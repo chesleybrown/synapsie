@@ -1,0 +1,59 @@
+{% extends "accounts/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Login" %}{% endblock %}
+{% block body_class %}login{% endblock %}
+
+{% block sidebar %}
+	<ul id="site_sidebar">
+		<li class="sidebar_item">
+			<h3>No account?</h3>
+			<a href="{% url accounts_register %}" class="input_button_wrapper">
+				<div class="input_button_start"></div>
+				<div class="input_button_body">
+					<div class="icon icon_register"></div>
+					<span>Register Now</span>
+				</div>
+				<div class="input_button_end"></div>
+			</a>
+		</li>
+	</ul>
+{% endblock sidebar %}
+
+{% block body %}
+	
+	<h2>Login to your account</h2>
+	<p>You'll have your life indexed before you know it.</p>
+	
+	{% if form.has_errors %}
+		<p class="error">Sorry, that's not a valid username or password</p>
+	{% endif %}
+	
+	<form class="record_form" action='.' method='post'>{% csrf_token %}
+		<fieldset>
+			<div id="id_username_field" class="field">
+				<label for="username">Your Username</label>
+				<input type="text" name="username" value="" id="username">
+			</div>
+			<div id="id_password_field" class="field">
+				<label for="password">Your Password</label>
+				<input type="password" name="password" value="" id="password">
+			</div>
+		</fieldset>
+		
+		<div class="actions">
+			<div class="actions_right">
+				<div class="input_button_wrapper">
+					<div class="input_button_start"></div>
+					<div class="input_button_body">
+						<div class="icon icon_login"></div>
+						<input type="submit" id="account_login" name="submit" value="Login" class="input_submit" />
+					</div>
+					<div class="input_button_end"></div>
+				</div>
+			</div>
+		</div>
+	</form>
+	
+{% endblock %}

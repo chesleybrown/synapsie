@@ -1,0 +1,38 @@
+{% extends "site_base.html" %}
+
+{% block body_class %}records{% endblock %}
+
+{% block sidebar %}
+	<ul id="site_sidebar">
+		<li class="sidebar_item">
+			<h3>Used Tags</h3>
+			<ul class="tags">
+				{% for tag in used_tags %}
+					<li class="tag"><a href="{% url record_index tags=tag.name %}">{{ tag.name }}</a> <a href="{% url record_index %}" class="closebutton"></a></li>
+				{% endfor %}
+			</ul>
+		</li>
+		<li class="sidebar_item">
+			<h3>Popular Tags</h3>
+			<div class="visualize">
+			<table class="use_visualize hidden">
+				<thead>
+					<tr>
+						<td></td>
+						{% for tag in popular_tags %}
+							<th>{{ tag.name }}</th>
+						{% endfor %}
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>You</th>
+						{% for tag in popular_tags %}
+							<td>{{ tag.count }}</td>
+						{% endfor %}
+					</tr>
+				</tbody>
+			</table>
+		</li>
+	</ul>
+{% endblock sidebar %}

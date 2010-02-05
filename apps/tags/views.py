@@ -1,0 +1,177 @@
+import sys
+import apps.session_messages as SessionMessages
+
+from apps.tags.messages import TagMessages
+from apps.records.models import Record
+from apps.tags.forms import TagForm
+from tagging.models import Tag, TaggedItem
+from tagging.forms import TagAdminForm
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect, Http404
+from django.template import RequestContext
+from django.shortcuts import get_object_or_404, render_to_response
+from django.views.generic.list_detail import object_list
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def list_tags(request):
+	
+	# init
+	identity = request.user
+	records = False
+	
+	# get tags user has used
+	tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity))
+	
+	# render
+	return render_to_response('tags/tag_list.html', {
+		'tags': tags,
+	}, context_instance=RequestContext(request))
+
+@login_required
+def add_tag(request):
+	
+	# init
+	identity = request.user
+	formset = TagForm()
+	
+	# test permission to edit
+	#if not record.can_edit(identity):
+	#	return HttpResponseRedirect(reverse('record_list'))
+	
+	# get available tags user has used
+	used_tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity))
+	used_tags_printable = ", ".join(map(str, used_tags))
+	
+	# if user has posted
+	if request.method == 'POST':
+		
+		formset = TagForm(request.POST)
+		
+		# validate form
+		if formset.is_valid():
+			clean = formset.cleaned_data
+			
+			# add record
+			#tag.name = clean['name']
+			
+			# save
+			#tag.save()
+			
+			# update tags
+			#Tag.objects.update_tags(record, clean['tags'])
+			
+			# redirect to show_record
+			#return HttpResponseRedirect(reverse('tag_show', kwargs=dict(tag_id=tag.id)))
+	
+	# render
+	return render_to_response('tags/tag_form.html', {
+		'formset': formset,
+		'used_tags_printable': used_tags_printable,
+	}, context_instance=RequestContext(request))
+
+@login_required
+def show_tag(request, tag_id):
+	
+	# init
+	identity = request.user
+	
+	# get record
+	tag = Tag.objects.get(pk=tag_id)
+	
+	# check if record was found
+	if tag is None:
+		raise Http404
+	
+	# test permission to view
+	#if not record.can_view(identity):
+	#	return HttpResponseRedirect(reverse('record_list'))
+	
+	# find all associated tags
+	#record_tags = Tag.objects.get_for_object(record)
+	
+	# render
+	return render_to_response('tags/tag_detail.html', {
+		'tag': tag,
+	}, context_instance=RequestContext(request))
+
+@login_required
+def edit_tag(request, tag_id):
+	
+	# init
+	identity = request.user
+	formset = TagForm()
+	
+	# get record
+	tag = Tag.objects.get(pk=tag_id)
+	
+	# check if record was found
+	if tag is None:
+		raise Http404
+	
+	# test permission to edit
+	#if not record.can_edit(identity):
+	#	return HttpResponseRedirect(reverse('record_list'))
+	
+	# get available tags user has used
+	used_tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity))
+	used_tags_printable = ", ".join(map(str, used_tags))
+	
+	#record.tags = tags
+	formset = TagAdminForm(instance=tag)
+	
+	# if user has posted
+	if request.method == 'POST':
+		
+		formset = TagForm(request.POST)
+		
+		# validate form
+		if formset.is_valid():
+			clean = formset.cleaned_data
+			
+			# update record
+			tag.name = clean['name']
+			
+			# save
+			tag.save()
+			
+			# redirect to show_record
+			return HttpResponseRedirect(reverse('tag_show', kwargs=dict(tag_id=tag.id)))
+	
+	# render
+	return render_to_response('tags/tag_form.html', {
+		'object' : tag,
+		'formset': formset,
+		'used_tags_printable': used_tags_printable,
+	}, context_instance=RequestContext(request))
+
+@login_required
+def delete_tag(request, tag_id):
+	
+	# init
+	identity = request.user
+	
+	# get record
+	tag = Tag.objects.get(pk=tag_id)
+	
+	# check if record was found
+	if tag is None:
+		raise Http404
+	
+	user_records = Record.objects.all().filter(user=identity)
+	tagged_user_records = TaggedItem.objects.get_by_model(user_records, tag)
+	
+	#for tagged_user_record in tagged_user_records:
+	#	sys.exit(TaggedItem.objects.all().filter(content_type=tagged_user_record, object_id=tagged_user_record.id, tag=tag_id))
+	#	tagged_item = TaggedItem.objects.all().filter(content_type=tagged_user_record, object_id=tagged_user_record.id, tag=tag_id)
+	#	tagged_item.delete()
+	
+	# test permission to delete
+	#if not tag.can_delete(identity):
+	#	return HttpResponseRedirect(reverse('record_list'))
+	
+	# delete it
+	#tag.delete()
+	
+	# redirect to show_record
+	return HttpResponseRedirect(reverse('tag_list'))

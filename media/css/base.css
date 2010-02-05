@@ -1,0 +1,585 @@
+/*
+	Base CSS used in main layout
+	@version 0.1
+	@author Chesley Brown
+	@product TagLife
+*/
+
+/* Global */
+html, body, #site_container {
+	height: 100%;
+}
+body {
+	background: url(/site_media/media/img/layout/body/bg.png);
+}
+body > #site_container {
+	height: auto;
+	min-height: 100%;
+}
+#site_container {
+	background: url(/site_media/media/img/layout/header/bg.png) repeat-x;
+}
+.hidden {
+	display: none;
+	zoom: 1;
+}
+
+
+/* Site Layout */
+#site_header {
+	height: 60px;
+}
+#site_header #login {
+	float: right;
+	height: 60px;
+}
+#site_header #login .user_username {
+	color: #fff;
+	text-shadow: #000 0 1px 0;
+}
+#site_header #logo {
+	float: left;
+}
+#site_header #logo a.logo_link {
+	display: block;
+	width: 192px;
+	height: 60px;
+	background-image: url(/site_media/media/img/layout/header/logo.png);
+}
+
+#site_content {
+	background: url('/site_media/media/img/backgrounds/1px/w60.png');
+	overflow: auto;
+	padding-top: 10px;
+	padding-bottom: 30px; /* must be same height as the footer */
+}
+
+#site_footer {
+	position: relative;
+	margin-top: -30px; /* negative value of footer height */
+	clear: both;
+	color: #fff;
+}
+#site_footer_content {
+	background: url('/site_media/media/img/backgrounds/1px/w40.png');
+	height: 30px;
+}
+#site_sidebar {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	overflow: auto;
+}
+#site_sidebar li.sidebar_item {
+	margin: 0 0 30px 0;
+	padding: 0;
+	overflow: auto;
+}
+
+
+/* Records */
+ul.records {
+	list-style: none;
+}
+ul.records li.record {
+	background-color: #E6E6E6;
+	border: 1px solid #CCCCCC;
+	margin-left: 10px;
+	margin-bottom: 5px;
+	position: relative;
+}
+
+ul.records li.record .date {
+	background: url(/site_media/media/img/layout/records/date_bg.png) no-repeat;
+	width: 50px;
+	height: 45px;
+	float: left;
+	position: absolute;
+	left: -10px;
+	top: 5px;
+	color: #fff;
+	text-shadow: #000 0 1px 0;
+	text-align: center;
+}
+ul.records li.record .date .day {
+	display: block;
+	font-size: 20px;
+	font-weight: bold;
+	position: absolute;
+	left: 7px;
+	top: 10px;
+	width: 25px;
+}
+ul.records li.record .date .month {
+	display: block;
+	font-size: 13px;
+	position: absolute;
+	left: 7px;
+	top: -1px;
+	width: 25px;
+}
+ul.records li.record .date .year {
+	display: block;
+	font-size: 11px;
+	position: absolute;
+	right: -2px;
+	top: 10px;
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+ul.records li.record .security {
+	position: absolute;
+	left: 10px;
+	bottom: 5px;
+}
+
+ul.records li.record .header {
+	margin: 0 10px 0 50px;
+	padding: 5px 5px;
+	border-bottom: 1px solid #CCCCCC;
+}
+ul.records li.record .header .time {
+	font-size: 11px;
+	float: left;
+	color: #666;
+	width: 55px;
+	margin-top: 2px;
+}
+ul.records li.record .header .text {
+	margin-left: 60px;
+}
+
+ul.records li.record .footer {
+	margin-left: 50px;
+	overflow: auto;
+}
+
+
+/* Tags */
+ul.tags {
+	list-style: none;
+	margin: 0;
+}
+ul.tags li.tag {
+	position: relative;
+	margin: 5px 10px 5px 0;
+	padding: 0 15px 0 5px;
+	font-size: 11px;
+	height: 18px;
+	line-height: 18px;
+	float: left;
+	display: block;
+	color: #fff;
+	background: #333;
+	border: 1px solid #000;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+ul.tags li.tag a {
+	color: #fff;
+	text-decoration: none;
+}
+ul.tags li.tag a.closebutton {
+	top: 1px;
+}
+
+
+/* Forms */
+textarea,
+input[type='text'],
+input[type='password'] {
+	border: 1px solid #666;
+}
+textarea:focus,
+input[type='text']:focus,
+input[type='password']:focus {
+	border-color: #00527F;
+}
+input[type='button']::-moz-focus-inner,
+input[type='submit']::-moz-focus-inner {
+	border: 0;
+}
+input[type='button']:focus,
+input[type='submit']:focus {
+	outline: none;
+}
+
+
+/* Record Form */
+form.record_form {
+	margin-bottom: 10px;
+}
+form.record_form fieldset {
+	background: url(/site_media/media/img/layout/form/bg.png);
+	border: 1px solid #00527F;
+	margin: 0;
+}
+form .field {
+	position: relative;
+	margin: 15px 0;
+}
+form .field textarea,
+form .field input[type='text'],
+form .field input[type='password'] {
+	font-size: 18px;
+	height: 20px;
+	width: 660px;
+	margin: 0 13px;
+}
+form .field input[type='text'],
+form .field input[type='password'] {
+	padding: 5px 5px;
+}
+form .field textarea {
+	height: 39px;
+	padding: 5px 5px;
+}
+form .field label {
+	font-size: 18px;
+	color: #999;
+	position: absolute;
+	top: 2px;
+	left: 20px;
+}
+
+form.record_form .actions {
+	background: #94B7DD;
+	margin: 0 10px;
+	height: 34px;
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+}
+form.record_form .actions_left {
+	float: left;
+	margin: 10px 0 0 5px;
+}
+form.record_form .actions_right {
+	float: right;
+	margin: 2px 5px 0;
+}
+
+form.record_form .record_security {
+	color: #fff;
+	text-shadow: 1px 1px #000;
+	cursor: pointer;
+}
+
+/* TextboxList sample CSS */
+ul.holder {
+	background: #fff;
+	margin: 0 13px !important;
+	overflow: hidden;
+	height: auto !important;
+	height: 1%;
+	padding: 0;
+	border: 1px solid #666;
+}
+ul.holder:focus {
+	border-color: #00527F;
+}
+*:first-child+html ul.holder { padding-bottom: 2px; } * html ul.holder { padding-bottom: 2px; } /* ie7 and below */
+ul.holder li {
+	float: left;
+	list-style-type: none;
+	margin: 0 5px 0 0;
+	white-space:nowrap;
+}
+ul.holder li.bit-box {
+	font-size: 11px;
+	color: #fff;
+	padding: 0 22px 0 5px;
+	margin: 6px 5px 5px;
+	position: relative;
+	background: #333;
+	border: 1px solid #000;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+ul.holder li.bit-box:hover,
+ul.tags li.tag:hover,
+.selected {
+	background: #000 !important;
+}
+ul.holder li.bit-box-focus {
+	border-color: #598BEC;
+	background: #598BEC;
+	color: #fff;
+}
+ul.holder li.bit-input input { width: auto; overflow:visible; margin: 0; border: 0px; outline: 0; padding: 3px 0px 2px; } /* no left/right padding here please */
+ul.holder li.bit-input input.smallinput { width: 20px; }
+
+/* Facebook demo CSS */      
+#add { border: 1px solid #999; width: 550px; margin: 50px; padding: 20px 30px 10px; }
+form ol li {
+	list-style-type: none;
+}
+form ol {
+	margin: 0;
+	padding: 0;
+}
+form ol li.input-text { margin-bottom: 10px; list-style-type: none; padding-bottom: 10px; }
+form ol li.input-text label { font-weight: bold; cursor: pointer; display: block; font-size: 13px; margin-bottom: 10px; }
+form ol li.input-text input {
+	width: 660px;
+	padding: 5px 5px 6px;
+	border: 1px solid #999;
+}
+form ul.holder {
+	width: 670px;
+}
+form ul {
+	margin: 0 !important
+}
+ul.holder li.bit-box,
+#apple-list ul.holder li.bit-box {
+	padding-right: 15px;
+	position: relative;
+	z-index:1000;
+}
+ul.holder li.bit-input input.maininput {
+	width: auto;
+	margin: 0;
+}
+#apple-list ul.holder li.bit-input input.smallinput {
+	width: 5px;
+}
+ul.holder li.bit-hover {
+	background: #BBCEF1;
+	border: 1px solid #6D95E0;
+}
+ul.holder li.bit-box-focus {
+	border-color: #598BEC;
+	background: #598BEC;
+	color: #fff;
+}
+ul.holder li.bit-box a.closebutton {
+	top: 0;
+}
+ul.holder li.bit-box a.closebutton,
+ul.tags li.tag a.closebutton {
+	outline: none;
+	position: absolute;
+	right: -1px;
+	display: block;
+	width: 16px;
+	height: 16px;
+	font-size: 1px;
+	background: url('/site_media/media/img/icons/fugue/cross-small-hover.png') no-repeat 0 0;
+}
+ul.holder li.bit-box a.closebutton:hover,
+ul.tags li.tag a.closebutton:hover {
+	background-position: 0 -16px;
+}
+ul.holder li.bit-box-focus a.closebutton,
+ul.holder li.bit-box-focus a.closebutton:hover {
+	background-position: bottom;
+}
+
+/* Autocompleter */
+
+.facebook-auto {
+	display: none;
+	position: absolute;
+	width: 670px;
+	background: url(/site_media/media/img/backgrounds/1px/w90.png);
+	left: 14px;
+}
+.facebook-auto .default {
+	padding: 2px 7px;
+	border: 1px solid #ccc;
+	border-width: 0 1px 1px;
+	font-size: 11px;
+}
+.facebook-auto ul { display: none; margin: 0; padding: 0; overflow: auto; position:absolute; z-index:9999}
+.facebook-auto ul li {
+	padding: 5px 12px;
+	z-index: 1000;
+	cursor: pointer;
+	margin: 0;
+	list-style-type: none;
+	border: 1px solid #ccc;
+	border-width: 0 1px 1px;
+	background: url(/site_media/media/img/backgrounds/1px/w90.png);
+}
+.facebook-auto ul li em {
+	font-weight: bold;
+	font-style: normal;
+	background: #ccc;
+}
+.facebook-auto ul li.auto-focus {
+	background: #4173CC;
+	color: #fff;
+}
+.facebook-auto ul li.auto-focus em {
+	background: none;
+}
+.deleted {
+	background-color: #666 !important;
+	border-color: #333 !important;
+	color: #fff !important;
+}
+
+
+/* Sexy Button */
+.input_button_wrapper,
+.input_button_large {
+	font-weight: bold;
+	display: inline-block;
+	white-space: nowrap;
+	cursor: pointer;
+	text-shadow: 1px 1px #fff;
+	text-decoration: none;
+	display: -moz-inline-box;
+	display: inline-block;
+}
+.input_button_wrapper,
+.input_button,
+.input_submit {
+	color: #000;
+	height: 30px;
+	line-height: 30px;
+	text-shadow: 1px 1px #fff;
+	border: none;
+	background: none;
+	padding: 0;
+	cursor: pointer;
+	font-weight: bold;
+}
+.input_button_large {
+	height: 50px;
+	line-height: 50px;
+}
+.input_button_large .input_button {
+	font-size: 15px;
+}
+.input_button_start,
+.input_button_body,
+.input_button_end {
+	display: inline-block;
+	float: left;
+	background-color: transparent;
+	background-position: 100% 0;
+	background-repeat: no-repeat;
+}
+.input_button_wrapper .input_button_start,
+.input_button_wrapper .input_button_body,
+.input_button_wrapper .input_button_end,
+.input_submit .input_button_start,
+.input_submit .input_button_body,
+.input_submit .input_button_end {
+	background-image: url(/site_media/media/img/layout/form/input_button.png);
+	height: 30px;
+	line-height: 30px;
+}
+.input_button_large .input_button_start,
+.input_button_large .input_button_body,
+.input_button_large .input_button_end {
+	/*background-image: url(../../images/layout/3.0/form/input_button_lg.png);*/
+	height: 50px;
+	line-height: 50px;
+}
+.input_button_wrapper .input_button_body .icon,
+.input_button_large .input_button_body .icon {
+	float: left;
+	display: inline-block;
+}
+.input_button_large .input_button_body .icon {
+	height: 50px;
+	line-height: 50px;
+}
+.input_button_wrapper .input_button_body .icon {
+	height: 30px;
+	line-height: 30px;
+}
+.input_button_start {
+	background-position: 0 0;
+	width: 14px;
+}
+.input_button_body {
+	background-position: center 0;
+}
+.input_button_end {
+	background-position: 100% 0;
+	width: 14px;
+}
+/* hover */
+.input_button_wrapper:hover .input_button_start,
+.input_button_large:hover .input_button_start {
+	background-position: 0 -81px;
+}
+.input_button_wrapper:hover .input_button_body,
+.input_button_large:hover .input_button_body {
+	background-position: center -81px;
+}
+.input_button_wrapper:hover .input_button_end,
+.input_button_large:hover .input_button_end {
+	background-position: 100% -81px;
+}
+.input_button_wrapper:active .input_button_start,
+.input_button_large:active .input_button_start {
+	background-position: 0 -162px;
+}
+.input_button_wrapper:active .input_button_body,
+.input_button_large:active .input_button_body {
+	background-position: center -162px;
+}
+.input_button_wrapper:active .input_button_end,
+.input_button_large:active .input_button_end {
+	background-position: 100% -162px;
+}
+
+/* disabled */
+.disabled .input_button_body {
+	color: #999;
+}
+.disabled .input_button_start,
+.disabled .input_button_start {
+	background-position: 0 -162px;
+}
+.disabled .input_button_body,
+.disabled .input_button_body {
+	background-position: center -162px;
+}
+.disabled .input_button_end,
+.disabled .input_button_end {
+	background-position: 100% -162px;
+}
+.disabled:hover .input_button_start,
+.disabled:hover .input_button_start {
+	background-position: 0 -243px;
+}
+.disabled:hover .input_button_body,
+.disabled:hover .input_button_body {
+	background-position: center -243px;
+}
+.disabled:hover .input_button_end,
+.disabled:hover .input_button_end {
+	background-position: 100% -243px;
+}
+
+a.input_button_wrapper:link,
+a.input_button_large:link {
+	color: #000;
+	text-decoration: none;
+}
+a.input_button_wrapper:visited,
+a.input_button_large:visited {
+	color: #000;
+	text-decoration: none;
+}
+a.input_button_wrapper:hover,
+a.input_button_large:hover {
+	color: #000;
+	text-decoration: none;
+}
+a.input_button_wrapper:focus,
+a.input_button_large:focus {
+	color: #000;
+	outline: none;
+}
+

@@ -1,0 +1,19 @@
+{% extends "records/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Record details" %}{% endblock %}
+
+{% block body %}
+	<h1>Record details</h1>
+	<a href="{% url record_list %}">Back to listing</a>
+	<a href="{% url record_edit record_id=record.id %}">Edit</a>
+	<a href="{% url record_delete record_id=record.id %}">Delete</a>
+	
+	<ul>
+		<li>User: {{ record.user.get_profile.name }}</li>
+		<li>Record: {{ record.text }}</li>
+		<li>Tags: {{ record.get_tags_printable }}</li>
+		<li>Created: {{ record.created }}</li>
+	</ul>
+{% endblock %}

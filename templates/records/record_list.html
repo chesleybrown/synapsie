@@ -1,0 +1,50 @@
+{% extends "records/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Records" %}{% endblock %}
+
+{% block body %}
+	<h1>Record listing</h1>
+	<a href="{% url record_add %}">Create record</a>
+	
+	<ul class="records">
+		{% for record in object_list %}
+			<li class="record">
+				<div class="date">
+					<span class="month">{{ record.created|date:"M" }}</span>
+					<span class="day">{{ record.created|date:"d" }}</span>
+					<span class="year">{{ record.created|date:"Y" }}</span>
+				</div>
+				<div class="header">
+					<div class="time">
+						<span>{{ record.created|date:"g:iA" }}</span>
+					</div>
+					<div class="content">
+						{{ record.text }}
+						<br />
+						(<a href="{% url record_show record_id=record.id %}">View</a>
+						<a href="{% url record_edit record_id=record.id %}">Edit</a>
+						<a href="{% url record_delete record_id=record.id %}">Delete</a>)
+					</div>
+				</div>
+				<div class="footer">
+					<ul class="tags">
+						{% for tag in record.tags %}
+							<li class="tag">{{ tag.name }} x</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
+	
+	<div>
+		{% if has_previous %}
+			<a href="{% url record_list %}?page={{ previous }}">&lt;-previous</a>
+		{% endif %}
+		{% if has_next %}
+			<a href="{% url record_list %}?page={{ next }}">next-&gt;</a>
+		{% endif %}
+	</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+/* SITE-SPECIFIC TAB STYLING */
+
+body.home #tab_home a,
+body.register #tab_register a,
+body.login #tab_login a,
+body.profile #tab_profile a,
+body.notices #tab_notices a,
+body.records #tab_records a,
+body.tags #tab_tags a {
+	color: #000; /* selected tab text colour */
+	text-shadow: #fff 0 1px 0;
+}
+
+body.home #tab_home,
+body.register #tab_register,
+body.login #tab_login,
+body.profile #tab_profile,
+body.notices #tab_notices,
+body.records #tab_records,
+body.tags #tab_tags {
+	margin: 0; /* to compensate for border */
+	padding: 5px 0 5px;
+	background: url(/site_media/media/img/backgrounds/1px/w40.png); /* selected tab colour */
+	border-left: 1px solid #00527F; /* tab border */
+	border-top: 1px solid #00527F; /* tab border */
+	border-right: 1px solid #00527F; /* tab border */
+	-moz-border-radius-topleft: 3px;
+	-webkit-border-top-left-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-right-radius: 3px;
+}
+
+/* GENERAL TAB STYLING */
+ 
+#left_tabs {
+	position: absolute;
+	bottom: -1px; /* must be same thickness as tab border */
+	left: 210px; /* based on width and padding of logo */
+}
+#right_tabs {
+	position: absolute;
+	bottom: -1px; /* must be same thickness as tab border */
+}
+ 
+ul.tabs a, ul.tabs a:visited {
+	text-shadow: #000 0 1px 0;
+	color: #fff; /* unselected tab text colour */
+	font-weight: bold;
+	text-decoration: none;
+}
+ul.tabs a:hover {
+	color: #eee; /* unselected tab text hover colour */
+}
+ul.tabs li {
+	list-style-type: none;
+	display: inline;
+	background-color: none; /* unselected tab colour */
+	padding: 5px 0 4px;
+	margin: 0 1px; /* to compensate for border */
+}
+ul.tabs li a {
+	padding: 5px 12px;
+}
+ul.tabs {
+	margin: 0 0 5px;
+}

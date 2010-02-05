@@ -1,0 +1,24 @@
+{% extends "tags/base.html" %}
+
+{% load i18n %}
+{% load uni_form %}
+
+{% block head_title %}{% if object %}{% trans "Edit Tag" %}{% else %}{% trans "Create Tag" %}{% endif %}{% endblock %}
+
+{% block body %}
+<h1>{% if object %}Edit tag{% else %}Create tag{% endif %}</h1>
+<a href="{% url tag_list %}">Back to listing</a>
+
+<form class="uniForm" action="" method="post" enctype="multipart/form-data">
+	<fieldset class="inlineLabels">
+		<div class="ctrlHolder">
+			<label for="">Used Tags</label>
+			<p>{{ used_tags_printable }}</p>
+		</div>
+        {{ formset|as_uni_form }}
+        <div class="form_blick">
+            <input type="submit" value="{% if object %}Apply changes{% else %}Create{% endif %}" />
+        </div>
+    </fieldset>
+</form>
+{% endblock %}

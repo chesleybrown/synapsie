@@ -1,0 +1,57 @@
+{% extends "accounts/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Register" %}{% endblock %}
+{% block body_class %}register{% endblock %}
+
+{% block sidebar %}
+	<ul id="site_sidebar">
+		<li class="sidebar_item">
+			<h3>Have an account?</h3>
+			<a href="{% url accounts_login %}" class="input_button_wrapper">
+				<div class="input_button_start"></div>
+				<div class="input_button_body">
+					<div class="icon icon_login"></div>
+					<span>Login</span>
+				</div>
+				<div class="input_button_end"></div>
+			</a>
+		</li>
+	</ul>
+{% endblock sidebar %}
+
+{% block body %}
+<h2>Create your TagLife account now</h2>
+<p>You'll have your life indexed before you know it.</p>
+
+<form class="record_form" action='.' method='post'>{% csrf_token %}
+	<fieldset>
+		<div id="id_username_field" class="field">
+			{{ formset.username.label_tag }}
+			{{ formset.username }}
+		</div>
+		<div id="id_password1_field" class="field">
+			{{ formset.password1.label_tag }}
+			{{ formset.password1 }}
+		</div>
+		<div id="id_password2_field" class="field">
+			{{ formset.password2.label_tag }}
+			{{ formset.password2 }}
+		</div>
+	</fieldset>
+	
+	<div class="actions">
+		<div class="actions_right">
+			<div class="input_button_wrapper">
+				<div class="input_button_start"></div>
+				<div class="input_button_body">
+					<div class="icon icon_register"></div>
+					<input type="submit" id="account_register" name="submit" value="Register" class="input_submit" />
+				</div>
+				<div class="input_button_end"></div>
+			</div>
+		</div>
+	</div>
+</form>
+{% endblock %}

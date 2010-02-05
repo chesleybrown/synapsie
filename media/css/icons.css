@@ -1,0 +1,40 @@
+/*
+ * Icons
+ */
+.icon {
+	background: no-repeat left center;
+	display: block;
+	width: auto;
+	min-width: 16px;
+	height: 16px;
+	line-height: 16px;
+	white-space: nowrap;
+	text-indent: 20px;
+}
+input.icon {
+	text-align: left;
+	width: auto;
+	overflow: visible;
+	height: auto;
+	border: none;
+	cursor: pointer;
+	color: #333;
+	font-weight: bold;
+}
+
+.icon_personal {
+	background-image: url(/site_media/media/img/icons/fugue/lock.png);
+}
+.icon_shared {
+	background-image: url(/site_media/media/img/icons/fugue/hand-share.png);
+}
+
+.icon_post {
+	background-image: url(/site_media/media/img/icons/fugue/pin.png);
+}
+.icon_login {
+	background-image: url(/site_media/media/img/icons/fugue/key.png);
+}
+.icon_register {
+	background-image: url(/site_media/media/img/icons/fugue/pencil.png);
+}

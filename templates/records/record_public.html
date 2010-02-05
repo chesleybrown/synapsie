@@ -1,0 +1,54 @@
+{% extends "records/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% if object %}{% trans "Edit Record" %}{% else %}{% trans "Records" %}{% endif %}{% endblock %}
+
+{% block body %}
+	
+	<ul id="user_record_list" class="records">
+		{% for record in object_list %}
+			<li id="record_{{ record.id }}" class="record">
+				<div class="date">
+					<span class="month">{{ record.created|date:"M" }}</span>
+					<span class="day">{{ record.created|date:"d" }}</span>
+					<span class="year">{{ record.created|date:"Y" }}</span>
+				</div>
+				<div class="security">
+					{% if record.personal %}
+						<div class="icon icon_personal"></div>
+					{% else %}
+						<div class="icon icon_shared"></div>
+					{% endif %}
+				</div>
+				<div class="header">
+					<div class="time">
+						<span>{{ record.created|date:"g:iA" }}</span>
+					</div>
+					<div class="text">{{ record.text }}</div>
+					<div class="menu">
+						(<a href="{% url record_show record_id=record.id %}">View</a>
+						<a href="{% url record_edit record_id=record.id %}">Edit</a>
+						<a class="use_record_delete" href="{% url api-record record_id=record.id,emitter_format=".json" %}">Delete</a>)
+					</div>
+				</div>
+				<div class="footer">
+					<ul class="tags">
+						{% for tag in record.tags %}
+							<li class="tag">{{ tag.name }} x</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</li>
+		{% endfor %}
+	</ul>
+	
+	<div>
+		{% if has_previous %}
+		<a href="{% url record_list %}?page={{ previous }}">&lt;-previous</a>
+		{% endif %}
+		{% if has_next %}
+		<a href="{% url record_list %}?page={{ next }}">next-&gt;</a>
+		{% endif %}
+	</div>
+{% endblock %}
