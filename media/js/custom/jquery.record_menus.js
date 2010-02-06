@@ -1,5 +1,5 @@
 /*
- * jQuery RecordMenus 0.1
+ * jQuery RecordMenus 0.3
  * 
  * Add a "Dropdown" menu when you hover over a record
  * 
