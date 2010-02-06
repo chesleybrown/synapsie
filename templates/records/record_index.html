@@ -64,9 +64,15 @@
 						<li class="menu_header"></li>
 					</ul>
 					<ul class="menu_items">
-						<li class="menu_item"><a class="icon icon_record_view" href="{% url record_show record_id=0 %}">View</a></li>
-						<li class="menu_item"><a class="icon icon_record_edit" href="{% url record_edit record_id=0 %}">Edit</a></li>
-						<li class="menu_item"><a class="icon icon_record_delete use_record_delete" href="{% url api-record record_id=0,emitter_format=".json" %}">Delete</a></li>
+						<li class="menu_item">
+							<a href="{% url record_show record_id=0 %}"><span class="icon icon_record_view"></span>View</a>
+						</li>
+						<li class="menu_item">
+							<a href="{% url record_edit record_id=0 %}"><span class="icon icon_record_edit"></span>Edit</a>
+						</li>
+						<li class="menu_item">
+							<a class="use_record_delete" href="{% url api-record record_id=0,emitter_format=".json" %}"><span class="icon icon_record_delete"></span>Delete</a>
+						</li>
 					</ul>
 				</div>
 				<div class="footer"></div>
@@ -100,9 +106,15 @@
 						<li class="menu_header"></li>
 					</ul>
 					<ul class="menu_items">
-						<li class="menu_item"><a class="icon icon_record_view" href="{% url record_show record_id=record.id %}">View</a></li>
-						<li class="menu_item"><a class="icon icon_record_edit" href="{% url record_edit record_id=record.id %}">Edit</a></li>
-						<li class="menu_item"><a class="icon icon_record_delete use_record_delete" href="{% url api-record record_id=record.id,emitter_format=".json" %}">Delete</a></li>
+						<li class="menu_item">
+							<a href="{% url record_show record_id=record.id %}"><span class="icon icon_record_view"></span>View</a>
+						</li>
+						<li class="menu_item">
+							<a href="{% url record_edit record_id=record.id %}"><span class="icon icon_record_edit"></span>Edit</a>
+						</li>
+						<li class="menu_item">
+							<a class="use_record_delete" href="{% url api-record record_id=record.id,emitter_format=".json" %}"><span class="icon icon_record_delete"></span>Delete</a>
+						</li>
 					</ul>
 				</div>
 				<div class="footer">

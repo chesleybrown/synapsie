@@ -165,7 +165,7 @@ ul.records li.record div.menu ul.menu_headers {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	border-bottom: 1px solid #000;
+	border-bottom: 1px solid #999;
 	height: 16px;
 }
 ul.records li.record div.menu ul.menu_headers li.menu_header {
@@ -176,7 +176,7 @@ ul.records li.record div.menu ul.menu_headers li.menu_header {
 	height: 16px;
 	background: #fff;
 	cursor: pointer;
-	border: 1px solid #000;
+	border: 1px solid #999;
 }
 ul.records li.record div.menu ul.menu_items {
 	display: none;
@@ -185,7 +185,7 @@ ul.records li.record div.menu ul.menu_items {
 	padding: 0;
 	border-width: 0 1px 1px 1px;
 	border-style: solid;
-	border-color: #000;
+	border-color: #999;
 	overflow: hidden;
 	clear: both;
 	float: left;
@@ -195,7 +195,29 @@ ul.records li.record div.menu ul.menu_items {
 }
 ul.records li.record div.menu ul.menu_items li.menu_item {
 	margin: 0;
-	padding: 2px 5px;
+	padding: 3px 0;
+}
+ul.records li.record div.menu ul.menu_items li.menu_item .icon {
+	float: left;
+	margin: 3px 10px 0 0;
+}
+ul.records li.record div.menu ul.menu_items li.menu_item a {
+	color: #666;
+	text-decoration: none;
+	font-weight: bold;
+	padding: 4px 15px;
+	display: block;
+	text-shadow: 1px 1px #fff;
+	border-width: 1px 0;
+	border-style: solid;
+	border-color: transparent;
+}
+ul.records li.record div.menu ul.menu_items li.menu_item a:hover {
+	color: #fff;
+	text-shadow: 1px 1px #000;
+	text-decoration: none;
+	background-color: #333;
+	border-color: #000;
 }
 ul.records li.record div.menu ul.menu_headers li.menu_header.active,
 ul.records li.record div.menu ul.menu_headers li.menu_header.active:hover { /*--Makes sure that the active tab does not listen to the hover properties--*/
