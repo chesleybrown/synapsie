@@ -2,12 +2,13 @@
   CHART
 \*------------------------------------*/
 dl.tags_chart {
-	width: 220px;
-	padding-bottom: 20px;
+	width: auto;
+	padding-bottom: 25px;
+	margin: 0;
 	overflow: auto;
 }
 dl.tags_chart dt {
-	width: 120px;
+	width: 110px;
 	float: left;
 	margin: 0;
 	padding: 2px 0;
@@ -17,9 +18,9 @@ dl.tags_chart dt ul.tags {
 	float: right;
 }
 dl.tags_chart dd {
-	width: 84px;
+	width: 86px;
 	float: left;
-	margin: 0 5px 0 0;
+	margin: 0;
 	display: inline;
 }
 dl.tags_chart dd span {

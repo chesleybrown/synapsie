@@ -3,23 +3,26 @@
 {% block body_class %}records{% endblock %}
 
 {% block sidebar %}
-	<ul id="site_sidebar">
-		<li class="sidebar_item">
-			<h3>Used Tags</h3>
+	<ul class="sidebar_tabs">
+		<li><a href="#sidebar_tab_used">Used</a></li>
+		<li><a href="#sidebar_tab_popular">Popular</a></li>
+	</ul>
+	
+	<div class="sidebar_tab_container">
+		<div id="sidebar_tab_used" class="sidebar_tab_content">
 			<ul class="tags">
 				{% for tag in used_tags %}
 					<li class="tag"><a href="{% url record_index tags=tag.name %}">{{ tag.name }}</a> <a href="{% url record_index %}" class="closebutton"></a></li>
 				{% endfor %}
 			</ul>
-		</li>
-		<li class="sidebar_item">
-			<h3>Popular Tags</h3>
+		</div>
+		<div id="sidebar_tab_popular" class="sidebar_tab_content">
 			<dl class="tags_chart">
 				{% for tag in popular_tags %}
 					<dt><ul class="tags"><li class="tag"><a href="{% url record_index tags=tag.name %}">{{ tag.name }}</a> <a href="{% url record_index %}" class="closebutton"></a></li></ul></dt>
 					<dd><span style="width: {{ tag.percent }}%;">{{ tag.count }}</dd>
 				{% endfor %}
 			</dl>
-		</li>
-	</ul>
+		</div>
+	</div>
 {% endblock sidebar %}

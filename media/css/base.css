@@ -64,13 +64,16 @@ body > #site_container {
 	background: url('/site_media/media/img/backgrounds/1px/w40.png');
 	height: 30px;
 }
-#site_sidebar {
+
+
+/* Sidebar */
+ul.sidebar {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 	overflow: auto;
 }
-#site_sidebar li.sidebar_item {
+ul.sidebar li.sidebar_item {
 	margin: 0 0 30px 0;
 	padding: 0;
 	overflow: auto;
@@ -161,6 +164,7 @@ ul.records li.record .footer {
 ul.tags {
 	list-style: none;
 	margin: 0;
+	overflow: auto;
 }
 ul.tags li.tag {
 	position: relative;
@@ -273,9 +277,10 @@ ul.holder {
 	background: #fff;
 	margin: 0 13px !important;
 	overflow: hidden;
+	min-height: 30px;
 	height: auto !important;
 	height: 1%;
-	padding: 0;
+	padding: 0 5px;
 	border: 1px solid #666;
 }
 ul.holder:focus {
@@ -310,8 +315,17 @@ ul.holder li.bit-box-focus {
 	background: #598BEC;
 	color: #fff;
 }
-ul.holder li.bit-input input { width: auto; overflow:visible; margin: 0; border: 0px; outline: 0; padding: 3px 0px 2px; } /* no left/right padding here please */
-ul.holder li.bit-input input.smallinput { width: 20px; }
+ul.holder li.bit-input input {
+	width: auto;
+	overflow: visible;
+	margin: 0;
+	border: 0px;
+	outline: 0;
+	padding: 5px 0px 2px;
+} /* no left/right padding here please */
+ul.holder li.bit-input input.smallinput {
+	width: 20px;
+}
 
 /* Facebook demo CSS */      
 #add { border: 1px solid #999; width: 550px; margin: 50px; padding: 20px 30px 10px; }
@@ -330,7 +344,7 @@ form ol li.input-text input {
 	border: 1px solid #999;
 }
 form ul.holder {
-	width: 670px;
+	width: 660px;
 }
 form ul {
 	margin: 0 !important
