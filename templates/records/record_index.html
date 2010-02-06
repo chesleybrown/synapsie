@@ -6,6 +6,8 @@
 
 {% block body %}
 	
+	<div class="clear"></div>
+	
 	<form id="record_create_form" class="record_form" action="{% url api-record emitter_format=".json" %}" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<div id="id_text_field" class="field">

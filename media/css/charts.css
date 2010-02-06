@@ -1,0 +1,54 @@
+/*------------------------------------*\
+  CHART
+\*------------------------------------*/
+dl.tags_chart {
+	width: 220px;
+	padding-bottom: 20px;
+	overflow: auto;
+}
+dl.tags_chart dt {
+	width: 120px;
+	float: left;
+	margin: 0;
+	padding: 2px 0;
+	display: block;
+}
+dl.tags_chart dt ul.tags {
+	float: right;
+}
+dl.tags_chart dd {
+	width: 89px;
+	float: left;
+	margin: 0;
+	display: inline;
+}
+dl.tags_chart dd span {
+	color: #fff;
+	background: #0071bc;
+	text-align: center;
+	padding: 2px 5px;
+	margin: 5px 0;
+	display: block;
+	
+	text-shadow: #000 0 1px 0;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	background: -webkit-gradient(linear, left top, left bottom, from(#0071bc), to(#0063a6));
+	-webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,0.25)));
+}
+dl.tags_chart dd span {
+	-webkit-animation-name:bar-one; /* Give the bar an animation with a unique name */
+}
+dl.tags_chart dd span { /* Define animation styles for all three bars at once */
+	-webkit-animation-duration: 1s; /* Animation duration in seconds */
+	-webkit-animation-iteration-count: 1; /* Amount of times to loop */
+	-webkit-animation-timing-function: ease-out; /* Ease in, out etc. */
+}
+@-webkit-keyframes bar-one{
+	0%{ /* Define bar-one styles at 0% (0 seconds) */
+		width: 0%;
+	}
+	100%{ /* Define bar-one styles at 100% (0.5 seconds) */
+	}
+}

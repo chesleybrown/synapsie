@@ -235,22 +235,6 @@ $(document).ready(function() {
 	 */
 	
 	
-	/*
-	 * Handle graphs
-	 */
-	$('table.use_visualize').visualize({
-		type: 'pie',
-		parseDirection: 'y',
-		width: 220,
-		height: 220,
-		colors: ['#be1e2d','#666699','#92d5ea','#ee8310','#8d10ee','#5a3b16','#26a4ed','#f45a90','#e9e744', '#be1e2d','#666699','#92d5ea','#ee8310','#8d10ee','#5a3b16','#26a4ed','#f45a90','#e9e744', '#be1e2d','#666699','#92d5ea','#ee8310','#8d10ee','#5a3b16','#26a4ed','#f45a90','#e9e744']
-	});
-	$('div.visualize-info').insertBefore('div.visualize-pie');
-	/*
-	 * END graphs
-	 */
-	
-	
 	//enable elastic textfield for forms
 	$('form.record_form textarea').elastic();
 	

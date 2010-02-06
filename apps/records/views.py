@@ -21,6 +21,7 @@ def index_records(request, tags=False):
 	records = False
 	formset = RecordForm()
 	selected_tags = False
+	popular_tags_printable = list()
 	
 	# get user records
 	records = Record.objects.all().filter(user=identity).order_by('-created')
@@ -34,7 +35,13 @@ def index_records(request, tags=False):
 	# get available tags user has used
 	used_tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)
 	used_tags_printable = ", ".join(map(str, used_tags))
-	popular_tags = sorted(used_tags, key=lambda x: x.count, reverse=True)[:5]
+	popular_tags = sorted(used_tags, key=lambda x: x.count, reverse=True)
+	
+	# get popular tags ready for template
+	highest = popular_tags[0]
+	for tag in popular_tags:
+		tag.percent = (float(tag.count) / float(16)) * 100
+		popular_tags_printable.append(tag)
 	
 	# render
 	return render_to_response('records/record_index.html', {
@@ -42,7 +49,7 @@ def index_records(request, tags=False):
 		'selected_tags': selected_tags,
 		'used_tags_printable': used_tags_printable,
 		'used_tags': used_tags,
-		'popular_tags': popular_tags,
+		'popular_tags': popular_tags_printable,
 		'object_list': records,
 	}, context_instance=RequestContext(request))
 	
