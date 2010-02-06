@@ -117,6 +117,6 @@ html ul.sidebar_tabs li.active, html ul.sidebar_tabs li.active a:hover  { /*--Ma
 	background: #fff;
 }
 .sidebar_tab_content {
-	padding: 10px 5px;
+	padding: 10px 5px 5px 5px;
 	font-size: 1.2em;
 }
