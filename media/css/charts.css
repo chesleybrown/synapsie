@@ -49,7 +49,9 @@ dl.tags_chart dd span { /* Define animation styles for all three bars at once */
 @-webkit-keyframes bar-one{
 	0%{ /* Define bar-one styles at 0% (0 seconds) */
 		width: 0%;
+		opacity: 0;
 	}
 	100%{ /* Define bar-one styles at 100% (0.5 seconds) */
+		opacity: 1;
 	}
 }
