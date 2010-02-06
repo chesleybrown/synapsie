@@ -4,7 +4,7 @@ from tagging.forms import TagField
 
 class RecordForm(forms.ModelForm):
 	text = forms.CharField(label='Life Record...', widget=forms.Textarea)
-	tags = TagField(label='Tags for Life Record...', widget=forms.SelectMultiple)
+	tags = TagField(label='Tags for Life Record...', widget=forms.SelectMultiple, required=False)
 	personal = forms.CharField(widget=forms.HiddenInput, initial='1')
 	
 	def __init__(self, *args, **kwrds):
