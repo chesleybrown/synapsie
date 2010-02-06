@@ -134,8 +134,8 @@ ul.records li.record .date .year {
 
 ul.records li.record .security {
 	position: absolute;
-	left: 10px;
-	bottom: 5px;
+	top: 5px;
+	right: 30px;
 }
 
 ul.records li.record .header {
@@ -151,7 +151,60 @@ ul.records li.record .header .time {
 	margin-top: 2px;
 }
 ul.records li.record .header .text {
-	margin-left: 60px;
+	margin: 0 40px 0 60px;
+}
+
+ul.records li.record div.menu {
+	display: none;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	z-index: 100;
+}
+ul.records li.record div.menu ul.menu_headers {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px solid #000;
+	height: 16px;
+}
+ul.records li.record div.menu ul.menu_headers li.menu_header {
+	margin: 0 0 -1px 0;
+	padding: 0;
+	float: right;
+	width: 16px;
+	height: 16px;
+	background: #fff;
+	cursor: pointer;
+	border: 1px solid #000;
+}
+ul.records li.record div.menu ul.menu_items {
+	display: none;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	border-color: #000;
+	overflow: hidden;
+	clear: both;
+	float: left;
+	background: #fff;
+	-moz-box-shadow: 0 3px 5px #666;
+	-webkit-box-shadow: 0 3px 5px #666;
+}
+ul.records li.record div.menu ul.menu_items li.menu_item {
+	margin: 0;
+	padding: 2px 5px;
+}
+ul.records li.record div.menu ul.menu_headers li.menu_header.active,
+ul.records li.record div.menu ul.menu_headers li.menu_header.active:hover { /*--Makes sure that the active tab does not listen to the hover properties--*/
+	background: #fff;
+	border-bottom: 1px solid #fff; /*--Makes the active tab look like it's connected with its content--*/
+}
+
+ul.records li.record div.menu.active {
+	z-index: 200;
 }
 
 ul.records li.record .footer {

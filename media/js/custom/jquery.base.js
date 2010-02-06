@@ -264,4 +264,14 @@ $(document).ready(function() {
 		}
 	});
 	
+	
+	/*
+	 * Setup Record Menus (dropdowns)
+	 */
+	$('ul.records').recordMenus();
+	/*
+	 * END Setup Record Menus (dropdowns)
+	 */
+	
+	
 });

@@ -58,9 +58,16 @@
 						<span></span>
 					</div>
 					<div class="text"></div>
-					<div class="menu">
-						(<a class="use_record_delete" href="{% url api-record emitter_format=".json" %}">Delete</a>)
-					</div>
+				</div>
+				<div class="menu">
+					<ul class="menu_headers">
+						<li class="menu_header"></li>
+					</ul>
+					<ul class="menu_items">
+						<li class="menu_item"><a class="icon icon_record_view" href="{% url record_show record_id=0 %}">View</a></li>
+						<li class="menu_item"><a class="icon icon_record_edit" href="{% url record_edit record_id=0 %}">Edit</a></li>
+						<li class="menu_item"><a class="icon icon_record_delete use_record_delete" href="{% url api-record record_id=0,emitter_format=".json" %}">Delete</a></li>
+					</ul>
 				</div>
 				<div class="footer"></div>
 			</li>
@@ -87,11 +94,16 @@
 						<span>{{ record.created|date:"g:iA" }}</span>
 					</div>
 					<div class="text">{{ record.text }}</div>
-					<div class="menu">
-						(<a href="{% url record_show record_id=record.id %}">View</a>
-						<a href="{% url record_edit record_id=record.id %}">Edit</a>
-						<a class="use_record_delete" href="{% url api-record record_id=record.id,emitter_format=".json" %}">Delete</a>)
-					</div>
+				</div>
+				<div class="menu">
+					<ul class="menu_headers">
+						<li class="menu_header"></li>
+					</ul>
+					<ul class="menu_items">
+						<li class="menu_item"><a class="icon icon_record_view" href="{% url record_show record_id=record.id %}">View</a></li>
+						<li class="menu_item"><a class="icon icon_record_edit" href="{% url record_edit record_id=record.id %}">Edit</a></li>
+						<li class="menu_item"><a class="icon icon_record_delete use_record_delete" href="{% url api-record record_id=record.id,emitter_format=".json" %}">Delete</a></li>
+					</ul>
 				</div>
 				<div class="footer">
 					<ul class="tags">

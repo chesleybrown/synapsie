@@ -38,3 +38,13 @@ input.icon {
 .icon_register {
 	background-image: url(/site_media/media/img/icons/fugue/pencil.png);
 }
+
+.icon_record_view {
+	background-image: url(/site_media/media/img/icons/fugue/eye.png);
+}
+.icon_record_edit {
+	background-image: url(/site_media/media/img/icons/fugue/pencil.png);
+}
+.icon_record_delete {
+	background-image: url(/site_media/media/img/icons/fugue/cross-button.png);
+}
