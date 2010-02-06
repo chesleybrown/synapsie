@@ -77,6 +77,19 @@
 				}
 			);
 			
+			container.bind('click', function(e) {
+				
+				/* 
+				 * this prevents the menu from complete disappearing if the user
+				 * simply clicked outside the menu, but within the same record
+				 */
+				if (menu_items.is(':visible')) {
+					hide_menu(container);
+					e.stopPropagation();
+				}
+				
+			});
+			
 			menu.bind('click', function(e) {
 				toggle_menu(container);
 				e.stopPropagation();
