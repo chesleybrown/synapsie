@@ -1,5 +1,5 @@
 /*
- * jQuery RecordMenus 0.4
+ * jQuery RecordMenus 0.5
  * 
  * Add a "Dropdown" menu when you hover over a record
  * 
@@ -30,12 +30,10 @@
 			menu_items_selector: 'div.menu ul.menu_items',
 			active_class: 'active', // this is applied to both the menu container and the menu header
 			show_effect: function(e) {
-				e.parent().find('.security').addClass('hover');
-				e.addClass('hover');
+				e.show();
 			},
 			hide_effect: function(e) {
-				e.parent().find('.security').removeClass('hover');
-				e.removeClass('hover');
+				e.hide();
 			}
 		};
 		
