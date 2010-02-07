@@ -3,7 +3,9 @@ import apps.session_messages as SessionMessages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib import auth
+from django.contrib.auth.models import User
 from django.template import RequestContext
+from django.http import Http404
 
 from apps.accounts.messages import AccountMessages
 from apps.accounts.forms import UserCreationForm
@@ -74,3 +76,35 @@ def logout(request):
 	
 	# Redirect to a success page.
 	return HttpResponseRedirect("/accounts/login/")
+
+def show(request, user_id=0, username=False):
+	
+	# init
+	identity = request.user
+	user = identity
+	
+	# if they provided an id, get that user instead
+	if (user_id):
+		try:
+			# get user
+			user = User.objects.get(pk=user_id)
+			
+		except User.DoesNotExist:
+			raise Http404
+	
+	# if they provided a username
+	elif (username):
+		try:
+			# get user
+			user = User.objects.get(username=username)
+			
+		except User.DoesNotExist:
+			raise Http404
+	
+	
+	# test permission to view
+	
+	# render
+	return render_to_response('accounts/show.html', {
+		'user': user,
+	}, context_instance=RequestContext(request))
