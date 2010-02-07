@@ -268,7 +268,16 @@ $(document).ready(function() {
 	/*
 	 * Setup Record Menus (dropdowns)
 	 */
-	$('ul.records').recordMenus();
+	$('ul.records').recordMenus({
+		show_effect: function(e) {
+			e.parent().find('.security').addClass('hover');
+			e.addClass('hover');
+		},
+		hide_effect: function(e) {
+			e.parent().find('.security').removeClass('hover');
+			e.removeClass('hover');
+		}
+	});
 	/*
 	 * END Setup Record Menus (dropdowns)
 	 */
