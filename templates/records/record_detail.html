@@ -11,7 +11,7 @@
 	<a href="{% url record_delete record_id=record.id %}">Delete</a>
 	
 	<ul>
-		<li>User: {{ record.user.get_profile.name }}</li>
+		<li>User: {{ record.user.username }}</li>
 		<li>Record: {{ record.text }}</li>
 		<li>Tags: {{ record.get_tags_printable }}</li>
 		<li>Created: {{ record.created }}</li>
