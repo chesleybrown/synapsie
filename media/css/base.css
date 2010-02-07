@@ -133,9 +133,13 @@ ul.records li.record .date .year {
 }
 
 ul.records li.record .security {
+	opacity: 0.5;
 	position: absolute;
 	top: 5px;
-	right: 30px;
+	right: 46px;
+}
+ul.records li.record .security.hover {
+	opacity: 1;
 }
 
 ul.records li.record .header {
@@ -151,32 +155,39 @@ ul.records li.record .header .time {
 	margin-top: 2px;
 }
 ul.records li.record .header .text {
-	margin: 0 40px 0 60px;
+	margin: 0 56px 0 60px;
 }
 
 ul.records li.record div.menu {
-	display: none;
+	opacity: 0.5;
 	position: absolute;
 	top: 5px;
 	right: 5px;
 	z-index: 100;
 }
+ul.records li.record div.menu.hover {
+	opacity: 1;
+}
 ul.records li.record div.menu ul.menu_headers {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	border-bottom: 1px solid #999;
 	height: 16px;
 }
 ul.records li.record div.menu ul.menu_headers li.menu_header {
 	margin: 0 0 -1px 0;
 	padding: 0;
 	float: right;
-	width: 16px;
+	width: 32px;
 	height: 16px;
-	background: #fff;
+	background: url(/site_media/media/img/layout/records/dropdown_button.png) no-repeat;
 	cursor: pointer;
-	border: 1px solid #999;
+	position: absolute;
+	top: 1px;
+	right: 0;
+}
+ul.records li.record div.menu ul.menu_headers li.menu_header:hover {
+	background-position: 0 -16px
 }
 ul.records li.record div.menu ul.menu_items {
 	display: none;
@@ -221,8 +232,10 @@ ul.records li.record div.menu ul.menu_items li.menu_item a:hover {
 }
 ul.records li.record div.menu ul.menu_headers li.menu_header.active,
 ul.records li.record div.menu ul.menu_headers li.menu_header.active:hover { /*--Makes sure that the active tab does not listen to the hover properties--*/
-	background: #fff;
-	border-bottom: 1px solid #fff; /*--Makes the active tab look like it's connected with its content--*/
+	background-position: 0 -32px !important;
+}
+ul.records li.record div.menu.active ul.menu_headers {
+	border-bottom: 1px solid #999;
 }
 
 ul.records li.record div.menu.active {
