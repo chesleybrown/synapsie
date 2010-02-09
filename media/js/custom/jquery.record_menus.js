@@ -1,5 +1,5 @@
 /*
- * jQuery RecordMenus 0.5
+ * jQuery RecordMenus 0.6
  * 
  * Add a "Dropdown" menu when you hover over a record
  * 
@@ -48,13 +48,10 @@
 		
 		//save settings to data
 		records.data('record_menus_settings', settings);
-		records.find(settings.record_selector).data('record_menus_settings', function() {
-			return records.data('record_menus_settings');
-		});
 		
-		//clicking outside menu closes all menus that might be open
-		site_master.bind('click', function(e) {
-			var container = records.find(settings.record_selector);
+		// clicking outside menu closes all menus that might be open
+		site_master.bind('click.recordsMenuMaster', function(e) {
+			var container = records;
 			
 			container.each(function(e) {
 				var menu_items = $(this).find(settings.menu_items_selector);
@@ -63,9 +60,10 @@
 				}
 			});
 		});
+			
 		
 		// init the menus
-		records.find(settings.record_selector).each(function() {
+		records.each(function() {
 			
 			//init
 			var container = $(this);
@@ -83,7 +81,7 @@
 				}
 			);
 			
-			container.bind('click', function(e) {
+			container.bind('click.recordsMenu', function(e) {
 				
 				/* 
 				 * this prevents the menu from complete disappearing if the user
@@ -96,27 +94,16 @@
 				
 			});
 			
-			menu.bind('click', function(e) {
+			menu.bind('click.recordsMenu', function(e) {
 				toggle_menu(container);
 				e.stopPropagation();
 			});
 			
 		});
 		
-		function get_settings(element) {
-			//init
-			var settings = element.data('record_menus_settings');
-			
-			if (typeof(settings) == 'function') {
-				settings = settings();
-			}
-			
-			return settings;
-		}
-		
 		function show(element) {
 			//init
-			var settings = get_settings(element);
+			var settings = element.data('record_menus_settings');
 			var menu = element.find(settings.menu_selector);
 			
 			settings.show_effect(menu);
@@ -124,7 +111,7 @@
 		
 		function hide(element) {
 			//init
-			var settings = get_settings(element);
+			var settings = element.data('record_menus_settings');
 			var menu = element.find(settings.menu_selector);
 			var menu_items = element.find(settings.menu_items_selector);
 			
@@ -134,7 +121,7 @@
 		
 		function toggle_menu(element) {
 			//init
-			var settings = get_settings(element);
+			var settings = element.data('record_menus_settings');
 			var menu_items = element.find(settings.menu_items_selector);
 			
 			if (menu_items.is(':hidden')) {
@@ -147,7 +134,7 @@
 		
 		function show_menu(element) {
 			//init
-			var settings = get_settings(element);
+			var settings = element.data('record_menus_settings');
 			var menu = element.find(settings.menu_selector);
 			var menu_header = element.find(settings.menu_header_selector);
 			var menu_items = element.find(settings.menu_items_selector);
@@ -164,7 +151,7 @@
 		
 		function hide_menu(element) {
 			//init
-			var settings = get_settings(element);
+			var settings = element.data('record_menus_settings');
 			var menu = element.find(settings.menu_selector);
 			var menu_header = element.find(settings.menu_header_selector);
 			var menu_items = element.find(settings.menu_items_selector);
