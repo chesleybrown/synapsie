@@ -1,5 +1,5 @@
 /*
- FCBKcomplete 2.6.2a
+ FCBKcomplete 2.6.2b
  - Jquery version required: 1.2.x, 1.3.x
  
  Changelog:
@@ -37,6 +37,9 @@
  - 2.6.2a
  		made onselect, onremove take an anonymous function
  		focus on maininput when deleting an item via the click option
+ 
+ - 2.6.2b
+ 		add 'clear' option
  */
 
 /* Coded by: emposha <admin@emposha.com> */
@@ -70,7 +73,8 @@ jQuery(
 		        }
 	        	
 		        function createFCBK()
-		        {	    
+		        {
+		           
 		           element.hide();
 		           element.attr("multiple","multiple");
 		           if (element.attr("name").indexOf("[]") == -1)
@@ -98,6 +102,9 @@ jQuery(
 	               complete.prepend(feed);
 	               holder.after(complete);
 				   feed.css("width",complete.width());
+				   
+				   //save where the holder is
+		           element.data('fcbkcompleteHolder', holder);
 		        }
 	        	
 		        function preSet()
@@ -149,7 +156,7 @@ jQuery(
 	                        $(this).parent("li").fadeOut("fast", 
 	                            function(){
 									removeItem($(this));
-									$('#id_tags_annoninput').find('input.maininput').focus();
+									holder.find('input.maininput').focus();
 	                            }
 	                        );
 	                        return false;
@@ -639,8 +646,37 @@ jQuery(
                     string = string.replace('/([\x00-\x08,\x0b-\x0c,\x0e-\x19])/', '');
                     return string;
                 }
+                
+                function clear()
+                {
+					var holder = element.data('fcbkcompleteHolder');
+					
+					holder.find('li.bit-box').each(function() {
+						removeItem($(this));
+					});
+					
+					// call blur when done
+					holder.find('input.maininput').blur();
+					
+					
+					//done
+					return true;
+				}
 				
-		        var options = $.extend({
+				
+				//init
+				var element = $(this);
+		        var elemid = element.attr("id");
+		        var options = element.data('fcbkcompleteOptions');
+				
+				// call functions if provided
+				switch (opt) {
+					case 'clear':
+						return clear($(this));
+						break;
+				}
+				
+		        options = $.extend({
 				        json_url: null,
 				        cache: false,
 				        height: "10",
@@ -653,6 +689,8 @@ jQuery(
 						onselect: "",
 						onremove: ""
 			        }, opt);
+			        
+			    element.data('fcbkcompleteOptions', options);
 	        	
 		        //system variables
 		        var holder     		= null;
@@ -667,8 +705,6 @@ jQuery(
 				var browser_msie	= "\v"=="v";
 				var browser_msie_frame;
 				
-		        var element = $(this);
-		        var elemid = element.attr("id");
 		        init();
 
 		        return this;
