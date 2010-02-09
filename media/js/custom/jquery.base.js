@@ -222,7 +222,10 @@ $(document).ready(function() {
 			
 			// clear form
 			$('#id_text').val('').blur();
-			$('#id_tags_field').find('ul.holder li.bit-box a.closebutton').click();
+			$('#id_tags').fcbkcomplete('clear');
+			
+			//done, focus
+			$('#id_text').focus();
 			
 		}
 	});
