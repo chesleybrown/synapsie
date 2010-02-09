@@ -8,6 +8,14 @@ $(document).ready(function() {
 		return new Date(parts[0],parts[1]-1,parts[2],parts[3],parts[4],parts[5]);
 	}
 	
+	function nl2br(str) {
+		var regX = /\n/gi ;
+		
+		s = new String(str);
+		s = s.replace(regX, "<br /> \n");
+		return s;
+	}
+	
 	/*
 	 * Submit Buttons (Solves issue with clicking outside the input but within the visual button)
 	 */
@@ -164,7 +172,7 @@ $(document).ready(function() {
 			
 			// populate with new record info
 			new_record.find('div.security div.icon').addClass(security);
-			new_record.find('div.header div.text').text(data['text']);
+			new_record.find('div.header div.text').html(nl2br(data['text']));
 			new_record.find('div.header div.time').text(curr_hour + ':' + curr_min + am_pm);
 			new_record.find('div.date span.month').text(short_months[created.getMonth()]);
 			new_record.find('div.date span.day').text(curr_day);
