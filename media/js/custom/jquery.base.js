@@ -97,12 +97,15 @@ $(document).ready(function() {
 	
 	
 	/*
-	 * Enable ajax for record form
+	 * Enable ajax for record form (make into plugin!)
 	 */
 	$('#record_create_form').ajaxForm({
 		success: function(data) {
 			
-			var new_record = $('#record_blank').clone(true);
+			var base_tag_url = '/records/tag/';
+			var new_record = $('#records_blank ul.records li.record').clone(false);
+			var new_record_tags = $('#tags_blank ul.tags').clone(false);
+			var new_record_tags_tag = $('#tags_blank ul.tags li.tag').clone(false);
 			var user_record_list = $('#user_record_list');
 			var created = mysqlTimeStampToDate(data['created']);
 			var security = '';
@@ -141,6 +144,13 @@ $(document).ready(function() {
 				curr_min = '0' + curr_min;
 			}
 			
+			// add leading zero to day if needed
+			var curr_day = created.getDate();
+			
+			if (curr_day < 10) {
+				curr_day = '0' + curr_day;
+			}
+			
 			//determine security
 			if (data['personal'] == 1) {
 				var security = 'icon_personal';
@@ -157,25 +167,34 @@ $(document).ready(function() {
 			new_record.find('div.header div.text').text(data['text']);
 			new_record.find('div.header div.time').text(curr_hour + ':' + curr_min + am_pm);
 			new_record.find('div.date span.month').text(short_months[created.getMonth()]);
-			new_record.find('div.date span.day').text(created.getDate());
+			new_record.find('div.date span.day').text(curr_day);
 			new_record.find('div.date span.year').text(created.getFullYear());
 			new_record.find('div.header div.menu a.use_record_delete').attr('href', function(index, value) {
 				return value + "/" + data['id'];
 			});
 			
-			// tags
-			var new_record_tags = $('<ul/>');
-			new_record_tags.addClass('tags');
-			var new_record_tags_tag = $('<li/>');
-			new_record_tags_tag.addClass('tag');
+			// update menu items
+			new_record.find('div.menu ul.menu_items li.menu_item').each(function(e) {
+				$(this).find('a').attr('href', function(index, attr) {
+					return attr.replace(/\/0/, '/' + data['id']);
+				});
+			});
+			setupRecordMenuItems(new_record);
 			
+			// tags
+			new_record_tags.html('');
 			for (var tag in data['tags']) {
 				var li_tag = new_record_tags_tag.clone();
-				li_tag.text(data['tags'][tag]['name'] + ' x');
+				li_tag.find('a.tag_text')
+					.text(data['tags'][tag]['name'])
+					.attr('href', base_tag_url + data['tags'][tag]['name']);
 				new_record_tags.append(li_tag);
 			}
 			
 			new_record.find('div.footer').append(new_record_tags);
+			
+			// update sidebar with new tags
+			// TO DO
 			
 			// add new record to DOM
 			user_record_list.prepend(new_record);
@@ -188,8 +207,22 @@ $(document).ready(function() {
 				}, 'slow', 'linear');
 			});
 			
+			// enable menus for this new record
+			$(new_record).recordMenus({
+				show_effect: function(e) {
+					e.parent().find('.security').addClass('hover');
+					e.addClass('hover');
+				},
+				hide_effect: function(e) {
+					e.parent().find('.security').removeClass('hover');
+					e.removeClass('hover');
+				}
+			});
+			
+			
 			// clear form
-			//$('#id_text').val('');
+			$('#id_text').val('').blur();
+			$('#id_tags_field').find('ul.holder li.bit-box a.closebutton').click();
 			
 		}
 	});
@@ -199,37 +232,40 @@ $(document).ready(function() {
 	
 	
 	/*
-	 * Handle delete action
+	 * Handle delete action (make into plugin!)
 	 */
-	$('a.use_record_delete').bind('click', function(e) {
-		var element = $(this);
-		var container = element.parents('.record');
-		
-		container.animate({
-			opacity: 0.75
-		}, 'fast');
-		
-		$.ajax({
-			type: 'delete',
-			url: element.attr('href'),
-			success: function() {
-				container.animate({
-					opacity: 0
-				}, 'slow', 'linear', function() {
-					container.slideUp('slow', function() {
-						container.remove();
+	function setupRecordMenuItems(container) {
+		$(container).find('a.use_record_delete').bind('click', function(e) {
+			var element = $(this);
+			var container = element.parents('.record');
+			
+			container.animate({
+				opacity: 0.75
+			}, 'fast');
+			
+			$.ajax({
+				type: 'delete',
+				url: element.attr('href'),
+				success: function() {
+					container.animate({
+						opacity: 0
+					}, 'slow', 'linear', function() {
+						container.slideUp('slow', function() {
+							container.remove();
+						});
 					});
-				});
-			},
-			error: function() {
-				container.animate({
-					opacity: 1
-				}, 'fast');
-			}
+				},
+				error: function() {
+					container.animate({
+						opacity: 1
+					}, 'fast');
+				}
+			});
+			
+			e.preventDefault();
 		});
-		
-		e.preventDefault();
-	});
+	}
+	setupRecordMenuItems('body');
 	/*
 	 * END Handle delete action
 	 */
@@ -268,7 +304,7 @@ $(document).ready(function() {
 	/*
 	 * Setup Record Menus (dropdowns)
 	 */
-	$('ul.records').recordMenus({
+	$('ul.records li.record').recordMenus({
 		show_effect: function(e) {
 			e.parent().find('.security').addClass('hover');
 			e.addClass('hover');

@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block head_title %}{% if object %}{% trans "Edit Record" %}{% else %}{% trans "Records" %}{% endif %}{% endblock %}
+{% block head_title %}{% trans "Records" %}{% endblock %}
 
 {% block body %}
 	
@@ -43,41 +43,49 @@
 	</form>
 	
 	<div class="hidden">
-		<ul class="records">
-			<li id="record_blank" class="record hidden">
-				<div class="date">
-					<span class="month"></span>
-					<span class="day"></span>
-					<span class="year"></span>
-				</div>
-				<div class="security">
-					<div class="icon icon_personal"></div>
-				</div>
-				<div class="header">
-					<div class="time">
-						<span></span>
+		<div id="records_blank">
+			<ul class="records">
+				<li class="record hidden">
+					<div class="date">
+						<span class="month"></span>
+						<span class="day"></span>
+						<span class="year"></span>
 					</div>
-					<div class="text"></div>
-				</div>
-				<div class="menu">
-					<ul class="menu_headers">
-						<li class="menu_header"></li>
-					</ul>
-					<ul class="menu_items">
-						<li class="menu_item">
-							<a href="{% url record_show record_id=0 %}"><span class="icon icon_record_view"></span>View</a>
-						</li>
-						<li class="menu_item">
-							<a href="{% url record_edit record_id=0 %}"><span class="icon icon_record_edit"></span>Edit</a>
-						</li>
-						<li class="menu_item">
-							<a class="use_record_delete" href="{% url api-record record_id=0,emitter_format=".json" %}"><span class="icon icon_record_delete"></span>Delete</a>
-						</li>
-					</ul>
-				</div>
-				<div class="footer"></div>
-			</li>
-		</ul>
+					<div class="security">
+						<div class="icon icon_personal"></div>
+					</div>
+					<div class="header">
+						<div class="time">
+							<span></span>
+						</div>
+						<div class="text"></div>
+					</div>
+					<div class="menu">
+						<ul class="menu_headers">
+							<li class="menu_header"></li>
+						</ul>
+						<ul class="menu_items">
+							<li class="menu_item">
+								<a href="{% url record_show record_id=0 %}"><span class="icon icon_record_view"></span>View</a>
+							</li>
+							<li class="menu_item">
+								<a href="{% url record_edit record_id=0 %}"><span class="icon icon_record_edit"></span>Edit</a>
+							</li>
+							<li class="menu_item">
+								<a class="use_record_delete" href="{% url api-record record_id=0,emitter_format=".json" %}"><span class="icon icon_record_delete"></span>Delete</a>
+							</li>
+						</ul>
+					</div>
+					<div class="footer"></div>
+				</li>
+			</ul>
+		</div>
+		
+		<div id="tags_blank">
+			<ul class="tags">
+				<li class="tag"><a class="tag_text" href=""></a> <a href="#" class="closebutton"></a></li>
+			</ul>
+		</div>
 	</div>
 	
 	<ul id="user_record_list" class="records">
@@ -120,7 +128,7 @@
 				<div class="footer">
 					<ul class="tags">
 						{% for tag in record.tags %}
-							<li class="tag">{{ tag.name }} <a href="#" class="closebutton"></a></li>
+							<li class="tag"><a class="tag_text" href="{% url record_index tags=tag.name %}">{{ tag.name }}</a> <a href="#" class="closebutton"></a></li>
 						{% endfor %}
 					</ul>
 				</div>
