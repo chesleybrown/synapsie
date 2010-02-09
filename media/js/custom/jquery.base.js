@@ -9,7 +9,8 @@ $(document).ready(function() {
 	}
 	
 	function nl2br(str) {
-		var regX = /\n/gi ;
+		var regX = /\n/g ;
+		var s = '';
 		
 		s = new String(str);
 		s = s.replace(regX, "<br /> \n");
