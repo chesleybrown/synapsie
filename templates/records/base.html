@@ -4,7 +4,7 @@
 
 {% block sidebar %}
 	<ul class="sidebar_tabs">
-		<li><a href="#sidebar_tab_used">Used</a></li>
+		<li class="active"><a href="#sidebar_tab_used">Used</a></li>
 		<li><a href="#sidebar_tab_popular">Popular</a></li>
 	</ul>
 	
@@ -16,7 +16,7 @@
 				{% endfor %}
 			</ul>
 		</div>
-		<div id="sidebar_tab_popular" class="sidebar_tab_content">
+		<div id="sidebar_tab_popular" class="sidebar_tab_content hidden">
 			<dl class="tags_chart">
 				{% for tag in popular_tags %}
 					<dt><ul class="tags"><li class="tag"><a href="{% url record_index tags=tag.name %}">{{ tag.name }}</a> <a href="{% url record_index %}" class="closebutton"></a></li></ul></dt>
