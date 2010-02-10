@@ -8,7 +8,7 @@
 	
 	<div class="clear"></div>
 	
-	<form id="record_create_form" class="record_form" action="{% url api-record emitter_format=".json" %}" method="post" enctype="multipart/form-data">
+	<form id="record_create_form" class="record_form" action="{% url api-record emitter_format=".json" %}" method="post" enctype="multipart/form-data" autocomplete="off">
 		<fieldset>
 			<div id="id_text_field" class="field">
 				{{ formset.text.label_tag }}
@@ -76,6 +76,9 @@
 							</li>
 						</ul>
 					</div>
+					<div class="add_tag">
+						<div class="icon icon_tag_add use_add_tag"></div>
+					</div>
 					<div class="footer"></div>
 				</li>
 			</ul>
@@ -124,6 +127,9 @@
 							<a class="use_record_delete" href="{% url api-record record_id=record.id,emitter_format=".json" %}"><span class="icon icon_record_delete"></span>Delete</a>
 						</li>
 					</ul>
+				</div>
+				<div class="add_tag">
+					<div class="icon icon_tag_add use_add_tag"></div>
 				</div>
 				<div class="footer">
 					<ul class="tags">

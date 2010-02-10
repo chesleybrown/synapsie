@@ -48,3 +48,7 @@ input.icon {
 .icon_record_delete {
 	background-image: url(/site_media/media/img/icons/fugue/cross-button.png);
 }
+
+.icon_tag_add {
+	background-image: url(/site_media/media/img/icons/fugue/plus-small.png);
+}
