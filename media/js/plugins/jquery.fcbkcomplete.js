@@ -1,5 +1,5 @@
 /*
- FCBKcomplete 2.6.2c
+ FCBKcomplete 2.6.2d
  - Jquery version required: 1.2.x, 1.3.x
  
  Changelog:
@@ -44,6 +44,9 @@
  - 2.6.2c
  		added use of .attr instead of get(0).setAttribute which didn't seem to work after a form submit
  		added use of .filter() with function instead of a selector for finding option.val that already exists
+ 		
+ - 2.6.2d
+ 		using + 2 for the size instead of + 1 because text was getting cut off in Safari
  */
 
 /* Coded by: emposha <admin@emposha.com> */
@@ -271,19 +274,19 @@ jQuery(
 	                
 					input.keypress(
 	                    function(event)
-	                    {							
+	                    {
 	                        if (event.keyCode == 13)
 							{
 							    return false;
 							}
-							//auto expand input							
-							input.attr("size",input.val().length + 1);							
+							//auto expand input
+							input.attr("size",input.val().length + 2);
 	                    }
 	                );
 					
 					input.keydown(
 	                    function(event)
-	                    {							
+	                    {
 							//prevent to enter some bad chars when input is empty
 							if(event.keyCode == 191)
 							{								
