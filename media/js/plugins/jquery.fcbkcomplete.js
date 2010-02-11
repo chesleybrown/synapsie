@@ -1,5 +1,5 @@
 /*
- FCBKcomplete 2.6.2b
+ FCBKcomplete 2.6.2c
  - Jquery version required: 1.2.x, 1.3.x
  
  Changelog:
@@ -40,6 +40,10 @@
  
  - 2.6.2b
  		add 'clear' option
+ 		
+ - 2.6.2c
+ 		added use of .attr instead of get(0).setAttribute which didn't seem to work after a form submit
+ 		added use of .filter() with function instead of a selector for finding option.val that already exists
  */
 
 /* Coded by: emposha <admin@emposha.com> */
@@ -167,20 +171,25 @@ jQuery(
 	                {						
 	                    $("#"+elemid + "_annoninput").remove();
 						var _item;
-	                    addInput(1);                        
-	                    if (element.children("option[value=" + value + "]").length)
+	                    addInput(1);
+	                    _item = element.children("option").filter(function(index) {
+							return $(this).val() == value;
+						});
+						
+	                    if (_item.length)
 	                    {   
-							_item = element.children("option[value=" + value + "]");            
-	                        _item.get(0).setAttribute("selected", "selected");
-							if (!_item.hasClass("selected")) 
+							
+	                        _item.attr("selected", "selected");
+	                        
+							if (!_item.hasClass("selected"))
 							{
 								_item.addClass("selected");
 							}
 	                    }
 	                    else
 	                    {
-	                        var _item = $(document.createElement("option"));
-	                        _item.attr("value", value).get(0).setAttribute("selected", "selected");
+	                        _item = $(document.createElement("option"));
+	                        _item.attr("value", value).attr("selected", "selected");
 							_item.attr("value", value).addClass("selected");
 	                        _item.text(title);              
 	                        element.append(_item);
@@ -193,7 +202,8 @@ jQuery(
 						{
 							funCall(options.onselect,_item);
 						}	
-	                }					     
+	                }
+	                
 	                holder.children("li.bit-box.deleted").removeClass("deleted");
 	                feed.hide();
 					browser_msie?browser_msie_frame.hide():'';
@@ -202,7 +212,7 @@ jQuery(
 				function removeItem(item)
 				{
 					element.children("option[value=" + item.attr("rel") + "]").removeAttr("selected");
-					element.children("option[value=" + item.attr("rel") + "]").removeClass("selected");
+					element.children("option[value=" + item.attr("rel") + "]").removeAttr('class');
 					
 					if (typeof(options.onremove) == 'function')
 					{
