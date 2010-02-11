@@ -15,6 +15,7 @@ urlpatterns = patterns('',
 	
 	# API
 	(r'^api/records', include('apps.records.api.urls')),
+	(r'^api/tags', include('apps.tags.api.urls')),
 	
 	# Normal
 	(r'^accounts/', include('apps.accounts.urls')),

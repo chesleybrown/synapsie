@@ -111,7 +111,6 @@ $(document).ready(function() {
 	$('#record_create_form').ajaxForm({
 		success: function(data) {
 			
-			var base_tag_url = '/records/tag/';
 			var new_record = $('#records_blank ul.records li.record').clone(false);
 			var new_record_tags = $('#tags_blank ul.tags').clone(false);
 			var new_record_tags_tag = $('#tags_blank ul.tags li.tag').clone(false);
@@ -194,11 +193,21 @@ $(document).ready(function() {
 			new_record_tags.html('');
 			for (var tag in data['tags']) {
 				var li_tag = new_record_tags_tag.clone();
+				
+				//tag text
 				li_tag.find('a.tag_text')
 					.text(data['tags'][tag]['name'])
-					.attr('href', base_tag_url + data['tags'][tag]['name']);
+					.attr('href', function(index, attr) {
+						return attr + 'tags/' + data['tags'][tag]['name']
+					});
+				
+				//tag delete
+				li_tag.find('a.closebutton').attr('href', function(index, attr) {
+					return attr.replace(/\/(0)\/(0)/, '/' + data['tags'][tag]['name'] + '/' + data['id']);
+				});
 				new_record_tags.append(li_tag);
 			}
+			setupTags(new_record_tags);
 			
 			new_record.find('div.footer').append(new_record_tags);
 			
@@ -244,7 +253,7 @@ $(document).ready(function() {
 	
 	
 	/*
-	 * Handle delete action (make into plugin!)
+	 * Handle Record delete action (make into plugin!)
 	 */
 	function setupRecordMenuItems(container) {
 		$(container).find('a.use_record_delete').bind('click', function(e) {
@@ -252,7 +261,7 @@ $(document).ready(function() {
 			var container = element.parents('.record');
 			
 			container.animate({
-				opacity: 0.75
+				opacity: 0.5
 			}, 'fast');
 			
 			$.ajax({
@@ -279,7 +288,82 @@ $(document).ready(function() {
 	}
 	setupRecordMenuItems('body');
 	/*
-	 * END Handle delete action
+	 * END Handle Record delete action
+	 */
+	
+	
+	/*
+	 * Handle Tag delete action (make into plugin!)
+	 */
+	function setupTags(container) {
+		//single tag delete
+		$(container).find('a.use_tag_delete').bind('click', function(e) {
+			var element = $(this);
+			var container = element.parents('li.tag');
+			
+			container.animate({
+				opacity: 0.5
+			}, 'fast');
+			
+			$.ajax({
+				type: 'delete',
+				url: element.attr('href'),
+				success: function() {
+					container.animate({
+						opacity: 0
+					}, 'slow', 'linear', function() {
+						$(this).remove();
+					});
+				},
+				error: function() {
+					container.animate({
+						opacity: 1
+					}, 'fast');
+				}
+			});
+			
+			e.preventDefault();
+		});
+		
+		//all tag delete
+		$(container).find('a.use_tag_all_delete').bind('click', function(e) {
+			var element = $(this);
+			var container = element.parents('li.tag');
+			var tag_name = container.find('.tag_text').text();
+			var tags = false;
+			
+			//find all other tags on the page with this name
+			tags = $('ul.tags li.tag').filter(function() {
+				return $(this).find(".tag_text").text() == tag_name;
+			});
+			
+			tags.animate({
+				opacity: 0.5
+			}, 'fast');
+			
+			$.ajax({
+				type: 'delete',
+				url: element.attr('href'),
+				success: function() {
+					tags.animate({
+						opacity: 0
+					}, 'slow', 'linear', function() {
+						$(this).remove();
+					});
+				},
+				error: function() {
+					tags.animate({
+						opacity: 1
+					}, 'fast');
+				}
+			});
+			
+			e.preventDefault();
+		});
+	}
+	setupTags('body');
+	/*
+	 * END Handle Tag delete action
 	 */
 	
 	
