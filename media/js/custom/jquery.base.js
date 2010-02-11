@@ -240,7 +240,10 @@ $(document).ready(function() {
 			
 			
 			// clear form
-			$('#id_text').val('').blur();
+			$('#id_text')
+				.val('')
+				.removeAttr('style')
+				.blur();
 			$('#id_tags').fcbkcomplete('clear');
 			
 			//done, focus
