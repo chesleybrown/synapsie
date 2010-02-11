@@ -51,6 +51,7 @@ $(document).ready(function() {
 			setupInlineLabels(item);
 		}
 	});
+	$("#id_tags_temp").remove();
 	/*
 	 * END Tag Autocompleter
 	 */
