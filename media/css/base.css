@@ -252,7 +252,7 @@ ul.records li.record .add_tag .icon {
 }
 
 ul.records li.record .footer {
-	min-height: 28px;
+	min-height: 30px;
 	margin-left: 50px;
 	overflow: auto;
 }
