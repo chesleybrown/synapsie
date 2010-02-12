@@ -41,10 +41,18 @@ class TagHandler(BaseHandler):
 		
 		# init
 		identity = request.user
+		tag = None
 		records = None
 		tagged_item_manager = ModelTaggedItemManager()
 		tagged_item_ids = []
 		record_type = ContentType.objects.get_for_model(Record)
+		
+		# get id of tag
+		try:
+			tag = Tag.objects.get(name=tag_name)
+			
+		except Tag.DoesNotExist:
+			raise Http404
 		
 		# get tagged records (if no record_id provided)
 		if (record_id):
@@ -54,7 +62,7 @@ class TagHandler(BaseHandler):
 			except Record.DoesNotExist:
 				raise Http404
 			
-			tagged_items = TaggedItem.objects.all().filter(object_id=tagged_record.id, content_type=record_type)
+			tagged_items = TaggedItem.objects.all().filter(object_id=tagged_record.id, tag=tag, content_type=record_type)
 			
 		# doing a global tag delete for user
 		else:
@@ -64,8 +72,8 @@ class TagHandler(BaseHandler):
 			for tagged_record in tagged_records:
 				tagged_item_ids.append(tagged_record.id)
 			
-			tagged_items = TaggedItem.objects.all().filter(object_id__in=tagged_item_ids, content_type=record_type)
-		
+			tagged_items = TaggedItem.objects.all().filter(object_id__in=tagged_item_ids, tag=tag, content_type=record_type)
+			
 		# delete it/them
 		tagged_items.delete()
 		
