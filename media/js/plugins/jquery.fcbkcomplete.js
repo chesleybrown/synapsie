@@ -1,5 +1,5 @@
 /*
- FCBKcomplete 2.6.2d
+ FCBKcomplete 2.6.2e
  - Jquery version required: 1.2.x, 1.3.x
  
  Changelog:
@@ -47,6 +47,9 @@
  		
  - 2.6.2d
  		using + 2 for the size instead of + 1 because text was getting cut off in Safari
+ 	
+ - 2.6.2e
+ 		added option to disable the default message
  */
 
 /* Coded by: emposha <admin@emposha.com> */
@@ -95,7 +98,10 @@ jQuery(
 	               
 	               complete = $(document.createElement("div"));
 	               complete.addClass("facebook-auto");
-	               complete.append('<div class="default">'+ options.complete_text +"</div>");
+	               
+	               if (options.complete_text) {
+		               complete.append('<div class="default">'+ options.complete_text +"</div>");
+		           }
 	               
 				   if (browser_msie)
 	               {

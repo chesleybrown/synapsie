@@ -38,7 +38,7 @@ $(document).ready(function() {
 	 */
 	$("#id_tags").fcbkcomplete({
 		cache: true,
-		complete_text: 'Start typing to see your available tags...',
+		complete_text: false,
 		filter_case: false,
 		filter_hide: true,
 		firstselected: true,
