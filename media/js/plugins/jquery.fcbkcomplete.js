@@ -540,8 +540,7 @@ jQuery(
 							{
 								holder.children("li.bit-box.deleted").removeClass("deleted");
 							}
-							console.log(event.keyCode + ' ' +options.key_codes);
-							console.log(in_array(event.keyCode, options.key_codes));
+							
 	                        if (in_array(event.keyCode, options.key_codes) && checkFocusOn()) 
 	                        {
 	                            var option = focuson;
