@@ -1,5 +1,5 @@
 /*
- FCBKcomplete 2.6.2e
+ FCBKcomplete 2.6.2f
  - Jquery version required: 1.2.x, 1.3.x
  
  Changelog:
@@ -50,6 +50,9 @@
  	
  - 2.6.2e
  		added option to disable the default message
+ 	
+ - 2.6.2f
+ 		added option to provide keys that would trigger an addItem (instead of just enter/return)
  */
 
 /* Coded by: emposha <admin@emposha.com> */
@@ -537,8 +540,9 @@ jQuery(
 							{
 								holder.children("li.bit-box.deleted").removeClass("deleted");
 							}
-							
-	                        if (event.keyCode == 13 && checkFocusOn()) 
+							console.log(event.keyCode + ' ' +options.key_codes);
+							console.log(in_array(event.keyCode, options.key_codes));
+	                        if (in_array(event.keyCode, options.key_codes) && checkFocusOn()) 
 	                        {
 	                            var option = focuson;
 	                            addItem(option.text(), option.attr("rel"));
@@ -548,7 +552,7 @@ jQuery(
 								return false;
 	                        }
 							
-							if (event.keyCode == 13 && !checkFocusOn()) 
+							if (in_array(event.keyCode, options.key_codes) && !checkFocusOn()) 
 	                        {
 								if (options.newel) 
 								{
@@ -666,6 +670,17 @@ jQuery(
                     return string;
                 }
                 
+                function in_array(needle, stack){
+					var a=false;
+					for(var i=0;i<stack.length;i++){
+						if(needle == stack[i]){
+							a=true;
+							break;
+						}
+					}
+					return a;
+				}
+                
                 function clear()
                 {
 					var holder = element.data('fcbkcompleteHolder');
@@ -696,18 +711,19 @@ jQuery(
 				}
 				
 		        options = $.extend({
-				        json_url: null,
-				        cache: false,
-				        height: "10",
-				        newel: false,
-						firstselected: false,
-				        filter_case: false,
-				        filter_hide: false,
-				        complete_text: "Start to type...",
-						maxshownitems:  30,
-						onselect: "",
-						onremove: ""
-			        }, opt);
+					key_codes: [13],
+					json_url: null,
+					cache: false,
+					height: "10",
+					newel: false,
+					firstselected: false,
+					filter_case: false,
+					filter_hide: false,
+					complete_text: "Start to type...",
+					maxshownitems:  30,
+					onselect: "",
+					onremove: ""
+				}, opt);
 			        
 			    element.data('fcbkcompleteOptions', options);
 	        	

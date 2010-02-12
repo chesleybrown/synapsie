@@ -37,6 +37,12 @@ $(document).ready(function() {
 	 * Tag Autocompleter
 	 */
 	$("#id_tags").fcbkcomplete({
+		key_codes: [
+			0, //tab?
+			9, //tab
+			13, //enter
+			188 //comma
+		],
 		cache: true,
 		complete_text: false,
 		filter_case: false,
