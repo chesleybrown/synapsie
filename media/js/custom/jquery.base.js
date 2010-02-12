@@ -34,6 +34,28 @@ $(document).ready(function() {
 	
 	
 	/*
+	 * Time Since (timeago)
+	 */
+	function setupTimeSince() {
+		$('ul.records li.record .use_time_since').each(function(index, element) {
+			var date = $(this).prevAll('.datetime').text();
+			$(this).text(jQuery.timeago(date));
+			
+			if ($(this).css('opacity') == 0) {
+				$(this).animate({
+					opacity: 1
+				}, 'slow');
+			}
+		});
+	}
+	setupTimeSince();
+	setInterval(setupTimeSince, 60000);
+	/*
+	 * END Time Since (timeago)
+	 */
+	
+	
+	/*
 	 * Tag Autocompleter
 	 */
 	$("#id_tags").fcbkcomplete({
@@ -180,7 +202,9 @@ $(document).ready(function() {
 			// populate with new record info
 			new_record.find('div.security div.icon').addClass(security);
 			new_record.find('div.header div.text').html(nl2br(data['text']));
+			new_record.find('div.header div.datetime').text(data['created']);
 			new_record.find('div.header div.time').text(curr_hour + ':' + curr_min + am_pm);
+			new_record.find('div.header div.time_since').text(jQuery.timeago(created));
 			new_record.find('div.date span.month').text(short_months[created.getMonth()]);
 			new_record.find('div.date span.day').text(curr_day);
 			new_record.find('div.date span.year').text(created.getFullYear());

@@ -147,12 +147,21 @@ ul.records li.record .header {
 	padding: 5px 5px;
 	border-bottom: 1px solid #CCCCCC;
 }
+ul.records li.record .header .datetime {
+	display: none;
+}
 ul.records li.record .header .time {
 	font-size: 11px;
 	float: left;
 	color: #666;
 	width: 55px;
 	margin-top: 2px;
+}
+ul.records li.record .header .time_since {
+	opacity: 0;
+	font-size: 11px;
+	color: #666;
+	margin: 2px 56px 0 60px;
 }
 ul.records li.record .header .text {
 	margin: 0 56px 0 60px;

@@ -57,9 +57,9 @@
 						<div class="icon icon_personal"></div>
 					</div>
 					<div class="header">
-						<div class="time">
-							<span></span>
-						</div>
+						<div class="datetime"></div>
+						<div class="time"></div>
+						<div class="time_since use_time_since"></div>
 						<div class="text"></div>
 					</div>
 					<div class="menu">
@@ -109,10 +109,10 @@
 					{% endif %}
 				</div>
 				<div class="header">
-					<div class="time">
-						<span>{{ record.created|date:"g:iA" }}</span>
-					</div>
-					<div class="text">{{ record.text|linebreaks }}</div>
+					<div class="datetime">{{ record.created }}</div>
+					<div class="time">{{ record.created|date:"g:iA" }}</div>
+					<div class="time_since use_time_since">{{ record.created|timesince }} ago</div>
+					<div class="text">{{ record.text|linebreaksbr }}</div>
 				</div>
 				<div class="menu">
 					<ul class="menu_headers">
