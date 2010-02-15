@@ -267,6 +267,28 @@ ul.records li.record .footer {
 }
 
 
+/* Records More */
+.records_more {
+	background-color: #E6E6E6;
+	border: 1px solid #CCCCCC;
+	margin-left: 10px;
+	margin-bottom: 5px;
+	padding: 10px;
+	overflow: auto;
+	text-align: center;
+}
+.records_more .action {
+	float: right;
+}
+.records_more .loading {
+	display: none;
+	width: 32px;
+	height: 32px;
+	background: url(/site_media/media/img/layout/records/loading.gif);
+	margin: 0 auto;
+}
+
+
 /* Tags */
 ul.tags {
 	list-style: none;

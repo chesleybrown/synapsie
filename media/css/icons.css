@@ -29,9 +29,6 @@ input.icon {
 	background-image: url(/site_media/media/img/icons/fugue/hand-share.png);
 }
 
-.icon_post {
-	background-image: url(/site_media/media/img/icons/fugue/pin.png);
-}
 .icon_login {
 	background-image: url(/site_media/media/img/icons/fugue/key.png);
 }
@@ -39,6 +36,9 @@ input.icon {
 	background-image: url(/site_media/media/img/icons/fugue/pencil.png);
 }
 
+.icon_record_post {
+	background-image: url(/site_media/media/img/icons/fugue/pin.png);
+}
 .icon_record_view {
 	background-image: url(/site_media/media/img/icons/fugue/eye.png);
 }
@@ -47,6 +47,9 @@ input.icon {
 }
 .icon_record_delete {
 	background-image: url(/site_media/media/img/icons/fugue/cross-button.png);
+}
+.icon_record_more {
+	background-image: url(/site_media/media/img/icons/fugue/_overlay/pin--plus.png);
 }
 
 .icon_tag_add {

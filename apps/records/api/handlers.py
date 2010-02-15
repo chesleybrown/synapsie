@@ -1,14 +1,16 @@
 import datetime
 
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.decorators import login_required
 
 from piston.handler import AnonymousBaseHandler, BaseHandler
 from piston.utils import rc, validate
 
+from apps.records.messages import RecordMessages
 from apps.records.models import Record
 from apps.records.forms import RecordForm
 from tagging.models import Tag
+import tagging.utils
 
 class AnonymousRecordHandler(AnonymousBaseHandler):
 	model = Record
@@ -20,26 +22,81 @@ class RecordHandler(BaseHandler):
 	allowed_methods = ('GET', 'PUT', 'POST', 'DELETE')
 	model = Record
 	
-	def read(self, request, record_id=None):
+	def read(self, request, record_id=None, tags=False, page=1):
 		
 		#init
 		identity = request.user
+		messages = RecordMessages()
+		message = False
+		records = False
+		records_paginator = False
+		results_per_page = 25
+		clean_records = list()
 		
 		if record_id is not None:
-			record = Record.objects.get(pk=record_id)
 			
-			# check if record was found
-			if record is None:
-				return False
-			
-			# test permission to view
-			if not record.can_view(identity):
+			try:
+				record = Record.objects.get(pk=record_id)
+				
+				# check if record was found
+				if record is None:
+					return False
+				
+				# test permission to view
+				if not record.can_view(identity):
+					return False
+				
+			except Record.DoesNotExist:
 				return False
 			
 			return record
 		
-		paginator = Paginator(Record.objects.all(), 25)
-		return paginator.page(int(request.GET.get('page', 1))).object_list
+		else:
+			# get user records
+			record_list = Record.objects.all().filter(user=identity).order_by('-created')
+			
+			# filter by tags if provided
+			if (tags):
+				selected_tags = parse_tag_input(tags)
+				record_list = TaggedItem.objects.get_by_model(record_list, selected_tags)
+			
+			# number of items per page
+			paginator = Paginator(record_list, results_per_page)
+			
+			# If page request is out of range, deliver last page of results.
+			try:
+				records_paginator = paginator.page(page)
+			except (EmptyPage, InvalidPage):
+				records_paginator = None
+		
+		if records_paginator:
+			for record in records_paginator.object_list:
+				clean_record = {
+					'id': record.id,
+					'user_id': record.user_id,
+					'text': record.text,
+					'personal': record.personal,
+					'created': record.created,
+					'tags': record.tags
+				}
+				clean_records.append(clean_record)
+		
+		# determine message to return based on results remaining
+		if records_paginator and len(records_paginator.object_list) < results_per_page:
+			message = messages.get('no_more')
+		else:
+			message = messages.get('more')
+		
+		# generate data
+		data = {
+			'message': message,
+			'result': {
+				'results_per_page': results_per_page,
+				'records': clean_records,
+			},
+		}
+		
+		return data
 	
 	@validate(RecordForm)
 	def create(self, request):

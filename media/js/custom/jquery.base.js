@@ -135,152 +135,171 @@ $(document).ready(function() {
 	
 	
 	/*
+	 * Build Record
+	 */
+	function buildRecord(data) {
+		
+		var new_record = $('#records_blank ul.records li.record').clone(false);
+		var new_record_tags = $('#tags_blank ul.tags').clone(false);
+		var new_record_tags_tag = $('#tags_blank ul.tags li.tag').clone(false);
+		var created = mysqlTimeStampToDate(data['created']);
+		var security = '';
+		var short_months = [
+			'Jan',
+			'Feb',
+			'Mar',
+			'Apr',
+			'Jun',
+			'Jul',
+			'Aug',
+			'Sep',
+			'Oct',
+			'Nov',
+			'Dec',
+		];
+		
+		// determine time
+		var curr_hour = created.getHours();
+		var curr_min = created.getMinutes();
+		var am_pm = '';
+			
+		if (curr_hour < 12) {
+			am_pm = 'AM';
+		}
+		else {
+			am_pm = 'PM';
+		}
+		if (curr_hour == 0) {
+			curr_hour = 12;
+		}
+		if (curr_hour > 12) {
+			curr_hour = curr_hour - 12;
+		}
+		if (curr_min < 10) {
+			curr_min = '0' + curr_min;
+		}
+		
+		// add leading zero to day if needed
+		var curr_day = created.getDate();
+		
+		if (curr_day < 10) {
+			curr_day = '0' + curr_day;
+		}
+		
+		//determine security
+		if (data['personal'] == 1) {
+			var security = 'icon_personal';
+		}
+		else {
+			var security = 'icon_shared';
+		}
+		
+		new_record.attr('id', 'record_' + data['id']);
+		new_record.css('opacity', 0);
+		
+		// populate with new record info
+		new_record.find('div.security div.icon').addClass(security);
+		new_record.find('div.header div.text').html(nl2br(data['text']));
+		new_record.find('div.header div.datetime').text(data['created']);
+		new_record.find('div.header div.time').text(curr_hour + ':' + curr_min + am_pm);
+		new_record.find('div.header div.time_since').text(jQuery.timeago(created));
+		new_record.find('div.date span.month').text(short_months[created.getMonth()]);
+		new_record.find('div.date span.day').text(curr_day);
+		new_record.find('div.date span.year').text(created.getFullYear());
+		new_record.find('div.header div.menu a.use_record_delete').attr('href', function(index, value) {
+			return value + "/" + data['id'];
+		});
+		
+		// update menu items
+		new_record.find('div.menu ul.menu_items li.menu_item').each(function(e) {
+			$(this).find('a').attr('href', function(index, attr) {
+				return attr.replace(/\/0/, '/' + data['id']);
+			});
+		});
+		setupRecordMenuItems(new_record);
+		
+		// tags
+		new_record_tags.html('');
+		for (var tag in data['tags']) {
+			var li_tag = new_record_tags_tag.clone();
+			
+			//tag text
+			li_tag.find('a.tag_text')
+				.text(data['tags'][tag]['name'])
+				.attr('href', function(index, attr) {
+					return attr + 'tags/' + data['tags'][tag]['name']
+				});
+			
+			//tag delete
+			li_tag.find('a.closebutton').attr('href', function(index, attr) {
+				return attr.replace(/\/(0)\/(0)/, '/' + data['tags'][tag]['name'] + '/' + data['id']);
+			});
+			new_record_tags.append(li_tag);
+		}
+		setupTags(new_record_tags);
+		
+		new_record.find('div.footer').append(new_record_tags);
+		
+		// update sidebar with new tags
+		// TO DO
+		
+		// enable menus for this new record
+		$(new_record).recordMenus({
+			show_effect: function(e) {
+				e.parent().find('.security').addClass('hover');
+				e.addClass('hover');
+			},
+			hide_effect: function(e) {
+				e.parent().find('.security').removeClass('hover');
+				e.removeClass('hover');
+			}
+		});
+		
+		// return record
+		return new_record;
+		
+	}
+	/*
+	 * END Build Record
+	 */
+	
+	
+	/*
 	 * Enable ajax for record form (make into plugin!)
 	 */
-	$('#record_create_form').ajaxForm({
-		success: function(data) {
-			
-			var new_record = $('#records_blank ul.records li.record').clone(false);
-			var new_record_tags = $('#tags_blank ul.tags').clone(false);
-			var new_record_tags_tag = $('#tags_blank ul.tags li.tag').clone(false);
-			var user_record_list = $('#user_record_list');
-			var created = mysqlTimeStampToDate(data['created']);
-			var security = '';
-			var short_months = [
-				'Jan',
-				'Feb',
-				'Mar',
-				'Apr',
-				'Jun',
-				'Jul',
-				'Aug',
-				'Sep',
-				'Oct',
-				'Nov',
-				'Dec',
-			];
-			
-			// determine time
-			var curr_hour = created.getHours();
-			var curr_min = created.getMinutes();
-			var am_pm = '';
+	function setupRecordForm() {
+		$('#record_create_form').ajaxForm({
+			success: function(data) {
 				
-			if (curr_hour < 12) {
-				am_pm = 'AM';
-			}
-			else {
-				am_pm = 'PM';
-			}
-			if (curr_hour == 0) {
-				curr_hour = 12;
-			}
-			if (curr_hour > 12) {
-				curr_hour = curr_hour - 12;
-			}
-			if (curr_min < 10) {
-				curr_min = '0' + curr_min;
-			}
-			
-			// add leading zero to day if needed
-			var curr_day = created.getDate();
-			
-			if (curr_day < 10) {
-				curr_day = '0' + curr_day;
-			}
-			
-			//determine security
-			if (data['personal'] == 1) {
-				var security = 'icon_personal';
-			}
-			else {
-				var security = 'icon_shared';
-			}
-			
-			new_record.attr('id', 'record_' + data['id']);
-			new_record.css('opacity', 0);
-			
-			// populate with new record info
-			new_record.find('div.security div.icon').addClass(security);
-			new_record.find('div.header div.text').html(nl2br(data['text']));
-			new_record.find('div.header div.datetime').text(data['created']);
-			new_record.find('div.header div.time').text(curr_hour + ':' + curr_min + am_pm);
-			new_record.find('div.header div.time_since').text(jQuery.timeago(created));
-			new_record.find('div.date span.month').text(short_months[created.getMonth()]);
-			new_record.find('div.date span.day').text(curr_day);
-			new_record.find('div.date span.year').text(created.getFullYear());
-			new_record.find('div.header div.menu a.use_record_delete').attr('href', function(index, value) {
-				return value + "/" + data['id'];
-			});
-			
-			// update menu items
-			new_record.find('div.menu ul.menu_items li.menu_item').each(function(e) {
-				$(this).find('a').attr('href', function(index, attr) {
-					return attr.replace(/\/0/, '/' + data['id']);
-				});
-			});
-			setupRecordMenuItems(new_record);
-			
-			// tags
-			new_record_tags.html('');
-			for (var tag in data['tags']) {
-				var li_tag = new_record_tags_tag.clone();
+				//init
+				var user_record_list = $('#user_record_list');
+				var new_record = buildRecord(data);
 				
-				//tag text
-				li_tag.find('a.tag_text')
-					.text(data['tags'][tag]['name'])
-					.attr('href', function(index, attr) {
-						return attr + 'tags/' + data['tags'][tag]['name']
-					});
+				// add new record to DOM
+				user_record_list.prepend(new_record);
 				
-				//tag delete
-				li_tag.find('a.closebutton').attr('href', function(index, attr) {
-					return attr.replace(/\/(0)\/(0)/, '/' + data['tags'][tag]['name'] + '/' + data['id']);
-				});
-				new_record_tags.append(li_tag);
-			}
-			setupTags(new_record_tags);
-			
-			new_record.find('div.footer').append(new_record_tags);
-			
-			// update sidebar with new tags
-			// TO DO
-			
-			// add new record to DOM
-			user_record_list.prepend(new_record);
-			
-			new_record.animate({
-				height: 'toggle'
-			}, 'slow', 'linear', function() {
 				new_record.animate({
-					opacity: 1
-				}, 'slow', 'linear');
-			});
-			
-			// enable menus for this new record
-			$(new_record).recordMenus({
-				show_effect: function(e) {
-					e.parent().find('.security').addClass('hover');
-					e.addClass('hover');
-				},
-				hide_effect: function(e) {
-					e.parent().find('.security').removeClass('hover');
-					e.removeClass('hover');
-				}
-			});
-			
-			
-			// clear form
-			$('#id_text')
-				.val('')
-				.removeAttr('style')
-				.blur();
-			$('#id_tags').fcbkcomplete('clear');
-			
-			//done, focus
-			$('#id_text').focus();
-			
-		}
-	});
+					height: 'toggle'
+				}, 'slow', 'linear', function() {
+					$(this).animate({
+						opacity: 1
+					}, 'slow', 'linear');
+				});
+				
+				// clear form
+				$('#id_text')
+					.val('')
+					.removeAttr('style')
+					.blur();
+				$('#id_tags').fcbkcomplete('clear');
+				
+				//done, focus
+				$('#id_text').focus();
+				
+			}
+		});
+	}
+	setupRecordForm();
 	/*
 	 * END Enable ajax for record form
 	 */
@@ -398,6 +417,77 @@ $(document).ready(function() {
 	setupTags('body');
 	/*
 	 * END Handle Tag delete action
+	 */
+	
+	
+	/*
+	 * Handle Record More
+	 */
+	function setupRecordMore(container) {
+		//single tag delete
+		$(container).find('a.use_record_more').bind('click', function(e) {
+			var element = $(this);
+			var holder = element.parent().parent();
+			var user_record_list = $('#user_record_list');
+			var loading = holder.find('.loading');
+			
+			//show loading animation
+			element.hide();
+			loading.show();
+			
+			$.ajax({
+				type: 'get',
+				url: element.attr('href'),
+				success: function(data) {
+					var message = data.message;
+					var records = data.result.records;
+					var new_record = false;
+					var page = 2;
+					
+					var matches = element.attr('href').match(/page\/(\d+)/);
+					page = parseInt(matches[1]);
+					next_page = page+1;
+					
+					for (key in records) {
+						new_record = buildRecord(records[key]);
+						user_record_list.append(new_record);
+						
+						new_record.animate({
+							height: 'toggle'
+						}, 'slow', 'linear', function() {
+							$(this).animate({
+								opacity: 1
+							}, 'slow', 'linear');
+						});
+					}
+					
+					//determine if there are anymore results to find
+					if (records.length < data.result.results_per_page) {
+						holder.html(data.message.desc);
+					}
+					else {
+						//update page number
+						element.attr('href', function(index, attr) {
+							return attr.replace(/(page\/)\d+/, '$1' + next_page);
+						});
+					}
+					
+				},
+				error: function() {
+					console.log('error');
+				},
+				complete: function() {
+					loading.hide();
+					element.show();
+				}
+			});
+			
+			e.preventDefault();
+		});
+	}
+	setupRecordMore('body');
+	/*
+	 * END Handle Record More
 	 */
 	
 	

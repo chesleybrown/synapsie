@@ -10,6 +10,7 @@ Emitter.register('.xml', XMLEmitter, 'text/xml; charset=utf-8')
 Emitter.register('.xml/', XMLEmitter, 'text/xml; charset=utf-8')
 
 urlpatterns = patterns('',
-	url(r'^(?P<emitter_format>.+)/(?P<record_id>\d+)$', record_handler, name='api-record'),
+	url(r'^(?P<emitter_format>[\.a-z]+)/(?P<record_id>\d+)$', record_handler, name='api-record'),
+	url(r'^(?P<emitter_format>[\.a-z]+)/page/(?P<page>\d+)$', record_handler, name='api-record'),
 	url(r'^(?P<emitter_format>.+)$', record_handler, name='api-record'),
 )

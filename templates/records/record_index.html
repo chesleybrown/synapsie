@@ -8,7 +8,7 @@
 	
 	<div class="clear"></div>
 	
-	<form id="record_create_form" class="record_form" action="{% url api-record emitter_format=".json" %}" method="post" enctype="multipart/form-data" autocomplete="off">
+	<form id="record_create_form" class="record_form" action="{% url api-record emitter_format='.json' %}" method="post" enctype="multipart/form-data" autocomplete="off">
 		{% csrf_token %}
 		<fieldset>
 			<div id="id_text_field" class="field">
@@ -35,7 +35,7 @@
 				<div class="input_button_wrapper">
 					<div class="input_button_start"></div>
 					<div class="input_button_body">
-						<div class="icon icon_post"></div>
+						<div class="icon icon_record_post"></div>
 						<input type="submit" id="new_record" name="submit" value="{% if object %}Apply changes{% else %}Post{% endif %}" class="input_submit" />
 					</div>
 					<div class="input_button_end"></div>
@@ -74,7 +74,7 @@
 								<a href="{% url record_edit record_id=0 %}"><span class="icon icon_record_edit"></span>Edit</a>
 							</li>
 							<li class="menu_item">
-								<a class="use_record_delete" href="{% url api-record record_id=0,emitter_format=".json" %}"><span class="icon icon_record_delete"></span>Delete</a>
+								<a class="use_record_delete" href="{% url api-record record_id=0,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>Delete</a>
 							</li>
 						</ul>
 					</div>
@@ -88,13 +88,13 @@
 		
 		<div id="tags_blank">
 			<ul class="tags">
-				<li class="tag"><a class="tag_text" href="{% url record_index %}"></a> <a href="{% url api-tag tag_name=0,record_id=0,emitter_format=".json" %}" class="closebutton use_tag_delete"></a></li>
+				<li class="tag"><a class="tag_text" href="{% url record_index %}"></a> <a href="{% url api-tag tag_name=0,record_id=0,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
 			</ul>
 		</div>
 	</div>
 	
 	<ul id="user_record_list" class="records">
-		{% for record in object_list %}
+		{% for record in records_paginator.object_list %}
 			<li id="record_{{ record.id }}" class="record">
 				<div class="date">
 					<span class="month">{{ record.created|date:"M" }}</span>
@@ -126,7 +126,7 @@
 							<a href="{% url record_edit record_id=record.id %}"><span class="icon icon_record_edit"></span>Edit</a>
 						</li>
 						<li class="menu_item">
-							<a class="use_record_delete" href="{% url api-record record_id=record.id,emitter_format=".json" %}"><span class="icon icon_record_delete"></span>Delete</a>
+							<a class="use_record_delete" href="{% url api-record record_id=record.id,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>Delete</a>
 						</li>
 					</ul>
 				</div>
@@ -136,7 +136,7 @@
 				<div class="footer">
 					<ul class="tags">
 						{% for tag in record.tags %}
-							<li class="tag"><a class="tag_text" href="{% url record_index tags=tag.name %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format=".json" %}" class="closebutton use_tag_delete"></a></li>
+							<li class="tag"><a class="tag_text" href="{% url record_index tags=tag.name %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
 						{% endfor %}
 					</ul>
 				</div>
@@ -144,12 +144,16 @@
 		{% endfor %}
 	</ul>
 	
-	<div>
-		{% if has_previous %}
-		<a href="{% url record_list %}?page={{ previous }}">&lt;-previous</a>
-		{% endif %}
-		{% if has_next %}
-		<a href="{% url record_list %}?page={{ next }}">next-&gt;</a>
-		{% endif %}
+	<div class="records_more">
+		<div class="action">
+			<a href="{% url api-record page='2',emitter_format='.json' %}" class="input_button_wrapper use_record_more" style="width: 100%;">
+				<span class="input_button_start"></span>
+				<span class="input_button_body">
+					<span class="icon icon_record_more">more</span>
+				</span>
+				<span class="input_button_end"></span>
+			</a>
+		</div>
+		<div class="loading"></div>
 	</div>
 {% endblock %}
