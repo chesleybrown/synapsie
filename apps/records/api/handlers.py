@@ -32,7 +32,7 @@ class RecordHandler(BaseHandler):
 		message = False
 		records = False
 		records_paginator = False
-		results_per_page = 5
+		results_per_page = 25
 		clean_records = list()
 		
 		if record_id is not None:
