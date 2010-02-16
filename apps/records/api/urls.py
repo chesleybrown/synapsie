@@ -12,5 +12,8 @@ Emitter.register('.xml/', XMLEmitter, 'text/xml; charset=utf-8')
 urlpatterns = patterns('',
 	url(r'^(?P<emitter_format>[\.a-z]+)/(?P<record_id>\d+)$', record_handler, name='api-record'),
 	url(r'^(?P<emitter_format>[\.a-z]+)/page/(?P<page>\d+)$', record_handler, name='api-record'),
-	url(r'^(?P<emitter_format>.+)$', record_handler, name='api-record'),
+	url(r'^(?P<emitter_format>[\.a-z]+)/public/(?P<user_id>\d+)/page/(?P<page>\d+)$', record_handler, {
+		'public': True
+	}, name='api-record_public'),
+	url(r'^(?P<emitter_format>[\.a-z]+)$', record_handler, name='api-record'),
 )

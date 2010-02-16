@@ -7,7 +7,7 @@ from apps.records.forms import RecordForm
 from tagging.models import Tag, TaggedItem
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 from django.http import HttpResponseRedirect, Http404
 from django.template import RequestContext
@@ -69,12 +69,15 @@ def index_records(request, tags=False, page=1):
 	
 	return object_list(request, records, paginate_by=10)
 
-def public_records(request, user_id=0, username=False):
+def public_records(request, user_id=0, username=None, page=1):
 	
 	# init
 	identity = request.user
 	user = identity
 	records = False
+	selected_tags = False
+	popular_tags_printable = list()
+	results_per_page = 25
 	
 	try:
 		# if a user is provided, get that user's public records instead
@@ -89,21 +92,37 @@ def public_records(request, user_id=0, username=False):
 		raise Http404
 	
 	# get user records
-	records = Record.objects.all().filter(user=user, personal=0).order_by('-created')
+	record_list = Record.objects.all().filter(user=user, personal=0).order_by('-created')
+	
+	# number of items per page
+	paginator = Paginator(record_list, results_per_page)
+	
+	# If page request is out of range, deliver last page of results.
+	try:
+		records_paginator = paginator.page(page)
+	except (EmptyPage, InvalidPage):
+		records_paginator = paginator.page(paginator.num_pages)
 	
 	# get available tags user has used
-	used_tags = Tag.objects.usage_for_model(Record, filters=dict(user=user), counts=True)
+	used_tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)
 	used_tags_printable = ", ".join(map(str, used_tags))
-	popular_tags = sorted(used_tags, key=lambda x: x.count, reverse=True)[:5]
+	popular_tags = sorted(used_tags, key=lambda x: x.count, reverse=True)
+	
+	# get popular tags ready for template
+	highest = popular_tags[0]
+	for tag in popular_tags:
+		tag.percent = (float(tag.count) / float(highest.count)) * 100
+		popular_tags_printable.append(tag)
 	
 	# render
 	return render_to_response('records/record_public.html', {
+		'viewed_user': user,
+		'selected_tags': selected_tags,
+		'used_tags_printable': used_tags_printable,
 		'used_tags': used_tags,
-		'popular_tags': popular_tags,
-		'object_list': records,
+		'popular_tags': popular_tags_printable,
+		'records_paginator': records_paginator,
 	}, context_instance=RequestContext(request))
-	
-	return object_list(request, records, paginate_by=10)
 
 @login_required
 def search_records(request, query='', tags=False, page=1):

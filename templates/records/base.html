@@ -26,3 +26,56 @@
 		</div>
 	</div>
 {% endblock sidebar %}
+
+{% block body %}
+	
+	<div class="hidden">
+		<div id="records_blank">
+			<ul class="records">
+				<li class="record hidden">
+					<div class="date">
+						<span class="month"></span>
+						<span class="day"></span>
+						<span class="year"></span>
+					</div>
+					<div class="security">
+						<div class="icon icon_personal"></div>
+					</div>
+					<div class="header">
+						<div class="datetime"></div>
+						<div class="time"></div>
+						<div class="time_since use_time_since"></div>
+						<div class="text"></div>
+					</div>
+					<div class="menu">
+						<ul class="menu_headers">
+							<li class="menu_header"></li>
+						</ul>
+						<ul class="menu_items">
+							<li class="menu_item">
+								<a href="{% url record_show record_id=0 %}"><span class="icon icon_record_view"></span>View</a>
+							</li>
+							<li class="menu_item">
+								<a href="{% url record_edit record_id=0 %}"><span class="icon icon_record_edit"></span>Edit</a>
+							</li>
+							<li class="menu_item">
+								<a class="use_record_delete" href="{% url api-record record_id=0,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>Delete</a>
+							</li>
+						</ul>
+					</div>
+					<div class="add_tag">
+						<div class="icon icon_tag_add use_add_tag"></div>
+					</div>
+					<div class="footer"></div>
+				</li>
+			</ul>
+		</div>
+		
+		<div id="tags_blank">
+			<ul class="tags">
+				<li class="tag"><a class="tag_text" href="{% url record_index %}"></a> <a href="{% url api-tag tag_name=0,record_id=0,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
+			</ul>
+		</div>
+	</div>
+	
+{% endblock %}

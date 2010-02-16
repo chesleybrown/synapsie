@@ -1,5 +1,6 @@
 import datetime
 
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.decorators import login_required
 
@@ -22,15 +23,16 @@ class RecordHandler(BaseHandler):
 	allowed_methods = ('GET', 'PUT', 'POST', 'DELETE')
 	model = Record
 	
-	def read(self, request, record_id=None, tags=False, page=1):
+	def read(self, request, record_id=None, tags=False, page=1, user_id=None, username=None, public=False):
 		
 		#init
 		identity = request.user
+		user = identity
 		messages = RecordMessages()
 		message = False
 		records = False
 		records_paginator = False
-		results_per_page = 25
+		results_per_page = 5
 		clean_records = list()
 		
 		if record_id is not None:
@@ -52,8 +54,27 @@ class RecordHandler(BaseHandler):
 			return record
 		
 		else:
+			
+			# if a user is trying to view another user's public feed
+			if user_id is not None:
+				try:
+					# if a user is provided, get that user's public records instead
+					if user_id:
+						user = User.objects.get(pk=user_id)
+					
+					# if a username is provided, get by that instead
+					elif username:
+						user = User.objects.get(username__iexact=username)
+					
+				except User.DoesNotExist:
+					raise Http404
+				
 			# get user records
-			record_list = Record.objects.all().filter(user=identity).order_by('-created')
+			record_list = Record.objects.all().filter(user=user).order_by('-created')
+			
+			# only show public if enabled (added user & identity check for safety)
+			if public or user != identity:
+				record_list = record_list.filter(personal=0)
 			
 			# filter by tags if provided
 			if (tags):
@@ -82,7 +103,8 @@ class RecordHandler(BaseHandler):
 				clean_records.append(clean_record)
 		
 		# determine message to return based on results remaining
-		if records_paginator and len(records_paginator.object_list) < results_per_page:
+		if (records_paginator is None
+			or records_paginator and len(records_paginator.object_list) < results_per_page):
 			message = messages.get('no_more')
 		else:
 			message = messages.get('more')
