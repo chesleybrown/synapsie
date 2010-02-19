@@ -184,7 +184,7 @@ ul.records li.record .menu ul.menu_headers {
 	height: 16px;
 }
 ul.records li.record .menu ul.menu_headers li.menu_header {
-	margin: 0 0 -1px 0;
+	margin: 0;
 	padding: 0;
 	float: right;
 	width: 32px;
@@ -388,7 +388,7 @@ form.record_form .actions {
 }
 form.record_form .actions_left {
 	float: left;
-	margin: 10px 0 0 5px;
+	margin: 5px 0 0 5px;
 }
 form.record_form .actions_right {
 	float: right;
@@ -399,6 +399,124 @@ form.record_form .record_security {
 	color: #fff;
 	text-shadow: 1px 1px #000;
 	cursor: pointer;
+}
+
+form.record_form .security_menu {
+	z-index: 100;
+	position: absolute;
+}
+form.record_form .security_menu ul.menu_headers .icon {
+	float: left;
+	padding: 4px 4px 4px 0;
+}
+form.record_form .security_menu.hover {
+}
+form.record_form .security_menu ul.menu_headers {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	height: 24px;
+	line-height: 24px;
+	text-shadow: 1px 1px #fff;
+	cursor: pointer;
+}
+form.record_form .security_menu ul.menu_headers .side {
+	background: url(/site_media/media/img/layout/records/dropdown_side_bg.png) no-repeat;
+	margin: 0;
+	display: block;
+	width: 32px;
+	height: 24px;
+	float: right;
+}
+form.record_form .security_menu ul.menu_headers li.menu_header {
+	background: url(/site_media/media/img/layout/records/dropdown_bg.png) no-repeat;
+	margin: 1px 0 0 0;
+	padding: 0 0 0 7px;
+	float: left;
+	width: auto;
+	height: 24px;
+}
+form.record_form .security_menu ul.menu_headers li.menu_header .menu_header_text {
+	display: block;
+	float: left;
+	padding: 0;
+}
+form.record_form .security_menu ul.menu_headers:hover li.menu_header {
+	background-position: 0 -24px
+}
+form.record_form .security_menu ul.menu_headers:hover .side {
+	background-position: 0 -24px
+}
+form.record_form .security_menu ul.menu_items {
+	display: none;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	border-color: #999;
+	overflow: hidden;
+	clear: both;
+	float: left;
+	background: #fff;
+	min-width: 180px;
+	max-width: 280px;
+	-moz-box-shadow: 0 5px 5px #aaa;
+	-webkit-box-shadow: 0 5px 5px #aaa;
+}
+form.record_form .security_menu ul.menu_items li.menu_item {
+	margin: 0;
+	padding: 3px 0;
+	cursor: pointer;
+}
+form.record_form .security_menu ul.menu_items li.menu_item .icon {
+	float: left;
+	margin: 3px 10px 0 0;
+}
+form.record_form .security_menu ul.menu_items li.menu_item {
+	color: #666;
+	text-decoration: none;
+	font-weight: bold;
+	padding: 4px 15px;
+	display: block;
+	text-shadow: 1px 1px #fff;
+	border-width: 1px 0;
+	border-style: solid;
+	border-color: transparent;
+}
+form.record_form .security_menu ul.menu_items li.menu_item .menu_item_value {
+	display: none;
+}
+form.record_form .security_menu ul.menu_items li.menu_item .menu_item_text {
+}
+form.record_form .security_menu ul.menu_items li.menu_item .menu_item_desc {
+	font-size: 11px;
+	padding-left: 26px;
+	display: block;
+	color: #999;
+}
+form.record_form .security_menu ul.menu_items li.menu_item:hover .menu_item_desc {
+	color: #ddd;
+}
+form.record_form .security_menu ul.menu_items li.menu_item:hover {
+	color: #fff;
+	text-shadow: 1px 1px #000;
+	text-decoration: none;
+	background-color: #333;
+	border-color: #000;
+}
+form.record_form .security_menu.active ul.menu_headers li.menu_header .side,
+form.record_form .security_menu.active ul.menu_headers li.menu_header .side:hover,
+form.record_form .security_menu.active ul.menu_headers li.menu_header,
+form.record_form .security_menu.active ul.menu_headers li.menu_header:hover { /*--Makes sure that the active tab does not listen to the hover properties--*/
+	background-position: 0 -48px !important;
+}
+form.record_form .security_menu.active ul.menu_headers {
+	border-bottom: 1px solid #999;
+}
+
+form.record_form .security_menu.active {
+	z-index: 200;
 }
 
 /* TextboxList sample CSS */

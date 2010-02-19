@@ -29,7 +29,30 @@
 		
 		<div class="actions">
 			<div class="actions_left">
-				<div class="icon icon_personal use_personal_flag record_security">Personal</div>
+				<!--<div class="icon icon_personal use_personal_flag record_security">Personal</div>-->
+				<div class="security_menu use_security_menu">
+					<ul class="menu_headers">
+						<li class="menu_header">
+							<div class="menu_header_icon icon icon_personal"></div>
+							<span class="menu_header_text">Personal</span>
+							<div class="side"></div>
+						</li>
+					</ul>
+					<ul class="menu_items">
+						<li class="menu_item">
+							<span class="menu_item_icon icon icon_personal"></span>
+							<span class="menu_item_text">Personal</span>
+							<span class="menu_item_desc">Keep your posts restricted and only visible to yourself.</span>
+							<span class="menu_item_value">1</span>
+						</li>
+						<li class="menu_item">
+							<span class="menu_item_icon icon icon_shared"></span>
+							<span class="menu_item_text">Shared</span>
+							<span class="menu_item_desc">Let anyone find and read your posts. Share your life with the world.</span>
+							<span class="menu_item_value">0</span>
+						</li>
+					</ul>
+				</div>
 				{{ formset.personal }}
 			</div>
 			<div class="actions_right">
@@ -66,7 +89,7 @@
 					<div class="time_since use_time_since">{{ record.created|timesince }} ago</div>
 					<div class="text">{{ record.text|linebreaksbr }}</div>
 				</div>
-				<div class="menu">
+				<div class="menu use_record_menu">
 					<ul class="menu_headers">
 						<li class="menu_header"></li>
 					</ul>

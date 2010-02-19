@@ -244,7 +244,8 @@ $(document).ready(function() {
 		// TO DO
 		
 		// enable menus for this new record
-		$(new_record).recordMenus({
+		$(new_record).find('div.use_record_menu').dropdownMenus({
+			parent_block_selector: 'li.record',
 			show_effect: function(e) {
 				e.parent().find('.security').addClass('hover');
 				e.addClass('hover');
@@ -494,37 +495,12 @@ $(document).ready(function() {
 	//enable elastic textfield for forms
 	$('form.record_form textarea').elastic();
 	
-	//handle switching Personal flag
-	$('form.record_form div.use_personal_flag').bind('click', function(e) {
-		var element = $(this);
-		
-		if (element.hasClass('icon_personal')) {
-			element.fadeOut('normal', function() {
-				element
-					.removeClass('icon_personal')
-					.addClass('icon_shared')
-					.text('Shared')
-					.fadeIn('fast');
-			});
-			element.next('input').val(0);
-		}
-		else {
-			element.fadeOut('normal', function() {
-				element
-					.removeClass('icon_shared')
-					.addClass('icon_personal')
-					.text('Personal')
-					.fadeIn('fast');
-			});
-			element.next('input').val(1);
-		}
-	});
-	
 	
 	/*
 	 * Setup Record Menus (dropdowns)
 	 */
-	$('ul.records li.record').recordMenus({
+	$('div.use_record_menu').dropdownMenus({
+		parent_block_selector: 'li.record',
 		show_effect: function(e) {
 			e.parent().find('.security').addClass('hover');
 			e.addClass('hover');
@@ -536,6 +512,43 @@ $(document).ready(function() {
 	});
 	/*
 	 * END Setup Record Menus (dropdowns)
+	 */
+	
+	
+	/*
+	 * Setup Record Form Security Menu (dropdowns)
+	 */
+	$('form.record_form div.use_security_menu').dropdownMenus({
+		show_effect: function(e) {
+			e.addClass('hover');
+		},
+		hide_effect: function(e) {
+			e.removeClass('hover');
+		}
+	});
+	
+	//this handles when a user selects an option from the security menu
+	$('form.record_form div.use_security_menu ul.menu_items li.menu_item').bind('click', function(e) {
+		
+		//init
+		var menu_header = $(this).parents('.security_menu').find('li.menu_header');
+		var menu_header_text = menu_header.find('.menu_header_text');
+		var menu_header_icon = menu_header.find('.menu_header_icon');
+		var menu_item_text = $(this).find('.menu_item_text').text();
+		var menu_item_icon = $(this).find('.menu_item_icon');
+		var menu_item_value = $(this).find('.menu_item_value').text();
+		var personal_input = $(this).parents('.security_menu').next('input[name=personal]');
+		
+		//change header
+		menu_header_text.text(menu_item_text);
+		menu_header_icon
+			.attr('class', menu_item_icon.attr('class'))
+			.removeClass('menu_item_icon')
+			.addClass('menu_header_icon');
+		personal_input.val(menu_item_value);
+	});
+	/*
+	 * END Setup Record Form Security Menu (dropdowns)
 	 */
 	
 	
