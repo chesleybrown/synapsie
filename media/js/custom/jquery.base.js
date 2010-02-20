@@ -34,6 +34,17 @@ $(document).ready(function() {
 	
 	
 	/*
+	 * Site Search
+	 */
+	$('#site_search .icon_search').bind('click', function(e) {
+		$('#site_search input').focus();
+	});
+	/*
+	 * END Site Search
+	 */
+	
+	
+	/*
 	 * Time Since (timeago)
 	 */
 	function setupTimeSince() {
@@ -92,7 +103,7 @@ $(document).ready(function() {
 		fadeOpacity: 0.5,
 		fadeDuration: 350
 	};
-	$('form .field label').inFieldLabels(in_field_labels_options);
+	$('form.use_inline_labels label').inFieldLabels(in_field_labels_options);
 	
 	function setupInlineLabels(item) {
 		var id_tags_label = $('#id_tags_field label');

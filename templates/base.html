@@ -45,15 +45,25 @@
 							<div id="logo" dir="ltr">{% block logo_link_image %}{% endblock %}</div>
 						</div>
 						<div class="grid_9">
-							<div class="grid_4 prefix_5 alpha">
+							<div class="grid_4 prefix_5 alpha omega">
 								<div id="login">{% block login %}{% endblock %}{% block locale_switcher %}{% endblock %}<div style="text-align: right;"></div></div>
 							</div>
 							
 							<div class="clear"></div>
 							
-							<div class="grid_4 prefix_2 suffix_3 omega">
-								<div id="left_tabs" >{% block left_tabs %}{% endblock %}</div>
-								<div id="right_tabs" >{% block right_tabs %}{% endblock %}</div>
+							<div class="grid_6 alpha">
+								<div id="site_tabs" >{% block right_tabs %}{% endblock %}</div>
+							</div>
+							<div class="grid_3 omega">
+								<div id="site_search">
+									<form class="use_inline_labels" action="#">
+										<div class="field">
+											<div class="icon icon_search"></div>
+											<label for="id_site_search">Search Your Life...</label>
+											<input type="text" id="id_site_search" name="site_search" value="" />
+										</div>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>

@@ -31,7 +31,7 @@ body > #site_container {
 }
 #site_header #login {
 	float: right;
-	height: 60px;
+	height: 26px;
 }
 #site_header #login .user_username {
 	color: #fff;
@@ -46,9 +46,22 @@ body > #site_container {
 	height: 60px;
 	background-image: url(/site_media/media/img/layout/header/logo.png);
 }
+#site_header #site_search .field {
+	margin: 0;
+	position: relative;
+}
+#site_header #site_search input {
+	width: 210px;
+}
+#site_header #site_search .icon_search {
+	position: absolute;
+	top: 9px;
+	right: 7px;
+	cursor: text;
+}
 
 #site_content {
-	background: url('/site_media/media/img/backgrounds/1px/w60.png');
+	background: url(/site_media/media/img/backgrounds/1px/w60.png);
 	overflow: auto;
 	padding-top: 10px;
 	padding-bottom: 30px; /* must be same height as the footer */
@@ -61,7 +74,7 @@ body > #site_container {
 	color: #fff;
 }
 #site_footer_content {
-	background: url('/site_media/media/img/backgrounds/1px/w40.png');
+	background: url(/site_media/media/img/backgrounds/1px/w40.png);
 	height: 30px;
 }
 
@@ -323,6 +336,9 @@ textarea,
 input[type='text'],
 input[type='password'] {
 	border: 1px solid #666;
+	font-size: 18px;
+	height: 20px;
+	padding: 5px 5px;
 }
 textarea:focus,
 input[type='text']:focus,
@@ -336,6 +352,14 @@ input[type='submit']::-moz-focus-inner {
 input[type='button']:focus,
 input[type='submit']:focus {
 	outline: none;
+}
+form label {
+	font-size: 18px;
+	color: #999;
+	position: absolute;
+	top: 2px;
+	left: 7px;
+	cursor: text;
 }
 
 
@@ -352,23 +376,23 @@ form .field {
 	position: relative;
 	margin: 15px 0;
 }
-form .field textarea,
-form .field input[type='text'],
-form .field input[type='password'] {
+form.record_form .field textarea,
+form.record_form .field input[type='text'],
+form.record_form .field input[type='password'] {
 	font-size: 18px;
 	height: 20px;
 	width: 660px;
 	margin: 0 13px;
 }
-form .field input[type='text'],
-form .field input[type='password'] {
+form.record_form .field input[type='text'],
+form.record_form .field input[type='password'] {
 	padding: 5px 5px;
 }
-form .field textarea {
+form.record_form .field textarea {
 	height: 45px;
 	padding: 5px 5px;
 }
-form .field label {
+form.record_form .field label {
 	font-size: 18px;
 	color: #999;
 	position: absolute;

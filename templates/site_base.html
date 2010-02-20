@@ -28,7 +28,6 @@
 		{% spaceless %}
 			<ul class="tabs">
 				<li id="tab_profile"><a href="{% url accounts_show %}">{% trans "Profile" %}</a></li>
-				<li id="tab_notices"><a href="#">{% trans "Notices" %}{% if notice_unseen_count %} ({{ notice_unseen_count }}){% endif %}</a></li>
 				<li id="tab_records"><a href="{% url record_index %}">{% trans "Records" %}</a></li>
 				<li id="tab_search"><a href="{% url record_search %}">{% trans "Search" %}</a></li>
 				<li id="tab_tags"><a href="{% url tag_list %}">{% trans "Tags" %}</a></li>

@@ -22,6 +22,10 @@ input.icon {
 	font-weight: bold;
 }
 
+.icon_search {
+	background-image: url(/site_media/media/img/icons/fugue/magnifier.png);
+}
+
 .icon_personal {
 	background-image: url(/site_media/media/img/icons/fugue/lock.png);
 }

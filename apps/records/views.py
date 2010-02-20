@@ -168,7 +168,7 @@ def search_records(request, query='', tags=False, page=1):
 		popular_tags_printable.append(tag)
 	
 	# render
-	return render_to_response('records/record_index.html', {
+	return render_to_response('records/record_search.html', {
 		'formset': formset,
 		'selected_tags': selected_tags,
 		'used_tags_printable': used_tags_printable,
