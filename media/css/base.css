@@ -293,14 +293,13 @@ ul.records li.record .footer {
 ul.tags {
 	list-style: none;
 	margin: 0;
-	overflow: auto;
 }
 ul.tags li.tag {
 	position: relative;
 	margin: 5px 10px 5px 0;
 	padding: 0 15px 0 5px;
 	font-size: 11px;
-	height: 18px;
+	min-height: 18px;
 	line-height: 18px;
 	float: left;
 	display: block;
