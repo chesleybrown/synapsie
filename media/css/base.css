@@ -477,6 +477,7 @@ form.record_form .security_menu ul.menu_items li.menu_item {
 	color: #666;
 	text-decoration: none;
 	font-weight: bold;
+	margin: 3px 0;
 	padding: 4px 15px;
 	display: block;
 	text-shadow: 1px 1px #fff;
