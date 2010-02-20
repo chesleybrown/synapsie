@@ -11,7 +11,7 @@ from apps.records.messages import RecordMessages
 from apps.records.models import Record
 from apps.records.forms import RecordForm
 from tagging.models import Tag
-import tagging.utils
+from tagging.utils import parse_tag_input
 
 class AnonymousRecordHandler(AnonymousBaseHandler):
 	model = Record

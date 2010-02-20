@@ -5,6 +5,8 @@ from apps.records.messages import RecordMessages
 from apps.records.models import Record
 from apps.records.forms import RecordForm
 from tagging.models import Tag, TaggedItem
+from tagging.utils import get_tag_list
+
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
@@ -142,7 +144,7 @@ def search_records(request, query='', tags=False, page=1):
 	
 	# filter by tags if provided
 	if (tags):
-		selected_tags = tags.split(",")
+		selected_tags = get_tag_list(tags)
 		record_list = TaggedItem.objects.get_by_model(record_list, selected_tags)
 	
 	# number of items per page
@@ -173,6 +175,7 @@ def search_records(request, query='', tags=False, page=1):
 		'used_tags': used_tags,
 		'popular_tags': popular_tags_printable,
 		'records_paginator': records_paginator,
+		'filter_tags': selected_tags,
 	}, context_instance=RequestContext(request))
 	
 	return object_list(request, records, paginate_by=10)

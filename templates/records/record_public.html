@@ -44,7 +44,7 @@
 				<div class="footer">
 					<ul class="tags">
 						{% for tag in record.tags %}
-							<li class="tag"><a class="tag_text" href="{% url record_index tags=tag.name %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
+							<li class="tag"><a class="tag_text" href="{% url record_search tags=tag.name %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
 						{% endfor %}
 					</ul>
 				</div>
