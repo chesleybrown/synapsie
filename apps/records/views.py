@@ -54,10 +54,11 @@ def index_records(request, tags=False, page=1):
 	popular_tags = sorted(used_tags, key=lambda x: x.count, reverse=True)
 	
 	# get popular tags ready for template
-	highest = popular_tags[0]
-	for tag in popular_tags:
-		tag.percent = (float(tag.count) / float(highest.count)) * 100
-		popular_tags_printable.append(tag)
+	if (popular_tags):
+		highest = popular_tags[0]
+		for tag in popular_tags:
+			tag.percent = (float(tag.count) / float(highest.count)) * 100
+			popular_tags_printable.append(tag)
 	
 	# render
 	return render_to_response('records/record_index.html', {
