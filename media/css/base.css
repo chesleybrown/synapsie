@@ -57,7 +57,7 @@ body > #site_container {
 	position: absolute;
 	top: 9px;
 	right: 7px;
-	cursor: text;
+	cursor: pointer;
 }
 
 #site_content {

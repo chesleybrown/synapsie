@@ -37,7 +37,7 @@ $(document).ready(function() {
 	 * Site Search
 	 */
 	$('#site_search .icon_search').bind('click', function(e) {
-		$('#site_search input').focus();
+		$('#site_search form').submit();
 	});
 	/*
 	 * END Site Search

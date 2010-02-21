@@ -11,17 +11,26 @@
 	
 	<div class="clear"></div>
 	
-	{% if filter_tags %}
+	{% if query or selected_tags %}
 		<ul id="user_record_list" class="records">
 			<li class="record">
 				<div class="footer">
-					<ul class="tags">
-						{% for tag in filter_tags %}
-							{% if tag.name %}
-								<li class="tag"><a class="tag_text" href="{% url record_search tags=tag.name %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
-							{% endif %}
-						{% endfor %}
-					</ul>
+					<h4>
+						Searching for <strong>{{ query }}</strong>
+						{% if query and selected_tags %}
+							and
+						{% endif %}
+					</h4>
+					
+					{% if selected_tags %}
+						<ul class="tags">
+							{% for tag in selected_tags %}
+								{% if tag.name %}
+									<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					{% endif %}
 				</div>
 			</li>
 		</ul>
@@ -70,7 +79,7 @@
 				<div class="footer">
 					<ul class="tags">
 						{% for tag in record.tags %}
-							<li class="tag"><a class="tag_text" href="{% url record_search tags=tag.name %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
+							<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
 						{% endfor %}
 					</ul>
 				</div>

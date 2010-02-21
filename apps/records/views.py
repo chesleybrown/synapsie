@@ -128,7 +128,7 @@ def public_records(request, user_id=0, username=None, page=1):
 	}, context_instance=RequestContext(request))
 
 @login_required
-def search_records(request, query='', tags=False, page=1):
+def search_records(request, tags=False, query='', add_tag=False, page=1):
 	
 	# init
 	identity = request.user
@@ -137,15 +137,30 @@ def search_records(request, query='', tags=False, page=1):
 	formset = RecordForm()
 	selected_tags = False
 	popular_tags_printable = list()
+	used_tags_printable = ''
+	selected_tags_printable = ''
 	results_per_page = 25
 	paginator = False
+	
+	# add to filter
+	if (add_tag):
+		tags = add_tag + ',' + tags
+	
+	# get query if one provided
+	if (request.GET):
+		query = request.GET['query']
 	
 	# get user records
 	record_list = Record.objects.all().filter(user=identity).order_by('-created')
 	
+	# query provided
+	if (query):
+		record_list = record_list.filter(text__icontains=query)
+	
 	# filter by tags if provided
 	if (tags):
 		selected_tags = get_tag_list(tags)
+		selected_tags_printable = ",".join(map(str, selected_tags))
 		record_list = TaggedItem.objects.get_by_model(record_list, selected_tags)
 	
 	# number of items per page
@@ -159,7 +174,7 @@ def search_records(request, query='', tags=False, page=1):
 	
 	# get available tags user has used
 	used_tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)
-	used_tags_printable = ", ".join(map(str, used_tags))
+	used_tags_printable = ",".join(map(str, used_tags))
 	popular_tags = sorted(used_tags, key=lambda x: x.count, reverse=True)
 	
 	# get popular tags ready for template
@@ -176,11 +191,10 @@ def search_records(request, query='', tags=False, page=1):
 		'used_tags': used_tags,
 		'popular_tags': popular_tags_printable,
 		'records_paginator': records_paginator,
-		'filter_tags': selected_tags,
+		'selected_tags': selected_tags,
+		'selected_tags_printable': selected_tags_printable,
+		'query': query,
 	}, context_instance=RequestContext(request))
-	
-	return object_list(request, records, paginate_by=10)
-
 
 
 @login_required
