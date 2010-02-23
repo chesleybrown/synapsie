@@ -1,5 +1,5 @@
 /*
- FCBKcomplete 2.6.2f
+ FCBKcomplete 2.6.2g
  - Jquery version required: 1.2.x, 1.3.x
  
  Changelog:
@@ -53,6 +53,9 @@
  	
  - 2.6.2f
  		added option to provide keys that would trigger an addItem (instead of just enter/return)
+ 
+ - 2.6.2g
+ 		added a wrapper element for the tag text
  */
 
 /* Coded by: emposha <admin@emposha.com> */
