@@ -15,7 +15,6 @@ urlpatterns = patterns('',
 	url(r'^search/tags/(?P<add_tag>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*),(?P<tags>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*)\?query=(?P<query>.+)\/?$', views.search_records, name='record_search'),
 	url(r'^search\/?$', views.search_records, name='record_search'),
 	
-	url(r'^list/$', views.list_records, name='record_list'),
 	url(r'^create/$', views.add_record, name='record_add'),
 	url(r'^show/(?P<record_id>\d+)$', views.show_record, name='record_show'),
 	url(r'^edit/(?P<record_id>\d+)$', views.edit_record, name='record_edit'),
