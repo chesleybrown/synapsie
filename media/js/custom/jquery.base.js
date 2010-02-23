@@ -323,29 +323,54 @@ $(document).ready(function() {
 	function setupRecordMenuItems(container) {
 		$(container).find('a.use_record_delete').bind('click', function(e) {
 			var element = $(this);
-			var container = element.parents('.record');
+			var menu = $(this).parents('.menu');
+			var container = element.parents('.record ');
+			var content = container.find('.record_content');
+			var delete_confirmation = $('#record_delete_confirmation').find('.delete_confirmation').clone();
 			
-			container.animate({
-				opacity: 0.5
-			}, 'fast');
+			//fade out record content
+			content.animate({
+				opacity: 0.40
+			}, 'slow');
 			
-			$.ajax({
-				type: 'delete',
-				url: element.attr('href'),
-				success: function() {
-					container.animate({
-						opacity: 0
-					}, 'slow', 'linear', function() {
-						container.slideUp('slow', function() {
-							container.remove();
+			//show delete confirmation dialog
+			container.block({
+				message: delete_confirmation
+			});
+			
+			//setup delete action
+			delete_confirmation.find('.delete_action').attr('href', element.attr('href'));
+			delete_confirmation.find('.delete_action').bind('click', function(e) {
+				$.ajax({
+					type: 'delete',
+					url: $(this).attr('href'),
+					success: function() {
+						container.animate({
+							opacity: 0
+						}, 'slow', 'linear', function() {
+							container.slideUp('slow', function() {
+								container.remove();
+							});
 						});
-					});
-				},
-				error: function() {
-					container.animate({
-						opacity: 1
-					}, 'fast');
-				}
+					},
+					error: function() {
+						content.animate({
+							opacity: 1
+						}, 'fast');
+					}
+				});
+				
+				e.preventDefault();
+			});
+			
+			//setup cancel action
+			delete_confirmation.find('.cancel_action').bind('click', function(e) {
+				content.animate({
+					opacity: 1
+				}, 'fast');
+				container.unblock();
+				
+				e.preventDefault();
 			});
 			
 			e.preventDefault();

@@ -10,47 +10,49 @@
 	<ul id="user_record_list" class="records">
 		{% for record in records_paginator.object_list %}
 			<li id="record_{{ record.id }}" class="record">
-				<div class="date">
-					<span class="month">{{ record.created|date:"M" }}</span>
-					<span class="day">{{ record.created|date:"d" }}</span>
-					<span class="year">{{ record.created|date:"Y" }}</span>
-				</div>
-				<div class="security">
-					{% if record.personal %}
-						<div class="icon icon_personal"></div>
-					{% else %}
-						<div class="icon icon_shared"></div>
-					{% endif %}
-				</div>
-				<div class="header">
-					<div class="datetime">{{ record.created }}</div>
-					<div class="time">{{ record.created|date:"g:iA" }}</div>
-					<div class="time_since use_time_since">{{ record.created|timesince }} ago</div>
-					<div class="text">{{ record.text|linebreaksbr }}</div>
-				</div>
-				<div class="menu use_record_menu">
-					<ul class="menu_headers">
-						<li class="menu_header"></li>
-					</ul>
-					<ul class="menu_items">
-						<li class="menu_item">
-							<a href="{% url record_show record_id=record.id %}"><span class="icon icon_record_view"></span>View</a>
-						</li>
-					</ul>
-				</div>
-				<div class="add_tag">
-					<div class="icon icon_tag_add use_add_tag"></div>
-				</div>
-				<div class="footer">
-					<ul class="tags">
-						{% for tag in record.tags %}
-							{% if record.user_id == user.id %}
-								<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
-							{% else %}
-								<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' %}" class="closebutton hidden use_tag_delete"></a></li>
-							{% endif %}
-						{% endfor %}
-					</ul>
+				<div class="record_content">
+					<div class="date">
+						<span class="month">{{ record.created|date:"M" }}</span>
+						<span class="day">{{ record.created|date:"d" }}</span>
+						<span class="year">{{ record.created|date:"Y" }}</span>
+					</div>
+					<div class="security">
+						{% if record.personal %}
+							<div class="icon icon_personal"></div>
+						{% else %}
+							<div class="icon icon_shared"></div>
+						{% endif %}
+					</div>
+					<div class="header">
+						<div class="datetime">{{ record.created }}</div>
+						<div class="time">{{ record.created|date:"g:iA" }}</div>
+						<div class="time_since use_time_since">{{ record.created|timesince }} ago</div>
+						<div class="text">{{ record.text|linebreaksbr }}</div>
+					</div>
+					<div class="menu use_record_menu">
+						<ul class="menu_headers">
+							<li class="menu_header"></li>
+						</ul>
+						<ul class="menu_items">
+							<li class="menu_item">
+								<a href="{% url record_show record_id=record.id %}"><span class="icon icon_record_view"></span>View</a>
+							</li>
+						</ul>
+					</div>
+					<div class="add_tag">
+						<div class="icon icon_tag_add use_add_tag"></div>
+					</div>
+					<div class="footer">
+						<ul class="tags">
+							{% for tag in record.tags %}
+								{% if record.user_id == user.id %}
+									<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
+								{% else %}
+									<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' %}" class="closebutton hidden use_tag_delete"></a></li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					</div>
 				</div>
 			</li>
 		{% endfor %}

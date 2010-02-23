@@ -98,10 +98,12 @@ ul.records {
 	list-style: none;
 }
 ul.records li.record {
-	background-color: #E6E6E6;
-	border: 1px solid #CCCCCC;
 	margin-left: 10px;
 	margin-bottom: 5px;
+}
+ul.records li.record .record_content {
+	background-color: #E6E6E6;
+	border: 1px solid #CCCCCC;
 	position: relative;
 }
 
@@ -261,7 +263,7 @@ ul.records li.record .menu.active ul.menu_headers {
 }
 
 ul.records li.record .menu.active {
-	z-index: 200;
+	z-index: 2000;
 }
 
 ul.records li.record .add_tag {
@@ -271,6 +273,19 @@ ul.records li.record .add_tag {
 }
 ul.records li.record .add_tag .icon {
 	cursor: pointer;
+}
+
+ul.records .blockOverlay {
+	background: transparent !important;
+}
+ul.records .blockMsg {
+	background: url(/site_media/media/img/backgrounds/1px/w80.png) !important;
+	width: 60% !important;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+ul.records .blockMsg h5 {
+	text-shadow: 1px 1px #fff;
 }
 
 ul.records li.record .footer {
@@ -544,7 +559,7 @@ form.record_form .security_menu.active ul.menu_headers {
 }
 
 form.record_form .security_menu.active {
-	z-index: 200;
+	z-index: 2000;
 }
 
 /* TextboxList sample CSS */
