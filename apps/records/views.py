@@ -196,19 +196,6 @@ def search_records(request, tags=False, query='', add_tag=False, page=1):
 		'query': query,
 	}, context_instance=RequestContext(request))
 
-
-@login_required
-def list_records(request):
-	
-	# init
-	identity = request.user
-	records = False
-	
-	# get user records
-	records = Record.objects.all().filter(user=identity).order_by('-created')
-	
-	return object_list(request, records, paginate_by=10)
-
 @login_required
 def add_record(request):
 	
