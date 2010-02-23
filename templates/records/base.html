@@ -12,14 +12,14 @@
 		<div id="sidebar_tab_used" class="sidebar_tab_content">
 			<ul class="tags">
 				{% for tag in used_tags %}
-					<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format=".json" %}" class="closebutton use_tag_all_delete"></a></li>
+					<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format=".json" %}" class="closebutton hidden use_tag_all_delete"></a></li>
 				{% endfor %}
 			</ul>
 		</div>
 		<div id="sidebar_tab_popular" class="sidebar_tab_content hidden">
 			<dl class="tags_chart">
 				{% for tag in popular_tags %}
-					<dt><ul class="tags"><li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format=".json" %}" class="closebutton use_tag_all_delete"></a></li></ul></dt>
+					<dt><ul class="tags"><li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format=".json" %}" class="closebutton hidden use_tag_all_delete"></a></li></ul></dt>
 					<dd><span style="width: {{ tag.percent }}%;">{{ tag.count }}</dd>
 				{% endfor %}
 			</dl>

@@ -158,10 +158,14 @@ jQuery(
 		        {		        	
 	                var li = document.createElement("li");
 	                var txt = document.createTextNode(title);
-	                var aclose = document.createElement("a");       
+	                var aclose = document.createElement("a");
+	                var text_container = $('<span></span>')
+	                	.addClass('tag_text')
+	                	.text(title);
 	                
 	                $(li).attr({"class": "bit-box","rel": value});
-	                $(li).prepend(txt);        
+	                
+	                $(li).prepend(text_container);
 	                $(aclose).attr({"class": "closebutton","href": "#"});
 	                
 	                li.appendChild(aclose);
