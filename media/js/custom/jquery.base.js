@@ -342,6 +342,12 @@ $(document).ready(function() {
 			//setup delete action
 			delete_confirmation.find('.delete_action').attr('href', element.attr('href'));
 			delete_confirmation.find('.delete_action').bind('click', function(e) {
+				//hide delete confirmation dialog
+				container.unblock();
+				container.block({
+					message: ''
+				});
+				
 				$.ajax({
 					type: 'delete',
 					url: $(this).attr('href'),
