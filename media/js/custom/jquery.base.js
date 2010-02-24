@@ -83,6 +83,7 @@ $(document).ready(function() {
 		firstselected: true,
 		filter_selected: true,
 		newel: true,
+		allow_duplicates: false,
 		onselect: function(item) {
 			setupInlineLabels(item);
 		},

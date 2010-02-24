@@ -1,5 +1,5 @@
 /*
- FCBKcomplete 2.6.2g
+ FCBKcomplete 2.6.2h
  - Jquery version required: 1.2.x, 1.3.x
  
  Changelog:
@@ -56,6 +56,9 @@
  
  - 2.6.2g
  		added a wrapper element for the tag text
+ 
+ - 2.6.2h
+ 		added option to prevent user from adding the same tag twice
  */
 
 /* Coded by: emposha <admin@emposha.com> */
@@ -72,6 +75,7 @@
  * maxshownitems	- maximum numbers that will be shown at dropdown list (less better performance)
  * onselect			- fire event on item select
  * onremove			- fire event on item remove
+ * allow_duplicates - boolean to allow the same tag to be added twice in the input
  */
  
 jQuery(
@@ -158,69 +162,75 @@ jQuery(
 				});
 	        	
 		        function addItem (title, value, preadded)
-		        {		        	
-	                var li = document.createElement("li");
-	                var txt = document.createTextNode(title);
-	                var aclose = document.createElement("a");
-	                var text_container = $('<span></span>')
-	                	.addClass('tag_text')
-	                	.text(title);
-	                
-	                $(li).attr({"class": "bit-box","rel": value});
-	                
-	                $(li).prepend(text_container);
-	                $(aclose).attr({"class": "closebutton","href": "#"});
-	                
-	                li.appendChild(aclose);
-	                holder.append(li);
-	                
-	                $(aclose).click(
-	                    function(){
-	                        $(this).parent("li").fadeOut("fast", 
-	                            function(){
-									removeItem($(this));
-									holder.find('input.maininput').focus();
-	                            }
-	                        );
-	                        return false;
-	                    }
-	                );
-	                
+		        {
+	                var _item;
+                    _item = element.children("option").filter(function(index) {
+						return $(this).val() == value;
+					});
+					var added_already = _item.attr("selected");
+					
+					if (!added_already || options.allow_duplicates) {
+		                var li = document.createElement("li");
+		                var txt = document.createTextNode(title);
+		                var aclose = document.createElement("a");
+		                var text_container = $('<span></span>')
+		                	.addClass('tag_text')
+		                	.text(title);
+		                
+		                $(li).attr({"class": "bit-box","rel": value});
+		                
+		                $(li).prepend(text_container);
+		                $(aclose).attr({"class": "closebutton","href": "#"});
+		                
+		                li.appendChild(aclose);
+		                holder.append(li);
+		                
+		                $(aclose).click(
+		                    function(){
+		                        $(this).parent("li").fadeOut("fast", 
+		                            function(){
+										removeItem($(this));
+										holder.find('input.maininput').focus();
+		                            }
+		                        );
+		                        return false;
+		                    }
+		                );
+		            }
+					
 	                if (!preadded) 
 	                {						
 	                    $("#"+elemid + "_annoninput").remove();
-						var _item;
 	                    addInput(1);
-	                    _item = element.children("option").filter(function(index) {
-							return $(this).val() == value;
-						});
 						
-	                    if (_item.length)
-	                    {   
-							
-	                        _item.attr("selected", "selected");
-	                        
-							if (!_item.hasClass("selected"))
+						if (!added_already || options.allow_duplicates) {
+		                    if (_item.length)
+		                    {   
+								
+		                        _item.attr("selected", "selected");
+		                        
+								if (!_item.hasClass("selected"))
+								{
+									_item.addClass("selected");
+								}
+		                    }
+		                    else
+		                    {
+		                        _item = $(document.createElement("option"));
+		                        _item.attr("value", value).attr("selected", "selected");
+								_item.attr("value", value).addClass("selected");
+		                        _item.text(title);
+		                        element.append(_item);
+		                    }
+		                    if (typeof(options.onselect) == 'function')
+		                    {
+		                    	options.onselect(_item);
+		                    }
+							else if (options.onselect.length)
 							{
-								_item.addClass("selected");
+								funCall(options.onselect,_item);
 							}
-	                    }
-	                    else
-	                    {
-	                        _item = $(document.createElement("option"));
-	                        _item.attr("value", value).attr("selected", "selected");
-							_item.attr("value", value).addClass("selected");
-	                        _item.text(title);              
-	                        element.append(_item);
-	                    }
-	                    if (typeof(options.onselect) == 'function')
-	                    {
-	                    	options.onselect(_item);
-	                    }
-						else if (options.onselect.length)
-						{
-							funCall(options.onselect,_item);
-						}	
+						}
 	                }
 	                
 	                holder.children("li.bit-box.deleted").removeClass("deleted");
@@ -728,7 +738,8 @@ jQuery(
 					complete_text: "Start to type...",
 					maxshownitems:  30,
 					onselect: "",
-					onremove: ""
+					onremove: "",
+					allow_duplicates: true
 				}, opt);
 			        
 			    element.data('fcbkcompleteOptions', options);
