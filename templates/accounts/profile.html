@@ -1,0 +1,107 @@
+{% extends "accounts/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Profile" %}{% endblock %}
+{% block body_class %}profile{% endblock %}
+
+{% block body %}
+	<h1>Profile</h1>
+	
+	<div class="form_items_container">
+		<ul class="form_items">
+			<li>
+				<div class="label">
+					<label class="icon icon_username" for="">Username</label>
+				</div>
+				<div class="content">
+					{{ viewed_user.username }}
+				</div>
+			</li>
+			<li>
+				<div class="label">
+					<label class="icon icon_email" for="">Email</label>
+				</div>
+				<div class="content">
+					{{ viewed_user.email }}
+				</div>
+			</li>
+			<li>
+				<div class="label">
+					<label class="icon icon_password" for="">Password</label>
+				</div>
+				<div class="content">
+					&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;
+				</div>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="clear"></div>
+	
+	<div class="grid_4 suffix_1 alpha">
+		<h1>Record Stats</h1>
+		
+		<div class="form_items_container">
+			<ul class="form_items">
+				<li>
+					<div class="label">
+						<label for="">Total</label>
+					</div>
+					<div class="content">
+						{{ record_stats.total }}
+					</div>
+				</li>
+				<li>
+					<div class="label">
+						<label for="">Personal</label>
+					</div>
+					<div class="content">
+						{{ record_stats.personal }}
+					</div>
+				</li>
+				<li>
+					<div class="label">
+						<label for="">Shared</label>
+					</div>
+					<div class="content">
+						{{ record_stats.shared }}
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="grid_4 omega">
+		<h1>Tag Stats</h1>
+		
+		<div class="form_items_container">
+			<ul class="form_items">
+				<li>
+					<div class="label">
+						<label for="">Total</label>
+					</div>
+					<div class="content">
+						{{ tag_stats.total }}
+					</div>
+				</li>
+				<li>
+					<div class="label">
+						<label for="">Unique</label>
+					</div>
+					<div class="content">
+						{{ tag_stats.unique }}
+					</div>
+				</li>
+				<li>
+					<div class="label">
+						<label for="">Average Per Record</label>
+					</div>
+					<div class="content">
+						{{ tag_stats.average_per_record }}
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+{% endblock %}

@@ -33,6 +33,17 @@ input.icon {
 	background-image: url(/site_media/media/img/icons/fugue/cross-button.png);
 }
 
+/* Profile */
+.icon_username {
+	background-image: url(/site_media/media/img/icons/fugue/user.png);
+}
+.icon_email {
+	background-image: url(/site_media/media/img/icons/fugue/mail.png);
+}
+.icon_password {
+	background-image: url(/site_media/media/img/icons/fugue/key.png);
+}
+
 /* Security */
 .icon_personal {
 	background-image: url(/site_media/media/img/icons/fugue/lock.png);
