@@ -63,7 +63,7 @@
 				<dl class="tags_chart">
 					{% for tag in popular_tags %}
 						<dt><ul class="tags"><li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format=".json" %}" class="closebutton hidden use_tag_all_delete"></a></li></ul></dt>
-						<dd><span style="width: {{ tag.percent }}%;">{{ tag.count }}</dd>
+						<dd><span style="width: {{ tag.percent }}%;">{{ tag.count }}</span></dd>
 					{% endfor %}
 				</dl>
 			</div>
