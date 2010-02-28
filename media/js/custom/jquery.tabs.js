@@ -3,12 +3,12 @@
 $(document).ready(function() {
 
 	//When page loads...
-	$("div.sidebar_tab_container div.sidebar_tab_content").hide(); //Hide all content
-	$("ul.sidebar_tabs li:first").addClass("active").show(); //Activate first tab
-	$("div.sidebar_tab_container div.sidebar_tab_content:first").show(); //Show first tab content
+	$(".use_tabs div.sidebar_tab_container div.sidebar_tab_content").hide(); //Hide all content
+	$(".use_tabs ul.sidebar_tabs li:first").addClass("active").show(); //Activate first tab
+	$(".use_tabs div.sidebar_tab_container div.sidebar_tab_content:first").show(); //Show first tab content
 
 	//On Click Event
-	$("ul.sidebar_tabs li").click(function() {
+	$(".use_tabs ul.sidebar_tabs li").click(function() {
 		
 		// init
 		var active_class = 'active';
