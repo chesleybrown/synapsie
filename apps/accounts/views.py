@@ -134,6 +134,7 @@ def profile(request, user_id=0, username=False):
 		tag_stats['total'] += tag.count
 	
 	tag_stats['average_per_record'] = float(tag_stats['total']) / float(record_stats['total'])
+	tag_stats['average_per_record'] = round(tag_stats['average_per_record'], 1)
 	
 	# get available tags user has used
 	used_tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)

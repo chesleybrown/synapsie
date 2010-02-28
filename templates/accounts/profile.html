@@ -6,102 +6,134 @@
 {% block body_class %}profile{% endblock %}
 
 {% block body %}
-	<h1>Profile</h1>
-	
-	<div class="form_items_container">
-		<ul class="form_items">
-			<li>
-				<div class="label">
-					<label class="icon icon_username" for="">Username</label>
-				</div>
-				<div class="content">
-					{{ viewed_user.username }}
-				</div>
-			</li>
-			<li>
-				<div class="label">
-					<label class="icon icon_email" for="">Email</label>
-				</div>
-				<div class="content">
-					{{ viewed_user.email }}
-				</div>
-			</li>
-			<li>
-				<div class="label">
-					<label class="icon icon_password" for="">Password</label>
-				</div>
-				<div class="content">
-					&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;
-				</div>
-			</li>
+	<div class="use_tabs">
+		<ul class="content_tabs">
+			<li class="active"><a href="#content_profile">Profile</a></li>
 		</ul>
+		
+		<div class="content_tab_container">
+			<div id="content_profile" class="content_tab_content">
+				<div class="form_items_container">
+					<ul class="form_items">
+						<li>
+							<div class="label">
+								<label class="icon icon_username" for="id_username">Username</label>
+							</div>
+							<div id="id_username" class="content">
+								{{ viewed_user.username }}
+							</div>
+						</li>
+						<li>
+							<div class="label">
+								<label class="icon icon_email" for="id_email">Email</label>
+							</div>
+							<div id="id_email" class="content">
+								{{ viewed_user.email }}
+							</div>
+						</li>
+						<li>
+							<div class="label">
+								<label class="icon icon_password" for="id_password">Password</label>
+							</div>
+							<div id="id_password" class="content">
+								&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;
+							</div>
+						</li>
+						<li>
+							<div class="label">
+								<label class="icon icon_date_joined" for="id_date_joined">Joined</label>
+							</div>
+							<div id="id_date_joined" class="content">
+								{{ viewed_user.date_joined|date:"F d, Y" }} at {{ viewed_user.date_joined|date:"g:iA" }}
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
 	
 	<div class="clear"></div>
 	
 	<div class="grid_4 suffix_1 alpha">
-		<h1>Record Stats</h1>
-		
-		<div class="form_items_container">
-			<ul class="form_items">
-				<li>
-					<div class="label">
-						<label for="">Total</label>
-					</div>
-					<div class="content">
-						{{ record_stats.total }}
-					</div>
-				</li>
-				<li>
-					<div class="label">
-						<label for="">Personal</label>
-					</div>
-					<div class="content">
-						{{ record_stats.personal }}
-					</div>
-				</li>
-				<li>
-					<div class="label">
-						<label for="">Shared</label>
-					</div>
-					<div class="content">
-						{{ record_stats.shared }}
-					</div>
-				</li>
+		<div class="use_tabs">
+			<ul class="content_tabs">
+				<li class="active"><a href="#content_record_stats">Record Stats</a></li>
 			</ul>
+			
+			<div class="content_tab_container">
+				<div id="content_record_stats" class="content_tab_content">
+					<div class="form_items_container">
+						<ul class="form_items">
+							<li>
+								<div class="label">
+									<label for="id_record_total">Total</label>
+								</div>
+								<div id="id_record_total" class="content">
+									{{ record_stats.total }}
+								</div>
+							</li>
+							<li>
+								<div class="label">
+									<label for="id_record_personal">Personal</label>
+								</div>
+								<div id="id_record_personal" class="content">
+									{{ record_stats.personal }}
+								</div>
+							</li>
+							<li>
+								<div class="label">
+									<label for="id_record_shared">Shared</label>
+								</div>
+								<div id="id_record_shared" class="content">
+									{{ record_stats.shared }}
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	
 	<div class="grid_4 omega">
-		<h1>Tag Stats</h1>
-		
-		<div class="form_items_container">
-			<ul class="form_items">
-				<li>
-					<div class="label">
-						<label for="">Total</label>
-					</div>
-					<div class="content">
-						{{ tag_stats.total }}
-					</div>
-				</li>
-				<li>
-					<div class="label">
-						<label for="">Unique</label>
-					</div>
-					<div class="content">
-						{{ tag_stats.unique }}
-					</div>
-				</li>
-				<li>
-					<div class="label">
-						<label for="">Average Per Record</label>
-					</div>
-					<div class="content">
-						{{ tag_stats.average_per_record }}
-					</div>
-				</li>
+		<div class="use_tabs">
+			<ul class="content_tabs">
+				<li class="active"><a href="#content_tag_stats">Tag Stats</a></li>
 			</ul>
+			
+			<div class="content_tab_container">
+				<div id="content_tag_stats" class="content_tab_content">
+					<div class="form_items_container">
+						<ul class="form_items">
+							<li>
+								<div class="label">
+									<label for="id_tag_total">Total</label>
+								</div>
+								<div id="id_tag_total" class="content">
+									{{ tag_stats.total }}
+								</div>
+							</li>
+							<li>
+								<div class="label">
+									<label for="id_tag_unique">Unique</label>
+								</div>
+								<div id="id_tag_unique" class="content">
+									{{ tag_stats.unique }}
+								</div>
+							</li>
+							<li>
+								<div class="label">
+									<label for="id_tag_average_per_record">Average Per Record</label>
+								</div>
+								<div id="id_tag_average_per_record" class="content">
+									{{ tag_stats.average_per_record }}
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 {% endblock %}

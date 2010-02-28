@@ -43,6 +43,9 @@ input.icon {
 .icon_password {
 	background-image: url(/site_media/media/img/icons/fugue/key.png);
 }
+.icon_date_joined {
+	background-image: url(/site_media/media/img/icons/fugue/calendar-day.png);
+}
 
 /* Security */
 .icon_personal {
