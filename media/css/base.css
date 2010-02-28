@@ -487,11 +487,30 @@ form.record_form .actions {
 }
 form.record_form .actions_left {
 	float: left;
-	margin: 5px 0 0 5px;
+	margin: 3px 0 0 5px;
 }
 form.record_form .actions_right {
 	float: right;
-	margin: 2px 5px 0;
+	margin: 3px 5px 0;
+}
+form.record_form .actions_left .action,
+form.record_form .actions_left .group {
+	float: left;
+	margin-right: 10px;
+}
+form.record_form .actions_left .group .action {
+	margin: 0;
+}
+form.record_form .actions_right .action {
+	float: left;
+	margin-left: 10px;
+}
+
+form.record_form .action > .icon {
+	margin-top: 6px;
+}
+form.record_form .action > .input_button_wrapper {
+	margin-top: -1px;
 }
 
 form.record_form .record_security {
@@ -502,7 +521,6 @@ form.record_form .record_security {
 
 form.record_form .security_menu {
 	z-index: 100;
-	position: absolute;
 }
 form.record_form .security_menu ul.menu_headers .icon {
 	float: left;
@@ -518,6 +536,9 @@ form.record_form .security_menu ul.menu_headers {
 	line-height: 24px;
 	text-shadow: 1px 1px #fff;
 	cursor: pointer;
+	position: relative;
+	top: 1px;
+	z-index: 2100;
 }
 form.record_form .security_menu ul.menu_headers .side {
 	background: url(/site_media/media/img/layout/records/dropdown_side_bg.png) no-repeat;
@@ -547,18 +568,18 @@ form.record_form .security_menu ul.menu_headers:hover .side {
 	background-position: 0 -24px
 }
 form.record_form .security_menu ul.menu_items {
+	position: absolute;
+	z-index: 2000;
 	display: none;
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	border-width: 0 1px 1px 1px;
-	border-style: solid;
-	border-color: #999;
+	border: 1px solid #999;
 	overflow: hidden;
 	clear: both;
 	float: left;
 	background: #fff;
-	min-width: 180px;
+	min-width: 100px;
 	max-width: 280px;
 	-moz-box-shadow: 0 5px 5px #aaa;
 	-webkit-box-shadow: 0 5px 5px #aaa;

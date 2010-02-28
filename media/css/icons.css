@@ -79,6 +79,15 @@ input.icon {
 .icon_record_more {
 	background-image: url(/site_media/media/img/icons/fugue/_overlay/pin--plus.png);
 }
+.icon_record_date {
+	background-image: url(/site_media/media/img/icons/fugue/calendar-month.png);
+}
+.icon_record_time {
+	background-image: url(/site_media/media/img/icons/fugue/clock.png);
+}
+.icon_record_datetime_reset {
+	background-image: url(/site_media/media/img/icons/fugue/calendar-previous.png);
+}
 
 /* Tags */
 .icon_tag_add {

@@ -29,40 +29,181 @@
 		
 		<div class="actions">
 			<div class="actions_left">
-				<!--<div class="icon icon_personal use_personal_flag record_security">Personal</div>-->
-				<div class="security_menu use_security_menu">
-					<ul class="menu_headers">
-						<li class="menu_header">
-							<div class="menu_header_icon icon icon_personal"></div>
-							<span class="menu_header_text">Personal</span>
-							<div class="side"></div>
-						</li>
-					</ul>
-					<ul class="menu_items">
-						<li class="menu_item">
-							<span class="menu_item_icon icon icon_personal"></span>
-							<span class="menu_item_text">Personal</span>
-							<span class="menu_item_desc">Keep your posts restricted and only visible to yourself.</span>
-							<span class="menu_item_value">1</span>
-						</li>
-						<li class="menu_item">
-							<span class="menu_item_icon icon icon_shared"></span>
-							<span class="menu_item_text">Shared</span>
-							<span class="menu_item_desc">Let anyone find and read your posts. Share your life with the world.</span>
-							<span class="menu_item_value">0</span>
-						</li>
-					</ul>
-				</div>
-				{{ formset.personal }}
-			</div>
-			<div class="actions_right">
-				<div class="input_button_wrapper">
-					<div class="input_button_start"></div>
-					<div class="input_button_body">
-						<div class="icon icon_record_post"></div>
-						<input type="submit" id="new_record" name="submit" value="{% if object %}Apply changes{% else %}Post{% endif %}" class="input_submit" />
+				<div class="action">
+					<div class="security_menu use_security_menu">
+						<ul class="menu_headers">
+							<li class="menu_header">
+								<div class="menu_header_icon icon icon_record_date"></div>
+								<span class="menu_header_text">Feb 28, 2010</span>
+								<div class="side"></div>
+							</li>
+						</ul>
+						<ul class="menu_items">
+							<li class="menu_item">
+								<span class="menu_item_icon icon icon_record_date"></span>
+								<span class="menu_item_text">Date Picker</span>
+								<span class="menu_item_desc">A date picker will go here...</span>
+								<span class="menu_item_value">1</span>
+							</li>
+						</ul>
 					</div>
-					<div class="input_button_end"></div>
+				</div>
+				
+				<div class="group">
+					<div class="action">
+						<div class="security_menu use_security_menu">
+							<ul class="menu_headers">
+								<li class="menu_header">
+									<div class="menu_header_icon icon icon_record_time"></div>
+									<span class="menu_header_text">10</span>
+									<div class="side"></div>
+								</li>
+							</ul>
+							<ul class="menu_items">
+								<li class="menu_item">
+									<span class="menu_item_text">1</span>
+									<span class="menu_item_value">1</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">2</span>
+									<span class="menu_item_value">2</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">3</span>
+									<span class="menu_item_value">3</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">4</span>
+									<span class="menu_item_value">4</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">5</span>
+									<span class="menu_item_value">5</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">6</span>
+									<span class="menu_item_value">6</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">7</span>
+									<span class="menu_item_value">7</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">8</span>
+									<span class="menu_item_value">8</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">9</span>
+									<span class="menu_item_value">9</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">10</span>
+									<span class="menu_item_value">10</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">11</span>
+									<span class="menu_item_value">11</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">12</span>
+									<span class="menu_item_value">12</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="action">
+						<div class="security_menu use_security_menu">
+							<ul class="menu_headers">
+								<li class="menu_header">
+									<span class="menu_header_text">35</span>
+									<div class="side"></div>
+								</li>
+							</ul>
+							<ul class="menu_items">
+								<li class="menu_item">
+									<span class="menu_item_text">00</span>
+									<span class="menu_item_value">0</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">15</span>
+									<span class="menu_item_value">15</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">30</span>
+									<span class="menu_item_value">30</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">45</span>
+									<span class="menu_item_value">45</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="action">
+						<div class="security_menu use_security_menu">
+							<ul class="menu_headers">
+								<li class="menu_header">
+									<span class="menu_header_text">PM</span>
+									<div class="side"></div>
+								</li>
+							</ul>
+							<ul class="menu_items">
+								<li class="menu_item">
+									<span class="menu_item_text">AM</span>
+									<span class="menu_item_value">AM</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_text">PM</span>
+									<span class="menu_item_value">PM</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				
+				<div class="action">
+					<div class="icon icon_record_datetime_reset"></div>
+				</div>
+			</div>
+			
+			<div class="actions_right">
+				
+				<div class="action">
+					<div class="security_menu use_security_menu">
+						<ul class="menu_headers">
+							<li class="menu_header">
+								<div class="menu_header_icon icon icon_personal"></div>
+								<span class="menu_header_text">Personal</span>
+								<div class="side"></div>
+							</li>
+						</ul>
+						<ul class="menu_items">
+							<li class="menu_item">
+								<span class="menu_item_icon icon icon_personal"></span>
+								<span class="menu_item_text">Personal</span>
+								<span class="menu_item_desc">Keep this post restricted and only visible to yourself.</span>
+								<span class="menu_item_value">1</span>
+							</li>
+							<li class="menu_item">
+								<span class="menu_item_icon icon icon_shared"></span>
+								<span class="menu_item_text">Shared</span>
+								<span class="menu_item_desc">Let anyone find and read this post. Share your life with the world.</span>
+								<span class="menu_item_value">0</span>
+							</li>
+						</ul>
+					</div>
+					{{ formset.personal }}
+				</div>
+				
+				<div class="action">
+					<div class="input_button_wrapper">
+						<div class="input_button_start"></div>
+						<div class="input_button_body">
+							<div class="icon icon_record_post"></div>
+							<input type="submit" id="new_record" name="submit" value="{% if object %}Apply changes{% else %}Post{% endif %}" class="input_submit" />
+						</div>
+						<div class="input_button_end"></div>
+					</div>
 				</div>
 			</div>
 		</div>
