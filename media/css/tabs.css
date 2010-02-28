@@ -38,33 +38,33 @@ body.tags #tab_tags {
 	margin-top: 11px;
 }
  
-ul.tabs a, ul.tabs a:visited {
+ul.site_tabs a, ul.site_tabs a:visited {
 	text-shadow: #000 0 1px 0;
 	color: #fff; /* unselected tab text colour */
 	font-weight: bold;
 	text-decoration: none;
 }
-ul.tabs a:hover {
+ul.site_tabs a:hover {
 	color: #eee; /* unselected tab text hover colour */
 }
-ul.tabs li {
+ul.site_tabs li {
 	list-style-type: none;
 	display: inline;
 	background-color: none; /* unselected tab colour */
 	padding: 5px 0 4px;
 	margin: 0 1px; /* to compensate for border */
 }
-ul.tabs li a {
+ul.site_tabs li a {
 	padding: 5px 12px;
 }
-ul.tabs {
+ul.site_tabs {
 	margin: 0 0 5px;
 }
 
 
 /* Sidebar Tabs */
 
-ul.sidebar_tabs {
+ul.tabs {
 	margin: 0;
 	padding: 0;
 	float: left;
@@ -74,7 +74,7 @@ ul.sidebar_tabs {
 	border-left: 1px solid #ccc;
 	width: 100%;
 }
-ul.sidebar_tabs li {
+ul.tabs li {
 	float: left;
 	margin: 0;
 	padding: 0;
@@ -87,7 +87,7 @@ ul.sidebar_tabs li {
 	position: relative;
 	background: #E6E6E6;
 }
-ul.sidebar_tabs li a {
+ul.tabs li a {
 	text-decoration: none;
 	color: #000;
 	display: block;
@@ -96,15 +96,15 @@ ul.sidebar_tabs li a {
 	border: 1px solid #fff; /*--Gives the bevel look with a 1px white border inside the list item--*/
 	outline: none;
 }
-ul.sidebar_tabs li a:hover {
+ul.tabs li a:hover {
 	background: #ddd;
 }
-html ul.sidebar_tabs li.active, html ul.sidebar_tabs li.active a:hover  { /*--Makes sure that the active tab does not listen to the hover properties--*/
+html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that the active tab does not listen to the hover properties--*/
 	background: #fff;
 	border-bottom: 1px solid #fff; /*--Makes the active tab look like it's connected with its content--*/
 }
 
-.sidebar_tab_container {
+.tab_container {
 	border: 1px solid #ccc;
 	border-top: none;
 	overflow: hidden;
@@ -114,64 +114,17 @@ html ul.sidebar_tabs li.active, html ul.sidebar_tabs li.active a:hover  { /*--Ma
 	background: #fff;
 	margin: 0 0 20px 0;
 }
-.sidebar_tab_content {
+.tab_content {
 	padding: 10px 5px 5px 5px;
 	font-size: 1.2em;
+}
+
+/* Sidebar Tabs */
+.sidebar_tabs ul.tabs li a {
+	font-size: 14px;
 }
 
 /* Site Content Tabs */
-
-ul.content_tabs {
-	margin: 0;
-	padding: 0;
-	float: left;
-	list-style: none;
-	height: 32px; /*--Set height of tabs--*/
-	border-bottom: 1px solid #ccc;
-	border-left: 1px solid #ccc;
-	width: 100%;
-}
-ul.content_tabs li {
-	float: left;
-	margin: 0;
-	padding: 0;
-	height: 31px; /*--Subtract 1px from the height of the unordered list--*/
-	line-height: 31px; /*--Vertically aligns the text within the tab--*/
-	border: 1px solid #ccc;
-	border-left: none;
-	margin-bottom: -1px; /*--Pull the list item down 1px--*/
-	overflow: hidden;
-	position: relative;
-	background: #E6E6E6;
-}
-ul.content_tabs li a {
-	text-decoration: none;
-	color: #000;
-	display: block;
+.site_content_tabs ul.tabs li a {
 	font-size: 20px;
-	padding: 0 20px;
-	border: 1px solid #fff; /*--Gives the bevel look with a 1px white border inside the list item--*/
-	outline: none;
-}
-ul.content_tabs li a:hover {
-	background: #ddd;
-}
-html ul.content_tabs li.active, html ul.content_tabs li.active a:hover  { /*--Makes sure that the active tab does not listen to the hover properties--*/
-	background: #fff;
-	border-bottom: 1px solid #fff; /*--Makes the active tab look like it's connected with its content--*/
-}
-
-.content_tab_container {
-	border: 1px solid #ccc;
-	border-top: none;
-	overflow: hidden;
-	clear: both;
-	float: left;
-	width: 100%;
-	background: #fff;
-	margin: 0 0 20px 0;
-}
-.content_tab_content {
-	padding: 10px 5px 5px 5px;
-	font-size: 1.2em;
 }

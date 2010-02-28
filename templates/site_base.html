@@ -26,7 +26,7 @@
 {% block right_tabs %}
 	{% if user.is_authenticated %}
 		{% spaceless %}
-			<ul class="tabs">
+			<ul class="site_tabs">
 				<li id="tab_profile"><a href="{% url accounts_profile %}">{% trans "Profile" %}</a></li>
 				<li id="tab_records"><a href="{% url record_index %}">{% trans "Records" %}</a></li>
 				<li id="tab_search"><a href="{% url record_search %}">{% trans "Search" %}</a></li>
@@ -35,7 +35,7 @@
 		{% endspaceless %}
 	{% else %}
 		{% spaceless %}
-			<ul class="tabs">
+			<ul class="site_tabs">
 				<li id="tab_home"><a href="{% url home %}">{% trans "Home" %}</a></li>
 				<li id="tab_register"><a href="{% url accounts_register %}">{% trans "Register" %}</a></li>
 				<li id="tab_login"><a href="{% url accounts_login %}">{% trans "Login" %}</a></li>
@@ -46,14 +46,14 @@
 
 {% block sidebar %}
 	{% if user %}
-		<div class="use_tabs">
-			<ul class="sidebar_tabs">
+		<div class="use_tabs sidebar_tabs">
+			<ul class="tabs">
 				<li class="active"><a href="#sidebar_tab_used">Used</a></li>
 				<li><a href="#sidebar_tab_popular">Popular</a></li>
 			</ul>
 			
-			<div class="sidebar_tab_container">
-				<div id="sidebar_tab_used" class="sidebar_tab_content">
+			<div class="tab_container">
+				<div id="sidebar_tab_used" class="tab_content">
 					{% if used_tags %}
 						<ul class="tags">
 							{% for tag in used_tags %}
@@ -62,7 +62,7 @@
 						</ul>
 					{% endif %}
 				</div>
-				<div id="sidebar_tab_popular" class="sidebar_tab_content hidden">
+				<div id="sidebar_tab_popular" class="tab_content hidden">
 					{% if popular_tags %}
 						<ul class="tags_chart">
 							{% for tag in popular_tags %}
