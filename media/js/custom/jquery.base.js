@@ -584,14 +584,47 @@ $(document).ready(function() {
 		
 		//change header
 		menu_header_text.text(menu_item_text);
+		menu_header_icon.attr('class', menu_item_icon.attr('class'));
 		menu_header_icon
-			.attr('class', menu_item_icon.attr('class'))
 			.removeClass('menu_item_icon')
 			.addClass('menu_header_icon');
 		personal_input.val(menu_item_value);
 	});
 	/*
 	 * END Setup Record Form Security Menu (dropdowns)
+	 */
+	
+	
+	/*
+	 * Setup Record Form Date Picker
+	 */
+	$('.use_datepicker')
+		.datePicker({
+			inline:true
+		})
+		.bind(
+			'dateSelected',
+			function(e, selectedDate, $td)
+			{
+				console.log('You selected ' + selectedDate);
+			}
+		);
+	/*
+	 * END Setup Record Form Date Picker
+	 */
+	
+	
+	/*
+	 * Setup Tag Popular Show All
+	 */
+	$('a.use_tag_popular_show_all').bind('click', function(e) {
+		$('#sidebar_tab_popular').find('ul.tags_chart li').fadeIn('slow');
+		
+		$(this).remove();
+		e.preventDefault();
+	});
+	/*
+	 * END Setup Tag Popular Show All
 	 */
 	
 	

@@ -10,6 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/icons.css" />
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/tabs.css" />
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/charts.css" />
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.datePicker.css" />
 	{% block extra_head %}{% endblock %}
 {% endblock %}
 
@@ -66,16 +67,41 @@
 					{% if popular_tags %}
 						<ul class="tags_chart">
 							{% for tag in popular_tags %}
-								<li>
-									<div class="label">
-										<ul class="tags"><li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format=".json" %}" class="closebutton hidden use_tag_all_delete"></a></li></ul>
-									</div>
-									<div class="content">
-										<span style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
-									</div>
-								</li>
+								{% if forloop.counter > 10 %}
+									<li class="hidden">
+										<div class="label">
+											<ul class="tags"><li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format=".json" %}" class="closebutton hidden use_tag_all_delete"></a></li></ul>
+										</div>
+										<div class="content">
+											<span style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
+										</div>
+									</li>
+								{% else %}
+									<li>
+										<div class="label">
+											<ul class="tags"><li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format=".json" %}" class="closebutton hidden use_tag_all_delete"></a></li></ul>
+										</div>
+										<div class="content">
+											<span style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
+										</div>
+									</li>
+								{% endif %}
 							{% endfor %}
 						</ul>
+						
+						{% if popular_tags|length > 10 %}
+							<div class="actions">
+								<div class="action">
+									<a href="#" class="input_button_wrapper use_tag_popular_show_all">
+										<span class="input_button_start"></span>
+										<span class="input_button_body">
+											<span class="input_button_content icon icon_tags">Show All</span>
+										</span>
+										<span class="input_button_end"></span>
+									</a>
+								</div>
+							</div>
+						{% endif %}
 					{% endif %}
 				</div>
 			</div>
@@ -95,6 +121,7 @@
 
 {% block extra_body_base %}
 	<script src="{{ MEDIA_URL }}js/lib/min/jquery-1.4.2.min.js" type="text/javascript"></script>
+	<script src="{{ MEDIA_URL }}js/lib/date.js" type="text/javascript"></script>
 	<script src="{{ MEDIA_URL }}js/plugins/jquery.fcbkcomplete.js" type="text/javascript"></script>
 	<script src="{{ MEDIA_URL }}js/custom/jquery.base.js" type="text/javascript"></script>
 	<script src="{{ MEDIA_URL }}js/custom/jquery.dropdown_menus.js" type="text/javascript"></script>
@@ -104,5 +131,6 @@
 	<script src="{{ MEDIA_URL }}js/plugins/jquery.elastic.js" type="text/javascript"></script>
 	<script src="{{ MEDIA_URL }}js/plugins/jquery.timeago.js" type="text/javascript"></script>
 	<script src="{{ MEDIA_URL }}js/plugins/jquery.blockUI.js" type="text/javascript"></script>
+	<script src="{{ MEDIA_URL }}js/plugins/min/jquery.datePicker.min-2.1.2.js" type="text/javascript"></script>
 	{% block extra_body %}{% endblock %}
 {% endblock %}

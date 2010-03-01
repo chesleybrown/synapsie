@@ -77,7 +77,7 @@ input.icon {
 	background-image: url(/site_media/media/img/icons/fugue/eraser.png);
 }
 .icon_record_more {
-	background-image: url(/site_media/media/img/icons/fugue/_overlay/pin--plus.png);
+	background-image: url(/site_media/media/img/icons/fugue/pins.png);
 }
 .icon_record_date {
 	background-image: url(/site_media/media/img/icons/fugue/calendar-month.png);
@@ -90,6 +90,12 @@ input.icon {
 }
 
 /* Tags */
+.icon_tag {
+	background-image: url(/site_media/media/img/icons/fugue/tag.png);
+}
+.icon_tags {
+	background-image: url(/site_media/media/img/icons/fugue/tags.png);
+}
 .icon_tag_add {
-	background-image: url(/site_media/media/img/icons/fugue/plus-small.png);
+	background-image: url(/site_media/media/img/icons/fugue/_overlay/tag--plus.png);
 }

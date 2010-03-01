@@ -68,9 +68,8 @@ def index_records(request, tags=False, page=1):
 		'used_tags': used_tags,
 		'popular_tags': popular_tags_printable,
 		'records_paginator': records_paginator,
+		'records_per_page': results_per_page,
 	}, context_instance=RequestContext(request))
-	
-	return object_list(request, records, paginate_by=10)
 
 def public_records(request, user_id=0, username=None, page=1):
 	

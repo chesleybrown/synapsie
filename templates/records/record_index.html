@@ -40,9 +40,9 @@
 						</ul>
 						<ul class="menu_items">
 							<li class="menu_item">
-								<span class="menu_item_icon icon icon_record_date"></span>
-								<span class="menu_item_text">Date Picker</span>
-								<span class="menu_item_desc">A date picker will go here...</span>
+								<div class="menu_item_desc">
+									<div class="use_datepicker"></div>
+								</div>
 								<span class="menu_item_value">1</span>
 							</li>
 						</ul>
@@ -264,16 +264,18 @@
 		{% endfor %}
 	</ul>
 	
-	<div class="records_more">
-		<div class="action">
-			<a href="{% url api-record page='2',emitter_format='.json' %}" class="input_button_wrapper use_record_more" style="width: 100%;">
-				<span class="input_button_start"></span>
-				<span class="input_button_body">
-					<span class="icon icon_record_more">more</span>
-				</span>
-				<span class="input_button_end"></span>
-			</a>
+	{% if records_paginator.object_list|length == records_per_page %}
+		<div class="records_more">
+			<div class="action">
+				<a href="{% url api-record page='2',emitter_format='.json' %}" class="input_button_wrapper use_record_more">
+					<span class="input_button_start"></span>
+					<span class="input_button_body">
+						<span class="icon icon_record_more">More</span>
+					</span>
+					<span class="input_button_end"></span>
+				</a>
+			</div>
+			<div class="loading"></div>
 		</div>
-		<div class="loading"></div>
-	</div>
+	{% endif %}
 {% endblock %}
