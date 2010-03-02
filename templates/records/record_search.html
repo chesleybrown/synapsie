@@ -27,7 +27,7 @@
 							<ul class="tags">
 								{% for tag in selected_tags %}
 									{% if tag.name %}
-										<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
+										<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a></li>
 									{% endif %}
 								{% endfor %}
 							</ul>
