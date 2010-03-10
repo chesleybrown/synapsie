@@ -1,21 +1,29 @@
 table.jCalendar {
-	border: 1px solid #000;
-	background: #aaa;
+	background: #CCC;
 	border-collapse: separate;
-	border-spacing: 2px;
+	border-spacing: 1px;
+	margin: 0 0 3px 5px;
 }
 table.jCalendar th {
-	background: #333;
+	background: url(/site_media/media/img/layout/form/bg.png) repeat scroll 0 0 transparent;
 	color: #fff;
+	text-shadow: #000 0 1px 0;
 	font-weight: bold;
 	padding: 3px 5px;
+	border-width: 1px 1px 0 0;
+	border-style: solid;
+	border-color: #fff;
 }
 
 table.jCalendar td {
-	background: #ccc;
+	background: #eee;
 	color: #000;
+	text-shadow: #fff 0 1px 0;
 	padding: 3px 5px;
 	text-align: center;
+	border-width: 1px 1px 0 0;
+	border-style: solid;
+	border-color: #fff;
 }
 table.jCalendar td.other-month {
 	background: #ddd;
@@ -24,33 +32,40 @@ table.jCalendar td.other-month {
 table.jCalendar td.today {
 	background: #666;
 	color: #fff;
+	text-shadow: #000 0 1px 0;
 }
 table.jCalendar td.selected {
-	background: #f66;
+	background: #333;
 	color: #fff;
+	text-shadow: #000 0 1px 0;
 }
 table.jCalendar td.selected.dp-hover {
-	background: #f33;
+	background: #555;
 	color: #fff;
+	text-shadow: #000 0 1px 0;
 }
 table.jCalendar td.dp-hover,
 table.jCalendar tr.activeWeekHover td {
 	background: #fff;
 	color: #000;
+	text-shadow: #fff 0 1px 0;
 }
 table.jCalendar tr.selectedWeek td {
 	background: #f66;
 	color: #fff;
+	text-shadow: #000 0 1px 0;
 }
 table.jCalendar td.disabled, table.jCalendar td.disabled.dp-hover {
 	background: #bbb;
 	color: #888;
+	text-shadow: #fff 0 1px 0;
 }
 table.jCalendar td.unselectable,
 table.jCalendar td.unselectable:hover,
 table.jCalendar td.unselectable.dp-hover {
 	background: #bbb;
 	color: #888;
+	text-shadow: #fff 0 1px 0;
 }
 
 /* For the popup */
@@ -59,10 +74,10 @@ table.jCalendar td.unselectable.dp-hover {
 
 div.dp-popup {
 	position: relative;
-	background: #ccc;
+	background: #fff;
 	font-size: 10px;
 	font-family: arial, sans-serif;
-	padding: 2px;
+	margin: 10px;
 	width: 171px;
 	line-height: 1.2em;
 }
@@ -73,8 +88,9 @@ div#dp-popup {
 div.dp-popup h2 {
 	font-size: 12px;
 	text-align: center;
-	margin: 2px 0;
-	padding: 0;
+	margin: 2px 3px 0 3px;
+	padding: 5px 3px;
+	color: #000;
 }
 a#dp-close {
 	font-size: 11px;
@@ -99,6 +115,18 @@ div.dp-popup div.dp-nav-prev {
 div.dp-popup div.dp-nav-prev a {
 	float: left;
 }
+div.dp-popup div.dp-nav-prev a.dp-nav-prev-year {
+	background: url(/site_media/media/img/icons/fugue/control-double-180-small.png) no-repeat;
+	display: block;
+	width: 16px;
+	height: 16px;
+}
+div.dp-popup div.dp-nav-prev a.dp-nav-prev-month {
+	background: url(/site_media/media/img/icons/fugue/control-180-small.png) no-repeat;
+	display: block;
+	width: 16px;
+	height: 16px;
+}
 /* Opera needs the rules to be this specific otherwise it doesn't change the cursor back to pointer after you have disabled and re-enabled a link */
 div.dp-popup div.dp-nav-prev a, div.dp-popup div.dp-nav-next a {
 	cursor: pointer;
@@ -115,9 +143,22 @@ div.dp-popup div.dp-nav-next {
 div.dp-popup div.dp-nav-next a {
 	float: right;
 }
+div.dp-popup div.dp-nav-next a.dp-nav-next-year {
+	background: url(/site_media/media/img/icons/fugue/control-double-000-small.png) no-repeat;
+	display: block;
+	width: 16px;
+	height: 16px;
+}
+div.dp-popup div.dp-nav-next a.dp-nav-next-month {
+	background: url(/site_media/media/img/icons/fugue/control-000-small.png) no-repeat;
+	display: block;
+	width: 16px;
+	height: 16px;
+}
 div.dp-popup a.disabled {
 	cursor: default;
 	color: #aaa;
+	opacity: 0.25;
 }
 div.dp-popup td {
 	cursor: pointer;

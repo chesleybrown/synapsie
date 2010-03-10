@@ -519,16 +519,16 @@ form.record_form .record_security {
 	cursor: pointer;
 }
 
-form.record_form .security_menu {
+form.record_form .form_menu {
 	z-index: 100;
 }
-form.record_form .security_menu ul.menu_headers .icon {
+form.record_form .form_menu ul.menu_headers .icon {
 	float: left;
 	padding: 4px 4px 4px 0;
 }
-form.record_form .security_menu.hover {
+form.record_form .form_menu.hover {
 }
-form.record_form .security_menu ul.menu_headers {
+form.record_form .form_menu ul.menu_headers {
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -540,7 +540,7 @@ form.record_form .security_menu ul.menu_headers {
 	top: 1px;
 	z-index: 2100;
 }
-form.record_form .security_menu ul.menu_headers .side {
+form.record_form .form_menu ul.menu_headers .side {
 	background: url(/site_media/media/img/layout/records/dropdown_side_bg.png) no-repeat;
 	margin: 0;
 	display: block;
@@ -548,7 +548,7 @@ form.record_form .security_menu ul.menu_headers .side {
 	height: 24px;
 	float: right;
 }
-form.record_form .security_menu ul.menu_headers li.menu_header {
+form.record_form .form_menu ul.menu_headers li.menu_header {
 	background: url(/site_media/media/img/layout/records/dropdown_bg.png) no-repeat;
 	margin: 1px 0 0 0;
 	padding: 0 0 0 7px;
@@ -556,18 +556,18 @@ form.record_form .security_menu ul.menu_headers li.menu_header {
 	width: auto;
 	height: 24px;
 }
-form.record_form .security_menu ul.menu_headers li.menu_header .menu_header_text {
+form.record_form .form_menu ul.menu_headers li.menu_header .menu_header_text {
 	display: block;
 	float: left;
 	padding: 0;
 }
-form.record_form .security_menu ul.menu_headers:hover li.menu_header {
+form.record_form .form_menu ul.menu_headers:hover li.menu_header {
 	background-position: 0 -24px
 }
-form.record_form .security_menu ul.menu_headers:hover .side {
+form.record_form .form_menu ul.menu_headers:hover .side {
 	background-position: 0 -24px
 }
-form.record_form .security_menu ul.menu_items {
+form.record_form .form_menu ul.menu_items {
 	position: absolute;
 	z-index: 2000;
 	display: none;
@@ -584,16 +584,7 @@ form.record_form .security_menu ul.menu_items {
 	-moz-box-shadow: 0 5px 5px #aaa;
 	-webkit-box-shadow: 0 5px 5px #aaa;
 }
-form.record_form .security_menu ul.menu_items li.menu_item {
-	margin: 0;
-	padding: 3px 0;
-	cursor: pointer;
-}
-form.record_form .security_menu ul.menu_items li.menu_item .icon {
-	float: left;
-	margin: 3px 10px 0 0;
-}
-form.record_form .security_menu ul.menu_items li.menu_item {
+form.record_form .form_menu ul.menu_items li.menu_item {
 	color: #666;
 	text-decoration: none;
 	font-weight: bold;
@@ -604,39 +595,57 @@ form.record_form .security_menu ul.menu_items li.menu_item {
 	border-width: 1px 0;
 	border-style: solid;
 	border-color: transparent;
+	cursor: pointer;
 }
-form.record_form .security_menu ul.menu_items li.menu_item .menu_item_value {
+form.record_form .form_menu ul.menu_items li.menu_item_datepicker {
+	margin: 0;
+	padding: 0;
+	cursor: default;
+}
+form.record_form .form_menu ul.menu_items li.menu_item .icon {
+	float: left;
+	margin: 3px 10px 0 0;
+}
+form.record_form .form_menu ul.menu_items li.menu_item .menu_item_value,
+form.record_form .form_menu ul.menu_items li.menu_item_datepicker .menu_item_value {
 	display: none;
 }
-form.record_form .security_menu ul.menu_items li.menu_item .menu_item_text {
+form.record_form .form_menu ul.menu_items li.menu_item .menu_item_text {
 }
-form.record_form .security_menu ul.menu_items li.menu_item .menu_item_desc {
+form.record_form .form_menu ul.menu_items li.menu_item .menu_item_desc {
 	font-size: 11px;
 	padding-left: 26px;
 	display: block;
 	color: #999;
 }
-form.record_form .security_menu ul.menu_items li.menu_item:hover .menu_item_desc {
+form.record_form .form_menu ul.menu_items li.menu_item_datepicker .menu_item_desc {
+	margin: 0;
+	padding: 0;
+}
+form.record_form .form_menu ul.menu_items li.menu_item:hover .menu_item_desc {
 	color: #ddd;
 }
-form.record_form .security_menu ul.menu_items li.menu_item:hover {
+form.record_form .form_menu ul.menu_items li.menu_item:hover {
 	color: #fff;
 	text-shadow: 1px 1px #000;
 	text-decoration: none;
 	background-color: #333;
 	border-color: #000;
 }
-form.record_form .security_menu.active ul.menu_headers li.menu_header .side,
-form.record_form .security_menu.active ul.menu_headers li.menu_header .side:hover,
-form.record_form .security_menu.active ul.menu_headers li.menu_header,
-form.record_form .security_menu.active ul.menu_headers li.menu_header:hover { /*--Makes sure that the active tab does not listen to the hover properties--*/
+form.record_form .form_menu ul.menu_items li.menu_item_datepicker:hover {
+	background-color: #fff;
+}
+form.record_form .form_menu.active ul.menu_headers li.menu_header .side,
+form.record_form .form_menu.active ul.menu_headers li.menu_header .side:hover,
+form.record_form .form_menu.active ul.menu_headers li.menu_header,
+form.record_form .form_menu.active ul.menu_headers li.menu_header:hover { /*--Makes sure that the active tab does not listen to the hover properties--*/
 	background-position: 0 -48px !important;
 }
-form.record_form .security_menu.active ul.menu_headers {
+form.record_form .form_menu.active ul.menu_headers {
 	border-bottom: 1px solid #999;
 }
 
-form.record_form .security_menu.active {
+form.record_form .form_menu.active {
 	z-index: 2000;
 }
 
@@ -675,7 +684,7 @@ ul.holder li.bit-box {
 ul.holder li.bit-box:hover,
 ul.tags li.tag:hover,
 .selected {
-	background: #000 !important;
+	background: #000;
 }
 ul.holder li.bit-box-focus {
 	border-color: #598BEC;

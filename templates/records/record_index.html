@@ -30,16 +30,16 @@
 		<div class="actions">
 			<div class="actions_left">
 				<div class="action">
-					<div class="security_menu use_security_menu">
+					<div id="record_form_datepicker" class="form_menu use_form_menu">
 						<ul class="menu_headers">
 							<li class="menu_header">
 								<div class="menu_header_icon icon icon_record_date"></div>
-								<span class="menu_header_text">Feb 28, 2010</span>
+								<span class="menu_header_text">{% now "M d, Y" %}</span>
 								<div class="side"></div>
 							</li>
 						</ul>
 						<ul class="menu_items">
-							<li class="menu_item">
+							<li class="menu_item_datepicker">
 								<div class="menu_item_desc">
 									<div class="use_datepicker"></div>
 								</div>
@@ -47,54 +47,55 @@
 							</li>
 						</ul>
 					</div>
+					{{ formset.date }}
 				</div>
 				
 				<div class="group">
 					<div class="action">
-						<div class="security_menu use_security_menu">
+						<div class="form_menu use_form_menu">
 							<ul class="menu_headers">
 								<li class="menu_header">
 									<div class="menu_header_icon icon icon_record_time"></div>
-									<span class="menu_header_text">10</span>
+									<span class="menu_header_text">{% now "h" %}</span>
 									<div class="side"></div>
 								</li>
 							</ul>
 							<ul class="menu_items">
 								<li class="menu_item">
-									<span class="menu_item_text">1</span>
-									<span class="menu_item_value">1</span>
+									<span class="menu_item_text">01</span>
+									<span class="menu_item_value">01</span>
 								</li>
 								<li class="menu_item">
-									<span class="menu_item_text">2</span>
-									<span class="menu_item_value">2</span>
+									<span class="menu_item_text">02</span>
+									<span class="menu_item_value">02</span>
 								</li>
 								<li class="menu_item">
-									<span class="menu_item_text">3</span>
-									<span class="menu_item_value">3</span>
+									<span class="menu_item_text">03</span>
+									<span class="menu_item_value">03</span>
 								</li>
 								<li class="menu_item">
-									<span class="menu_item_text">4</span>
-									<span class="menu_item_value">4</span>
+									<span class="menu_item_text">04</span>
+									<span class="menu_item_value">04</span>
 								</li>
 								<li class="menu_item">
-									<span class="menu_item_text">5</span>
-									<span class="menu_item_value">5</span>
+									<span class="menu_item_text">05</span>
+									<span class="menu_item_value">05</span>
 								</li>
 								<li class="menu_item">
-									<span class="menu_item_text">6</span>
-									<span class="menu_item_value">6</span>
+									<span class="menu_item_text">06</span>
+									<span class="menu_item_value">06</span>
 								</li>
 								<li class="menu_item">
-									<span class="menu_item_text">7</span>
-									<span class="menu_item_value">7</span>
+									<span class="menu_item_text">07</span>
+									<span class="menu_item_value">07</span>
 								</li>
 								<li class="menu_item">
-									<span class="menu_item_text">8</span>
-									<span class="menu_item_value">8</span>
+									<span class="menu_item_text">08</span>
+									<span class="menu_item_value">08</span>
 								</li>
 								<li class="menu_item">
-									<span class="menu_item_text">9</span>
-									<span class="menu_item_value">9</span>
+									<span class="menu_item_text">09</span>
+									<span class="menu_item_value">09</span>
 								</li>
 								<li class="menu_item">
 									<span class="menu_item_text">10</span>
@@ -110,19 +111,20 @@
 								</li>
 							</ul>
 						</div>
+						{{ formset.hours }}
 					</div>
 					<div class="action">
-						<div class="security_menu use_security_menu">
+						<div class="form_menu use_form_menu">
 							<ul class="menu_headers">
 								<li class="menu_header">
-									<span class="menu_header_text">35</span>
+									<span class="menu_header_text">{% now "i" %}</span>
 									<div class="side"></div>
 								</li>
 							</ul>
 							<ul class="menu_items">
 								<li class="menu_item">
 									<span class="menu_item_text">00</span>
-									<span class="menu_item_value">0</span>
+									<span class="menu_item_value">00</span>
 								</li>
 								<li class="menu_item">
 									<span class="menu_item_text">15</span>
@@ -138,12 +140,13 @@
 								</li>
 							</ul>
 						</div>
+						{{ formset.minutes }}
 					</div>
 					<div class="action">
-						<div class="security_menu use_security_menu">
+						<div class="form_menu use_form_menu">
 							<ul class="menu_headers">
 								<li class="menu_header">
-									<span class="menu_header_text">PM</span>
+									<span class="menu_header_text">{% now "A" %}</span>
 									<div class="side"></div>
 								</li>
 							</ul>
@@ -158,6 +161,7 @@
 								</li>
 							</ul>
 						</div>
+						{{ formset.ampm }}
 					</div>
 				</div>
 				
@@ -169,7 +173,7 @@
 			<div class="actions_right">
 				
 				<div class="action">
-					<div class="security_menu use_security_menu">
+					<div class="form_menu use_form_menu">
 						<ul class="menu_headers">
 							<li class="menu_header">
 								<div class="menu_header_icon icon icon_personal"></div>

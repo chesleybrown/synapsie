@@ -8,7 +8,7 @@ urlpatterns = patterns('',
 	
 	url(r'^public/(?P<user_id>\d+)\/?$', views.public_records, name='record_public'),
 	url(r'^public/(?P<username>.+)\/?$', views.public_records, name='record_public'),
-	url(r'^public\/?$$', views.public_records, name='record_public'),
+	url(r'^public\/?$', views.public_records, name='record_public'),
 	
 	url(r'^search/tags/(?P<tags>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*)\/?$', views.search_records, name='record_search'),
 	url(r'^search/tags/(?P<add_tag>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*),(?P<tags>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*)(?P<query>.*)\/?$', views.search_records, name='record_search'),

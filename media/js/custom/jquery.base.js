@@ -561,7 +561,7 @@ $(document).ready(function() {
 	/*
 	 * Setup Record Form Security Menu (dropdowns)
 	 */
-	$('form.record_form div.use_security_menu').dropdownMenus({
+	$('form.record_form div.use_form_menu').dropdownMenus({
 		show_effect: function(e) {
 			e.addClass('hover');
 		},
@@ -571,16 +571,16 @@ $(document).ready(function() {
 	});
 	
 	//this handles when a user selects an option from the security menu
-	$('form.record_form div.use_security_menu ul.menu_items li.menu_item').bind('click', function(e) {
+	$('form.record_form div.use_form_menu ul.menu_items li.menu_item').bind('click', function(e) {
 		
 		//init
-		var menu_header = $(this).parents('.security_menu').find('li.menu_header');
+		var menu_header = $(this).parents('.form_menu').find('li.menu_header');
 		var menu_header_text = menu_header.find('.menu_header_text');
 		var menu_header_icon = menu_header.find('.menu_header_icon');
 		var menu_item_text = $(this).find('.menu_item_text').text();
 		var menu_item_icon = $(this).find('.menu_item_icon');
 		var menu_item_value = $(this).find('.menu_item_value').text();
-		var personal_input = $(this).parents('.security_menu').next('input[name=personal]');
+		var input = $(this).parents('.form_menu').next('input');
 		
 		//change header
 		menu_header_text.text(menu_item_text);
@@ -588,7 +588,7 @@ $(document).ready(function() {
 		menu_header_icon
 			.removeClass('menu_item_icon')
 			.addClass('menu_header_icon');
-		personal_input.val(menu_item_value);
+		input.val(menu_item_value);
 	});
 	/*
 	 * END Setup Record Form Security Menu (dropdowns)
@@ -598,15 +598,35 @@ $(document).ready(function() {
 	/*
 	 * Setup Record Form Date Picker
 	 */
+	Date.firstDayOfWeek = 0; //sunday
 	$('.use_datepicker')
 		.datePicker({
-			inline:true
+			inline: true,
+			startDate: '01/01/1970',
+			endDate: (new Date()).asString(),
+			previousYear: '',
+			previousMonth: '',
+			nextYear: '',
+			nextMonth: ''
 		})
 		.bind(
 			'dateSelected',
-			function(e, selectedDate, $td)
-			{
-				console.log('You selected ' + selectedDate);
+			function(e, selectedDate, $td) {
+				var input = $(this).parents('.form_menu').next('input');
+				var formated_day = selectedDate.getDate();
+				if (formated_day < 10) {
+					formated_day = '0' + formated_day;
+				}
+				var formated_month = selectedDate.getMonth();
+				if (formated_month < 10) {
+					formated_month = '0' + formated_month;
+				}
+				
+				var formated_date = selectedDate.getMonthName(true) + ' ' + formated_day + ', ' + selectedDate.getFullYear();
+				var date = selectedDate.getFullYear() + '-' + formated_month + '-' + formated_day
+				
+				$('#record_form_datepicker').find('.menu_header_text').text(formated_date);
+				input.val(date);
 			}
 		);
 	/*

@@ -526,6 +526,10 @@
 		this.selectedDates		=	{};
 		this.inline				=	null;
 		this.context			=	'#dp-popup';
+		this.previousYear		=	null;
+		this.previousMonth		=	null;
+		this.nextYear			=	null;
+		this.nextMonth			=	null;
 	};
 	$.extend(
 		DatePicker.prototype,
@@ -545,6 +549,11 @@
 				this.hoverClass = s.hoverClass;
 				this.setOffset(s.verticalOffset, s.horizontalOffset);
 				this.inline = s.inline;
+				this.previousYear = s.previousYear;
+				this.previousMonth = s.previousMonth;
+				this.nextYear = s.nextYear;
+				this.nextMonth = s.nextMonth;
+				
 				if (this.inline) {
 					this.context = this.ele;
 					this.display();
@@ -744,7 +753,6 @@
 					this._closeCalendar(true);
 				}
 				
-				
 				$createIn
 					.append(
 						$('<div></div>')
@@ -754,7 +762,7 @@
 								$('<h2></h2>'),
 								$('<div class="dp-nav-prev"></div>')
 									.append(
-										$('<a class="dp-nav-prev-year" href="#" title="' + $.dpText.TEXT_PREV_YEAR + '">&lt;&lt;</a>')
+										$('<a class="dp-nav-prev-year" href="#" title="' + $.dpText.TEXT_PREV_YEAR + '">' + this.previousYear + '</a>')
 											.bind(
 												'click',
 												function()
@@ -762,7 +770,7 @@
 													return c._displayNewMonth.call(c, this, 0, -1);
 												}
 											),
-										$('<a class="dp-nav-prev-month" href="#" title="' + $.dpText.TEXT_PREV_MONTH + '">&lt;</a>')
+										$('<a class="dp-nav-prev-month" href="#" title="' + $.dpText.TEXT_PREV_MONTH + '">' + this.previousMonth + '</a>')
 											.bind(
 												'click',
 												function()
@@ -773,7 +781,7 @@
 									),
 								$('<div class="dp-nav-next"></div>')
 									.append(
-										$('<a class="dp-nav-next-year" href="#" title="' + $.dpText.TEXT_NEXT_YEAR + '">&gt;&gt;</a>')
+										$('<a class="dp-nav-next-year" href="#" title="' + $.dpText.TEXT_NEXT_YEAR + '">' + this.nextYear + '</a>')
 											.bind(
 												'click',
 												function()
@@ -781,7 +789,7 @@
 													return c._displayNewMonth.call(c, this, 0, 1);
 												}
 											),
-										$('<a class="dp-nav-next-month" href="#" title="' + $.dpText.TEXT_NEXT_MONTH + '">&gt;</a>')
+										$('<a class="dp-nav-next-month" href="#" title="' + $.dpText.TEXT_NEXT_MONTH + '">' + this.nextMonth + '</a>')
 											.bind(
 												'click',
 												function()
@@ -1051,7 +1059,11 @@
 		horizontalPosition	: $.dpConst.POS_LEFT,
 		verticalOffset		: 0,
 		horizontalOffset	: 0,
-		hoverClass			: 'dp-hover'
+		hoverClass			: 'dp-hover',
+		previousYear		: '&lt;&lt;',
+		previousMonth		: '&lt;',
+		nextYear			: '&gt;&gt;',
+		nextMonth			: '&gt;'
 	};
 
 	function _getController(ele)
