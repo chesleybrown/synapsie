@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime
+import time
 
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
@@ -126,8 +127,11 @@ class RecordHandler(BaseHandler):
 		#init
 		identity = request.user
 		formset = RecordForm()
-		now = datetime.datetime.now()
+		now = datetime.now()
 		str_tags = ''
+		record_datetime = None
+		datetime_string = False
+		datetime_format = "%Y-%m-%d %I:%M%p"
 		
 		# if user has posted
 		if request.method == 'POST':
@@ -139,11 +143,17 @@ class RecordHandler(BaseHandler):
 			if formset.is_valid():
 				clean = formset.cleaned_data
 				
+				# generate datetime stamp
+				if clean['datetime_set']:
+					datetime_string = clean['date'] + ' ' + clean['hour'] + ':' + clean['minute'] + clean['ampm']
+					record_datetime = datetime.fromtimestamp(time.mktime(time.strptime(datetime_string, datetime_format)))
+				
 				# create record, set user
 				record = Record(
 					user_id = identity.id,
 					text = clean['text'],
-					personal = int(clean['personal'])
+					personal = int(clean['personal']),
+					created = record_datetime
 				)
 				
 				# save

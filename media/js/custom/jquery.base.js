@@ -305,6 +305,7 @@ $(document).ready(function() {
 					.removeAttr('style')
 					.blur();
 				$('#id_tags').fcbkcomplete('clear');
+				$('#record_form_datetime_reset div.use_record_form_datetime_reset').click();
 				
 				//done, focus
 				$('#id_text').focus();
@@ -617,7 +618,7 @@ $(document).ready(function() {
 				if (formated_day < 10) {
 					formated_day = '0' + formated_day;
 				}
-				var formated_month = selectedDate.getMonth();
+				var formated_month = selectedDate.getMonth()+1;
 				if (formated_month < 10) {
 					formated_month = '0' + formated_month;
 				}
@@ -625,12 +626,121 @@ $(document).ready(function() {
 				var formated_date = selectedDate.getMonthName(true) + ' ' + formated_day + ', ' + selectedDate.getFullYear();
 				var date = selectedDate.getFullYear() + '-' + formated_month + '-' + formated_day
 				
-				$('#record_form_datepicker').find('.menu_header_text').text(formated_date);
+				$(this).parents('.form_menu').find('.menu_header_text').text(formated_date);
 				input.val(date);
 			}
 		);
 	/*
 	 * END Setup Record Form Date Picker
+	 */
+	
+	
+	/*
+	 * Setup Record Form Date Time Selection
+	 */
+	function setupDateTimeSelection() {
+		var selections = $('#record_form_date, #record_form_time_hour, #record_form_time_minute, #record_form_time_ampm');
+		var datetime_reset = $('#record_form_datetime_reset');
+		
+		$(selections)
+			.find('.menu_item, .menu_item_datepicker')
+			.bind('click', function(e) {
+				datetime_reset.fadeIn();
+				$('#id_datetime_set').val(1);
+			});
+	}
+	setupDateTimeSelection();
+	/*
+	 * END Record Form Date Time Selection
+	 */
+	
+	/*
+	 * Setup Time Selection Auto-Updating (clock)
+	 */
+	function setupDateTimeAutoUpdate(force_update) {
+		var now = new Date();
+		var selection_menu_items = $('#record_form_date, #record_form_time_hour, #record_form_time_minute, #record_form_time_ampm')
+			.find('.form_menu .menu_items');
+		var date = $('#record_form_date');
+		var hour = $('#record_form_time_hour');
+		var minute = $('#record_form_time_minute');
+		var ampm = $('#record_form_time_ampm');
+		var datetime_reset = $('#record_form_datetime_reset');
+		
+		//generate formated date
+		var formated_day = now.getDate();
+		if (formated_day < 10) {
+			formated_day = '0' + formated_day;
+		}
+		var formated_month = now.getMonth()+1;
+		if (formated_month < 10) {
+			formated_month = '0' + formated_month;
+		}
+		var formated_date = now.getMonthName(true) + ' ' + formated_day + ', ' + now.getFullYear();
+		var sql_date = now.getFullYear() + '-' + formated_month + '-' + formated_day
+		
+		//generate hour
+		var formated_hour = now.getHours();
+		if (formated_hour >= 12){
+			if (formated_hour == 12){
+				formated_hour = 12;
+			}
+			else {
+				formated_hour = formated_hour-12;
+			}
+		}
+		else if(formated_hour < 12){
+			if (formated_hour == 0){
+				formated_hour = 12;
+			}
+		}
+		
+		//generate minute
+		var formated_minute = now.getMinutes();
+		if (formated_minute < 10) {
+			formated_minute = '0' + formated_minute;
+		}
+		
+		//generate ampm
+		var formated_ampm = 'AM';
+		if (now.getHours() > 12) {
+			formated_ampm = 'PM';
+		}
+		
+		//update selection inputs ONLY if datetime_reset isn't visible
+		if (force_update || (!$(selection_menu_items).is(':visible') && $(datetime_reset).is(':hidden'))) {
+			$(date).find('.use_datepicker').dpSetSelected(formated_month+'/'+formated_day+'/'+now.getFullYear()); //stupid datepicker
+			$(date).find('.menu_header_text').text(formated_date);
+			$(date).find('input').val(sql_date);
+			
+			$(hour).find('.menu_header_text').text(formated_hour);
+			$(hour).find('input').val(formated_hour);
+			
+			$(minute).find('.menu_header_text').text(formated_minute);
+			$(minute).find('input').val(formated_minute);
+			
+			$(ampm).find('.menu_header_text').text(formated_ampm);
+			$(ampm).find('input').val(formated_ampm);
+			
+			$('#id_datetime_set').val(0);
+		}
+	}
+	setupDateTimeAutoUpdate(false);
+	setInterval(function() { setupDateTimeAutoUpdate(false); }, 5000);
+	/*
+	 * END Setup Time Selection Auto-Updating (clock)
+	 */
+	
+	
+	/*
+	 * Setup DateTime Reset
+	 */
+	$('div.use_record_form_datetime_reset').bind('click', function(e) {
+		setupDateTimeAutoUpdate(true);
+		$(this).parent().fadeOut();
+	});
+	/*
+	 * END Setup DateTime Reset
 	 */
 	
 	

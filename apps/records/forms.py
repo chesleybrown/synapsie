@@ -8,9 +8,10 @@ class RecordForm(forms.ModelForm):
 	tags = TagField(label='Tags for Life Record...', widget=forms.SelectMultiple, required=False)
 	personal = forms.CharField(widget=forms.HiddenInput, initial='1')
 	date = forms.CharField(widget=forms.HiddenInput, initial=date.today())
-	hours = forms.CharField(widget=forms.HiddenInput, initial=datetime.today().strftime("%I"))
-	minutes = forms.CharField(widget=forms.HiddenInput, initial=datetime.today().strftime("%M"))
+	hour = forms.CharField(widget=forms.HiddenInput, initial=datetime.today().strftime("%I"))
+	minute = forms.CharField(widget=forms.HiddenInput, initial=datetime.today().strftime("%M"))
 	ampm = forms.CharField(widget=forms.HiddenInput, initial=datetime.today().strftime("%p"))
+	datetime_set = forms.CharField(widget=forms.HiddenInput, initial=0)
 	
 	def __init__(self, *args, **kwrds):
 		super(RecordForm, self).__init__(*args, **kwrds)

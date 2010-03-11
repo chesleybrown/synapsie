@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 from tagging.fields import TagField
@@ -6,7 +8,7 @@ from tagging.models import Tag
 class Record(models.Model):
 	user = models.ForeignKey(User)
 	text = models.TextField()
-	created = models.DateTimeField(auto_now_add=True)
+	created = models.DateTimeField(default=datetime.now())
 	personal = models.BooleanField(default=True)
 	
 	def __unicode__(self):

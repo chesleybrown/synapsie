@@ -506,8 +506,13 @@ form.record_form .actions_right .action {
 	margin-left: 10px;
 }
 
-form.record_form .action > .icon {
+form.record_form .action > .icon,
+form.record_form .action > div > .icon {
 	margin-top: 6px;
+	cursor: pointer;
+	font-size: 11px;
+	color: #fff;
+	text-shadow: #333 1px 1px 0;
 }
 form.record_form .action > .input_button_wrapper {
 	margin-top: -1px;
