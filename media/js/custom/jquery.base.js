@@ -709,7 +709,7 @@ $(document).ready(function() {
 		
 		//update selection inputs ONLY if datetime_reset isn't visible
 		if (force_update || (!$(selection_menu_items).is(':visible') && $(datetime_reset).is(':hidden'))) {
-			$(date).find('.use_datepicker').dpSetSelected(formated_month+'/'+formated_day+'/'+now.getFullYear()); //stupid datepicker
+			$(date).find('.use_datepicker').dpSetSelected(formated_day+'/'+formated_month+'/'+now.getFullYear()); //stupid datepicker
 			$(date).find('.menu_header_text').text(formated_date);
 			$(date).find('input').val(sql_date);
 			
