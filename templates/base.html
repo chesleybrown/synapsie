@@ -56,11 +56,11 @@
 							</div>
 							<div class="grid_3 omega">
 								<div id="site_search">
-									<form class="use_inline_labels" action="{% url record_search tags=selected_tags_printable %}" method="get">
+									<form class="use_inline_labels" action="{% url record_search %}" method="get">
 										<div class="field">
 											<div class="icon icon_search"></div>
 											<label for="id_site_search">Search Your Life...</label>
-											<input type="text" id="id_site_search" name="query" value="{{ query }}" />
+											<input type="text" id="id_site_search" name="text" value="" />
 										</div>
 									</form>
 								</div>

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load tag %}
 
 {% block extra_head_base %}
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" />
@@ -56,11 +57,7 @@
 			<div class="tab_container">
 				<div id="sidebar_tab_used" class="tab_content">
 					{% if used_tags %}
-						<ul class="tags">
-							{% for tag in used_tags %}
-								<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format=".json" %}" class="closebutton hidden use_tag_all_delete"></a></li>
-							{% endfor %}
-						</ul>
+						{% render_tags used_tags %}
 					{% endif %}
 				</div>
 				<div id="sidebar_tab_popular" class="tab_content hidden">
@@ -68,9 +65,10 @@
 						<ul class="tags_chart">
 							{% for tag in popular_tags %}
 								{% if forloop.counter > 10 %}
+									<!-- These are hidden on load... -->
 									<li class="hidden">
 										<div class="label">
-											<ul class="tags"><li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format=".json" %}" class="closebutton hidden use_tag_all_delete"></a></li></ul>
+											{% render_tag tag %}
 										</div>
 										<div class="content">
 											<span style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
@@ -79,7 +77,7 @@
 								{% else %}
 									<li>
 										<div class="label">
-											<ul class="tags"><li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,emitter_format=".json" %}" class="closebutton hidden use_tag_all_delete"></a></li></ul>
+											{% render_tag tag %}
 										</div>
 										<div class="content">
 											<span style="width: {{ tag.percent }}%;">{{ tag.count }}</span>

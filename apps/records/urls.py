@@ -11,8 +11,8 @@ urlpatterns = patterns('',
 	url(r'^public\/?$', views.public_records, name='record_public'),
 	
 	url(r'^search/tags/(?P<tags>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*)\/?$', views.search_records, name='record_search'),
-	url(r'^search/tags/(?P<add_tag>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*),(?P<tags>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*)(?P<query>.*)\/?$', views.search_records, name='record_search'),
-	url(r'^search/tags/(?P<add_tag>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*),(?P<tags>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*)\?query=(?P<query>.+)\/?$', views.search_records, name='record_search'),
+	url(r'^search/tags/(?P<add_tag>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*),(?P<tags>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*)(?P<text>.*)\/?$', views.search_records, name='record_search'),
+	url(r'^search/tags/(?P<add_tag>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*),(?P<tags>[\w\-\!\@\#\$\%\^\&\*\(\),\s]*)\?text=(?P<text>.+)\/?$', views.search_records, name='record_search'),
 	url(r'^search\/?$', views.search_records, name='record_search'),
 	
 	url(r'^create/$', views.add_record, name='record_add'),

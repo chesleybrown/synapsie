@@ -3,7 +3,7 @@ import apps.session_messages as SessionMessages
 
 from apps.records.messages import RecordMessages
 from apps.records.models import Record
-from apps.records.forms import RecordForm
+from apps.records.forms import RecordForm, RecordSearchForm
 from tagging.models import Tag, TaggedItem
 from tagging.utils import get_tag_list
 
@@ -127,13 +127,13 @@ def public_records(request, user_id=0, username=None, page=1):
 	}, context_instance=RequestContext(request))
 
 @login_required
-def search_records(request, tags=False, query='', add_tag=False, page=1):
+def search_records(request, tags=False, text='', add_tag=False, page=1):
 	
 	# init
 	identity = request.user
 	record_list = False
 	records = False
-	formset = RecordForm()
+	formset = RecordSearchForm()
 	selected_tags = False
 	popular_tags_printable = list()
 	used_tags_printable = ''
@@ -147,14 +147,18 @@ def search_records(request, tags=False, query='', add_tag=False, page=1):
 	
 	# get query if one provided
 	if (request.GET):
-		query = request.GET['query']
+		text = request.GET['text']
+		tags = request.GET.getlist('tags[]')
+	
+	# set query in form
+	formset = RecordSearchForm(request.GET)
 	
 	# get user records
 	record_list = Record.objects.all().filter(user=identity).order_by('-created')
 	
 	# query provided
-	if (query):
-		record_list = record_list.filter(text__icontains=query)
+	if (text):
+		record_list = record_list.filter(text__icontains=text)
 	
 	# filter by tags if provided
 	if (tags):
@@ -192,7 +196,7 @@ def search_records(request, tags=False, query='', add_tag=False, page=1):
 		'records_paginator': records_paginator,
 		'selected_tags': selected_tags,
 		'selected_tags_printable': selected_tags_printable,
-		'query': query,
+		'text': text,
 	}, context_instance=RequestContext(request))
 
 @login_required

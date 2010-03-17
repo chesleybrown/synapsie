@@ -1,0 +1,14 @@
+{% load tag %}
+
+<ul class="tags">
+	{% for tag in tags %}
+		{% if tag.name %}
+			<li class="tag">
+				<a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,text=text %}">{{ tag.name }}</a>
+				{% if close_url %}
+					<a class="closebutton {{ closebutton_class }}" href="{{ close_url }}"></a>
+				{% endif %}
+			</li>
+		{% endif %}
+	{% endfor %}
+</ul>

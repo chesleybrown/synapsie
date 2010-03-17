@@ -1,6 +1,7 @@
 {% extends "records/base.html" %}
 
 {% load i18n %}
+{% load tag %}
 
 {% block body_class %}search{% endblock %}
 
@@ -11,26 +12,45 @@
 	
 	<div class="clear"></div>
 	
-	{% if query or selected_tags %}
+	<form id="record_search_form" class="record_form use_inline_labels" action="{% url record_search %}" method="get" autocomplete="off">
+		<fieldset>
+			<div id="id_text_field" class="field">
+				{{ formset.text.label_tag }}
+				{{ formset.text }}
+			</div>
+			<div id="id_tags_field" class="field">
+				{{ formset.tags.label_tag }}
+				<input id="id_tags_temp" name="tags" type="text" value="" />
+				<select id="id_tags" name="tags[]" multiple="multiple" class="hidden">
+					{% for tag in used_tags %}
+						<option value="{{ tag.name }}">{{ tag.name }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</fieldset>
+		
+		<div class="actions">
+			<div class="actions_right">
+				<div class="action">
+					<div class="input_button_wrapper">
+						<div class="input_button_start"></div>
+						<div class="input_button_body">
+							<div class="icon icon_search"></div>
+							<input type="submit" id="search_record" value="Search" class="input_submit" />
+						</div>
+						<div class="input_button_end"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	{% if selected_tags %}
 		<ul id="user_record_list" class="records">
 			<li class="record">
 				<div class="record_content">
 					<div class="footer">
-						<h4>
-							Searching for <strong>{{ query }}</strong>
-							{% if query and selected_tags %}
-								and
-							{% endif %}
-						</h4>
-						
 						{% if selected_tags %}
-							<ul class="tags">
-								{% for tag in selected_tags %}
-									{% if tag.name %}
-										<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a></li>
-									{% endif %}
-								{% endfor %}
-							</ul>
+							{% render_tags selected_tags %}
 						{% endif %}
 					</div>
 				</div>
@@ -83,7 +103,7 @@
 						{% if record.tags %}
 							<ul class="tags">
 								{% for tag in record.tags %}
-									<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,query=query %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
+									<li class="tag"><a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,text=text %}">{{ tag.name }}</a> <a href="{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' %}" class="closebutton use_tag_delete"></a></li>
 								{% endfor %}
 							</ul>
 						{% endif %}
