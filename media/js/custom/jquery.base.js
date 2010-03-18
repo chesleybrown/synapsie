@@ -694,6 +694,9 @@ $(document).ready(function() {
 				formated_hour = 12;
 			}
 		}
+		if (formated_hour < 10) {
+			formated_hour = '0' + formated_hour;
+		}
 		
 		//generate minute
 		var formated_minute = now.getMinutes();
