@@ -78,6 +78,31 @@ body > #site_container {
 	height: 30px;
 }
 
+/* Highlight */
+.highlight {
+	color: #fff;
+	text-shadow: 0 1px 0 #000;
+	font-weight: bold;
+	padding: 2px 3px;
+	border: 1px solid #00527F;
+	background: #94B7DD;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	
+	-webkit-animation: 'highlight' 1s; /* Animation duration in seconds */
+}
+@-webkit-keyframes highlight{
+	0% { /* Define bar-one styles at 0% */
+		color: #000;
+		text-shadow: 0 1px 0 #fff;
+		background: none;
+		border: 1px solid transparent;
+	}
+	100% { /* Define bar-one styles at 100% */
+		opacity: 1;
+	}
+}
+
 
 /* Sidebar */
 ul.sidebar {

@@ -126,3 +126,16 @@
 		<div class="loading"></div>
 	</div>
 {% endblock %}
+
+{% block extra_body %}
+	{{ block.super }}
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+			//highlight the search matches within the records
+			$('#user_record_list li.record .header .text').highlight($('#id_text').val());
+			
+		});
+	</script>
+{% endblock %}
