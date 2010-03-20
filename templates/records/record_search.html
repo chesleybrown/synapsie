@@ -23,7 +23,11 @@
 				<input id="id_tags_temp" name="tags" type="text" value="" />
 				<select id="id_tags" name="tags[]" multiple="multiple" class="hidden">
 					{% for tag in used_tags %}
-						<option value="{{ tag.name }}">{{ tag.name }}</option>
+						{% if tag in selected_tags %}
+							<option selected="selected" value="{{ tag.name }}">{{ tag.name }}</option>
+						{% else %}
+							<option value="{{ tag.name }}">{{ tag.name }}</option>
+						{% endif %}
 					{% endfor %}
 				</select>
 			</div>
@@ -44,19 +48,6 @@
 			</div>
 		</div>
 	</form>
-	{% if selected_tags %}
-		<ul id="user_record_list" class="records">
-			<li class="record">
-				<div class="record_content">
-					<div class="footer">
-						{% if selected_tags %}
-							{% render_tags selected_tags %}
-						{% endif %}
-					</div>
-				</div>
-			</li>
-		</ul>
-	{% endif %}
 	
 	<ul id="user_record_list" class="records">
 		{% for record in records_paginator.object_list %}

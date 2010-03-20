@@ -113,9 +113,15 @@ $(document).ready(function() {
 		var id_tags_select = $('#id_tags');
 		var id_tags_label_clone = false;
 		
+		//hide label if items are selected on load
+		var id_tags_selected = id_tags_select.find('option:selected');
+		if (id_tags_selected.size() > 0) {
+			id_tags_label.hide();
+		}
+		
 		if (item) {
 			id_tags_maininput.bind('blur.setupInFieldLabels', function() {
-				var id_tags_selected = id_tags_select.find('option.selected');
+				var id_tags_selected = id_tags_select.find('option:selected');
 				
 				if (id_tags_selected.size() == 0) {
 					id_tags_maininput.attr('id', 'maininput');
