@@ -1,6 +1,7 @@
 from datetime import datetime
 import time
 
+from django.http import HttpResponseNotAllowed, HttpResponseForbidden, HttpResponse, HttpResponseBadRequest
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.contrib.auth.decorators import login_required
@@ -121,11 +122,11 @@ class RecordHandler(BaseHandler):
 		
 		return data
 	
-	@validate(RecordForm)
 	def create(self, request):
 		
 		#init
 		identity = request.user
+		messages = RecordMessages()
 		formset = RecordForm()
 		now = datetime.now()
 		str_tags = ''
@@ -175,8 +176,11 @@ class RecordHandler(BaseHandler):
 				
 				# redirect to show_record
 				return clean_record
-		
-		return record
+			
+			else:
+				return messages.get('permission_denied')
+			
+		return rc.BAD_REQUEST
 	
 	def update(self, request, record_id):
 		return rc.UPDATED
