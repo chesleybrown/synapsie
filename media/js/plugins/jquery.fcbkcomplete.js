@@ -59,6 +59,9 @@
  
  - 2.6.2h
  		added option to prevent user from adding the same tag twice
+ 	
+ - 2.6.2i
+ 		fixed preSetting up the tags that are already selected on load
  */
 
 /* Coded by: emposha <admin@emposha.com> */
@@ -131,19 +134,19 @@ jQuery(
 		        }
 	        	
 		        function preSet()
-		        {										
+		        {
 		            element.children("option").each( 
 		                function(i,option) 
-		                {									                    
-							option = $(option);												
-		                    if (option.hasClass("selected"))
-		                    {																															
+		                {
+							option = $(option);
+		                    if (option.hasClass("selected") || option.is(':selected'))
+		                    {
 		                        addItem (option.text(), option.val(), true);
 								option.attr("selected","selected");
 		                    } 
 							else
 							{
-								option.removeAttr("selected");	
+								option.removeAttr("selected");
 							}
 
 							cache.push({
@@ -169,7 +172,7 @@ jQuery(
 					});
 					var added_already = _item.attr("selected");
 					
-					if (!added_already || options.allow_duplicates) {
+					if (preadded || (!added_already || options.allow_duplicates)) {
 		                var li = document.createElement("li");
 		                var txt = document.createTextNode(title);
 		                var aclose = document.createElement("a");
@@ -199,7 +202,7 @@ jQuery(
 		            }
 					
 	                if (!preadded) 
-	                {						
+	                {
 	                    $("#"+elemid + "_annoninput").remove();
 	                    addInput(1);
 						
