@@ -342,6 +342,22 @@ ul.records li.record .footer {
 }
 
 
+/* Records No Results */
+.records_no_results {
+	background-color: #E6E6E6;
+	border: 1px solid #CCCCCC;
+	margin-left: 10px;
+	margin-bottom: 5px;
+	padding: 10px;
+	overflow: auto;
+	text-align: center;
+}
+.records_no_results p {
+	text-align: center;
+	margin: 0;
+}
+
+
 /* Tags */
 ul.tags {
 	list-style: none;
