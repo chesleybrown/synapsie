@@ -26,6 +26,9 @@ input.icon {
 .icon_search {
 	background-image: url(/site_media/media/img/icons/fugue/magnifier.png);
 }
+.icon_clear {
+	background-image: url(/site_media/media/img/icons/fugue/eraser.png);
+}
 .icon_delete {
 	background-image: url(/site_media/media/img/icons/fugue/eraser.png);
 }
