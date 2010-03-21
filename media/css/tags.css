@@ -1,0 +1,76 @@
+/*
+	Tags CSS used in main layout
+	@version 0.1
+	@author Chesley Brown
+	@product TagLife
+*/
+
+/* Tags */
+ul.tags {
+	list-style: none;
+	margin: 0;
+}
+ul.tags li.tag {
+	position: relative;
+	margin: 5px 10px 5px 0;
+	padding: 0 0 0 5px;
+	font-size: 11px;
+	min-height: 18px;
+	line-height: 18px;
+	float: left;
+	display: block;
+	color: #fff;
+	background: #333;
+	border: 1px solid #000;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+ul.tags li.tag .tag_text,
+ul.holder li.bit-box .tag_text {
+	color: #fff;
+	text-decoration: none;
+	padding: 0;
+	margin: 0 5px 0 0;
+	float: left;
+	display: block;
+}
+ul.tags li.tag a.closebutton {
+}
+
+
+/* Records More */
+.tags_more {
+	background-color: #E6E6E6;
+	border: 1px solid #CCCCCC;
+	margin-left: 10px;
+	margin-bottom: 5px;
+	padding: 10px;
+	overflow: auto;
+	text-align: center;
+}
+.tags_more .action {
+	float: right;
+}
+.tags_more .loading {
+	display: none;
+	width: 32px;
+	height: 32px;
+	background: url(/site_media/media/img/layout/records/loading.gif);
+	margin: 0 auto;
+}
+
+
+/* Records No Results */
+.tags_no_results {
+	background-color: #E6E6E6;
+	border: 1px solid #CCCCCC;
+	margin-left: 10px;
+	margin-bottom: 5px;
+	padding: 10px;
+	overflow: auto;
+	text-align: center;
+}
+.tags_no_results p {
+	text-align: center;
+	margin: 0;
+}

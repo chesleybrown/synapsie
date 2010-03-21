@@ -589,7 +589,7 @@ $(document).ready(function() {
 	
 	
 	/*
-	 * Setup Record Menus (dropdowns)
+	 * Setup Record/Tag Menus (dropdowns)
 	 */
 	$('div.use_record_menu').dropdownMenus({
 		parent_block_selector: 'li.record',
@@ -602,8 +602,17 @@ $(document).ready(function() {
 			e.removeClass('hover');
 		}
 	});
+	$('div.use_tag_menu').dropdownMenus({
+		parent_block_selector: 'li.tag',
+		show_effect: function(e) {
+			e.addClass('hover');
+		},
+		hide_effect: function(e) {
+			e.removeClass('hover');
+		}
+	});
 	/*
-	 * END Setup Record Menus (dropdowns)
+	 * END Setup Record/Tag Menus (dropdowns)
 	 */
 	
 	

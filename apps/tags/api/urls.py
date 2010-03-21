@@ -10,7 +10,8 @@ Emitter.register('.xml', XMLEmitter, 'text/xml; charset=utf-8')
 Emitter.register('.xml/', XMLEmitter, 'text/xml; charset=utf-8')
 
 urlpatterns = patterns('',
-	url(r'^(?P<emitter_format>.+)/(?P<tag_name>.+)/(?P<record_id>\d+)$', tag_handler, name='api-tag'),
-	url(r'^(?P<emitter_format>.+)/(?P<tag_name>.+)$', tag_handler, name='api-tag'),
-	url(r'^(?P<emitter_format>.+)$', tag_handler, name='api-tag'),
+	url(r'^(?P<emitter_format>[\.a-z]+)/(?P<tag_name>.+)/(?P<record_id>\d+)$', tag_handler, name='api-tag'),
+	url(r'^(?P<emitter_format>[\.a-z]+)/(?P<tag_id>\d+)$', tag_handler, name='api-tag'),
+	url(r'^(?P<emitter_format>[\.a-z]+)/(?P<tag_name>.+)$', tag_handler, name='api-tag'),
+	url(r'^(?P<emitter_format>[\.a-z]+)$', tag_handler, name='api-tag'),
 )

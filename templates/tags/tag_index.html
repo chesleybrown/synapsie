@@ -1,0 +1,63 @@
+{% extends "tags/base.html" %}
+
+{% load i18n %}
+{% load tag %}
+
+{% block body_class %}tags{% endblock %}
+
+{% block head_title %}{% trans "Tags" %}{% endblock %}
+
+{% block body %}
+	{{ block.super }}
+	
+	<div class="clear"></div>
+	
+	<div class="site_content_tabs">
+		<ul class="tabs">
+			<li class="active"><a href="#tags">All Tags</a></li>
+		</ul>
+		
+		<div class="tab_container">
+			<div id="tags" class="tab_content">
+				{% if tags_paginator.object_list %}
+					<div class="form_items_container">
+						<ul id="user_tag_list" class="form_items">
+							{% for tag in tags_paginator.object_list %}
+								<li id="tag_{{ tag.id }}" class="tag">
+									<div class="container">
+										<div class="label">
+											<div class="name">{{ tag.name }}</div>
+										</div>
+										<div class="content has_menu">{{ tag.count }}</div>
+									</div>
+									<div class="menu use_tag_menu">
+										<ul class="menu_headers">
+											<li class="menu_header"></li>
+										</ul>
+										<ul class="menu_items">
+											<li class="menu_item">
+												<a href="{% url tag_edit tag_id=tag.id %}"><span class="icon icon_record_edit"></span>Edit</a>
+											</li>
+											<li class="menu_item">
+												<a class="use_record_delete" href="{% url api-tag tag_id=tag.id,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>Delete...</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				{% endif %}
+				
+				{% if not tags_paginator.object_list %}
+					
+					<!-- No Results -->
+					<div class="tags_no_results">
+						<p>{% trans "Sorry, but you just haven't tagged anything yet..." %}</p>
+					</div>
+					
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

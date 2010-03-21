@@ -1,0 +1,377 @@
+/*
+	Records CSS used in main layout
+	@version 0.1
+	@author Chesley Brown
+	@product TagLife
+*/
+
+/* Record Form */
+form.record_form {
+	margin-bottom: 10px;
+}
+form.record_form fieldset {
+	background: url(/site_media/media/img/layout/form/bg.png);
+	border: 1px solid #00527F;
+	margin: 0;
+}
+form .field {
+	position: relative;
+	margin: 15px 0;
+}
+form.record_form .field textarea,
+form.record_form .field input[type='text'],
+form.record_form .field input[type='password'] {
+	font-size: 18px;
+	height: 20px;
+	width: 660px;
+	margin: 0 13px;
+}
+form.record_form .field input[type='text'],
+form.record_form .field input[type='password'] {
+	padding: 5px 5px;
+}
+form.record_form .field textarea {
+	height: 45px;
+	padding: 5px 5px;
+}
+form.record_form .field label {
+	font-size: 18px;
+	color: #999;
+	position: absolute;
+	top: 2px;
+	left: 20px;
+}
+
+form.record_form .actions {
+	background: #94B7DD;
+	margin: 0 10px;
+	height: 34px;
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+}
+form.record_form .actions_left {
+	float: left;
+	margin: 3px 0 0 5px;
+}
+form.record_form .actions_right {
+	float: right;
+	margin: 3px 5px 0;
+}
+form.record_form .actions_left .action,
+form.record_form .actions_left .group {
+	float: left;
+	margin-right: 10px;
+}
+form.record_form .actions_left .group .action {
+	margin: 0;
+}
+form.record_form .actions_right .action {
+	float: left;
+	margin-left: 10px;
+}
+
+form.record_form .action > .icon,
+form.record_form .action > div > .icon {
+	margin-top: 6px;
+	cursor: pointer;
+	font-size: 11px;
+	color: #fff;
+	text-shadow: #333 1px 1px 0;
+}
+form.record_form .action > .input_button_wrapper {
+	margin-top: -1px;
+}
+
+form.record_form .record_security {
+	color: #fff;
+	text-shadow: 1px 1px #000;
+	cursor: pointer;
+}
+
+form.record_form .form_menu {
+	z-index: 100;
+}
+form.record_form .form_menu ul.menu_headers .icon {
+	float: left;
+	padding: 4px 4px 4px 0;
+}
+form.record_form .form_menu.hover {
+}
+form.record_form .form_menu ul.menu_headers {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	height: 24px;
+	line-height: 24px;
+	text-shadow: 1px 1px #fff;
+	cursor: pointer;
+	position: relative;
+	top: 1px;
+	z-index: 2100;
+}
+form.record_form .form_menu ul.menu_headers .side {
+	background: url(/site_media/media/img/layout/records/dropdown_side_bg.png) no-repeat;
+	margin: 0;
+	display: block;
+	width: 32px;
+	height: 24px;
+	float: right;
+}
+form.record_form .form_menu ul.menu_headers li.menu_header {
+	background: url(/site_media/media/img/layout/records/dropdown_bg.png) no-repeat;
+	margin: 1px 0 0 0;
+	padding: 0 0 0 7px;
+	float: left;
+	width: auto;
+	height: 24px;
+}
+form.record_form .form_menu ul.menu_headers li.menu_header .menu_header_text {
+	display: block;
+	float: left;
+	padding: 0;
+}
+form.record_form .form_menu ul.menu_headers:hover li.menu_header {
+	background-position: 0 -24px
+}
+form.record_form .form_menu ul.menu_headers:hover .side {
+	background-position: 0 -24px
+}
+form.record_form .form_menu ul.menu_items {
+	position: absolute;
+	z-index: 2000;
+	display: none;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border: 1px solid #999;
+	overflow: hidden;
+	clear: both;
+	float: left;
+	background: #fff;
+	min-width: 100px;
+	max-width: 280px;
+	-moz-box-shadow: 0 5px 5px #aaa;
+	-webkit-box-shadow: 0 5px 5px #aaa;
+}
+form.record_form .form_menu ul.menu_items li.menu_item {
+	color: #666;
+	text-decoration: none;
+	font-weight: bold;
+	margin: 3px 0;
+	padding: 4px 15px;
+	display: block;
+	text-shadow: 1px 1px #fff;
+	border-width: 1px 0;
+	border-style: solid;
+	border-color: transparent;
+	cursor: pointer;
+}
+form.record_form .form_menu ul.menu_items li.menu_item_datepicker {
+	margin: 0;
+	padding: 0;
+	cursor: default;
+}
+form.record_form .form_menu ul.menu_items li.menu_item .icon {
+	float: left;
+	margin: 3px 10px 0 0;
+}
+form.record_form .form_menu ul.menu_items li.menu_item .menu_item_value,
+form.record_form .form_menu ul.menu_items li.menu_item_datepicker .menu_item_value {
+	display: none;
+}
+form.record_form .form_menu ul.menu_items li.menu_item .menu_item_text {
+}
+form.record_form .form_menu ul.menu_items li.menu_item .menu_item_desc {
+	font-size: 11px;
+	padding-left: 26px;
+	display: block;
+	color: #999;
+}
+form.record_form .form_menu ul.menu_items li.menu_item_datepicker .menu_item_desc {
+	margin: 0;
+	padding: 0;
+}
+form.record_form .form_menu ul.menu_items li.menu_item:hover .menu_item_desc {
+	color: #ddd;
+}
+form.record_form .form_menu ul.menu_items li.menu_item:hover {
+	color: #fff;
+	text-shadow: 1px 1px #000;
+	text-decoration: none;
+	background-color: #333;
+	border-color: #000;
+}
+form.record_form .form_menu ul.menu_items li.menu_item_datepicker:hover {
+	background-color: #fff;
+}
+form.record_form .form_menu.active ul.menu_headers li.menu_header .side,
+form.record_form .form_menu.active ul.menu_headers li.menu_header .side:hover,
+form.record_form .form_menu.active ul.menu_headers li.menu_header,
+form.record_form .form_menu.active ul.menu_headers li.menu_header:hover { /*--Makes sure that the active tab does not listen to the hover properties--*/
+	background-position: 0 -48px !important;
+}
+form.record_form .form_menu.active ul.menu_headers {
+	border-bottom: 1px solid #999;
+}
+
+form.record_form .form_menu.active {
+	z-index: 2000;
+}
+
+
+/* Records */
+ul.records {
+	list-style: none;
+}
+ul.records li.record {
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+ul.records li.record .record_content {
+	background-color: #E6E6E6;
+	border: 1px solid #CCCCCC;
+	position: relative;
+}
+
+ul.records li.record .date {
+	background: url(/site_media/media/img/layout/records/date_bg.png) no-repeat;
+	width: 50px;
+	height: 49px;
+	float: left;
+	position: absolute;
+	left: -10px;
+	top: 5px;
+	color: #fff;
+	text-shadow: #000 0 1px 0;
+	text-align: center;
+}
+ul.records li.record .date .day {
+	display: block;
+	font-size: 20px;
+	font-weight: bold;
+	position: absolute;
+	left: 7px;
+	top: 12px;
+	width: 25px;
+}
+ul.records li.record .date .month {
+	display: block;
+	font-size: 13px;
+	position: absolute;
+	left: 7px;
+	top: 1px;
+	width: 25px;
+}
+ul.records li.record .date .year {
+	display: block;
+	font-size: 11px;
+	position: absolute;
+	right: -2px;
+	top: 12px;
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+ul.records li.record .security {
+	opacity: 0.5;
+	position: absolute;
+	top: 5px;
+	right: 46px;
+}
+ul.records li.record .security.hover {
+	opacity: 1;
+}
+ul.records li.record .header {
+	margin: 0 10px 0 50px;
+	padding: 5px 5px;
+	border-bottom: 1px solid #CCCCCC;
+}
+ul.records li.record .header .datetime {
+	display: none;
+}
+ul.records li.record .header .time {
+	font-size: 11px;
+	float: left;
+	color: #666;
+	width: 55px;
+	margin-top: 2px;
+}
+ul.records li.record .header .time_since {
+	opacity: 0;
+	font-size: 11px;
+	color: #666;
+	margin: 2px 56px 0 60px;
+}
+ul.records li.record .header .text {
+	text-shadow: 1px 1px 0 #fff;
+	margin: 0 56px 0 60px;
+}
+
+ul.records li.record .add_tag {
+	position: absolute;
+	right: 5px;
+	bottom: 6px;
+}
+ul.records li.record .add_tag .icon {
+	cursor: pointer;
+}
+
+ul.records .blockOverlay {
+	background: transparent !important;
+}
+ul.records .blockMsg {
+	background: url(/site_media/media/img/backgrounds/1px/w80.png) !important;
+	width: 60% !important;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+ul.records .blockMsg h5 {
+	text-shadow: 1px 1px #fff;
+}
+
+ul.records li.record .footer {
+	min-height: 30px;
+	margin-left: 50px;
+	overflow: auto;
+}
+
+
+/* Records More */
+.records_more {
+	background-color: #E6E6E6;
+	border: 1px solid #CCCCCC;
+	margin-left: 10px;
+	margin-bottom: 5px;
+	padding: 10px;
+	overflow: auto;
+	text-align: center;
+}
+.records_more .action {
+	float: right;
+}
+.records_more .loading {
+	display: none;
+	width: 32px;
+	height: 32px;
+	background: url(/site_media/media/img/layout/records/loading.gif);
+	margin: 0 auto;
+}
+
+
+/* Records No Results */
+.records_no_results {
+	background-color: #E6E6E6;
+	border: 1px solid #CCCCCC;
+	margin-left: 10px;
+	margin-bottom: 5px;
+	padding: 10px;
+	overflow: auto;
+	text-align: center;
+}
+.records_no_results p {
+	text-align: center;
+	margin: 0;
+}

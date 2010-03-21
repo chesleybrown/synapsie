@@ -35,7 +35,7 @@
 						</ul>
 						<ul class="menu_items">
 							<li class="menu_item">
-								<a href="{% url record_show record_id=record.id %}"><span class="icon icon_record_view"></span>View</a>
+								<a href="{% url record_show record_id=record.id %}"><span class="icon icon_record_view"></span>{% trans "View" %}</a>
 							</li>
 						</ul>
 					</div>
@@ -65,7 +65,7 @@
 			<a href="{% url api-record_public page='2',emitter_format='.json',user_id=viewed_user.id %}" class="input_button_wrapper use_record_more" style="width: 100%;">
 				<span class="input_button_start"></span>
 				<span class="input_button_body">
-					<span class="icon icon_record_more">more</span>
+					<span class="icon icon_record_more">{% trans "More" %}</span>
 				</span>
 				<span class="input_button_end"></span>
 			</a>

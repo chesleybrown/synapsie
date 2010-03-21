@@ -6,12 +6,63 @@ from apps.records.models import Record
 from apps.tags.forms import TagForm
 from tagging.models import Tag, TaggedItem
 from tagging.forms import TagAdminForm
+
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
+
 from django.http import HttpResponseRedirect, Http404
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
 from django.views.generic.list_detail import object_list
-from django.contrib.auth.decorators import login_required
+
+
+@login_required
+def index_tags(request, page=1):
+	
+	# init
+	identity = request.user
+	tag_list = False
+	tags = False
+	tags_paginator = False
+	selected_tags = False
+	popular_tags_printable = list()
+	results_per_page = 500
+	paginator = False
+	
+	# get all user tags
+	tag_list = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)
+	
+	# number of items per page
+	paginator = Paginator(tag_list, results_per_page)
+	
+	# If page request is out of range, deliver last page of results.
+	try:
+		tags_paginator = paginator.page(page)
+	except (EmptyPage, InvalidPage):
+		tags_paginator = paginator.page(paginator.num_pages)
+	
+	# get available tags user has used
+	used_tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)
+	used_tags_printable = ", ".join(map(str, used_tags))
+	popular_tags = sorted(used_tags, key=lambda x: x.count, reverse=True)
+	
+	# get popular tags ready for template
+	if (popular_tags):
+		highest = popular_tags[0]
+		for tag in popular_tags:
+			tag.percent = (float(tag.count) / float(highest.count)) * 100
+			popular_tags_printable.append(tag)
+	
+	# render
+	return render_to_response('tags/tag_index.html', {
+		'selected_tags': selected_tags,
+		'used_tags_printable': used_tags_printable,
+		'used_tags': used_tags,
+		'popular_tags': popular_tags_printable,
+		'tags_paginator': tags_paginator,
+		'tags_per_page': results_per_page,
+	}, context_instance=RequestContext(request))
 
 @login_required
 def list_tags(request):

@@ -1,5 +1,7 @@
 {% extends "site_base.html" %}
 
+{% load i18n %}
+
 {% block body_class %}records{% endblock %}
 
 {% block body %}
@@ -29,13 +31,13 @@
 							</ul>
 							<ul class="menu_items">
 								<li class="menu_item">
-									<a href="{% url record_show record_id=0 %}"><span class="icon icon_record_view"></span>View</a>
+									<a href="{% url record_show record_id=0 %}"><span class="icon icon_record_view"></span>{% trans "View" %}</a>
 								</li>
 								<li class="menu_item">
-									<a href="{% url record_edit record_id=0 %}"><span class="icon icon_record_edit"></span>Edit</a>
+									<a href="{% url record_edit record_id=0 %}"><span class="icon icon_record_edit"></span>{% trans "Edit" %}</a>
 								</li>
 								<li class="menu_item">
-									<a class="use_record_delete" href="{% url api-record record_id=0,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>Delete...</a>
+									<a class="use_record_delete" href="{% url api-record record_id=0,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>{% trans "Delete..." %}</a>
 								</li>
 							</ul>
 						</div>

@@ -7,6 +7,7 @@ from apps.records.forms import RecordForm, RecordSearchForm
 from tagging.models import Tag, TaggedItem
 from tagging.utils import get_tag_list
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
@@ -15,7 +16,6 @@ from django.http import HttpResponseRedirect, Http404
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
 from django.views.generic.list_detail import object_list
-from django.contrib.auth.decorators import login_required
 
 @login_required
 def index_records(request, tags=False, page=1):

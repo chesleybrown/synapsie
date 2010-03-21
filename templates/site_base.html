@@ -8,6 +8,8 @@
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/960.css" />
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/text.css" />
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" />
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/records.css" />
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/tags.css" />
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/icons.css" />
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/tabs.css" />
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/charts.css" />
@@ -33,7 +35,7 @@
 				<li id="tab_profile"><a href="{% url accounts_profile %}">{% trans "Profile" %}</a></li>
 				<li id="tab_records"><a href="{% url record_index %}">{% trans "Records" %}</a></li>
 				<li id="tab_search"><a href="{% url record_search %}">{% trans "Search" %}</a></li>
-				<li id="tab_tags"><a href="{% url tag_list %}">{% trans "Tags" %}</a></li>
+				<li id="tab_tags"><a href="{% url tag_index %}">{% trans "Tags" %}</a></li>
 			</ul>
 		{% endspaceless %}
 	{% else %}
@@ -51,8 +53,8 @@
 	{% if user %}
 		<div class="use_tabs sidebar_tabs">
 			<ul class="tabs">
-				<li class="active"><a href="#sidebar_tab_used">Used</a></li>
-				<li><a href="#sidebar_tab_popular">Popular</a></li>
+				<li class="active"><a href="#sidebar_tab_used">{% trans "Used" %}</a></li>
+				<li><a href="#sidebar_tab_popular">{% trans "Popular" %}</a></li>
 			</ul>
 			
 			<div class="tab_container">
@@ -94,7 +96,7 @@
 									<a href="#" class="input_button_wrapper use_tag_popular_show_all">
 										<span class="input_button_start"></span>
 										<span class="input_button_body">
-											<span class="input_button_content icon icon_tags">Show All</span>
+											<span class="input_button_content icon icon_tags">{% trans "Show All" %}</span>
 										</span>
 										<span class="input_button_end"></span>
 									</a>

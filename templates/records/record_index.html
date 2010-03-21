@@ -180,7 +180,7 @@
 				
 				<div class="action">
 					<div id="record_form_datetime_reset" class="hidden">
-						<div class="icon icon_record_datetime_reset use_record_form_datetime_reset">Reset</div>
+						<div class="icon icon_record_datetime_reset use_record_form_datetime_reset">{% trans "Reset" %}</div>
 						{{ formset.datetime_set }}
 					</div>
 				</div>
@@ -193,21 +193,21 @@
 						<ul class="menu_headers">
 							<li class="menu_header">
 								<div class="menu_header_icon icon icon_personal"></div>
-								<span class="menu_header_text">Personal</span>
+								<span class="menu_header_text">{% trans "Personal" %}</span>
 								<div class="side"></div>
 							</li>
 						</ul>
 						<ul class="menu_items">
 							<li class="menu_item">
 								<span class="menu_item_icon icon icon_personal"></span>
-								<span class="menu_item_text">Personal</span>
-								<span class="menu_item_desc">Keep this post restricted and only visible to yourself.</span>
+								<span class="menu_item_text">{% trans "Personal" %}</span>
+								<span class="menu_item_desc">{% trans "Keep this post restricted and only visible to yourself." %}</span>
 								<span class="menu_item_value">1</span>
 							</li>
 							<li class="menu_item">
 								<span class="menu_item_icon icon icon_shared"></span>
-								<span class="menu_item_text">Shared</span>
-								<span class="menu_item_desc">Let anyone find and read this post. Share your life with the world.</span>
+								<span class="menu_item_text">{% trans "Shared" %}</span>
+								<span class="menu_item_desc">{% trans "Let anyone find and read this post. Share your life with the world." %}</span>
 								<span class="menu_item_value">0</span>
 							</li>
 						</ul>
@@ -220,7 +220,7 @@
 						<div class="input_button_start"></div>
 						<div class="input_button_body">
 							<div class="icon icon_record_post"></div>
-							<input type="submit" id="new_record" name="submit" value="{% if object %}Apply changes{% else %}Post{% endif %}" class="input_submit" />
+							<input type="submit" id="new_record" name="submit" value="{% if object %}{% trans "Apply changes" %}{% else %}{% trans "Post" %}{% endif %}" class="input_submit" />
 						</div>
 						<div class="input_button_end"></div>
 					</div>
@@ -257,13 +257,13 @@
 						</ul>
 						<ul class="menu_items">
 							<li class="menu_item">
-								<a href="{% url record_show record_id=record.id %}"><span class="icon icon_record_view"></span>View</a>
+								<a href="{% url record_show record_id=record.id %}"><span class="icon icon_record_view"></span>{% trans "View" %}</a>
 							</li>
 							<li class="menu_item">
-								<a href="{% url record_edit record_id=record.id %}"><span class="icon icon_record_edit"></span>Edit</a>
+								<a href="{% url record_edit record_id=record.id %}"><span class="icon icon_record_edit"></span>{% trans "Edit" %}</a>
 							</li>
 							<li class="menu_item">
-								<a class="use_record_delete" href="{% url api-record record_id=record.id,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>Delete...</a>
+								<a class="use_record_delete" href="{% url api-record record_id=record.id,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>{% trans "Delete..." %}</a>
 							</li>
 						</ul>
 					</div>
@@ -291,7 +291,7 @@
 				<a href="{% url api-record page='2',emitter_format='.json' %}" class="input_button_wrapper use_record_more">
 					<span class="input_button_start"></span>
 					<span class="input_button_body">
-						<span class="icon icon_record_more">More</span>
+						<span class="icon icon_record_more">{% trans "More" %}</span>
 					</span>
 					<span class="input_button_end"></span>
 				</a>
