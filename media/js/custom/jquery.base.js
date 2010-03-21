@@ -292,8 +292,8 @@ $(document).ready(function() {
 				
 				//init
 				var user_record_list = $('#user_record_list');
-				var message = data['message'];
-				var record_data = data['data'];
+				var message = data.message;
+				var record_data = data.data;
 				var new_record = false;
 				
 				//created successfully
@@ -326,7 +326,7 @@ $(document).ready(function() {
 				
 				//something went wrong
 				else {
-					$.gritterExtend.add(data['message']);
+					$.gritterExtend.add(data.message);
 				}
 				
 			}
@@ -374,7 +374,7 @@ $(document).ready(function() {
 					success: function(data) {
 					
 						//init
-						var message = data['message'];
+						var message = data.message;
 						
 						//created successfully
 						if (message['status'] == 204) {
@@ -391,7 +391,7 @@ $(document).ready(function() {
 						
 						//something went wrong
 						else {
-							$.gritterExtend.add(data['message']);
+							$.gritterExtend.add(data.message);
 							
 							content.animate({
 								opacity: 1
@@ -523,36 +523,46 @@ $(document).ready(function() {
 				url: element.attr('href'),
 				success: function(data) {
 					var message = data.message;
-					var records = data.result.records;
+					var records = data.data.records;
 					var new_record = false;
 					var page = 2;
 					
-					var matches = element.attr('href').match(/page\/(\d+)/);
-					page = parseInt(matches[1]);
-					next_page = page+1;
-					
-					for (key in records) {
-						new_record = buildRecord(records[key]);
-						user_record_list.append(new_record);
+					//success
+					if (message.status == 200) {
 						
-						new_record.animate({
-							height: 'toggle'
-						}, 'slow', 'linear', function() {
-							$(this).animate({
-								opacity: 1
-							}, 'slow', 'linear');
-						});
+						var matches = element.attr('href').match(/page\/(\d+)/);
+						page = parseInt(matches[1]);
+						next_page = page+1;
+						
+						for (key in records) {
+							new_record = buildRecord(records[key]);
+							user_record_list.append(new_record);
+							
+							new_record.animate({
+								height: 'toggle'
+							}, 'slow', 'linear', function() {
+								$(this).animate({
+									opacity: 1
+								}, 'slow', 'linear');
+							});
+						}
+						
+						//determine if there are anymore results to find
+						if (records.length < data.data.results_per_page) {
+							holder.html(data.message.text);
+						}
+						else {
+							//update page number
+							element.attr('href', function(index, attr) {
+								return attr.replace(/(page\/)\d+/, '$1' + next_page);
+							});
+						}
+						
 					}
 					
-					//determine if there are anymore results to find
-					if (records.length < data.result.results_per_page) {
-						holder.html(data.message.desc);
-					}
+					//something went wrong
 					else {
-						//update page number
-						element.attr('href', function(index, attr) {
-							return attr.replace(/(page\/)\d+/, '$1' + next_page);
-						});
+						$.gritterExtend.add(data.message);
 					}
 					
 				},

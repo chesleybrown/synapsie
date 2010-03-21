@@ -12,8 +12,8 @@ class RecordMessages(GeneralMessages):
 	)
 	
 	no_more = dict(
-		status=400,
-		kind="error",
+		status=200,
+		kind="warning",
 		title=_("No More Records Remain"),
 		text=_("No more records to show."),
 		sticky=False,

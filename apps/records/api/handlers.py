@@ -42,6 +42,7 @@ class RecordHandler(BaseHandler):
 		records_paginator = False
 		results_per_page = 25
 		clean_records = list()
+		response = self.empty_response
 		
 		if record_id is not None:
 			
@@ -117,15 +118,13 @@ class RecordHandler(BaseHandler):
 		else:
 			message = messages.get('more')
 		
-		# generate data
-		data = {
-			'message': message,
-			'result': {
-				'results_per_page': results_per_page,
-				'records': clean_records,
-			},
+		# return message and record created
+		response['message'] = message
+		response['data'] = {
+			'results_per_page': results_per_page,
+			'records': clean_records,
 		}
-		
+		return response
 		return data
 	
 	def create(self, request):
