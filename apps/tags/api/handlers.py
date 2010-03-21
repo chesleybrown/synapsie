@@ -7,6 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from piston.handler import AnonymousBaseHandler, BaseHandler
 from piston.utils import rc, validate
 
+from apps.tags.messages import TagMessages
 from apps.records.models import Record
 #from apps.tags.forms import TagForm
 from tagging.models import Tag, TaggedItem
@@ -21,6 +22,12 @@ class TagHandler(BaseHandler):
 	anonymous = AnonymousTagHandler
 	allowed_methods = ('GET', 'PUT', 'POST', 'DELETE')
 	model = Tag
+	
+	# init our empty response
+	empty_response = dict(
+		message = {},
+		data = {},
+	)
 	
 	def read(self, request, tag_name=None):
 		
@@ -46,6 +53,8 @@ class TagHandler(BaseHandler):
 		tagged_item_manager = ModelTaggedItemManager()
 		tagged_item_ids = []
 		record_type = ContentType.objects.get_for_model(Record)
+		messages = TagMessages()
+		response = self.empty_response
 		
 		# get id of tag
 		try:
@@ -77,4 +86,8 @@ class TagHandler(BaseHandler):
 		# delete it/them
 		tagged_items.delete()
 		
-		return rc.DELETED
+		# return delete message
+		response['message'] = messages.get('deleted', {
+			'tag_name': tag_name,
+		})
+		return response

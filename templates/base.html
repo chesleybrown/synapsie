@@ -114,7 +114,6 @@
 		<div class="hidden">
 			<div id="record_delete_confirmation">
 				<div class="delete_confirmation">
-					<h5>Are you sure? This cannon be undone.</h5>
 					<div class="actions">
 						<a class="input_button_wrapper delete_action">
 							<span class="input_button_start"></span>
@@ -132,6 +131,32 @@
 							<span class="input_button_end"></span>
 						</a>
 					</div>
+					
+					<h5>{% trans "Are you sure? This cannon be undone." %}</h5>
+				</div>
+			</div>
+			
+			<div id="tag_all_delete_confirmation">
+				<div class="delete_confirmation">
+					<div class="actions">
+						<a class="input_button_wrapper delete_action">
+							<span class="input_button_start"></span>
+							<span class="input_button_body">
+								<span class="icon icon_delete">{% trans "Delete" %}</span>
+							</span>
+							<span class="input_button_end"></span>
+						</a>
+						
+						<a class="input_button_wrapper cancel_action">
+							<span class="input_button_start"></span>
+							<span class="input_button_body">
+								<span class="icon icon_cancel">{% trans "Cancel" %}</span>
+							</span>
+							<span class="input_button_end"></span>
+						</a>
+					</div>
+					
+					<h5>{% trans "Are you sure? This cannon be undone." %}</h5>
 				</div>
 			</div>
 		</div>

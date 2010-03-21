@@ -431,6 +431,96 @@ $(document).ready(function() {
 	/*
 	 * Handle Tag delete action (make into plugin!)
 	 */
+	function setupTagMenuItems(container) {
+		$(container).find('a.use_tag_all_delete').bind('click', function(e) {
+			var element = $(this);
+			var menu = $(this).parents('.menu');
+			var container = element.parents('li ');
+			var content = container.find('.container');
+			var delete_confirmation = $('#tag_all_delete_confirmation').find('.delete_confirmation').clone();
+			
+			//fade out record content
+			$(content).animate({
+				opacity: 0.40
+			}, 'slow');
+			
+			//show delete confirmation dialog
+			$(container).block({
+				message: $(delete_confirmation)
+			});
+			
+			//setup delete action
+			$(delete_confirmation).find('.delete_action').attr('href', $(element).attr('href'));
+			$(delete_confirmation).find('.delete_action').bind('click', function(e) {
+				//hide delete confirmation dialog
+				$(container).unblock();
+				$(container).block({
+					message: ''
+				});
+				
+				$.ajax({
+					type: 'delete',
+					url: $(this).attr('href'),
+					success: function(data) {
+					
+						//init
+						var message = data.message;
+						
+						//deleted successfully
+						if (message['status'] == 204) {
+							
+							$(container).animate({
+								opacity: 0
+							}, 'slow', 'linear', function() {
+								$(container).slideUp('slow', function() {
+									$(container).remove();
+								});
+							});
+							
+						}
+						
+						//something went wrong
+						else {
+							$.gritterExtend.add(data.message);
+							
+							content.animate({
+								opacity: 1
+							}, 'fast');
+						}
+						
+					},
+					error: function() {
+						content.animate({
+							opacity: 1
+						}, 'fast');
+					}
+				});
+				
+				e.preventDefault();
+			});
+			
+			//setup cancel action
+			delete_confirmation.find('.cancel_action').bind('click', function(e) {
+				content.animate({
+					opacity: 1
+				}, 'fast');
+				container.unblock();
+				
+				e.preventDefault();
+			});
+			
+			e.preventDefault();
+		});
+	}
+	setupTagMenuItems('body');
+	/*
+	 * END Handle Tag delete action
+	 */
+	
+	
+	/*
+	 * Handle Tag delete action (make into plugin!)
+	 */
 	function setupTags(container) {
 		//single tag delete
 		$(container).find('a.use_tag_delete').bind('click', function(e) {
@@ -453,42 +543,6 @@ $(document).ready(function() {
 				},
 				error: function() {
 					container.animate({
-						opacity: 1
-					}, 'fast');
-				}
-			});
-			
-			e.preventDefault();
-		});
-		
-		//all tag delete
-		$(container).find('a.use_tag_all_delete').bind('click', function(e) {
-			var element = $(this);
-			var container = element.parents('li.tag');
-			var tag_name = container.find('.tag_text').text();
-			var tags = false;
-			
-			//find all other tags on the page with this name
-			tags = $('ul.tags li.tag').filter(function() {
-				return $(this).find(".tag_text").text() == tag_name;
-			});
-			
-			tags.animate({
-				opacity: 0.5
-			}, 'fast');
-			
-			$.ajax({
-				type: 'delete',
-				url: element.attr('href'),
-				success: function() {
-					tags.animate({
-						opacity: 0
-					}, 'slow', 'linear', function() {
-						$(this).remove();
-					});
-				},
-				error: function() {
-					tags.animate({
 						opacity: 1
 					}, 'fast');
 				}

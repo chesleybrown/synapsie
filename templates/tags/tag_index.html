@@ -25,23 +25,25 @@
 							{% for tag in tags_paginator.object_list %}
 								<li id="tag_{{ tag.id }}" class="tag">
 									<div class="container">
-										<div class="label">
-											<div class="name">{{ tag.name }}</div>
+										<div class="header">
+											<div class="label">
+												<div class="name">{{ tag.name }}</div>
+											</div>
+											<div class="content has_menu">{{ tag.count }}</div>
 										</div>
-										<div class="content has_menu">{{ tag.count }}</div>
-									</div>
-									<div class="menu use_tag_menu">
-										<ul class="menu_headers">
-											<li class="menu_header"></li>
-										</ul>
-										<ul class="menu_items">
-											<li class="menu_item">
-												<a href="{% url tag_edit tag_id=tag.id %}"><span class="icon icon_record_edit"></span>Edit</a>
-											</li>
-											<li class="menu_item">
-												<a class="use_record_delete" href="{% url api-tag tag_id=tag.id,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>Delete...</a>
-											</li>
-										</ul>
+										<div class="menu use_tag_menu">
+											<ul class="menu_headers">
+												<li class="menu_header"></li>
+											</ul>
+											<ul class="menu_items">
+												<li class="menu_item">
+													<a href="{% url tag_edit tag_id=tag.id %}"><span class="icon icon_record_edit"></span>Edit</a>
+												</li>
+												<li class="menu_item">
+													<a class="use_tag_all_delete" href="{% url api-tag tag_name=tag.name,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>Delete...</a>
+												</li>
+											</ul>
+										</div>
 									</div>
 								</li>
 							{% endfor %}

@@ -118,6 +118,25 @@ ul.sidebar li.sidebar_item {
 }
 
 
+/* BlockUI */
+.blockOverlay {
+	background: transparent !important;
+}
+.blockMsg {
+	background: url(/site_media/media/img/backgrounds/1px/w80.png) !important;
+	width: 90% !important;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+.blockMsg h5 {
+	text-shadow: 1px 1px #fff;
+	margin: 10px 0;
+}
+.blockMsg .actions {
+	float: right;
+}
+
+
 /* Dropdown Menu */
 ul .menu {
 	opacity: 0.5;
@@ -264,7 +283,7 @@ ul.form_items > li .content {
 ul.form_items > li .content.has_menu {
 	margin-right: 50px;
 }
-ul.form_items > li > .container {
+ul.form_items > li > .container > .header {
 	overflow: auto;
 }
 ul.form_items .menu {
