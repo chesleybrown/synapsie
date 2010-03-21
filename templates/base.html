@@ -59,7 +59,7 @@
 									<form class="use_inline_labels" action="{% url record_search %}" method="get">
 										<div class="field">
 											<div class="icon icon_search"></div>
-											<label for="id_site_search">Search Your Life...</label>
+											<label for="id_site_search">{% trans "Search Your Life..." %}</label>
 											<input type="text" id="id_site_search" name="text" value="" />
 										</div>
 									</form>
@@ -119,7 +119,7 @@
 						<a class="input_button_wrapper delete_action">
 							<span class="input_button_start"></span>
 							<span class="input_button_body">
-								<span class="icon icon_delete">Delete</span>
+								<span class="icon icon_delete">{% trans "Delete" %}</span>
 							</span>
 							<span class="input_button_end"></span>
 						</a>
@@ -127,7 +127,7 @@
 						<a class="input_button_wrapper cancel_action">
 							<span class="input_button_start"></span>
 							<span class="input_button_body">
-								<span class="icon icon_cancel">Cancel</span>
+								<span class="icon icon_cancel">{% trans "Cancel" %}</span>
 							</span>
 							<span class="input_button_end"></span>
 						</a>

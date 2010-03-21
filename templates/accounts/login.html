@@ -8,12 +8,12 @@
 {% block sidebar %}
 	<ul id="site_sidebar">
 		<li class="sidebar_item">
-			<h3>No account?</h3>
+			<h3>{% trans "No account?" %}</h3>
 			<a href="{% url accounts_register %}" class="input_button_wrapper">
 				<div class="input_button_start"></div>
 				<div class="input_button_body">
 					<div class="icon icon_register"></div>
-					<span>Register Now</span>
+					<span>{% trans "Register Now" %}</span>
 				</div>
 				<div class="input_button_end"></div>
 			</a>
@@ -23,21 +23,21 @@
 
 {% block body %}
 	
-	<h2>Login to your account</h2>
-	<p>You'll have your life indexed before you know it.</p>
+	<h2>{% trans "Login to your account" %}</h2>
+	<p>{% trans "You'll have your life indexed before you know it." %}</p>
 	
 	{% if form.has_errors %}
-		<p class="error">Sorry, that's not a valid username or password</p>
+		<p class="error">{% trans "Sorry, that's not a valid username or password" %}</p>
 	{% endif %}
 	
 	<form class="record_form use_inline_labels" action='.' method='post'>{% csrf_token %}
 		<fieldset>
 			<div id="id_username_field" class="field">
-				<label for="username">Your Username</label>
+				<label for="username">{% trans "Your Username" %}</label>
 				<input type="text" name="username" value="" id="username">
 			</div>
 			<div id="id_password_field" class="field">
-				<label for="password">Your Password</label>
+				<label for="password">{% trans "Your Password" %}</label>
 				<input type="password" name="password" value="" id="password">
 			</div>
 		</fieldset>
@@ -48,7 +48,7 @@
 					<div class="input_button_start"></div>
 					<div class="input_button_body">
 						<div class="icon icon_login"></div>
-						<input type="submit" id="account_login" name="submit" value="Login" class="input_submit" />
+						<input type="submit" id="account_login" name="submit" value="{% trans "Login" %}" class="input_submit" />
 					</div>
 					<div class="input_button_end"></div>
 				</div>

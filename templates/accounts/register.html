@@ -8,12 +8,12 @@
 {% block sidebar %}
 	<ul id="site_sidebar">
 		<li class="sidebar_item">
-			<h3>Have an account?</h3>
+			<h3>{% trans "Have an account?" %}</h3>
 			<a href="{% url accounts_login %}" class="input_button_wrapper">
 				<div class="input_button_start"></div>
 				<div class="input_button_body">
 					<div class="icon icon_login"></div>
-					<span>Login</span>
+					<span>{% trans "Login" %}</span>
 				</div>
 				<div class="input_button_end"></div>
 			</a>
@@ -47,7 +47,7 @@
 				<div class="input_button_start"></div>
 				<div class="input_button_body">
 					<div class="icon icon_register"></div>
-					<input type="submit" id="account_register" name="submit" value="Register" class="input_submit" />
+					<input type="submit" id="account_register" name="submit" value="{% trans "Register" %}" class="input_submit" />
 				</div>
 				<div class="input_button_end"></div>
 			</div>
