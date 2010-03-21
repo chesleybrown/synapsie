@@ -4,13 +4,13 @@ from django.utils.translation import ugettext as _
 class TagMessages(GeneralMessages):
 	
 	created = dict(
-		status="added",
+		kind="created",
 		title=_("Created Tag"),
-		desc=_("You have successfull created a tag: %(tag_name)s"),
+		text=_("You have successfull created a tag: %(tag_name)s"),
 	)
 	
 	deleted = dict(
-		status="removed",
+		kind="deleted",
 		title=_("Deleted Tag"),
-		desc=_("You have successfull deleted a tag: %(tag_name)s"),
+		text=_("You have successfull deleted a tag: %(tag_name)s"),
 	)

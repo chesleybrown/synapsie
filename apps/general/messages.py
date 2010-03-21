@@ -13,12 +13,14 @@ class GeneralMessages():
 		
 		# input vars
 		if not params == None:
-			custom_message['desc'] = message['desc'] % params
+			custom_message['text'] = message['text'] % params
 		
 		return custom_message
 	
 	permission_denied = dict(
-		status="error",
+		status=401,
+		kind="error",
 		title=_("Permission Denied"),
-		desc=_("You are not permitted to perform this action."),
+		text=_("You are not permitted to perform this action."),
+		sticky=False,
 	)

@@ -3,26 +3,42 @@ from django.utils.translation import ugettext as _
 
 class RecordMessages(GeneralMessages):
 	
+	missing_data = dict(
+		status=400,
+		kind="error",
+		title=_("Missing Information"),
+		text=_("Did you even submit anything?"),
+		sticky=False,
+	)
+	
 	no_more = dict(
-		status="error",
+		status=400,
+		kind="error",
 		title=_("No More Records Remain"),
-		desc=_("No more records to show."),
+		text=_("No more records to show."),
+		sticky=False,
 	)
 	
 	more = dict(
-		status="success",
+		status=200,
+		kind="success",
 		title=_("More Records Remain"),
-		desc=_("More records remain to be shown."),
+		text=_("More records remain to be shown."),
+		sticky=False,
 	)
 	
 	created = dict(
-		status="added",
+		status=201,
+		kind="created",
 		title=_("Created Record"),
-		desc=_("You have successfully created a record: %(record_text)s"),
+		text=_("You have successfully created a new record."),
+		sticky=False,
 	)
 	
 	deleted = dict(
-		status="removed",
+		status=204,
+		kind="deleted",
 		title=_("Deleted Record"),
-		desc=_("You have successfully deleted a record: %(record_text)s"),
+		text=_("You have successfully deleted a record."),
+		sticky=False,
 	)

@@ -25,6 +25,12 @@ class RecordHandler(BaseHandler):
 	allowed_methods = ('GET', 'PUT', 'POST', 'DELETE')
 	model = Record
 	
+	# init our empty response
+	empty_response = dict(
+		message = {},
+		data = {},
+	)
+	
 	def read(self, request, record_id=None, tags=False, page=1, user_id=None, username=None, public=False):
 		
 		#init
@@ -133,6 +139,7 @@ class RecordHandler(BaseHandler):
 		record_datetime = None
 		datetime_string = False
 		datetime_format = "%Y-%m-%d %I:%M%p"
+		response = self.empty_response
 		
 		# if user has posted
 		if request.method == 'POST':
@@ -174,11 +181,16 @@ class RecordHandler(BaseHandler):
 					'tags': record.tags
 				}
 				
-				# redirect to show_record
-				return clean_record
+				# return message and record created
+				response['message'] = messages.get('created')
+				response['data'] = clean_record
+				return response
 			
 			else:
-				return messages.get('permission_denied')
+				
+				# return error message, missing data
+				response['message'] = messages.get('missing_data')
+				return response
 			
 		return rc.BAD_REQUEST
 	
@@ -189,6 +201,8 @@ class RecordHandler(BaseHandler):
 		
 		# init
 		identity = request.user
+		messages = RecordMessages()
+		response = self.empty_response
 		
 		# get record
 		record = Record.objects.get(pk=record_id)
@@ -205,4 +219,6 @@ class RecordHandler(BaseHandler):
 		# delete it
 		record.delete()
 		
-		return rc.DELETED
+		# return delete message
+		response['message'] = messages.get('deleted')
+		return response

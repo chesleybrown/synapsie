@@ -292,29 +292,42 @@ $(document).ready(function() {
 				
 				//init
 				var user_record_list = $('#user_record_list');
-				var new_record = buildRecord(data);
+				var message = data['message'];
+				var record_data = data['data'];
+				var new_record = false;
 				
-				// add new record to DOM
-				user_record_list.prepend(new_record);
+				//created successfully
+				if (message['status'] == 201) {
+					
+					// add new record to DOM
+					new_record = buildRecord(record_data);
+					user_record_list.prepend(new_record);
+					
+					new_record.animate({
+						height: 'toggle'
+					}, 'slow', 'linear', function() {
+						$(this).animate({
+							opacity: 1
+						}, 'slow', 'linear');
+					});
+					
+					// clear form
+					$('#id_text')
+						.val('')
+						.removeAttr('style')
+						.blur();
+					$('#id_tags').fcbkcomplete('clear');
+					$('#record_form_datetime_reset div.use_record_form_datetime_reset').click();
+					
+					//done, focus
+					$('#id_text').focus();
+					
+				}
 				
-				new_record.animate({
-					height: 'toggle'
-				}, 'slow', 'linear', function() {
-					$(this).animate({
-						opacity: 1
-					}, 'slow', 'linear');
-				});
-				
-				// clear form
-				$('#id_text')
-					.val('')
-					.removeAttr('style')
-					.blur();
-				$('#id_tags').fcbkcomplete('clear');
-				$('#record_form_datetime_reset div.use_record_form_datetime_reset').click();
-				
-				//done, focus
-				$('#id_text').focus();
+				//something went wrong
+				else {
+					$.gritterExtend.add(data['message']);
+				}
 				
 			}
 		});
@@ -358,14 +371,33 @@ $(document).ready(function() {
 				$.ajax({
 					type: 'delete',
 					url: $(this).attr('href'),
-					success: function() {
-						container.animate({
-							opacity: 0
-						}, 'slow', 'linear', function() {
-							container.slideUp('slow', function() {
-								container.remove();
+					success: function(data) {
+					
+						//init
+						var message = data['message'];
+						
+						//created successfully
+						if (message['status'] == 204) {
+							
+							container.animate({
+								opacity: 0
+							}, 'slow', 'linear', function() {
+								container.slideUp('slow', function() {
+									container.remove();
+								});
 							});
-						});
+							
+						}
+						
+						//something went wrong
+						else {
+							$.gritterExtend.add(data['message']);
+							
+							content.animate({
+								opacity: 1
+							}, 'fast');
+						}
+						
 					},
 					error: function() {
 						content.animate({
