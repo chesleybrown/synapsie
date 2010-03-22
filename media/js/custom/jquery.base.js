@@ -924,9 +924,9 @@ $(document).ready(function() {
 		}
 		
 		//generate ampm
-		var formated_ampm = 'AM';
-		if (now.getHours() > 12) {
-			formated_ampm = 'PM';
+		var formated_ampm = 'PM';
+		if (now.getHours() < 12) {
+			formated_ampm = 'AM';
 		}
 		
 		//update selection inputs ONLY if datetime_reset isn't visible
