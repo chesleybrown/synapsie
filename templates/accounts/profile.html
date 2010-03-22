@@ -17,41 +17,49 @@
 					<ul class="form_items">
 						<li>
 							<div class="container">
-								<div class="label">
-									<label class="icon icon_username" for="id_username">{% trans "Username" %}</label>
-								</div>
-								<div id="id_username" class="content">
-									{{ viewed_user.username }}
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="container">
-								<div class="label">
-									<label class="icon icon_email" for="id_email">{% trans "Email" %}</label>
-								</div>
-								<div id="id_email" class="content">
-									{{ viewed_user.email }}
+								<div class="header">
+									<div class="label">
+										<label class="icon icon_username" for="id_username">{% trans "Username" %}</label>
+									</div>
+									<div id="id_username" class="content">
+										{{ viewed_user.username }}
+									</div>
 								</div>
 							</div>
 						</li>
 						<li>
 							<div class="container">
-								<div class="label">
-									<label class="icon icon_password" for="id_password">{% trans "Password" %}</label>
-								</div>
-								<div id="id_password" class="content">
-									&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;
+								<div class="header">
+									<div class="label">
+										<label class="icon icon_email" for="id_email">{% trans "Email" %}</label>
+									</div>
+									<div id="id_email" class="content">
+										{{ viewed_user.email }}
+									</div>
 								</div>
 							</div>
 						</li>
 						<li>
 							<div class="container">
-								<div class="label">
-									<label class="icon icon_date_joined" for="id_date_joined">{% trans "Joined" %}</label>
+								<div class="header">
+									<div class="label">
+										<label class="icon icon_password" for="id_password">{% trans "Password" %}</label>
+									</div>
+									<div id="id_password" class="content">
+										&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;
+									</div>
 								</div>
-								<div id="id_date_joined" class="content">
-									{{ viewed_user.date_joined|date:"F d, Y" }} at {{ viewed_user.date_joined|date:"g:iA" }}
+							</div>
+						</li>
+						<li>
+							<div class="container">
+								<div class="header">
+									<div class="label">
+										<label class="icon icon_date_joined" for="id_date_joined">{% trans "Joined" %}</label>
+									</div>
+									<div id="id_date_joined" class="content">
+										{{ viewed_user.date_joined|date:"F d, Y" }} at {{ viewed_user.date_joined|date:"g:iA" }}
+									</div>
 								</div>
 							</div>
 						</li>
@@ -75,31 +83,37 @@
 						<ul class="form_items">
 							<li>
 								<div class="container">
-									<div class="label">
-										<label for="id_record_total">{% trans "Total" %}</label>
-									</div>
-									<div id="id_record_total" class="content">
-										{{ record_stats.total }}
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="container">
-									<div class="label">
-										<label for="id_record_personal">{% trans "Personal" %}</label>
-									</div>
-									<div id="id_record_personal" class="content">
-										{{ record_stats.personal }}
+									<div class="header">
+										<div class="label">
+											<label for="id_record_total">{% trans "Total" %}</label>
+										</div>
+										<div id="id_record_total" class="content">
+											{{ record_stats.total }}
+										</div>
 									</div>
 								</div>
 							</li>
 							<li>
 								<div class="container">
-									<div class="label">
-										<label for="id_record_shared">{% trans "Shared" %}</label>
+									<div class="header">
+										<div class="label">
+											<label for="id_record_personal">{% trans "Personal" %}</label>
+										</div>
+										<div id="id_record_personal" class="content">
+											{{ record_stats.personal }}
+										</div>
 									</div>
-									<div id="id_record_shared" class="content">
-										{{ record_stats.shared }}
+								</div>
+							</li>
+							<li>
+								<div class="container">
+									<div class="header">
+										<div class="label">
+											<label for="id_record_shared">{% trans "Shared" %}</label>
+										</div>
+										<div id="id_record_shared" class="content">
+											{{ record_stats.shared }}
+										</div>
 									</div>
 								</div>
 							</li>
@@ -122,31 +136,37 @@
 						<ul class="form_items">
 							<li>
 								<div class="container">
-									<div class="label">
-										<label for="id_tag_total">{% trans "Total" %}</label>
-									</div>
-									<div id="id_tag_total" class="content">
-										{{ tag_stats.total }}
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="container">
-									<div class="label">
-										<label for="id_tag_unique">{% trans "Unique" %}</label>
-									</div>
-									<div id="id_tag_unique" class="content">
-										{{ tag_stats.unique }}
+									<div class="header">
+										<div class="label">
+											<label for="id_tag_total">{% trans "Total" %}</label>
+										</div>
+										<div id="id_tag_total" class="content">
+											{{ tag_stats.total }}
+										</div>
 									</div>
 								</div>
 							</li>
 							<li>
 								<div class="container">
-									<div class="label">
-										<label for="id_tag_average_per_record">{% trans "Average Per Record" %}</label>
+									<div class="header">
+										<div class="label">
+											<label for="id_tag_unique">{% trans "Unique" %}</label>
+										</div>
+										<div id="id_tag_unique" class="content">
+											{{ tag_stats.unique }}
+										</div>
 									</div>
-									<div id="id_tag_average_per_record" class="content">
-										{{ tag_stats.average_per_record }}
+								</div>
+							</li>
+							<li>
+								<div class="container">
+									<div class="header">
+										<div class="label">
+											<label for="id_tag_average_per_record">{% trans "Average Per Record" %}</label>
+										</div>
+										<div id="id_tag_average_per_record" class="content">
+											{{ tag_stats.average_per_record }}
+										</div>
 									</div>
 								</div>
 							</li>

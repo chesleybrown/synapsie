@@ -37,10 +37,10 @@
 											</ul>
 											<ul class="menu_items">
 												<li class="menu_item">
-													<a href="{% url tag_edit tag_id=tag.id %}"><span class="icon icon_record_edit"></span>Edit</a>
+													<a class="use_tag_edit" href="{% url api-tag tag_name=tag.name,emitter_format='.json' %}"><span class="icon icon_tag_edit"></span>Edit</a>
 												</li>
 												<li class="menu_item">
-													<a class="use_tag_all_delete" href="{% url api-tag tag_name=tag.name,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>Delete...</a>
+													<a class="use_tag_all_delete" href="{% url api-tag tag_name=tag.name,emitter_format='.json' %}"><span class="icon icon_tag_delete"></span>Delete...</a>
 												</li>
 											</ul>
 										</div>

@@ -23,17 +23,33 @@ input.icon {
 }
 
 /* Global */
-.icon_search {
+.icon_search,
+.icon_record_search,
+.icon_tag_search {
 	background-image: url(/site_media/media/img/icons/fugue/magnifier.png);
 }
 .icon_clear {
 	background-image: url(/site_media/media/img/icons/fugue/eraser.png);
 }
-.icon_delete {
+.icon_save,
+.icon_record_save,
+.icon_tag_save {
+	background-image: url(/site_media/media/img/icons/fugue/disk-black.png);
+}
+.icon_delete,
+.icon_record_delete,
+.icon_tag_delete {
 	background-image: url(/site_media/media/img/icons/fugue/eraser.png);
 }
-.icon_cancel {
+.icon_cancel,
+.icon_record_cancel,
+.icon_tag_cancel {
 	background-image: url(/site_media/media/img/icons/fugue/cross-button.png);
+}
+.icon_edit,
+.icon_tag_edit,
+.icon_record_edit {
+	background-image: url(/site_media/media/img/icons/fugue/pencil.png);
 }
 
 /* Profile */
@@ -72,12 +88,6 @@ input.icon {
 }
 .icon_record_view {
 	background-image: url(/site_media/media/img/icons/fugue/eye.png);
-}
-.icon_record_edit {
-	background-image: url(/site_media/media/img/icons/fugue/pencil.png);
-}
-.icon_record_delete {
-	background-image: url(/site_media/media/img/icons/fugue/eraser.png);
 }
 .icon_record_more {
 	background-image: url(/site_media/media/img/icons/fugue/pins.png);

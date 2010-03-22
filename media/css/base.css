@@ -128,9 +128,12 @@ ul.sidebar li.sidebar_item {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
+.blockMsg .popup {
+	padding: 10px;
+}
 .blockMsg h5 {
 	text-shadow: 1px 1px #fff;
-	margin: 10px 0;
+	margin: 0;
 }
 .blockMsg .actions {
 	float: right;
@@ -173,7 +176,7 @@ ul .menu ul.menu_items {
 	display: none;
 	list-style: none;
 	margin: 0;
-	padding: 0;
+	padding: 3px 0;
 	border-width: 0 1px 1px 1px;
 	border-style: solid;
 	border-color: #999;
@@ -187,7 +190,7 @@ ul .menu ul.menu_items {
 ul .menu ul.menu_items li.menu_item {
 	font-size: 12px;
 	margin: 0;
-	padding: 3px 0;
+	padding: 0;
 }
 ul .menu ul.menu_items li.menu_item .icon {
 	float: left;
@@ -197,7 +200,7 @@ ul .menu ul.menu_items li.menu_item a {
 	color: #666;
 	text-decoration: none;
 	font-weight: bold;
-	padding: 4px 15px;
+	padding: 7px 15px;
 	display: block;
 	text-shadow: 1px 1px #fff;
 	border-width: 1px 0;

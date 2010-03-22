@@ -9,7 +9,7 @@ from piston.utils import rc, validate
 
 from apps.tags.messages import TagMessages
 from apps.records.models import Record
-#from apps.tags.forms import TagForm
+from apps.tags.forms import TagForm
 from tagging.models import Tag, TaggedItem
 from tagging.managers import ModelTaggedItemManager
 
@@ -41,8 +41,96 @@ class TagHandler(BaseHandler):
 		identity = request.user
 		
 	
-	def update(self, request, tag_id):
-		return rc.UPDATED
+	def update(self, request, tag_name):
+		
+		# init
+		identity = request.user
+		tagged_item_manager = ModelTaggedItemManager()
+		tag = Tag()
+		updated_tag = Tag()
+		clean = None
+		clean_records = list()
+		messages = TagMessages()
+		response = self.empty_response
+		formset = None
+		
+		# get original tag
+		try:
+			tag = Tag.objects.get(name=tag_name)
+			
+		except Tag.DoesNotExist:
+			response['message'] = message.get('not_found')
+			return response
+		
+		# get updated tag (if it exists already)
+		try:
+			updated_tag = Tag.objects.get(name=request.PUT['name'])
+			
+		except Tag.DoesNotExist:
+			updated_tag = None
+		
+		# UPDATED TAG formset
+		if updated_tag:
+			formset = TagForm(request.PUT, instance=updated_tag)
+		
+		# tag doesn't exist yet... new tag
+		else:
+			formset = TagForm(request.PUT)
+		
+		# validate form
+		if formset.is_valid():
+			clean = formset.cleaned_data
+			
+			# create "updated" tag as a new tag if it doesn't exist already
+			if not updated_tag:
+				updated_tag = Tag(
+					name = clean['name']
+				)
+			
+			# get all records with this tag
+			records = Record.objects.all().filter(user=identity)
+			tagged_records = tagged_item_manager.with_all(tag.name, records)
+			
+			# go through each record and update the tags for them
+			for tagged_record in tagged_records:
+				
+				# basically go through all the record's current tags and remove
+				# the one the user is currently updating
+				record_tags = list()
+				record_tags_list = list()
+				for record_tag in tagged_record.tags:
+					if record_tag.name != tag_name:
+						record_tags.append(record_tag)
+						record_tags_list.append(record_tag.name)
+				
+				record_tags.append(updated_tag)
+				record_tags_list.append(updated_tag.name)
+				
+				# set all the info for the updated record
+				clean_record = {
+					'id': tagged_record.id,
+					'user_id': tagged_record.user_id,
+					'text': tagged_record.text,
+					'personal': tagged_record.personal,
+					'created': tagged_record.created,
+					'tags': record_tags,
+				}
+				clean_records.append(clean_record)
+				
+				# update the tags for the records
+				str_tags = ",".join(record_tags_list)
+				Tag.objects.update_tags(tagged_record, str_tags)
+			
+			# return message and record updated
+			response['message'] = messages.get('updated', {
+				'tag_name': tag_name,
+			})
+			response['data'] = updated_tag
+			
+		else:
+			response['message'] = messages.get('invalid')
+		
+		return response
 	
 	def delete(self, request, tag_name, record_id=None):
 		

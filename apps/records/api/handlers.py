@@ -125,7 +125,6 @@ class RecordHandler(BaseHandler):
 			'records': clean_records,
 		}
 		return response
-		return data
 	
 	def create(self, request):
 		
@@ -135,6 +134,7 @@ class RecordHandler(BaseHandler):
 		formset = RecordForm()
 		now = datetime.now()
 		str_tags = ''
+		clean = None
 		record_datetime = None
 		datetime_string = False
 		datetime_format = "%Y-%m-%d %I:%M%p"
@@ -180,18 +180,16 @@ class RecordHandler(BaseHandler):
 					'tags': record.tags
 				}
 				
-				# return message and record created
+				# set message and record created
 				response['message'] = messages.get('created')
 				response['data'] = clean_record
-				return response
 			
 			else:
 				
-				# return error message, missing data
+				# set error message, missing data
 				response['message'] = messages.get('missing_data')
-				return response
 			
-		return rc.BAD_REQUEST
+		return response
 	
 	def update(self, request, record_id):
 		return rc.UPDATED

@@ -107,7 +107,6 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
 .tab_container {
 	border: 1px solid #ccc;
 	border-top: none;
-	overflow: hidden;
 	clear: both;
 	float: left;
 	width: 100%;

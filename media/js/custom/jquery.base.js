@@ -345,9 +345,9 @@ $(document).ready(function() {
 		$(container).find('a.use_record_delete').bind('click', function(e) {
 			var element = $(this);
 			var menu = $(this).parents('.menu');
-			var container = element.parents('.record ');
-			var content = container.find('.record_content');
-			var delete_confirmation = $('#record_delete_confirmation').find('.delete_confirmation').clone();
+			var container = $(element).parents('.record ');
+			var content = $(container).find('.record_content');
+			var popup = $('#record_delete_confirmation').find('.popup').clone();
 			
 			//fade out record content
 			content.animate({
@@ -356,12 +356,12 @@ $(document).ready(function() {
 			
 			//show delete confirmation dialog
 			container.block({
-				message: delete_confirmation
+				message: $(popup)
 			});
 			
 			//setup delete action
-			delete_confirmation.find('.delete_action').attr('href', element.attr('href'));
-			delete_confirmation.find('.delete_action').bind('click', function(e) {
+			$(popup).find('.delete_action').attr('href', element.attr('href'));
+			$(popup).find('.delete_action').bind('click', function(e) {
 				//hide delete confirmation dialog
 				container.unblock();
 				container.block({
@@ -403,6 +403,9 @@ $(document).ready(function() {
 						content.animate({
 							opacity: 1
 						}, 'fast');
+					},
+					complete: function() {
+						$(container).unblock();
 					}
 				});
 				
@@ -410,7 +413,7 @@ $(document).ready(function() {
 			});
 			
 			//setup cancel action
-			delete_confirmation.find('.cancel_action').bind('click', function(e) {
+			$(popup).find('.cancel_action').bind('click', function(e) {
 				content.animate({
 					opacity: 1
 				}, 'fast');
@@ -435,9 +438,9 @@ $(document).ready(function() {
 		$(container).find('a.use_tag_all_delete').bind('click', function(e) {
 			var element = $(this);
 			var menu = $(this).parents('.menu');
-			var container = element.parents('li ');
-			var content = container.find('.container');
-			var delete_confirmation = $('#tag_all_delete_confirmation').find('.delete_confirmation').clone();
+			var container = $(element).parents('li ');
+			var content = $(container).find('.container');
+			var popup = $('#tag_all_delete_confirmation').find('.popup').clone();
 			
 			//fade out record content
 			$(content).animate({
@@ -446,12 +449,12 @@ $(document).ready(function() {
 			
 			//show delete confirmation dialog
 			$(container).block({
-				message: $(delete_confirmation)
+				message: $(popup)
 			});
 			
 			//setup delete action
-			$(delete_confirmation).find('.delete_action').attr('href', $(element).attr('href'));
-			$(delete_confirmation).find('.delete_action').bind('click', function(e) {
+			$(popup).find('.delete_action').attr('href', $(element).attr('href'));
+			$(popup).find('.delete_action').bind('click', function(e) {
 				//hide delete confirmation dialog
 				$(container).unblock();
 				$(container).block({
@@ -493,6 +496,9 @@ $(document).ready(function() {
 						content.animate({
 							opacity: 1
 						}, 'fast');
+					},
+					complete: function() {
+						$(container).unblock();
 					}
 				});
 				
@@ -500,11 +506,113 @@ $(document).ready(function() {
 			});
 			
 			//setup cancel action
-			delete_confirmation.find('.cancel_action').bind('click', function(e) {
+			$(popup).find('.cancel_action').bind('click', function(e) {
 				content.animate({
 					opacity: 1
 				}, 'fast');
 				container.unblock();
+				
+				e.preventDefault();
+			});
+			
+			e.preventDefault();
+		});
+		
+		$(container).find('a.use_tag_edit').bind('click', function(e) {
+			var element = $(this);
+			var menu = $(this).parents('.menu');
+			var container = $(element).parents('li ');
+			var content = $(container).find('.container');
+			var popup = $('#tag_edit_form').find('.popup').clone();
+			var form = $(popup).find('form');
+			var edit_action = $(popup).find('.edit_action');
+			var cancel_action = $(popup).find('.cancel_action');
+			
+			//get edit info
+			var tag_name = $(container).find('.name');
+			
+			//get edit form inputs
+			var tag_name_input = $(form).find('input[name="name"]');
+			
+			//fill in edit form
+			$(form).attr('action', $(element).attr('href'));
+			$(tag_name_input).val($(tag_name).text());
+			
+			//fade out record content
+			$(content).animate({
+				opacity: 0.40
+			}, 'slow');
+			
+			//show delete confirmation dialog
+			$(container).block({
+				message: $(popup)
+			});
+			
+			//focus on tag name input
+			$(tag_name_input).focus();
+			
+			//setup delete action
+			$(edit_action).bind('click', function(e) {
+				//hide delete confirmation dialog
+				$(container).unblock();
+				$(container).block({
+					message: ''
+				});
+				
+				$(form).ajaxForm({
+					success: function(data) {
+					
+						//init
+						var message = data.message;
+						var tag = data.data;
+						
+						//updated successfully
+						if (message['status'] == 200) {
+							
+							//update the displayed tag
+							tag_name.text(tag.name);
+							
+							//update href
+							$(element).attr('href', function(index, attr) {
+								return attr.replace(/(api\/tags.json\/)(.+)$/, '$1' + tag.name);
+							});
+							
+							$(content).animate({
+								opacity: 1
+							}, 'fast');
+							
+						}
+						
+						//something went wrong
+						else {
+							$.gritterExtend.add(data.message);
+							
+							$(content).animate({
+								opacity: 1
+							}, 'fast');
+						}
+						
+					},
+					error: function() {
+						$(content).animate({
+							opacity: 1
+						}, 'fast');
+					},
+					complete: function() {
+						$(container).unblock();
+					}
+				});
+				$(form).submit();
+				
+				e.preventDefault();
+			});
+			
+			//setup cancel action
+			$(cancel_action).bind('click', function(e) {
+				$(content).animate({
+					opacity: 1
+				}, 'fast');
+				$(container).unblock();
 				
 				e.preventDefault();
 			});
