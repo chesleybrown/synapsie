@@ -1,5 +1,5 @@
 /*
- FCBKcomplete 2.6.2h
+ FCBKcomplete 2.6.2j
  - Jquery version required: 1.2.x, 1.3.x
  
  Changelog:
@@ -62,6 +62,11 @@
  	
  - 2.6.2i
  		fixed preSetting up the tags that are already selected on load
+ 	
+ - 2.6.2j
+ 		removed complete fadein/fadeout... was just causing issues in my layout
+ 		added addItemToCache function
+ 		using addItemToCache function to dynamically add items to the cache if they don't already exist in the cache
  */
 
 /* Coded by: emposha <admin@emposha.com> */
@@ -90,7 +95,7 @@ jQuery(
 			{
 		        function init()
 		        {
-		           createFCBK();       
+		           createFCBK();
 	               preSet();
 	               addInput(0); 
 		        }
@@ -119,7 +124,7 @@ jQuery(
 				   if (browser_msie)
 	               {
 	                    complete.append('<iframe class="ie6fix" scrolling="no" frameborder="0"></iframe>');
-	                    browser_msie_frame = complete.children('.ie6fix');						
+	                    browser_msie_frame = complete.children('.ie6fix');
 	               }
 				   
 	               feed = $(document.createElement("ul"));
@@ -153,7 +158,7 @@ jQuery(
 								caption: option.text(),
 								value: option.val()
 							});
-							search_string += "" + (cache.length - 1) + ":" + option.text() + ";";                
+							search_string += "" + (cache.length - 1) + ":" + option.text() + ";";
 		                }
 		            );
 		        }
@@ -163,6 +168,20 @@ jQuery(
 				{					
 					addItem(data.title, data.value);
 				});
+				
+				function addItemToCache(value, caption) {
+					
+					if (cache) {
+						cache.push (
+							{
+								caption: caption,
+								value: value
+							}
+						);
+						search_string += "" + (cache.length - 1) + ":" + value + ";";
+					}
+					
+				}
 	        	
 		        function addItem (title, value, preadded)
 		        {
@@ -173,12 +192,16 @@ jQuery(
 					var added_already = _item.attr("selected");
 					
 					if (preadded || (!added_already || options.allow_duplicates)) {
+						
 		                var li = document.createElement("li");
 		                var txt = document.createTextNode(title);
 		                var aclose = document.createElement("a");
 		                var text_container = $('<span></span>')
 		                	.addClass('tag_text')
 		                	.text(title);
+		                
+		                //add new item to cache
+		                addItemToCache(title, title);
 		                
 		                $(li).attr({"class": "bit-box","rel": value});
 		                
@@ -273,14 +296,14 @@ jQuery(
 	                input.focus(
 	                    function()
 	                    {
-	                        complete.fadeIn("fast");
+	                        complete.show();
 	                    }
 	                );
 	                
 	                input.blur(
 	                    function()
 	                    {
-	                        complete.fadeOut("fast");
+	                        complete.hide();
 	                    }
 	                );
 	                
@@ -318,10 +341,10 @@ jQuery(
 	                    {
 							//prevent to enter some bad chars when input is empty
 							if(event.keyCode == 191)
-							{								
+							{
 								event.preventDefault();
 								return false;
-							}	                       					
+							}
 	                    }
 	                );
 					
@@ -333,7 +356,7 @@ jQuery(
 							if (event.keyCode == 8 && etext.length == 0)
 							{			
 								feed.hide();
-								browser_msie?browser_msie_frame.hide():'';				
+								browser_msie?browser_msie_frame.hide():'';
 								if (holder.children("li.bit-box.deleted").length == 0) 
 								{
 									holder.children("li.bit-box:last").addClass("deleted");
@@ -356,7 +379,7 @@ jQuery(
 							
 	                        if (event.keyCode != 40 && event.keyCode != 38 && etext.length != 0) 
 	                        {
-	                            counter = 0;									                            
+	                            counter = 0;
 								
 	                            if (options.json_url) 
 	                            {
@@ -393,7 +416,7 @@ jQuery(
 							input.focus();
 							complete.children(".default").show();
 						},1);
-					}						    
+					}
 		        }
 	        	
 				function addMembers(etext, data)
@@ -440,8 +463,8 @@ jQuery(
 					var content = '';
 					while (match != null && maximum > 0) 
 					{
-						var id = match[1];						
-						var object = cache[id];	
+						var id = match[1];
+						var object = cache[id];
 						if (options.filter_selected && element.children("option[value=" + object.value + "]").hasClass("selected")) 
 						{
 							//nothing here...
@@ -451,7 +474,7 @@ jQuery(
 							content += '<li rel="' + object.value + '">' + itemIllumination(object.caption, etext) + '</li>';
 							counter++;
 							maximum--;
-						}						
+						}
 						match = myregexp.exec(search_string);
 					}
 					feed.append(content);
@@ -477,7 +500,7 @@ jQuery(
 	                    {
 	                        browser_msie_frame.css({"height": feed.height() + "px", "width": feed.width() + "px"}).show();
 	                    }
-	                }				
+	                }
 				}
 				
 				function itemIllumination(text, etext)
@@ -532,9 +555,9 @@ jQuery(
 	        	
 		        function bindEvents()
 		        {
-		            var maininput = $("#"+elemid + "_annoninput").children(".maininput");	                 	
+		            var maininput = $("#"+elemid + "_annoninput").children(".maininput");
 	       	        bindFeedEvent();      	
-	                feed.children("li").unbind("mousedown");        
+	                feed.children("li").unbind("mousedown");
 	                feed.children("li").mousedown( 
 	                    function()
 	                    {
