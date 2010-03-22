@@ -200,9 +200,6 @@ jQuery(
 		                	.addClass('tag_text')
 		                	.text(title);
 		                
-		                //add new item to cache
-		                addItemToCache(title, title);
-		                
 		                $(li).attr({"class": "bit-box","rel": value});
 		                
 		                $(li).prepend(text_container);
@@ -247,6 +244,9 @@ jQuery(
 								_item.attr("value", value).addClass("selected");
 		                        _item.text(title);
 		                        element.append(_item);
+		                        
+		                        //add new item to cache
+		                		addItemToCache(title, title);
 		                    }
 		                    if (typeof(options.onselect) == 'function')
 		                    {
