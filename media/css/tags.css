@@ -74,3 +74,9 @@ ul.tags li.tag a.closebutton {
 	text-align: center;
 	margin: 0;
 }
+
+
+/* Tag Input */
+input.tag {
+	width: 375px;
+}

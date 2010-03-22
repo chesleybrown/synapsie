@@ -30,6 +30,11 @@ form.record_form .field input[type='text'],
 form.record_form .field input[type='password'] {
 	padding: 5px 5px;
 }
+form.record_form .field textarea:focus,
+form.record_form .field input[type='text']:focus,
+form.record_form .field input[type='password']:focus {
+	border-color: #00527F;
+}
 form.record_form .field textarea {
 	height: 45px;
 	padding: 5px 5px;
