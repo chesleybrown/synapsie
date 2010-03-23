@@ -32,7 +32,7 @@ def index_records(request, tags=False, page=1):
 	paginator = False
 	
 	# get user records
-	record_list = Record.objects.all().filter(user=identity).order_by('-created')
+	record_list = Record.objects.all().filter(user=identity).order_by('-created', '-id')
 	
 	# filter by tags if provided
 	if (tags):
@@ -94,7 +94,7 @@ def public_records(request, user_id=0, username=None, page=1):
 		raise Http404
 	
 	# get user records
-	record_list = Record.objects.all().filter(user=user, personal=0).order_by('-created')
+	record_list = Record.objects.all().filter(user=user, personal=0).order_by('-created', '-id')
 	
 	# number of items per page
 	paginator = Paginator(record_list, results_per_page)
@@ -155,7 +155,7 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	formset = RecordSearchForm(request.GET)
 	
 	# get user records
-	record_list = Record.objects.all().filter(user=identity).order_by('-created')
+	record_list = Record.objects.all().filter(user=identity).order_by('-created', '-id')
 	
 	# user has created at least 1 record
 	if (record_list.count() > 0):

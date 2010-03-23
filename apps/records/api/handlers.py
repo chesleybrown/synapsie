@@ -79,7 +79,7 @@ class RecordHandler(BaseHandler):
 					raise Http404
 				
 			# get user records
-			record_list = Record.objects.all().filter(user=user).order_by('-created')
+			record_list = Record.objects.all().filter(user=user).order_by('-created', '-id')
 			
 			# only show public if enabled (added user & identity check for safety)
 			if public or user != identity:
