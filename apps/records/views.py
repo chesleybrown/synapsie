@@ -57,7 +57,7 @@ def index_records(request, tags=False, page=1):
 	if (popular_tags):
 		highest = popular_tags[0]
 		for tag in popular_tags:
-			tag.percent = (float(tag.count) / float(highest.count)) * 100
+			tag.percent = round((float(tag.count) / float(highest.count)) * 100, 0)
 			popular_tags_printable.append(tag)
 	
 	# render
@@ -113,7 +113,7 @@ def public_records(request, user_id=0, username=None, page=1):
 	# get popular tags ready for template
 	highest = popular_tags[0]
 	for tag in popular_tags:
-		tag.percent = (float(tag.count) / float(highest.count)) * 100
+		tag.percent = round((float(tag.count) / float(highest.count)) * 100, 0)
 		popular_tags_printable.append(tag)
 	
 	# render
@@ -188,7 +188,7 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	# get popular tags ready for template
 	highest = popular_tags[0]
 	for tag in popular_tags:
-		tag.percent = (float(tag.count) / float(highest.count)) * 100
+		tag.percent = round((float(tag.count) / float(highest.count)) * 100, 0)
 		popular_tags_printable.append(tag)
 	
 	# render

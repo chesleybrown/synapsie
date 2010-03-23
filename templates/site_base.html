@@ -75,7 +75,7 @@
 												{% render_tag tag %}
 											</div>
 											<div class="content">
-												<span style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
+												<span class="value" style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
 											</div>
 										</li>
 									{% else %}
@@ -84,7 +84,7 @@
 												{% render_tag tag %}
 											</div>
 											<div class="content">
-												<span style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
+												<span class="value" style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
 											</div>
 										</li>
 									{% endif %}

@@ -51,7 +51,7 @@ def index_tags(request, page=1):
 	if (popular_tags):
 		highest = popular_tags[0]
 		for tag in popular_tags:
-			tag.percent = (float(tag.count) / float(highest.count)) * 100
+			tag.percent = round((float(tag.count) / float(highest.count)) * 100, 0)
 			popular_tags_printable.append(tag)
 	
 	# render
