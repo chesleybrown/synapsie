@@ -23,13 +23,13 @@
 					<div class="form_items_container">
 						<ul id="user_tag_list" class="form_items">
 							{% for tag in tags_paginator.object_list %}
-								<li id="tag_{{ tag.id }}" class="tag">
+								<li id="tag_{{ tag.id }}" class="tag has_menu">
 									<div class="container">
 										<div class="header">
 											<div class="label">
-												<div class="name">{{ tag.name }}</div>
+												<a href="{% url record_search tags=tag.name %}" class="name">{{ tag.name }}</a>
 											</div>
-											<div class="content has_menu">{{ tag.count }}</div>
+											<div class="content">{{ tag.count }}</div>
 										</div>
 										<div class="menu use_tag_menu">
 											<ul class="menu_headers">

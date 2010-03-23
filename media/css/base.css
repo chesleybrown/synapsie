@@ -252,10 +252,7 @@ ul.form_items > li {
 }
 ul.form_items > li .label {
 	margin: 8px 0 0 0;
-	padding: 10px 0;
-	color: #333;
 	text-shadow: 1px 1px #fff;
-	font-size: 12px;
 	min-height: 17px;
 	font-weight: bold;
 	width: 100%;
@@ -267,10 +264,18 @@ ul.form_items > li .label {
 	position: absolute;
 }
 ul.form_items > li .label label,
-ul.form_items > li .label div {
+ul.form_items > li .label div,
+ul.form_items > li .label a {
+	padding: 10px 0;
+	color: #333;
+	font-size: 12px;
 	display: block;
 	margin-left: 10px;
 	line-height: 17px;
+	text-decoration: none;
+}
+ul.form_items > li .label a:hover {
+	color: #666;
 }
 ul.form_items > li .content {
 	margin-right: 10px;
@@ -290,7 +295,8 @@ ul.form_items > li .content {
 	border-style: solid;
 	border-color: #00527F;
 }
-ul.form_items > li .content.has_menu {
+ul.form_items > li.has_menu .container > .header > .content,
+ul.form_items > li.has_menu .container > .header a {
 	margin-right: 50px;
 }
 ul.form_items > li > .container > .header {
