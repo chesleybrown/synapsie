@@ -178,4 +178,5 @@ class TagHandler(BaseHandler):
 		response['message'] = messages.get('deleted', {
 			'tag_name': tag_name,
 		})
+		response['data'] = tag
 		return response

@@ -50,64 +50,66 @@
 {% endblock %}
 
 {% block sidebar %}
-	{% if user %}
-		<div class="use_tabs sidebar_tabs">
-			<ul class="tabs">
-				<li class="active"><a href="#sidebar_tab_used">{% trans "Used" %}</a></li>
-				<li><a href="#sidebar_tab_popular">{% trans "Popular" %}</a></li>
-			</ul>
-			
-			<div class="tab_container">
-				<div id="sidebar_tab_used" class="tab_content">
-					{% if used_tags %}
-						{% render_tags used_tags %}
-					{% endif %}
-				</div>
-				<div id="sidebar_tab_popular" class="tab_content hidden">
-					{% if popular_tags %}
-						<ul class="tags_chart">
-							{% for tag in popular_tags %}
-								{% if forloop.counter > 10 %}
-									<!-- These are hidden on load... -->
-									<li class="hidden">
-										<div class="label">
-											{% render_tag tag %}
-										</div>
-										<div class="content">
-											<span style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
-										</div>
-									</li>
-								{% else %}
-									<li>
-										<div class="label">
-											{% render_tag tag %}
-										</div>
-										<div class="content">
-											<span style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
-										</div>
-									</li>
-								{% endif %}
-							{% endfor %}
-						</ul>
-						
-						{% if popular_tags|length > 10 %}
-							<div class="actions">
-								<div class="action">
-									<a href="#" class="input_button_wrapper use_tag_popular_show_all">
-										<span class="input_button_start"></span>
-										<span class="input_button_body">
-											<span class="input_button_content icon icon_tags">{% trans "Show All" %}</span>
-										</span>
-										<span class="input_button_end"></span>
-									</a>
-								</div>
-							</div>
+	<div id="site_sidebar">
+		{% if user %}
+			<div class="use_tabs sidebar_tabs">
+				<ul class="tabs">
+					<li class="active"><a href="#sidebar_tab_used">{% trans "Used" %}</a></li>
+					<li><a href="#sidebar_tab_popular">{% trans "Popular" %}</a></li>
+				</ul>
+				
+				<div class="tab_container">
+					<div id="sidebar_tab_used" class="tab_content">
+						{% if used_tags %}
+							{% render_tags used_tags %}
 						{% endif %}
-					{% endif %}
+					</div>
+					<div id="sidebar_tab_popular" class="tab_content hidden">
+						{% if popular_tags %}
+							<ul class="tags_chart">
+								{% for tag in popular_tags %}
+									{% if forloop.counter > 10 %}
+										<!-- These are hidden on load... -->
+										<li class="hidden">
+											<div class="label">
+												{% render_tag tag %}
+											</div>
+											<div class="content">
+												<span style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
+											</div>
+										</li>
+									{% else %}
+										<li>
+											<div class="label">
+												{% render_tag tag %}
+											</div>
+											<div class="content">
+												<span style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
+											</div>
+										</li>
+									{% endif %}
+								{% endfor %}
+							</ul>
+							
+							{% if popular_tags|length > 10 %}
+								<div class="actions">
+									<div class="action">
+										<a href="#" class="input_button_wrapper use_tag_popular_show_all">
+											<span class="input_button_start"></span>
+											<span class="input_button_body">
+												<span class="input_button_content icon icon_tags">{% trans "Show All" %}</span>
+											</span>
+											<span class="input_button_end"></span>
+										</a>
+									</div>
+								</div>
+							{% endif %}
+						{% endif %}
+					</div>
 				</div>
 			</div>
-		</div>
-	{% endif %}
+		{% endif %}
+	</div>
 {% endblock sidebar %}
 
 {% block footer %}
@@ -136,5 +138,6 @@
 	<script src="{{ MEDIA_URL }}js/plugins/jquery.highlight.js" type="text/javascript"></script>
 	<script src="{{ MEDIA_URL }}js/plugins/jquery.gritter.js" type="text/javascript"></script>
 	<script src="{{ MEDIA_URL }}js/custom/jquery.gritter_extend.js" type="text/javascript"></script>
+	<script src="{{ MEDIA_URL }}js/custom/jquery.sidebar.js" type="text/javascript"></script>
 	{% block extra_body %}{% endblock %}
 {% endblock %}

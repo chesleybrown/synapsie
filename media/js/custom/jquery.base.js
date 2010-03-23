@@ -45,6 +45,15 @@ $(document).ready(function() {
 	
 	
 	/*
+	 * Sidebar
+	 */
+	$('#site_sidebar').sidebar();
+	/*
+	 * END Sidebar
+	 */
+	
+	
+	/*
 	 * Time Since (timeago)
 	 */
 	function setupTimeSince() {
@@ -259,7 +268,9 @@ $(document).ready(function() {
 		new_record.find('div.footer').append(new_record_tags);
 		
 		// update sidebar with new tags
-		// TO DO
+		$(new_record_tags).find('li').each(function() {
+			$('#site_sidebar').sidebar('add_tag', $(this).find('a.tag_text').text());
+		});
 		
 		// enable menus for this new record
 		$(new_record).find('div.use_record_menu').dropdownMenus({
@@ -480,6 +491,9 @@ $(document).ready(function() {
 								});
 							});
 							
+							//update sidebar
+							$('#site_sidebar').sidebar('remove_tag', data.data.name);
+							
 						}
 						
 						//something went wrong
@@ -530,6 +544,7 @@ $(document).ready(function() {
 			
 			//get edit info
 			var tag_name = $(container).find('.name');
+			var old_tag_name_text = $(container).find('.name').text(); //so we know what the old value is later
 			
 			//get edit form inputs
 			var tag_name_input = $(form).find('input[name="name"]');
@@ -580,6 +595,14 @@ $(document).ready(function() {
 							$(content).animate({
 								opacity: 1
 							}, 'fast');
+							
+							//update sidebar
+							$('#site_sidebar').sidebar('update_tag', old_tag_name_text, tag.name);
+							
+							//update delete action
+							$(container).find('a.use_tag_all_delete').attr('href', function(index, attr) {
+								return attr.replace(/(api\/tags.json\/)(.*)/, '$1' + tag.name);
+							});
 							
 						}
 						
@@ -729,7 +752,7 @@ $(document).ready(function() {
 					
 				},
 				error: function() {
-					console.log('error');
+					
 				},
 				complete: function() {
 					loading.hide();
