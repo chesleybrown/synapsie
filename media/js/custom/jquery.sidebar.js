@@ -1,5 +1,5 @@
 /*
- * jQuery Sidebar 0.3
+ * jQuery Sidebar 0.4
  * 
  * Makes it easy to handle adding/removing tags from the sidebar dynamically
  * 
@@ -153,11 +153,10 @@
 			
 			// update the tag
 			new_tag = $(tag).clone();
-			new_tag
-				.find('a.tag_text').text(new_tag_name)
-				.find('a.tag_text').attr('href', function(index, attr) {
-					return attr.replace(/(tags\/)(.*)/, '$1' + new_tag_name);
-				});
+			new_tag.find('a.tag_text').text(new_tag_name);
+			new_tag.find('a.tag_text').attr('href', function(index, attr) {
+				return attr.replace(/(\/tags\/).*/, '$1' + new_tag_name);
+			});
 			
 			// remove old tag
 			$(tag).remove();

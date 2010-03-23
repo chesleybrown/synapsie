@@ -587,12 +587,12 @@ $(document).ready(function() {
 							//update the displayed tag/href
 							tag_name.text(tag.name);
 							tag_name.attr('href', function(index, attr) {
-								return attr.replace(/(tags\/)(.*)$/, '$1' + tag.name);
+								return attr.replace(/(\/tags\/)(.*)$/, '$1' + tag.name);
 							});
 							
 							//update edit href
 							$(element).attr('href', function(index, attr) {
-								return attr.replace(/(api\/tags.json\/)(.*)$/, '$1' + tag.name);
+								return attr.replace(/(\/api\/tags.json\/)(.*)$/, '$1' + tag.name);
 							});
 							
 							$(content).animate({
@@ -604,7 +604,7 @@ $(document).ready(function() {
 							
 							//update delete action
 							$(container).find('a.use_tag_all_delete').attr('href', function(index, attr) {
-								return attr.replace(/(api\/tags.json\/)(.*)/, '$1' + tag.name);
+								return attr.replace(/(\/api\/tags.json\/)(.*)$/, '$1' + tag.name);
 							});
 							
 						}
