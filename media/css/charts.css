@@ -29,7 +29,9 @@ ul.tags_chart > li .content {
 	margin: 0;
 	display: inline;
 }
-ul.tags_chart > li .content span {
+ul.tags_chart > li .content > span {
+	min-width: 7px;
+	
 	color: #fff;
 	background: #0071bc;
 	text-align: center;
@@ -44,10 +46,10 @@ ul.tags_chart > li .content span {
 	background: -webkit-gradient(linear, left top, left bottom, from(#0071bc), to(#0063a6));
 	-webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0)), to(rgba(0,0,0,0.25)));
 }
-ul.tags_chart > li .content span {
+ul.tags_chart > li .content > span {
 	-webkit-animation-name:bar-one; /* Give the bar an animation with a unique name */
 }
-ul.tags_chart > li .content span { /* Define animation styles for all three bars at once */
+ul.tags_chart > li .content > span { /* Define animation styles for all three bars at once */
 	-webkit-animation-duration: 1s; /* Animation duration in seconds */
 	-webkit-animation-iteration-count: 1; /* Amount of times to loop */
 	-webkit-animation-timing-function: ease-out; /* Ease in, out etc. */
