@@ -1,5 +1,5 @@
 /*
- * jQuery Sidebar 0.1
+ * jQuery Sidebar 0.2
  * 
  * Makes it easy to handle adding/removing tags from the sidebar dynamically
  * 
@@ -68,13 +68,23 @@
 			var settings = sidebar.data('sidebar_settings');
 			var sidebar_tab_used_tags = $(settings.sidebar_tab_used_tags);
 			var after_tag = false;
+			var already_exists = false;
 			
 			// add tag
 			$(sidebar_tab_used_tags).find('li').each(function() {
-				if ($(this).find('a.tag_text').text() < tag.find('a.tag_text').text()) {
+				// abort if tag already exists
+				if ($(this).find('a.tag_text').text() == tag.find('a.tag_text').text()) {
+					already_exists = true;
+				}
+				else if ($(this).find('a.tag_text').text() < tag.find('a.tag_text').text()) {
 					after_tag = $(this);
 				}
 			});
+			
+			// abort if tag already exists
+			if (already_exists) {
+				return false;
+			}
 			
 			// can go after a current tag
 			if (after_tag) {
