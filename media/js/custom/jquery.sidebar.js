@@ -1,5 +1,5 @@
 /*
- * jQuery Sidebar 0.2
+ * jQuery Sidebar 0.3
  * 
  * Makes it easy to handle adding/removing tags from the sidebar dynamically
  * 
@@ -73,10 +73,10 @@
 			// add tag
 			$(sidebar_tab_used_tags).find('li').each(function() {
 				// abort if tag already exists
-				if ($(this).find('a.tag_text').text() == tag.find('a.tag_text').text()) {
+				if ($(this).find('a.tag_text').text() == $(tag).find('a.tag_text').text()) {
 					already_exists = true;
 				}
-				else if ($(this).find('a.tag_text').text() < tag.find('a.tag_text').text()) {
+				else if ($(this).find('a.tag_text').text() < $(tag).find('a.tag_text').text()) {
 					after_tag = $(this);
 				}
 			});
@@ -100,6 +100,9 @@
 			else {
 				$(sidebar_tab_used_tags).append(tag);
 			}
+			
+			// fade it all fancy
+			$(tag).fadeIn('slow');
 			
 			return true;
 			
@@ -127,9 +130,6 @@
 			
 			//sidebar_tab_popular_tags.append(tag);
 			
-			// fade it all fancy
-			tag.fadeIn('slow');
-			
 			return true;
 			
 		}
@@ -152,13 +152,18 @@
 			});
 			
 			// update the tag
-			tag.find('a.tag_text').text(new_tag_name);
-			tag.find('a.tag_text').attr('href', function(index, attr) {
-				return attr.replace(/(tags\/)(.*)/, '$1' + new_tag_name);
-			});
+			new_tag = $(tag).clone();
+			new_tag
+				.find('a.tag_text').text(new_tag_name)
+				.find('a.tag_text').attr('href', function(index, attr) {
+					return attr.replace(/(tags\/)(.*)/, '$1' + new_tag_name);
+				});
+			
+			// remove old tag
+			$(tag).remove();
 			
 			// update location of tag (sort)
-			insert_tag(sidebar, tag);
+			insert_tag(sidebar, new_tag);
 			
 			return true;
 			
