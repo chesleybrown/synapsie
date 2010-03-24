@@ -70,7 +70,7 @@
 								{% for tag in popular_tags %}
 									{% if forloop.counter > 10 %}
 										<!-- These are hidden on load... -->
-										<li class="hidden">
+										<li class="popular_tag hidden">
 											<div class="label">
 												{% render_tag tag %}
 											</div>
@@ -79,7 +79,7 @@
 											</div>
 										</li>
 									{% else %}
-										<li>
+										<li class="popular_tag">
 											<div class="label">
 												{% render_tag tag %}
 											</div>
