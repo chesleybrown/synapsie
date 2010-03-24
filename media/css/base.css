@@ -130,6 +130,17 @@ ul.sidebar li.sidebar_item {
 }
 .blockMsg .popup {
 	padding: 10px;
+	position: relative;
+}
+.blockMsg .popup .popup_close {
+	display: block;
+	cursor: pointer;
+	background: url(/site_media/media/img/layout/popup/close.png);
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: -15px;
+	right: -15px;
 }
 .blockMsg .popup .contents {
 	overflow: auto;

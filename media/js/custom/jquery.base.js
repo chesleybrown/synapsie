@@ -424,7 +424,7 @@ $(document).ready(function() {
 			});
 			
 			//setup cancel action
-			$(popup).find('.cancel_action').bind('click', function(e) {
+			$(popup).find('.cancel_action, .popup_close').bind('click', function(e) {
 				content.animate({
 					opacity: 1
 				}, 'fast');
@@ -520,7 +520,7 @@ $(document).ready(function() {
 			});
 			
 			//setup cancel action
-			$(popup).find('.cancel_action').bind('click', function(e) {
+			$(popup).find('.cancel_action, .popup_close').bind('click', function(e) {
 				content.animate({
 					opacity: 1
 				}, 'fast');
@@ -540,7 +540,7 @@ $(document).ready(function() {
 			var popup = $('#tag_edit_form').find('.popup').clone();
 			var form = $(popup).find('form');
 			var edit_action = $(popup).find('.edit_action');
-			var cancel_action = $(popup).find('.cancel_action');
+			var cancel_action = $(popup).find('.cancel_action, .popup_close');
 			
 			//get edit info
 			var tag_name = $(container).find('.name');
