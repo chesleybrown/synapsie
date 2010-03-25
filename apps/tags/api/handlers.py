@@ -48,6 +48,7 @@ class TagHandler(BaseHandler):
 		tagged_item_manager = ModelTaggedItemManager()
 		tag = Tag()
 		updated_tag = Tag()
+		str_tags = ','
 		clean = None
 		clean_records = list()
 		messages = TagMessages()

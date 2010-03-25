@@ -133,7 +133,7 @@ class RecordHandler(BaseHandler):
 		messages = RecordMessages()
 		formset = RecordForm()
 		now = datetime.now()
-		str_tags = ''
+		str_tags = ','
 		clean = None
 		record_datetime = None
 		datetime_string = False
@@ -167,7 +167,7 @@ class RecordHandler(BaseHandler):
 				record.save()
 				
 				# add tags
-				str_tags = ",".join(arr_tags)
+				str_tags += ",".join(arr_tags)
 				Tag.objects.update_tags(record, str_tags)
 				
 				# return only what we need to
