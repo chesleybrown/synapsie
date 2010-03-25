@@ -88,9 +88,9 @@ class TagHandler(BaseHandler):
 					name = clean['name']
 				)
 			
-			# get all records with this tag
+			# get all records with the original tag
 			records = Record.objects.all().filter(user=identity)
-			tagged_records = tagged_item_manager.with_all(tag.name, records)
+			tagged_records = tagged_item_manager.with_all("," + tag.name, records)
 			
 			# go through each record and update the tags for them
 			for tagged_record in tagged_records:
@@ -119,9 +119,9 @@ class TagHandler(BaseHandler):
 				clean_records.append(clean_record)
 				
 				# update the tags for the records
-				str_tags += ",".join(record_tags_list)
+				str_tags = "," + ",".join(record_tags_list)
 				Tag.objects.update_tags(tagged_record, str_tags)
-			
+				
 			# return message and record updated
 			response['message'] = messages.get('updated', {
 				'tag_name': tag_name,
