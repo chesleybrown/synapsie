@@ -60,7 +60,7 @@ class TagHandler(BaseHandler):
 			tag = Tag.objects.get(name=tag_name)
 			
 		except Tag.DoesNotExist:
-			response['message'] = message.get('not_found')
+			response['message'] = messages.get('not_found')
 			return response
 		
 		# get updated tag (if it exists already)
@@ -119,7 +119,7 @@ class TagHandler(BaseHandler):
 				clean_records.append(clean_record)
 				
 				# update the tags for the records
-				str_tags = ",".join(record_tags_list)
+				str_tags += ",".join(record_tags_list)
 				Tag.objects.update_tags(tagged_record, str_tags)
 			
 			# return message and record updated
