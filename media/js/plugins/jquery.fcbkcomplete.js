@@ -1,5 +1,5 @@
 /*
- FCBKcomplete 2.6.2j
+ FCBKcomplete 2.6.2k
  - Jquery version required: 1.2.x, 1.3.x
  
  Changelog:
@@ -67,6 +67,10 @@
  		removed complete fadein/fadeout... was just causing issues in my layout
  		added addItemToCache function
  		using addItemToCache function to dynamically add items to the cache if they don't already exist in the cache
+ 		
+ - 2.6.2k
+ 		added better value filtering so that it doesn't break if tags contain odd characters
+ 		
  */
 
 /* Coded by: emposha <admin@emposha.com> */
@@ -266,17 +270,22 @@ jQuery(
 	        	
 				function removeItem(item)
 				{
-					element.children("option[value=" + item.attr("rel") + "]").removeAttr("selected");
-					element.children("option[value=" + item.attr("rel") + "]").removeAttr('class');
+					var element_options_filtered = element.children("option").filter(function(index, element) {
+						return ($(this).val() == item.attr("rel"));
+					});
+					
+					$(element_options_filtered)
+						.removeAttr("selected")
+						.removeAttr('class');
 					
 					if (typeof(options.onremove) == 'function')
 					{
-						var _item = element.children("option[value=" + item.attr("rel") + "]");
+						var _item = $(element_options_filtered);
 						options.onremove(_item);
 					}
 					else if (options.onremove.length)
 					{
-					    var _item = element.children("option[value=" + item.attr("rel") + "]");
+					    var _item = $(element_options_filtered);
 						funCall(options.onremove,_item);
 					}
 					
@@ -465,7 +474,10 @@ jQuery(
 					{
 						var id = match[1];
 						var object = cache[id];
-						if (options.filter_selected && element.children("option[value=" + object.value + "]").hasClass("selected")) 
+						var element_options_filtered = element.children("option").filter(function(index, element) {
+							return ($(this).val() == object.value);
+						});
+						if (options.filter_selected && $(element_options_filtered).hasClass("selected")) 
 						{
 							//nothing here...
 						}
