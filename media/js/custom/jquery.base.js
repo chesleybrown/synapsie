@@ -312,7 +312,10 @@ $(document).ready(function() {
 	 */
 	function setupRecordForm() {
 		$('#record_create_form').ajaxForm({
-			success: function(data) {
+			beforeSubmit: function(arr, form, options) {
+				$(form).find('.loading').fadeIn('fast');
+			},
+			success: function(data, status_text, form) {
 				
 				//init
 				var user_record_list = $('#user_record_list');
@@ -352,6 +355,9 @@ $(document).ready(function() {
 				else {
 					$.gritterExtend.add(data.message);
 				}
+				
+				//always fade out loading
+				$(form).find('.loading').fadeOut('slow');
 				
 			}
 		});

@@ -77,6 +77,17 @@ form.record_form .actions_right .action {
 	margin-left: 10px;
 }
 
+form.record_form .action .loading_container {
+	margin-top: 6px;
+	width: 16px;
+	height: 16px;
+}
+form.record_form .action .loading {
+	background: url(/site_media/media/img/layout/records/form_loading.gif);
+	width: 16px;
+	height: 16px;
+	display: none;
+}
 form.record_form .action > .icon,
 form.record_form .action > div > .icon {
 	margin-top: 6px;
