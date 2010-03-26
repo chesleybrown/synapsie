@@ -1,5 +1,5 @@
 /*
- FCBKcomplete 2.6.2k
+ FCBKcomplete 2.6.2.12
  - Jquery version required: 1.2.x, 1.3.x
  
  Changelog:
@@ -34,42 +34,45 @@
  - 2.6.1
  		fixed public method to use it $("elem").trigger("addItem",[{"title": "test", "value": "test"}]);
  
- - 2.6.2a
+ - 2.6.2.1
  		made onselect, onremove take an anonymous function
  		focus on maininput when deleting an item via the click option
  
- - 2.6.2b
+ - 2.6.2.2
  		add 'clear' option
  		
- - 2.6.2c
+ - 2.6.2.3
  		added use of .attr instead of get(0).setAttribute which didn't seem to work after a form submit
  		added use of .filter() with function instead of a selector for finding option.val that already exists
  		
- - 2.6.2d
+ - 2.6.2.4
  		using + 2 for the size instead of + 1 because text was getting cut off in Safari
  	
- - 2.6.2e
+ - 2.6.2.5
  		added option to disable the default message
  	
- - 2.6.2f
+ - 2.6.2.6
  		added option to provide keys that would trigger an addItem (instead of just enter/return)
  
- - 2.6.2g
+ - 2.6.2.7
  		added a wrapper element for the tag text
  
- - 2.6.2h
+ - 2.6.2.8
  		added option to prevent user from adding the same tag twice
  	
- - 2.6.2i
+ - 2.6.2.9
  		fixed preSetting up the tags that are already selected on load
  	
- - 2.6.2j
+ - 2.6.2.10
  		removed complete fadein/fadeout... was just causing issues in my layout
  		added addItemToCache function
  		using addItemToCache function to dynamically add items to the cache if they don't already exist in the cache
  		
- - 2.6.2k
+ - 2.6.2.11
  		added better value filtering so that it doesn't break if tags contain odd characters
+ 	
+ - 2.6.2.12
+ 		removed use of fcbk IDs so that we can have multiple on a single page
  		
  */
 
@@ -106,40 +109,41 @@ jQuery(
 	        	
 		        function createFCBK()
 		        {
-		           
-		           element.hide();
-		           element.attr("multiple","multiple");
-		           if (element.attr("name").indexOf("[]") == -1)
-		           {
-		           	   element.attr("name",element.attr("name")+"[]");
-		           }
-	        	   
-		           holder = $(document.createElement("ul"));
-	               holder.attr("class", "holder");
-	               element.after(holder);
-	               
-	               complete = $(document.createElement("div"));
-	               complete.addClass("facebook-auto");
-	               
-	               if (options.complete_text) {
-		               complete.append('<div class="default">'+ options.complete_text +"</div>");
-		           }
-	               
-				   if (browser_msie)
-	               {
-	                    complete.append('<iframe class="ie6fix" scrolling="no" frameborder="0"></iframe>');
-	                    browser_msie_frame = complete.children('.ie6fix');
-	               }
-				   
-	               feed = $(document.createElement("ul"));
-	               feed.attr("id", elemid + "_feed");
-	               
-	               complete.prepend(feed);
-	               holder.after(complete);
-				   feed.css("width",complete.width());
-				   
-				   //save where the holder is
-		           element.data('fcbkcompleteHolder', holder);
+					//everthing needs to reside within the fbck container
+					$(element).after(container);
+					$(container).append(element);
+					
+					element.hide();
+					element.attr("multiple","multiple");
+					if (element.attr("name").indexOf("[]") == -1) {
+						element.attr("name",element.attr("name")+"[]");
+					}
+					
+					holder = $(document.createElement("ul"));
+					holder.attr("class", "holder");
+					element.after(holder);
+					
+					complete = $(document.createElement("div"));
+					complete.addClass("facebook-auto");
+					
+					if (options.complete_text) {
+						complete.append('<div class="default">'+ options.complete_text +"</div>");
+					}
+					
+					if (browser_msie) {
+						complete.append('<iframe class="ie6fix" scrolling="no" frameborder="0"></iframe>');
+						browser_msie_frame = complete.children('.ie6fix');
+					}
+					
+					feed = $("<ul></ul>");
+					feed.attr("class", "feed");
+					
+					complete.prepend(feed);
+					holder.after(complete);
+					feed.css("width",complete.width());
+					
+					//save where the holder is
+					element.data('fcbkcompleteHolder', holder);
 		        }
 	        	
 		        function preSet()
@@ -227,7 +231,7 @@ jQuery(
 					
 	                if (!preadded) 
 	                {
-	                    $("#"+elemid + "_annoninput").remove();
+	                    $(container).find("li.annoninput").remove();
 	                    addInput(1);
 						
 						if (!added_already || options.allow_duplicates) {
@@ -298,8 +302,8 @@ jQuery(
 		            var li = $(document.createElement("li"));
 	                var input = $(document.createElement("input"));
 	                
-	                li.attr({"class": "bit-input","id": elemid + "_annoninput"});        
-	                input.attr({"type": "text","class": "maininput","size": "1"});        
+	                li.attr({"class": "bit-input annoninput"});
+	                input.attr({"type": "text","class": "maininput","size": "1"});
 	                holder.append(li.append(input));
 	                
 	                input.focus(
@@ -567,7 +571,7 @@ jQuery(
 	        	
 		        function bindEvents()
 		        {
-		            var maininput = $("#"+elemid + "_annoninput").children(".maininput");
+		            var maininput = $(container).find("li.annoninput").children(".maininput");
 	       	        bindFeedEvent();      	
 	                feed.children("li").unbind("mousedown");
 	                feed.children("li").mousedown( 
@@ -783,6 +787,7 @@ jQuery(
 			    element.data('fcbkcompleteOptions', options);
 	        	
 		        //system variables
+		        var container  		= $('<div></div>').addClass('fcbk_container');
 		        var holder     		= null;
 		        var feed       		= null;
 		        var complete   		= null;
