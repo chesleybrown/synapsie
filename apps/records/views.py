@@ -235,6 +235,8 @@ def show_record(request, record_id):
 	
 	# init
 	identity = request.user
+	record = False
+	messages = RecordMessages()
 	
 	try:
 		# get record
@@ -245,13 +247,17 @@ def show_record(request, record_id):
 	
 	# test permission to view
 	if not record.can_view(identity):
-		return HttpResponseRedirect(reverse('record_list'))
+		SessionMessages.create_message(request, messages.get('permission_denied'))
+		return HttpResponseRedirect(reverse('record_index'))
 	
-	# find all associated tags
-	#record_tags = Tag.objects.get_for_object(record)
+	# get used/popular tags for current user
+	used_tags = get_used_tags(Record, identity)
+	popular_tags = get_popular_tags(used_tags)
 	
 	# render
-	return render_to_response('records/record_detail.html', {
+	return render_to_response('records/record_show.html', {
+		'used_tags': used_tags,
+		'popular_tags': popular_tags,
 		'record': record,
 	}, context_instance=RequestContext(request))
 

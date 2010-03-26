@@ -305,12 +305,26 @@ ul.records li.record .header .time {
 	margin-top: 2px;
 }
 ul.records li.record .header .time_since {
+	float: left;
 	opacity: 0;
 	font-size: 11px;
 	color: #666;
+	margin: 2px 56px 0 5px;
+}
+ul.records li.record .header .created_by {
+	float: right;
+	font-size: 11px;
+	color: #666;
 	margin: 2px 56px 0 60px;
+	text-align: right;
+}
+ul.records li.record .header .created_by .label {
+}
+ul.records li.record .header .created_by .value {
+	font-weight: bold;
 }
 ul.records li.record .header .text {
+	clear: both;
 	text-shadow: 1px 1px 0 #fff;
 	margin: 0 56px 0 60px;
 }

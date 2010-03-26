@@ -12,6 +12,24 @@ body {
 	font: 13px/1.5 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif;
 }
 
+a:link {
+	text-shadow: 1px 1px 0 #fff;
+	color: #555;
+	text-decoration: none;
+}
+a:visited {
+	text-shadow: 1px 1px 0 #fff;
+	color: #555;
+	text-decoration: none;
+}
+a:hover {
+	color: #222;
+	text-decoration: none;
+}
+a:active {
+	color: #111;
+	text-decoration: none;
+}
 a:focus {
 	outline: 1px dotted;
 }

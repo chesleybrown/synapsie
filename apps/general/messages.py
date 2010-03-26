@@ -21,6 +21,6 @@ class GeneralMessages():
 		status=401,
 		kind="error",
 		title=_("Permission Denied"),
-		text=_("You are not permitted to perform this action."),
+		text=_("Back off! Get your own sandwich! But really, you are not permitted to perform this action."),
 		sticky=False,
 	)

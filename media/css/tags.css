@@ -27,6 +27,7 @@ ul.tags li.tag {
 }
 ul.tags li.tag .tag_text,
 ul.holder li.bit-box .tag_text {
+	text-shadow: none;
 	color: #fff;
 	text-decoration: none;
 	padding: 0;
