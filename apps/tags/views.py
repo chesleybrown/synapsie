@@ -2,8 +2,9 @@ import sys
 import apps.session_messages as SessionMessages
 
 from apps.tags.messages import TagMessages
-from apps.records.models import Record
 from apps.tags.forms import TagForm
+from apps.tags.utils import get_used_tags, get_popular_tags
+from apps.records.models import Record
 from tagging.models import Tag, TaggedItem
 from tagging.forms import TagAdminForm
 
@@ -26,7 +27,6 @@ def index_tags(request, page=1):
 	tags = False
 	tags_paginator = False
 	selected_tags = False
-	popular_tags_printable = list()
 	results_per_page = 500
 	paginator = False
 	
@@ -42,24 +42,15 @@ def index_tags(request, page=1):
 	except (EmptyPage, InvalidPage):
 		tags_paginator = paginator.page(paginator.num_pages)
 	
-	# get available tags user has used
-	used_tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)
-	used_tags_printable = ", ".join(map(str, used_tags))
-	popular_tags = sorted(used_tags, key=lambda x: x.count, reverse=True)
-	
-	# get popular tags ready for template
-	if (popular_tags):
-		highest = popular_tags[0]
-		for tag in popular_tags:
-			tag.percent = round((float(tag.count) / float(highest.count)) * 100, 0)
-			popular_tags_printable.append(tag)
+	# get used/popular tags for current user
+	used_tags = get_used_tags(Record, identity)
+	popular_tags = get_popular_tags(used_tags)
 	
 	# render
 	return render_to_response('tags/tag_index.html', {
 		'selected_tags': selected_tags,
-		'used_tags_printable': used_tags_printable,
 		'used_tags': used_tags,
-		'popular_tags': popular_tags_printable,
+		'popular_tags': popular_tags,
 		'tags_paginator': tags_paginator,
 		'tags_per_page': results_per_page,
 	}, context_instance=RequestContext(request))

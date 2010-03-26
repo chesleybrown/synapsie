@@ -4,6 +4,7 @@ import apps.session_messages as SessionMessages
 from apps.records.messages import RecordMessages
 from apps.records.models import Record
 from apps.records.forms import RecordForm, RecordSearchForm
+from apps.tags.utils import get_used_tags, get_popular_tags
 from tagging.models import Tag, TaggedItem
 from tagging.utils import get_tag_list
 
@@ -48,25 +49,16 @@ def index_records(request, tags=False, page=1):
 	except (EmptyPage, InvalidPage):
 		records_paginator = paginator.page(paginator.num_pages)
 	
-	# get available tags user has used
-	used_tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)
-	used_tags_printable = ", ".join(map(str, used_tags))
-	popular_tags = sorted(used_tags, key=lambda x: x.count, reverse=True)
-	
-	# get popular tags ready for template
-	if (popular_tags):
-		highest = popular_tags[0]
-		for tag in popular_tags:
-			tag.percent = round((float(tag.count) / float(highest.count)) * 100, 0)
-			popular_tags_printable.append(tag)
+	# get used/popular tags for current user
+	used_tags = get_used_tags(Record, identity)
+	popular_tags = get_popular_tags(used_tags)
 	
 	# render
 	return render_to_response('records/record_index.html', {
 		'formset': formset,
 		'selected_tags': selected_tags,
-		'used_tags_printable': used_tags_printable,
 		'used_tags': used_tags,
-		'popular_tags': popular_tags_printable,
+		'popular_tags': popular_tags,
 		'records_paginator': records_paginator,
 		'records_per_page': results_per_page,
 	}, context_instance=RequestContext(request))
@@ -105,24 +97,16 @@ def public_records(request, user_id=0, username=None, page=1):
 	except (EmptyPage, InvalidPage):
 		records_paginator = paginator.page(paginator.num_pages)
 	
-	# get available tags user has used
-	used_tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)
-	used_tags_printable = ", ".join(map(str, used_tags))
-	popular_tags = sorted(used_tags, key=lambda x: x.count, reverse=True)
-	
-	# get popular tags ready for template
-	highest = popular_tags[0]
-	for tag in popular_tags:
-		tag.percent = round((float(tag.count) / float(highest.count)) * 100, 0)
-		popular_tags_printable.append(tag)
+	# get used/popular tags for current user
+	used_tags = get_used_tags(Record, identity)
+	popular_tags = get_popular_tags(used_tags)
 	
 	# render
 	return render_to_response('records/record_public.html', {
 		'viewed_user': user,
 		'selected_tags': selected_tags,
-		'used_tags_printable': used_tags_printable,
 		'used_tags': used_tags,
-		'popular_tags': popular_tags_printable,
+		'popular_tags': popular_tags,
 		'records_paginator': records_paginator,
 	}, context_instance=RequestContext(request))
 
@@ -180,24 +164,16 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	except (EmptyPage, InvalidPage):
 		records_paginator = paginator.page(paginator.num_pages)
 	
-	# get available tags user has used
-	used_tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)
-	used_tags_printable = ",".join(map(str, used_tags))
-	popular_tags = sorted(used_tags, key=lambda x: x.count, reverse=True)
-	
-	# get popular tags ready for template
-	highest = popular_tags[0]
-	for tag in popular_tags:
-		tag.percent = round((float(tag.count) / float(highest.count)) * 100, 0)
-		popular_tags_printable.append(tag)
+	# get used/popular tags for current user
+	used_tags = get_used_tags(Record, identity)
+	popular_tags = get_popular_tags(used_tags)
 	
 	# render
 	return render_to_response('records/record_search.html', {
 		'formset': formset,
 		'selected_tags': selected_tags,
-		'used_tags_printable': used_tags_printable,
 		'used_tags': used_tags,
-		'popular_tags': popular_tags_printable,
+		'popular_tags': popular_tags,
 		'records_paginator': records_paginator,
 		'selected_tags': selected_tags,
 		'selected_tags_printable': selected_tags_printable,
