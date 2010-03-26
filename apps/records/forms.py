@@ -4,7 +4,9 @@ from tagging.forms import TagField
 from datetime import date, datetime
 
 class RecordForm(forms.ModelForm):
-	text = forms.CharField(label='Life Record...', widget=forms.Textarea)
+	text = forms.CharField(label='Life Record...', widget=forms.Textarea(
+		attrs={'class': 'text'}
+	))
 	tags = TagField(label='Tags for Life Record...', widget=forms.SelectMultiple, required=False)
 	personal = forms.CharField(widget=forms.HiddenInput, initial='1')
 	date = forms.CharField(widget=forms.HiddenInput, initial=date.today())

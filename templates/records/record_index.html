@@ -13,14 +13,14 @@
 	<form id="record_create_form" class="record_form use_inline_labels" action="{% url api-record emitter_format='.json' %}" method="post" enctype="multipart/form-data" autocomplete="off">
 		{% csrf_token %}
 		<fieldset>
-			<div id="id_text_field" class="field">
-				{{ formset.text.label_tag }}
-				{{ formset.text }}
+			<div class="field text_field">
+				{{ record_create_formset.text.label_tag }}
+				{{ record_create_formset.text }}
 			</div>
-			<div id="id_tags_field" class="field">
-				{{ formset.tags.label_tag }}
-				<input id="id_tags_temp" name="tags" type="text" value="" />
-				<select id="id_tags" name="tags[]" multiple="multiple" class="hidden">
+			<div class="field tag_field">
+				{{ record_create_formset.tags.label_tag }}
+				<input class="tags_temp" name="tags" type="text" value="" />
+				<select id="id_record_create-tags" name="tags[]" multiple="multiple" class="tags hidden">
 					{% for tag in used_tags %}
 						{% if tag in selected_tags %}
 							<option selected="selected" value="{{ tag.name }}">{{ tag.name }}</option>
@@ -35,7 +35,7 @@
 		<div class="actions">
 			<div class="actions_left">
 				<div class="action">
-					<div id="record_form_date">
+					<div class="record_form_date">
 						<div class="form_menu use_form_menu">
 							<ul class="menu_headers">
 								<li class="menu_header">
@@ -53,13 +53,13 @@
 								</li>
 							</ul>
 						</div>
-						{{ formset.date }}
+						{{ record_create_formset.date }}
 					</div>
 				</div>
 				
 				<div class="group">
 					<div class="action">
-						<div id="record_form_time_hour">
+						<div class="record_form_time_hour">
 							<div class="form_menu use_form_menu">
 								<ul class="menu_headers">
 									<li class="menu_header">
@@ -119,11 +119,11 @@
 									</li>
 								</ul>
 							</div>
-							{{ formset.hour }}
+							{{ record_create_formset.hour }}
 						</div>
 					</div>
 					<div class="action">
-						<div id="record_form_time_minute">
+						<div class="record_form_time_minute">
 							<div class="form_menu use_form_menu">
 								<ul class="menu_headers">
 									<li class="menu_header">
@@ -150,11 +150,11 @@
 									</li>
 								</ul>
 							</div>
-							{{ formset.minute }}
+							{{ record_create_formset.minute }}
 						</div>
 					</div>
 					<div class="action">
-						<div id="record_form_time_ampm">
+						<div class="record_form_time_ampm">
 							<div class="form_menu use_form_menu">
 								<ul class="menu_headers">
 									<li class="menu_header">
@@ -173,15 +173,15 @@
 									</li>
 								</ul>
 							</div>
-							{{ formset.ampm }}
+							{{ record_create_formset.ampm }}
 						</div>
 					</div>
 				</div>
 				
 				<div class="action">
-					<div id="record_form_datetime_reset" class="hidden">
+					<div class="record_form_datetime_reset hidden">
 						<div class="icon icon_record_datetime_reset use_record_form_datetime_reset">{% trans "Reset" %}</div>
-						{{ formset.datetime_set }}
+						{{ record_create_formset.datetime_set }}
 					</div>
 				</div>
 			</div>
@@ -215,7 +215,7 @@
 							</li>
 						</ul>
 					</div>
-					{{ formset.personal }}
+					{{ record_formset.personal }}
 				</div>
 				
 				<div class="action">
@@ -223,7 +223,7 @@
 						<div class="input_button_start"></div>
 						<div class="input_button_body">
 							<div class="icon icon_record_post"></div>
-							<input type="submit" id="new_record" name="submit" value="{% if object %}{% trans "Apply changes" %}{% else %}{% trans "Post" %}{% endif %}" class="input_submit" />
+							<input type="submit" name="submit" value="{% trans "Post" %}" class="input_submit" />
 						</div>
 						<div class="input_button_end"></div>
 					</div>
@@ -263,7 +263,7 @@
 								<a href="{% url record_show record_id=record.id %}"><span class="icon icon_record_view"></span>{% trans "View" %}</a>
 							</li>
 							<li class="menu_item">
-								<a href="{% url record_edit record_id=record.id %}"><span class="icon icon_record_edit"></span>{% trans "Edit" %}</a>
+								<a class="use_record_edit" href="{% url record_edit record_id=record.id %}"><span class="icon icon_record_edit"></span>{% trans "Edit" %}</a>
 							</li>
 							<li class="menu_item">
 								<a class="use_record_delete" href="{% url api-record record_id=record.id,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>{% trans "Delete..." %}</a>

@@ -103,7 +103,7 @@ $(document).ready(function() {
 	/*
 	 * Tag Autocompleter
 	 */
-	$("#id_tags").fcbkcomplete({
+	$("select.tags").fcbkcomplete({
 		key_codes: [
 			0, //tab?
 			9, //tab
@@ -125,7 +125,7 @@ $(document).ready(function() {
 			setupInlineLabels(item);
 		}
 	});
-	$("#id_tags_temp").remove();
+	$("#record_create_form input.tags_temp, #record_edit_form input.tags_temp").remove();
 	/*
 	 * END Tag Autocompleter
 	 */
@@ -141,44 +141,49 @@ $(document).ready(function() {
 	$('form.use_inline_labels label').inFieldLabels(in_field_labels_options);
 	
 	function setupInlineLabels(item) {
-		var id_tags_label = $('#id_tags_field label');
-		var id_tags_maininput = $('#id_tags_field input.maininput');
-		var id_tags_holder = $('#id_tags_field ul.holder');
-		var id_tags_select = $('#id_tags');
-		var id_tags_label_clone = false;
-		
-		//hide label if items are selected on load
-		var id_tags_selected = id_tags_select.find('option:selected');
-		if (id_tags_selected.size() > 0) {
-			id_tags_label.hide();
-		}
-		
-		if (item) {
-			id_tags_maininput.bind('blur.setupInFieldLabels', function() {
-				var id_tags_selected = id_tags_select.find('option:selected');
-				
-				if (id_tags_selected.size() == 0) {
-					id_tags_maininput.attr('id', 'maininput');
-					id_tags_label_clone = id_tags_label.clone(false);
-					id_tags_label_clone.insertAfter(id_tags_label);
-					id_tags_label.remove();
+		$('#record_create_form').each(function() {
+			
+			// init
+			var id_tags_label = $(this).find('div.tag_field label');
+			var id_tags_maininput = $(this).find('div.tag_field input.maininput');
+			var id_tags_holder = $(this).find('div.tag_field ul.holder');
+			var id_tags_select = $(this).find('select.tags');
+			var id_tags_label_clone = false;
+			
+			// hide label if items are selected on load
+			var id_tags_selected = $(id_tags_select).find('option:selected');
+			if ($(id_tags_selected).size() > 0) {
+				id_tags_label.hide();
+			}
+			
+			if (item) {
+				$(id_tags_maininput).bind('blur.setupInFieldLabels', function() {
+					var id_tags_selected = $(id_tags_select).find('option:selected');
 					
-					id_tags_label_clone.css({opacity: 0.0}).show();
-					id_tags_label_clone.animate({
-						opacity: 1
-					}, in_field_labels_options['fadeDuration']);
+					if ($(id_tags_selected).size() == 0) {
+						$(id_tags_maininput).attr('id', 'maininput');
+						$(id_tags_label_clone) = id_tags_label.clone(false);
+						$(id_tags_label_clone).insertAfter(id_tags_label);
+						$(id_tags_label).remove();
+						
+						$(id_tags_label_clone).css({opacity: 0.0}).show();
+						$(id_tags_label_clone).animate({
+							opacity: 1
+						}, in_field_labels_options['fadeDuration']);
+						
+						$(id_tags_label_clone).inFieldLabels(in_field_labels_options);
+					}
 					
-					id_tags_label_clone.inFieldLabels(in_field_labels_options);
-				}
-				
-				$(this).unbind('blur.setupInFieldLabels');
-			});
-		}
-		else {
-			id_tags_maininput.attr('id', 'maininput');
-			id_tags_label.attr('for', 'maininput');
-			id_tags_label.inFieldLabels(in_field_labels_options);
-		}
+					$(this).unbind('blur.setupInFieldLabels');
+				});
+			}
+			else {
+				$(id_tags_maininput).attr('id', 'maininput');
+				$(id_tags_label).attr('for', 'maininput');
+				$(id_tags_label).inFieldLabels(in_field_labels_options);
+			}
+			
+		});
 	}
 	setupInlineLabels(false);
 	/*
@@ -342,6 +347,7 @@ $(document).ready(function() {
 				var message = data.message;
 				var record_data = data.data;
 				var new_record = false;
+				var record_text = $(form).find('textarea.text');
 				
 				// created successfully
 				if (message['status'] == 201) {
@@ -359,15 +365,15 @@ $(document).ready(function() {
 					});
 					
 					// clear form
-					$('#id_text')
+					$(record_text)
 						.val('')
 						.removeAttr('style')
 						.blur();
-					$('#id_tags').fcbkcomplete('clear');
-					$('#record_form_datetime_reset div.use_record_form_datetime_reset').click();
+					$(form).find('select.tags').fcbkcomplete('clear');
+					$(form).find('div.use_record_form_datetime_reset').click();
 					
 					//done, focus
-					$('#id_text').focus();
+					$(record_text).focus();
 					
 				}
 				
@@ -395,20 +401,59 @@ $(document).ready(function() {
 	 * Handle Record delete action (make into plugin!)
 	 */
 	function setupRecordMenuItems(container) {
-		$(container).find('a.use_record_delete').bind('click', function(e) {
+		$(container).find('a.use_record_edit').bind('click', function(e) {
+			
 			var element = $(this);
 			var menu = $(this).parents('.menu');
-			var container = $(element).parents('.record ');
-			var content = $(container).find('.record_content');
-			var popup = $('#record_delete_confirmation').find('.popup').clone();
+			var holder = $(element).parents('.record ');
+			var content = $(holder).find('.record_content');
+			var popup = $('#record_edit_form_popup').find('.popup').clone();
 			
 			//fade out record content
-			content.animate({
+			$(content).animate({
 				opacity: 0.40
 			}, 'slow');
 			
 			//show delete confirmation dialog
-			container.block({
+			$(holder).block({
+				message: $(popup)
+			});
+			
+			//setup delete action
+			$(popup).find('.edit_action').attr('href', $(element).attr('href'));
+			$(popup).find('.edit_action').bind('click', function(e) {
+				
+				e.preventDefault();
+			});
+			
+			//setup cancel action
+			$(popup).find('.cancel_action, .popup_close').bind('click', function(e) {
+				content.animate({
+					opacity: 1
+				}, 'fast');
+				$(holder).unblock();
+				
+				e.preventDefault();
+			});
+			
+			e.preventDefault();
+		});
+		
+		
+		$(container).find('a.use_record_delete').bind('click', function(e) {
+			var element = $(this);
+			var menu = $(this).parents('.menu');
+			var holder = $(element).parents('.record ');
+			var content = $(holder).find('.record_content');
+			var popup = $('#record_delete_confirmation').find('.popup').clone();
+			
+			//fade out record content
+			$(content).animate({
+				opacity: 0.40
+			}, 'slow');
+			
+			//show delete confirmation dialog
+			$(holder).block({
 				message: $(popup)
 			});
 			
@@ -416,8 +461,8 @@ $(document).ready(function() {
 			$(popup).find('.delete_action').attr('href', element.attr('href'));
 			$(popup).find('.delete_action').bind('click', function(e) {
 				//hide delete confirmation dialog
-				container.unblock();
-				container.block({
+				$(holder).unblock();
+				$(holder).block({
 					message: ''
 				});
 				
@@ -432,11 +477,11 @@ $(document).ready(function() {
 						//created successfully
 						if (message['status'] == 204) {
 							
-							container.animate({
+							$(holder).animate({
 								opacity: 0
 							}, 'slow', 'linear', function() {
-								container.slideUp('slow', function() {
-									container.remove();
+								$(holder).slideUp('slow', function() {
+									$(holder).remove();
 								});
 							});
 							
@@ -470,7 +515,7 @@ $(document).ready(function() {
 				content.animate({
 					opacity: 1
 				}, 'fast');
-				container.unblock();
+				$(holder).unblock();
 				
 				e.preventDefault();
 			});
@@ -926,15 +971,21 @@ $(document).ready(function() {
 	 * Setup Record Form Date Time Selection
 	 */
 	function setupDateTimeSelection() {
-		var selections = $('#record_form_date, #record_form_time_hour, #record_form_time_minute, #record_form_time_ampm');
-		var datetime_reset = $('#record_form_datetime_reset');
 		
-		$(selections)
-			.find('.menu_item, .menu_item_datepicker')
-			.bind('click', function(e) {
-				datetime_reset.fadeIn();
-				$('#id_datetime_set').val(1);
-			});
+		$('#record_create_form, #record_edit_form').each(function() {
+			
+			var selections = $(this).find('div.record_form_date, div.record_form_time_hour, div.record_form_time_minute, div.record_form_time_ampm');
+			var datetime_reset = $(this).find('div.record_form_datetime_reset');
+			
+			$(selections)
+				.find('.menu_item, .menu_item_datepicker')
+				.bind('click', function(e) {
+					datetime_reset.fadeIn();
+					$(this).find('input[name=datetime_set]').val(1);
+				});
+			
+		});
+		
 	}
 	setupDateTimeSelection();
 	/*
@@ -945,75 +996,79 @@ $(document).ready(function() {
 	 * Setup Time Selection Auto-Updating (clock)
 	 */
 	function setupDateTimeAutoUpdate(force_update) {
-		var now = new Date();
-		var selection_menu_items = $('#record_form_date, #record_form_time_hour, #record_form_time_minute, #record_form_time_ampm')
-			.find('.form_menu .menu_items');
-		var date = $('#record_form_date');
-		var hour = $('#record_form_time_hour');
-		var minute = $('#record_form_time_minute');
-		var ampm = $('#record_form_time_ampm');
-		var datetime_reset = $('#record_form_datetime_reset');
 		
-		//generate formated date
-		var formated_day = now.getDate();
-		if (formated_day < 10) {
-			formated_day = '0' + formated_day;
-		}
-		var formated_month = now.getMonth()+1;
-		if (formated_month < 10) {
-			formated_month = '0' + formated_month;
-		}
-		var formated_date = now.getMonthName(true) + ' ' + formated_day + ', ' + now.getFullYear();
-		var sql_date = now.getFullYear() + '-' + formated_month + '-' + formated_day
-		
-		//generate hour
-		var formated_hour = now.getHours();
-		if (formated_hour >= 12){
-			if (formated_hour == 12){
-				formated_hour = 12;
+		$('#record_create_form, #record_edit_form').each(function() {
+			var now = new Date();
+			var selection_menu_items = $(this).find('div.record_form_date, div.record_form_time_hour, div.record_form_time_minute, div.record_form_time_ampm')
+				.find('.form_menu .menu_items');
+			var date = $(this).find('div.record_form_date');
+			var hour = $(this).find('div.record_form_time_hour');
+			var minute = $(this).find('div.record_form_time_minute');
+			var ampm = $(this).find('div.record_form_time_ampm');
+			var datetime_reset = $(this).find('div.record_form_datetime_reset');
+			
+			//generate formated date
+			var formated_day = now.getDate();
+			if (formated_day < 10) {
+				formated_day = '0' + formated_day;
 			}
-			else {
-				formated_hour = formated_hour-12;
+			var formated_month = now.getMonth()+1;
+			if (formated_month < 10) {
+				formated_month = '0' + formated_month;
 			}
-		}
-		else if(formated_hour < 12){
-			if (formated_hour == 0){
-				formated_hour = 12;
+			var formated_date = now.getMonthName(true) + ' ' + formated_day + ', ' + now.getFullYear();
+			var sql_date = now.getFullYear() + '-' + formated_month + '-' + formated_day
+			
+			//generate hour
+			var formated_hour = now.getHours();
+			if (formated_hour >= 12){
+				if (formated_hour == 12){
+					formated_hour = 12;
+				}
+				else {
+					formated_hour = formated_hour-12;
+				}
 			}
-		}
-		if (formated_hour < 10) {
-			formated_hour = '0' + formated_hour;
-		}
+			else if(formated_hour < 12){
+				if (formated_hour == 0){
+					formated_hour = 12;
+				}
+			}
+			if (formated_hour < 10) {
+				formated_hour = '0' + formated_hour;
+			}
+			
+			//generate minute
+			var formated_minute = now.getMinutes();
+			if (formated_minute < 10) {
+				formated_minute = '0' + formated_minute;
+			}
+			
+			//generate ampm
+			var formated_ampm = 'PM';
+			if (now.getHours() < 12) {
+				formated_ampm = 'AM';
+			}
+			
+			//update selection inputs ONLY if datetime_reset isn't visible
+			if (force_update || (!$(selection_menu_items).is(':visible') && $(datetime_reset).is(':hidden'))) {
+				$(date).find('.use_datepicker').dpSetSelected(formated_day+'/'+formated_month+'/'+now.getFullYear()); //stupid datepicker
+				$(date).find('.menu_header_text').text(formated_date);
+				$(date).find('input').val(sql_date);
+				
+				$(hour).find('.menu_header_text').text(formated_hour);
+				$(hour).find('input').val(formated_hour);
+				
+				$(minute).find('.menu_header_text').text(formated_minute);
+				$(minute).find('input').val(formated_minute);
+				
+				$(ampm).find('.menu_header_text').text(formated_ampm);
+				$(ampm).find('input').val(formated_ampm);
+				
+				$('#id_datetime_set').val(0);
+			}
+		});
 		
-		//generate minute
-		var formated_minute = now.getMinutes();
-		if (formated_minute < 10) {
-			formated_minute = '0' + formated_minute;
-		}
-		
-		//generate ampm
-		var formated_ampm = 'PM';
-		if (now.getHours() < 12) {
-			formated_ampm = 'AM';
-		}
-		
-		//update selection inputs ONLY if datetime_reset isn't visible
-		if (force_update || (!$(selection_menu_items).is(':visible') && $(datetime_reset).is(':hidden'))) {
-			$(date).find('.use_datepicker').dpSetSelected(formated_day+'/'+formated_month+'/'+now.getFullYear()); //stupid datepicker
-			$(date).find('.menu_header_text').text(formated_date);
-			$(date).find('input').val(sql_date);
-			
-			$(hour).find('.menu_header_text').text(formated_hour);
-			$(hour).find('input').val(formated_hour);
-			
-			$(minute).find('.menu_header_text').text(formated_minute);
-			$(minute).find('input').val(formated_minute);
-			
-			$(ampm).find('.menu_header_text').text(formated_ampm);
-			$(ampm).find('input').val(formated_ampm);
-			
-			$('#id_datetime_set').val(0);
-		}
 	}
 	setupDateTimeAutoUpdate(false);
 	setInterval(function() { setupDateTimeAutoUpdate(false); }, 5000);

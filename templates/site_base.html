@@ -72,7 +72,9 @@
 										<!-- These are hidden on load... -->
 										<li class="popular_tag hidden">
 											<div class="label">
-												{% render_tag tag %}
+												<ul class="tags">
+													{% render_tag tag %}
+												</ul>
 											</div>
 											<div class="content">
 												<span class="value" style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
@@ -81,7 +83,9 @@
 									{% else %}
 										<li class="popular_tag">
 											<div class="label">
-												{% render_tag tag %}
+												<ul class="tags">
+													{% render_tag tag %}
+												</ul>
 											</div>
 											<div class="content">
 												<span class="value" style="width: {{ tag.percent }}%;">{{ tag.count }}</span>

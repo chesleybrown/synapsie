@@ -36,7 +36,7 @@
 						</ul>
 						<ul class="menu_items">
 							<li class="menu_item">
-								<a href="{% url record_edit record_id=record.id %}"><span class="icon icon_record_edit"></span>{% trans "Edit" %}</a>
+								<a class="use_record_edit" href="{% url record_edit record_id=record.id %}"><span class="icon icon_record_edit"></span>{% trans "Edit" %}</a>
 							</li>
 							<li class="menu_item">
 								<a class="use_record_delete" href="{% url api-record record_id=record.id,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>{% trans "Delete..." %}</a>

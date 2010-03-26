@@ -131,7 +131,7 @@ class RecordHandler(BaseHandler):
 		#init
 		identity = request.user
 		messages = RecordMessages()
-		formset = RecordForm()
+		formset = RecordForm(prefix='record_create')
 		now = datetime.now()
 		str_tags = ','
 		clean = None
@@ -143,7 +143,7 @@ class RecordHandler(BaseHandler):
 		# if user has posted
 		if request.method == 'POST':
 			
-			formset = RecordForm(request.POST)
+			formset = RecordForm(request.POST, prefix='record_create')
 			arr_tags = request.POST.getlist('tags[]')
 			
 			# validate form

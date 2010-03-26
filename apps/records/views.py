@@ -26,7 +26,8 @@ def index_records(request, tags=False, page=1):
 	record_list = False
 	records = False
 	records_paginator = False
-	formset = RecordForm()
+	record_edit_formset = RecordForm(prefix='record_edit')
+	record_create_formset = RecordForm(prefix='record_create')
 	selected_tags = False
 	popular_tags_printable = list()
 	results_per_page = 25
@@ -55,7 +56,8 @@ def index_records(request, tags=False, page=1):
 	
 	# render
 	return render_to_response('records/record_index.html', {
-		'formset': formset,
+		'record_edit_formset': record_edit_formset,
+		'record_create_formset': record_create_formset,
 		'selected_tags': selected_tags,
 		'used_tags': used_tags,
 		'popular_tags': popular_tags,
