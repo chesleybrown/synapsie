@@ -60,6 +60,10 @@ body > #site_container {
 	cursor: pointer;
 }
 
+#site_messages {
+	display: none;
+}
+
 #site_content {
 	background: url(/site_media/media/img/backgrounds/1px/w60.png);
 	overflow: auto;

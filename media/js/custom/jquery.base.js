@@ -34,6 +34,19 @@ $(document).ready(function() {
 	
 	
 	/*
+	 * Site Gritter Site Messages
+	 */
+	function setupSiteMessages() {
+		var messages = $.gritterExtend.parse();
+		$.gritterExtend.adds(messages);
+	}
+	setupSiteMessages();
+	/*
+	 * END Gritter Site Messages
+	 */
+	
+	
+	/*
 	 * Site Search
 	 */
 	$('#site_search .icon_search').bind('click', function(e) {

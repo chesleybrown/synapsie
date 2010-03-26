@@ -6,7 +6,7 @@
  * Dual licensed under the MIT and GPL licenses.
  *
  * Date: March 20, 2010
- * Version: 0.1
+ * Version: 0.2
  */
 
 (function($){
@@ -34,6 +34,12 @@
 	$.gritterExtend.add = function(params){
 		return GritterExtend.add(params || {});
 	}
+	$.gritterExtend.adds = function(messages){
+		return GritterExtend.adds(messages || []);
+	}
+	$.gritterExtend.parse = function(){
+		return GritterExtend.parse();
+	}
 	
 	var GritterExtend = {
 		
@@ -43,6 +49,7 @@
 		deleted_image: '',
 		error_image: '',
 		info_image: '',
+		messages_container: $('#site_messages'),
 		
 		add: function(params) {
 			
@@ -81,6 +88,50 @@
 				image: gritter_image,
 				sticky: gritter_sticky
 			});
+			
+		},
+		
+		// makes it simple to add an array of messages
+		adds: function(messages) {
+			for (message in messages) {
+				$.gritterExtend.add(messages[message]);
+			}
+			
+			return true;
+		},
+		
+		parse: function() {
+			
+			//init
+			var messages = [];
+			
+			//merge user provided options
+			for(opt in $.gritterExtend.options){
+				this[opt] = $.gritterExtend.options[opt];
+			}
+			
+			$(this.messages_container).find('li.message').each(function() {
+				
+				//init
+				var message = {
+					'status': '',
+					'title': '',
+					'text': '',
+					'sticky': false,
+					'king': ''
+				};
+				
+				message['status'] = parseInt($(this).find('.status').text());
+				message['title'] = $(this).find('.title').text();
+				message['text'] = $(this).find('.text').text();
+				message['sticky'] = ($(this).find('.sticky').text() != 'False');
+				message['kind'] = $(this).find('.kind').text();
+				
+				//append to messages array
+				messages.push(message);
+			});
+			
+			return messages;
 			
 		}
 		
