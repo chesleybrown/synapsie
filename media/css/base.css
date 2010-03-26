@@ -128,12 +128,12 @@ ul.sidebar li.sidebar_item {
 }
 .blockMsg {
 	background: url(/site_media/media/img/backgrounds/1px/w80.png) !important;
-	width: 90% !important;
+	width: 95% !important;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 }
 .blockMsg .popup {
-	padding: 10px;
+	padding: 5px;
 	position: relative;
 }
 .blockMsg .popup .popup_close {
@@ -327,7 +327,7 @@ ul.form_items .menu {
 textarea,
 input[type='text'],
 input[type='password'] {
-	border: 1px solid #999;
+	border: 1px solid #666;
 	font-size: 18px;
 	height: 20px;
 	padding: 5px 5px;
@@ -358,7 +358,7 @@ form label {
 /* TextboxList sample CSS */
 ul.holder {
 	background: #fff;
-	margin: 0 13px !important;
+	margin: 0 13px;
 	overflow: hidden;
 	min-height: 30px;
 	height: auto !important;
@@ -366,7 +366,7 @@ ul.holder {
 	padding: 0 5px;
 	border: 1px solid #666;
 }
-ul.holder:focus {
+ul.holder.focus {
 	border-color: #00527F;
 }
 *:first-child+html ul.holder { padding-bottom: 2px; } * html ul.holder { padding-bottom: 2px; } /* ie7 and below */
@@ -429,7 +429,7 @@ form ul.holder {
 	width: 660px;
 }
 form ul {
-	margin: 0 !important
+	margin: 0;
 }
 ul.holder li.bit-box,
 #apple-list ul.holder li.bit-box {
@@ -473,6 +473,7 @@ ul.holder li.bit-box-focus a.closebutton:hover {
 /* Autocompleter */
 
 .facebook-auto {
+	text-align: left;
 	display: none;
 	position: absolute;
 	width: 670px;

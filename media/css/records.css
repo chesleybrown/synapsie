@@ -237,6 +237,30 @@ form.record_form .form_menu.active {
 }
 
 
+/* Records Edit Form */
+.popup form.record_form ul.holder,
+.popup form.record_form .field textarea {
+	width: 600px;
+	margin: 0 auto;
+}
+.popup form.record_form ul.holder.focus,
+.popup form.record_form .field textarea:focus,
+.popup form.record_form .field input[type='text']:focus,
+.popup form.record_form .field input[type='password']:focus {
+	border-color: #000;
+}
+.popup form.record_form fieldset {
+	background: none;
+	border: none;
+	margin: 0;
+}
+
+.popup form.record_form .actions {
+	float: none;
+	background: none;
+}
+
+
 /* Records */
 ul.records {
 	list-style: none;

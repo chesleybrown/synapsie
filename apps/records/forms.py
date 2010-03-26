@@ -5,7 +5,7 @@ from datetime import date, datetime
 
 class RecordForm(forms.ModelForm):
 	text = forms.CharField(label='Life Record...', widget=forms.Textarea(
-		attrs={'class': 'text'}
+		attrs={'class': 'text use_elastic'}
 	))
 	tags = TagField(label='Tags for Life Record...', widget=forms.SelectMultiple, required=False)
 	personal = forms.CharField(widget=forms.HiddenInput, initial='1')

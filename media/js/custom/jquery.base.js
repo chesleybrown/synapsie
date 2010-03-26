@@ -103,29 +103,42 @@ $(document).ready(function() {
 	/*
 	 * Tag Autocompleter
 	 */
-	$("select.tags").fcbkcomplete({
-		key_codes: [
-			0, //tab?
-			9, //tab
-			13, //enter
-			188 //comma
-		],
-		cache: true,
-		complete_text: false,
-		filter_case: false,
-		filter_hide: true,
-		firstselected: true,
-		filter_selected: true,
-		newel: true,
-		allow_duplicates: false,
-		onselect: function(item) {
-			setupInlineLabels(item);
-		},
-		onremove: function(item) {
-			setupInlineLabels(item);
-		}
-	});
-	$("#record_create_form input.tags_temp, #record_edit_form input.tags_temp").remove();
+	function setupAutocompleter(container) {
+		
+		// setup autocomplete
+		$(container).find("select.tags").fcbkcomplete({
+			key_codes: [
+				0, //tab?
+				9, //tab
+				13, //enter
+				188 //comma
+			],
+			cache: true,
+			complete_text: false,
+			filter_case: false,
+			filter_hide: true,
+			firstselected: true,
+			filter_selected: true,
+			newel: true,
+			allow_duplicates: false,
+			onselect: function(item) {
+				setupInlineLabels(item);
+			},
+			onremove: function(item) {
+				setupInlineLabels(item);
+			}
+		});
+		$(container).find("input.tags_temp, input.tags_temp").remove();
+		
+		// focus effect for autocomplete input
+		$(container).find('input.maininput').live('focus', function() {
+			$(this).parents('ul.holder').addClass('focus');
+		});
+		$(container).find('input.maininput').live('blur', function() {
+			$(this).parents('ul.holder').removeClass('focus');
+		});
+	}
+	setupAutocompleter('#record_create_form');
 	/*
 	 * END Tag Autocompleter
 	 */
@@ -408,25 +421,97 @@ $(document).ready(function() {
 			var holder = $(element).parents('.record ');
 			var content = $(holder).find('.record_content');
 			var popup = $('#record_edit_form_popup').find('.popup').clone();
+			var form = $(popup).find('form');
+			var edit_action = $(form).find('input[type=submit]');
 			
-			//fade out record content
+			var text_input = $(form).find('textarea.text');
+			
+			// fade out record content
 			$(content).animate({
 				opacity: 0.40
 			}, 'slow');
 			
-			//show delete confirmation dialog
+			// show delete confirmation dialog
 			$(holder).block({
 				message: $(popup)
 			});
 			
-			//setup delete action
-			$(popup).find('.edit_action').attr('href', $(element).attr('href'));
-			$(popup).find('.edit_action').bind('click', function(e) {
+			// populate edit form
+			$(form).attr('action', $(element).attr('href'));
+			var text_formatted = $(content).find('.text').html().replace(/(<br>|<br \/>)/g, "\n");
+			$(text_input).val(text_formatted);
+			$(text_input).focus();
+			
+			// set current selected tags
+			var tag_names = [];
+			$(content).find('ul.tags li.tag').each(function() {
+				tag_names.push($(this).find('.tag_text').text());
+			});
+			$(form).find('select.tags option').each(function() {
 				
-				e.preventDefault();
+				for (tag_name in tag_names) {
+					if (tag_names[tag_name] == $(this).val()) {
+						$(this).attr('selected', true);
+					}
+				}
+				
 			});
 			
-			//setup cancel action
+			// enable autocompleter (this will auto-populate the selected tags now)
+			setupAutocompleter(form);
+			
+			// enable elastic textarea
+			$(form).find('textarea.use_elastic').elastic();
+			
+			// setup edit action
+			$(edit_action).bind('click', function(e) {
+				
+				// hide edit confirmation dialog
+				$(container).unblock();
+				$(container).block({
+					message: ''
+				});
+				
+				$(form).ajaxForm({
+					success: function(data) {
+					
+						// init
+						var message = data.message;
+						var tag = data.data;
+						
+						// updated successfully
+						if (message['status'] == 200) {
+							
+							//update record on screen
+							
+						}
+						
+						// something went wrong
+						else {
+							$.gritterExtend.add(data.message);
+							
+							$(content).animate({
+								opacity: 1
+							}, 'fast');
+						}
+						
+					},
+					error: function() {
+						$(content).animate({
+							opacity: 1
+						}, 'fast');
+					},
+					complete: function() {
+						$(container).unblock();
+					}
+				});
+				//$(form).submit();
+				
+				e.preventDefault();
+				
+			});
+			
+			// setup cancel action
 			$(popup).find('.cancel_action, .popup_close').bind('click', function(e) {
 				content.animate({
 					opacity: 1
@@ -645,7 +730,7 @@ $(document).ready(function() {
 				opacity: 0.40
 			}, 'slow');
 			
-			//show delete confirmation dialog
+			//show edit confirmation dialog
 			$(container).block({
 				message: $(popup)
 			});
@@ -653,9 +738,9 @@ $(document).ready(function() {
 			//focus on tag name input
 			$(tag_name_input).focus();
 			
-			//setup delete action
+			//setup edit action
 			$(edit_action).bind('click', function(e) {
-				//hide delete confirmation dialog
+				//hide edit confirmation dialog
 				$(container).unblock();
 				$(container).block({
 					message: ''
@@ -860,7 +945,7 @@ $(document).ready(function() {
 	
 	
 	//enable elastic textfield for forms
-	$('form.record_form textarea').elastic();
+	$('textarea.use_elastic').elastic();
 	
 	
 	/*

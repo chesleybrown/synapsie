@@ -53,15 +53,13 @@
 		<div id="record_edit_form_popup">
 			<div class="popup">
 				<div class="popup_close"></div>
-				<form id="record_edit_form" class="record_form use_inline_labels" action="{% url api-record emitter_format='.json' %}" method="update" enctype="multipart/form-data" autocomplete="off">
+				<form id="record_edit_form" class="record_form" action="{% url api-record emitter_format='.json' %}" method="update" enctype="multipart/form-data" autocomplete="off">
 					{% csrf_token %}
 					<fieldset>
 						<div class="field text_field">
-							{{ record_edit_formset.text.label_tag }}
 							{{ record_edit_formset.text }}
 						</div>
 						<div class="field tag_field">
-							{{ record_edit_formset.tags.label_tag }}
 							<input class="tags_temp" name="tags" type="text" value="" />
 							<select id="id_record_edit-tags" name="tags[]" multiple="multiple" class="tags hidden">
 								{% for tag in used_tags %}
@@ -266,7 +264,7 @@
 									<div class="input_button_start"></div>
 									<div class="input_button_body">
 										<div class="icon icon_record_post"></div>
-										<input type="submit" name="submit" value="{% trans "Post" %}" class="input_submit" />
+										<input type="submit" name="submit" value="{% trans 'Save' %}" class="input_submit" />
 									</div>
 									<div class="input_button_end"></div>
 								</div>
