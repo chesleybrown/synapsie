@@ -21,12 +21,24 @@ $(document).ready(function() {
 	 * Submit Buttons (Solves issue with clicking outside the input but within the visual button)
 	 */
 	$('.input_button_start, .input_button_end').bind('click', function(e) {
-		$(this).parent().find('input[type=submit]').parents('form').trigger('submit');
-		$(this).parent().find('input[type=button]').trigger('click');
+		var container = $(this).parent();
+		
+		if ($(container).find('input[type=submit]').is(':enabled')) {
+			$(container).find('input[type=submit]').parents('form').trigger('submit');
+		}
+		
+		if ($(container).find('input[type=button]').is(':enabled')) {
+			$(container).find('input[type=button]').trigger('click');
+		}
 	});
 	$('.input_button_body .icon').bind('click', function(e) {
-		$(this).next('input[type=submit]').parents('form').trigger('submit');
-		$(this).next('input[type=button]').trigger('click');
+		if ($(this).next('input[type=submit]').is(':enabled')) {
+			$(this).next('input[type=submit]').parents('form').trigger('submit');
+		}
+		
+		if ($(this).next('input[type=button]').is(':enabled')) {
+			$(this).next('input[type=button]').trigger('click');
+		}
 	});
 	/*
 	 * END Submit Buttons
@@ -313,17 +325,25 @@ $(document).ready(function() {
 	function setupRecordForm() {
 		$('#record_create_form').ajaxForm({
 			beforeSubmit: function(arr, form, options) {
+				
+				// show loading and disable form submit to prevent accidental double-post
 				$(form).find('.loading').fadeIn('fast');
+				$(form).find('input[type=submit]').attr('disabled', true);
+				$(form).find('.input_button_wrapper').addClass('disabled');
+				$(form).block({
+					message: ''
+				});
+				
 			},
 			success: function(data, status_text, form) {
 				
-				//init
+				// init
 				var user_record_list = $('#user_record_list');
 				var message = data.message;
 				var record_data = data.data;
 				var new_record = false;
 				
-				//created successfully
+				// created successfully
 				if (message['status'] == 201) {
 					
 					// add new record to DOM
@@ -351,13 +371,16 @@ $(document).ready(function() {
 					
 				}
 				
-				//something went wrong
+				// something went wrong
 				else {
 					$.gritterExtend.add(data.message);
 				}
 				
-				//always fade out loading
+				// always fade out loading and enable form again
 				$(form).find('.loading').fadeOut('slow');
+				$(form).find('input[type=submit]').attr('disabled', false);
+				$(form).find('.input_button_wrapper').removeClass('disabled');
+				$(form).unblock();
 				
 			}
 		});

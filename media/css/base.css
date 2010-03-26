@@ -624,32 +624,33 @@ ul.holder li.bit-box-focus a.closebutton:hover {
 }
 
 /* disabled */
-.disabled .input_button_body {
-	color: #999;
+.disabled .input_button_body,
+.disabled .input_button_body input {
+	color: #777;
 }
 .disabled .input_button_start,
 .disabled .input_button_start {
-	background-position: 0 -162px;
+	background-position: 0 -243px;
 }
 .disabled .input_button_body,
 .disabled .input_button_body {
-	background-position: center -162px;
+	background-position: center -243px;
 }
 .disabled .input_button_end,
 .disabled .input_button_end {
-	background-position: 100% -162px;
+	background-position: 100% -243px;
 }
 .disabled:hover .input_button_start,
 .disabled:hover .input_button_start {
-	background-position: 0 -243px;
+	background-position: 0 -324px;
 }
 .disabled:hover .input_button_body,
 .disabled:hover .input_button_body {
-	background-position: center -243px;
+	background-position: center -324px;
 }
 .disabled:hover .input_button_end,
 .disabled:hover .input_button_end {
-	background-position: 100% -243px;
+	background-position: 100% -324px;
 }
 
 a.input_button_wrapper:link,
