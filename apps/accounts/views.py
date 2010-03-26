@@ -147,5 +147,5 @@ def profile(request, user_id=0, username=False):
 		'record_stats': record_stats,
 		'tag_stats': tag_stats,
 		'used_tags': used_tags,
-		'popular_tags': popular_tags_printable,
+		'popular_tags': popular_tags,
 	}, context_instance=RequestContext(request))
