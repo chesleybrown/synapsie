@@ -10,6 +10,7 @@ from django.http import Http404
 from apps.accounts.messages import AccountMessages
 from apps.accounts.forms import UserCreationForm
 from apps.records.models import Record
+from apps.tags.utils import get_used_tags, get_popular_tags
 from tagging.models import Tag, TaggedItem
 
 def register(request):
@@ -136,17 +137,9 @@ def profile(request, user_id=0, username=False):
 	tag_stats['average_per_record'] = float(tag_stats['total']) / float(record_stats['total'])
 	tag_stats['average_per_record'] = round(tag_stats['average_per_record'], 1)
 	
-	# get available tags user has used
-	used_tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)
-	used_tags_printable = ", ".join(map(str, used_tags))
-	popular_tags = sorted(used_tags, key=lambda x: x.count, reverse=True)
-	
-	# get popular tags ready for template
-	if (popular_tags):
-		highest = popular_tags[0]
-		for tag in popular_tags:
-			tag.percent = round((float(tag.count) / float(highest.count)) * 100, 0)
-			popular_tags_printable.append(tag)
+	# get used/popular tags for current user
+	used_tags = get_used_tags(Record, identity)
+	popular_tags = get_popular_tags(used_tags)
 	
 	# render
 	return render_to_response('accounts/profile.html', {
