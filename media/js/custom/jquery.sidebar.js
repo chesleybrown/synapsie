@@ -1,5 +1,5 @@
 /*
- * jQuery Sidebar 0.5
+ * jQuery Sidebar 0.6
  * 
  * Makes it easy to handle adding/removing tags from the sidebar dynamically
  * 
@@ -78,7 +78,7 @@
 			tag = build_tag(sidebar, tag_name);
 			$(tag).show();
 			
-			// determine width of this tags
+			// determine width of this tag
 			tag_highest = sidebar_tab_popular_tags.find('li:first div.content span.value').text();
 			popular_tag_percent = Math.round((parseInt(popular_tag_value) / parseInt(tag_highest)) * 100);
 			
@@ -190,7 +190,8 @@
 			var settings = sidebar.data('sidebar_settings');
 			var sidebar_tab_popular_tags = $(settings.sidebar_tab_popular_tags);
 			var popular_tag_name = $(popular_tag).find('div.label ul.tags .tag_text').text();
-			var tag_highest = 0;
+			var highest_popular_tag = $(settings.sidebar_tab_popular_tags).find('li.popular_tag:first');
+			var highest_popular_tag_value = parseInt($(highest_popular_tag).find('div.content span.value').text());
 			var popular_tag_percent = 0;
 			var popular_tag_value = 0;
 			var current_popular_tag = false;
@@ -212,8 +213,7 @@
 				popular_tag_value.text(parseInt(popular_tag_value.text()) + 1);
 				
 				// determine width of this popular tag
-				tag_highest = sidebar_tab_popular_tags.find('li:first div.content span.value').text();
-				popular_tag_percent = Math.round((parseInt($(popular_tag_value).text()) / parseInt(tag_highest)) * 100);
+				popular_tag_percent = Math.round((parseInt($(popular_tag_value).text()) / parseInt(highest_popular_tag_value)) * 100);
 				
 				// set popular tag info
 				$(popular_tag_value).css('width', popular_tag_percent + '%');
@@ -225,6 +225,11 @@
 			
 			// get the current popular tag value
 			popular_tag_value = parseInt($(popular_tag).find('div.content span.value').text());
+			
+			// if the value of this popular tag is higher than the current highest value, recalculate widths
+			if (popular_tag_value > highest_popular_tag_value ) {
+				update_popular_tag_widths(sidebar);
+			}
 			
 			// determine where to add popular tag
 			$(sidebar_tab_popular_tags).find('li.popular_tag').each(function() {
@@ -253,6 +258,35 @@
 			// fade it all fancy
 			$(popular_tag).fadeIn('slow');
 			
+			return true;
+			
+		}
+		
+		// recalculate width if highest tag has been incremented
+		function update_popular_tag_widths(sidebar) {
+			
+			// init
+			var settings = sidebar.data('sidebar_settings');
+			var sidebar_tab_popular_tags = $(settings.sidebar_tab_popular_tags);
+			var highest_popular_tag = $(settings.sidebar_tab_popular_tags).find('li.popular_tag:first');
+			var highest_popular_tag_value = parseInt($(highest_popular_tag).find('div.content span.value').text());
+			
+			// iterate through all tags and recalculate their width based on the current highest value
+			$(sidebar_tab_popular_tags).find('li.popular_tag').each(function() {
+				
+				// init
+				var popular_tag_value = $(this).find('div.content span.value');
+				var popular_tag_percent = 0;
+				
+				// new width
+				popular_tag_percent = Math.round((parseInt($(popular_tag_value).text()) / parseInt(highest_popular_tag_value)) * 100);
+				
+				// update it's width
+				$(popular_tag_value).css('width', popular_tag_percent + '%');
+				
+			});
+			
+			// done
 			return true;
 			
 		}
