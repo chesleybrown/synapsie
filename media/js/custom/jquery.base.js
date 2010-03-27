@@ -450,7 +450,8 @@ $(document).ready(function() {
 				text: $(content).find('.text'),
 				tags: $(content).find('ul.tags'),
 				personal: $(content).find('.personal'),
-				security: $(content).find('.security')
+				security: $(content).find('.security'),
+				footer: $(content).find('div.footer')
 			};
 			
 			// inputs
@@ -560,7 +561,9 @@ $(document).ready(function() {
 							$(new_record_tags).append(li_tag);
 						}
 						setupTags(new_record_tags);
-						$(record_contents.tags).replaceWith(new_record_tags);
+						$(record_contents.footer)
+							.html('')
+							.append(new_record_tags);
 						
 						/****************************************************/
 						
