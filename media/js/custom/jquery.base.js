@@ -447,6 +447,7 @@ $(document).ready(function() {
 			
 			// displayed record
 			var record_contents = {
+				datetime: $(content).find('div.datetime'),
 				text: $(content).find('.text'),
 				tags: $(content).find('ul.tags'),
 				personal: $(content).find('.personal'),
@@ -458,21 +459,28 @@ $(document).ready(function() {
 			var record_inputs = {
 				text: $(form).find('textarea[name$=-text]'),
 				tags: $(form).find('select.tags'),
-				personal: $(form).find('input[name$=-personal]')
+				personal: $(form).find('input[name$=-personal]'),
+				security: $(form).find('div.security_dropdown')
 			};
+			
+			// enable buttons and other stuff in edit form
+			setupButtons(form);
+			setupFormDropdownMenus(form);
+			setupDatePicker(form);
+			setupDateTimeSelection(form);
+			
+			// set selections for dropdowns
+			$(record_inputs.security).dropdownMenus('select', $(record_contents.personal).text());
 			
 			// fade out record content
 			$(content).animate({
 				opacity: 0.40
 			}, 'slow');
 			
-			// show delete confirmation dialog
+			// show edit record dialog
 			$(holder).block({
 				message: $(popup)
 			});
-			
-			// fix buttons in edit form
-			setupButtons(form);
 			
 			// populate edit form
 			$(record_inputs.text).focus();
@@ -520,9 +528,9 @@ $(document).ready(function() {
 					var record = data.data;
 					
 					// updated successfully
-					if (message['status'] == 200) {
+					if (message.status == 200) {
 						
-						/******************make into plugin********************/
+						/******************make into record plugin********************/
 						
 						//update record on screen
 						$(record_contents.text).html(nl2br(record.text));
@@ -1049,76 +1057,82 @@ $(document).ready(function() {
 	
 	
 	/*
-	 * Setup Record Form Security Menu (dropdowns)
+	 * Setup Record Form Dropdown Menus
 	 */
-	$('form.record_form div.use_form_menu').dropdownMenus({
-		show_effect: function(e) {
-			e.addClass('hover');
-		},
-		hide_effect: function(e) {
-			e.removeClass('hover');
-		}
-	});
-	
-	//this handles when a user selects an option from the security menu
-	$('form.record_form div.use_form_menu ul.menu_items li.menu_item').bind('click', function(e) {
+	function setupFormDropdownMenus(container) {
+		$(container).find('div.use_form_menu').dropdownMenus({
+			show_effect: function(e) {
+				e.addClass('hover');
+			},
+			hide_effect: function(e) {
+				e.removeClass('hover');
+			}
+		});
 		
-		//init
-		var menu_header = $(this).parents('.form_menu').find('li.menu_header');
-		var menu_header_text = menu_header.find('.menu_header_text');
-		var menu_header_icon = menu_header.find('.menu_header_icon');
-		var menu_item_text = $(this).find('.menu_item_text').text();
-		var menu_item_icon = $(this).find('.menu_item_icon');
-		var menu_item_value = $(this).find('.menu_item_value').text();
-		var input = $(this).parents('.form_menu').next('input');
-		
-		//change header
-		menu_header_text.text(menu_item_text);
-		menu_header_icon.attr('class', menu_item_icon.attr('class'));
-		menu_header_icon
-			.removeClass('menu_item_icon')
-			.addClass('menu_header_icon');
-		input.val(menu_item_value);
-	});
+		//this handles when a user selects an option from a dropdown menu
+		$(container).find('div.use_form_menu ul.menu_items li.menu_item').bind('click', function(e) {
+			
+			//init
+			var menu_header = $(this).parents('.form_menu').find('li.menu_header');
+			var menu_header_text = menu_header.find('.menu_header_text');
+			var menu_header_icon = menu_header.find('.menu_header_icon');
+			var menu_item_text = $(this).find('.menu_item_text').text();
+			var menu_item_icon = $(this).find('.menu_item_icon');
+			var menu_item_value = $(this).find('.menu_item_value').text();
+			var input = $(this).parents('.form_menu').next('input');
+			
+			//change header
+			menu_header_text.text(menu_item_text);
+			menu_header_icon.attr('class', menu_item_icon.attr('class'));
+			menu_header_icon
+				.removeClass('menu_item_icon')
+				.addClass('menu_header_icon');
+			input.val(menu_item_value);
+		});
+	}
+	setupFormDropdownMenus('form.record_form');
 	/*
-	 * END Setup Record Form Security Menu (dropdowns)
+	 * END Setup Record Form Dropdown Menus
 	 */
 	
 	
 	/*
 	 * Setup Record Form Date Picker
 	 */
-	Date.firstDayOfWeek = 0; //sunday
-	$('.use_datepicker')
-		.datePicker({
-			inline: true,
-			startDate: '01/01/1970',
-			endDate: (new Date()).asString(),
-			previousYear: '',
-			previousMonth: '',
-			nextYear: '',
-			nextMonth: ''
-		})
-		.bind(
-			'dateSelected',
-			function(e, selectedDate, $td) {
-				var input = $(this).parents('.form_menu').next('input');
-				var formated_day = selectedDate.getDate();
-				if (formated_day < 10) {
-					formated_day = '0' + formated_day;
+	function setupDatePicker(container) {
+		Date.firstDayOfWeek = 0; //sunday
+		$(container).find('.use_datepicker')
+			.datePicker({
+				inline: true,
+				startDate: '01/01/1970',
+				endDate: (new Date()).asString(),
+				previousYear: '',
+				previousMonth: '',
+				nextYear: '',
+				nextMonth: ''
+			})
+			.bind(
+				'dateSelected',
+				function(e, selectedDate, $td) {
+					var input = $(this).parents('.form_menu').next('input');
+					var formated_day = selectedDate.getDate();
+					if (formated_day < 10) {
+						formated_day = '0' + formated_day;
+					}
+					var formated_month = selectedDate.getMonth()+1;
+					if (formated_month < 10) {
+						formated_month = '0' + formated_month;
+					}
+					
+					var formated_date = selectedDate.getMonthName(true) + ' ' + formated_day + ', ' + selectedDate.getFullYear();
+					var date = selectedDate.getFullYear() + '-' + formated_month + '-' + formated_day
+					
+					$(this).parents('.form_menu').find('.menu_header_text').text(formated_date);
+					input.val(date);
 				}
-				var formated_month = selectedDate.getMonth()+1;
-				if (formated_month < 10) {
-					formated_month = '0' + formated_month;
-				}
-				
-				var formated_date = selectedDate.getMonthName(true) + ' ' + formated_day + ', ' + selectedDate.getFullYear();
-				var date = selectedDate.getFullYear() + '-' + formated_month + '-' + formated_day
-				
-				$(this).parents('.form_menu').find('.menu_header_text').text(formated_date);
-				input.val(date);
-			}
-		);
+			);
+	}
+	setupDatePicker('form.record_form');
 	/*
 	 * END Setup Record Form Date Picker
 	 */
@@ -1127,9 +1141,9 @@ $(document).ready(function() {
 	/*
 	 * Setup Record Form Date Time Selection
 	 */
-	function setupDateTimeSelection() {
+	function setupDateTimeSelection(container) {
 		
-		$('#record_create_form, #record_edit_form form').each(function() {
+		$(container).find('form').each(function() {
 			
 			var selections = $(this).find('div.record_form_date, div.record_form_time_hour, div.record_form_time_minute, div.record_form_time_ampm');
 			var datetime_reset = $(this).find('div.record_form_datetime_reset');
@@ -1144,7 +1158,7 @@ $(document).ready(function() {
 		});
 		
 	}
-	setupDateTimeSelection();
+	setupDateTimeSelection('#record_create_form_container');
 	/*
 	 * END Record Form Date Time Selection
 	 */
@@ -1154,7 +1168,7 @@ $(document).ready(function() {
 	 */
 	function setupDateTimeAutoUpdate(force_update) {
 		
-		$('#record_create_form, #record_edit_form_popup form').each(function() {
+		$('#record_create_form').each(function() {
 			var now = new Date();
 			var selection_menu_items = $(this).find('div.record_form_date, div.record_form_time_hour, div.record_form_time_minute, div.record_form_time_ampm')
 				.find('.form_menu .menu_items');

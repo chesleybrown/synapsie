@@ -1,5 +1,5 @@
 /*
- * jQuery RecordMenus 0.7
+ * jQuery RecordMenus 0.8
  * 
  * Add a "Dropdown" menu when you hover over a record
  * 
@@ -18,6 +18,10 @@
 			
 			case 'hide':
 				return hide($(this));
+				break;
+			
+			case 'select':
+				return select($(this), optionName); //optionName = value
 				break;
 		}
 		
@@ -202,6 +206,20 @@
 			}
 			
 			return true;
+		}
+		
+		// select a menu option by it's value
+		function select(menu, value) {
+			//init
+			var settings = menu.data('dropdown_menu_settings');
+			var menu_items = menu.find(settings.menu_items_selector);
+			
+			$(menu_items).find('.menu_item').each(function() {
+				if ($(this).find('.menu_item_value').text() == value) {
+					$(this).trigger('click');
+				}
+				
+			});
 		}
 		
 	}

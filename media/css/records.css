@@ -238,6 +238,9 @@ form.record_form .form_menu.active {
 
 
 /* Records Edit Form */
+.popup form.record_form {
+	text-align: center;
+}
 .popup form.record_form ul.holder,
 .popup form.record_form .field textarea {
 	width: 600px;
@@ -260,6 +263,7 @@ form.record_form .form_menu.active {
 }
 
 .popup form.record_form .actions {
+	text-align: left;
 	float: none;
 	background: none;
 }

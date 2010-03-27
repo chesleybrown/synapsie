@@ -10,227 +10,229 @@
 	
 	<div class="clear"></div>
 	
-	<form id="record_create_form" class="record_form use_inline_labels" action="{% url api-record emitter_format='.json' %}" method="post" enctype="multipart/form-data" autocomplete="off">
-		{% csrf_token %}
-		<fieldset>
-			<div class="field text_field">
-				{{ record_create_formset.text.label_tag }}
-				{{ record_create_formset.text }}
-			</div>
-			<div class="field tag_field">
-				{{ record_create_formset.tags.label_tag }}
-				<input class="tags_temp" name="record_create-tags" type="text" value="" />
-				<select id="id_record_create-tags" name="record_create-tags[]" multiple="multiple" class="tags hidden">
-					{% for tag in used_tags %}
-						{% if tag in selected_tags %}
-							<option selected="selected" value="{{ tag.name }}">{{ tag.name }}</option>
-						{% else %}
-							<option value="{{ tag.name }}">{{ tag.name }}</option>
-						{% endif %}
-					{% endfor %}
-				</select>
-			</div>
-		</fieldset>
-		
-		<div class="actions">
-			<div class="actions_left">
-				<div class="action">
-					<div class="record_form_date">
-						<div class="form_menu use_form_menu">
+	<div class="record_create_form_container">
+		<form id="record_create_form" class="record_form use_inline_labels" action="{% url api-record emitter_format='.json' %}" method="post" enctype="multipart/form-data" autocomplete="off">
+			{% csrf_token %}
+			<fieldset>
+				<div class="field text_field">
+					{{ record_create_formset.text.label_tag }}
+					{{ record_create_formset.text }}
+				</div>
+				<div class="field tag_field">
+					{{ record_create_formset.tags.label_tag }}
+					<input class="tags_temp" name="record_create-tags" type="text" value="" />
+					<select id="id_record_create-tags" name="record_create-tags[]" multiple="multiple" class="tags hidden">
+						{% for tag in used_tags %}
+							{% if tag in selected_tags %}
+								<option selected="selected" value="{{ tag.name }}">{{ tag.name }}</option>
+							{% else %}
+								<option value="{{ tag.name }}">{{ tag.name }}</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+				</div>
+			</fieldset>
+			
+			<div class="actions">
+				<div class="actions_left">
+					<div class="action">
+						<div class="record_form_date">
+							<div class="form_menu use_form_menu">
+								<ul class="menu_headers">
+									<li class="menu_header">
+										<div class="menu_header_icon icon icon_record_date"></div>
+										<span class="menu_header_text">{% now "M d, Y" %}</span>
+										<div class="side"></div>
+									</li>
+								</ul>
+								<ul class="menu_items">
+									<li class="menu_item_datepicker">
+										<div class="menu_item_desc">
+											<div class="use_datepicker"></div>
+										</div>
+										<span class="menu_item_value">1</span>
+									</li>
+								</ul>
+							</div>
+							{{ record_create_formset.date }}
+						</div>
+					</div>
+					
+					<div class="group">
+						<div class="action">
+							<div class="record_form_time_hour">
+								<div class="form_menu use_form_menu">
+									<ul class="menu_headers">
+										<li class="menu_header">
+											<div class="menu_header_icon icon icon_record_time"></div>
+											<span class="menu_header_text">{% now "h" %}</span>
+											<div class="side"></div>
+										</li>
+									</ul>
+									<ul class="menu_items">
+										<li class="menu_item">
+											<span class="menu_item_text">01</span>
+											<span class="menu_item_value">01</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">02</span>
+											<span class="menu_item_value">02</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">03</span>
+											<span class="menu_item_value">03</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">04</span>
+											<span class="menu_item_value">04</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">05</span>
+											<span class="menu_item_value">05</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">06</span>
+											<span class="menu_item_value">06</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">07</span>
+											<span class="menu_item_value">07</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">08</span>
+											<span class="menu_item_value">08</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">09</span>
+											<span class="menu_item_value">09</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">10</span>
+											<span class="menu_item_value">10</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">11</span>
+											<span class="menu_item_value">11</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">12</span>
+											<span class="menu_item_value">12</span>
+										</li>
+									</ul>
+								</div>
+								{{ record_create_formset.hour }}
+							</div>
+						</div>
+						<div class="action">
+							<div class="record_form_time_minute">
+								<div class="form_menu use_form_menu">
+									<ul class="menu_headers">
+										<li class="menu_header">
+											<span class="menu_header_text">{% now "i" %}</span>
+											<div class="side"></div>
+										</li>
+									</ul>
+									<ul class="menu_items">
+										<li class="menu_item">
+											<span class="menu_item_text">00</span>
+											<span class="menu_item_value">00</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">15</span>
+											<span class="menu_item_value">15</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">30</span>
+											<span class="menu_item_value">30</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">45</span>
+											<span class="menu_item_value">45</span>
+										</li>
+									</ul>
+								</div>
+								{{ record_create_formset.minute }}
+							</div>
+						</div>
+						<div class="action">
+							<div class="record_form_time_ampm">
+								<div class="form_menu use_form_menu">
+									<ul class="menu_headers">
+										<li class="menu_header">
+											<span class="menu_header_text">{% now "A" %}</span>
+											<div class="side"></div>
+										</li>
+									</ul>
+									<ul class="menu_items">
+										<li class="menu_item">
+											<span class="menu_item_text">AM</span>
+											<span class="menu_item_value">AM</span>
+										</li>
+										<li class="menu_item">
+											<span class="menu_item_text">PM</span>
+											<span class="menu_item_value">PM</span>
+										</li>
+									</ul>
+								</div>
+								{{ record_create_formset.ampm }}
+							</div>
+						</div>
+					</div>
+					
+					<div class="action">
+						<div class="record_form_datetime_reset hidden">
+							<div class="icon icon_record_datetime_reset use_record_form_datetime_reset">{% trans "Reset" %}</div>
+							{{ record_create_formset.datetime_set }}
+						</div>
+					</div>
+				</div>
+				
+				<div class="actions_right">
+					
+					<div class="action">
+						<div class="loading_container"><div class="loading"></div></div>
+					</div>
+					<div class="action">
+						<div class="form_menu use_form_menu security_dropdown">
 							<ul class="menu_headers">
 								<li class="menu_header">
-									<div class="menu_header_icon icon icon_record_date"></div>
-									<span class="menu_header_text">{% now "M d, Y" %}</span>
+									<div class="menu_header_icon icon icon_personal"></div>
+									<span class="menu_header_text">{% trans "Personal" %}</span>
 									<div class="side"></div>
 								</li>
 							</ul>
 							<ul class="menu_items">
-								<li class="menu_item_datepicker">
-									<div class="menu_item_desc">
-										<div class="use_datepicker"></div>
-									</div>
+								<li class="menu_item">
+									<span class="menu_item_icon icon icon_personal"></span>
+									<span class="menu_item_text">{% trans "Personal" %}</span>
+									<span class="menu_item_desc">{% trans "Keep this post restricted and only visible to yourself." %}</span>
 									<span class="menu_item_value">1</span>
+								</li>
+								<li class="menu_item">
+									<span class="menu_item_icon icon icon_shared"></span>
+									<span class="menu_item_text">{% trans "Shared" %}</span>
+									<span class="menu_item_desc">{% trans "Let anyone find and read this post. Share your life with the world." %}</span>
+									<span class="menu_item_value">0</span>
 								</li>
 							</ul>
 						</div>
-						{{ record_create_formset.date }}
+						{{ record_create_formset.personal }}
 					</div>
-				</div>
-				
-				<div class="group">
+					
 					<div class="action">
-						<div class="record_form_time_hour">
-							<div class="form_menu use_form_menu">
-								<ul class="menu_headers">
-									<li class="menu_header">
-										<div class="menu_header_icon icon icon_record_time"></div>
-										<span class="menu_header_text">{% now "h" %}</span>
-										<div class="side"></div>
-									</li>
-								</ul>
-								<ul class="menu_items">
-									<li class="menu_item">
-										<span class="menu_item_text">01</span>
-										<span class="menu_item_value">01</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">02</span>
-										<span class="menu_item_value">02</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">03</span>
-										<span class="menu_item_value">03</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">04</span>
-										<span class="menu_item_value">04</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">05</span>
-										<span class="menu_item_value">05</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">06</span>
-										<span class="menu_item_value">06</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">07</span>
-										<span class="menu_item_value">07</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">08</span>
-										<span class="menu_item_value">08</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">09</span>
-										<span class="menu_item_value">09</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">10</span>
-										<span class="menu_item_value">10</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">11</span>
-										<span class="menu_item_value">11</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">12</span>
-										<span class="menu_item_value">12</span>
-									</li>
-								</ul>
+						<div class="input_button_wrapper">
+							<div class="input_button_start"></div>
+							<div class="input_button_body">
+								<div class="icon icon_record_post"></div>
+								<input type="submit" name="submit" value="{% trans 'Save' %}" class="input_submit" />
 							</div>
-							{{ record_create_formset.hour }}
+							<div class="input_button_end"></div>
 						</div>
-					</div>
-					<div class="action">
-						<div class="record_form_time_minute">
-							<div class="form_menu use_form_menu">
-								<ul class="menu_headers">
-									<li class="menu_header">
-										<span class="menu_header_text">{% now "i" %}</span>
-										<div class="side"></div>
-									</li>
-								</ul>
-								<ul class="menu_items">
-									<li class="menu_item">
-										<span class="menu_item_text">00</span>
-										<span class="menu_item_value">00</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">15</span>
-										<span class="menu_item_value">15</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">30</span>
-										<span class="menu_item_value">30</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">45</span>
-										<span class="menu_item_value">45</span>
-									</li>
-								</ul>
-							</div>
-							{{ record_create_formset.minute }}
-						</div>
-					</div>
-					<div class="action">
-						<div class="record_form_time_ampm">
-							<div class="form_menu use_form_menu">
-								<ul class="menu_headers">
-									<li class="menu_header">
-										<span class="menu_header_text">{% now "A" %}</span>
-										<div class="side"></div>
-									</li>
-								</ul>
-								<ul class="menu_items">
-									<li class="menu_item">
-										<span class="menu_item_text">AM</span>
-										<span class="menu_item_value">AM</span>
-									</li>
-									<li class="menu_item">
-										<span class="menu_item_text">PM</span>
-										<span class="menu_item_value">PM</span>
-									</li>
-								</ul>
-							</div>
-							{{ record_create_formset.ampm }}
-						</div>
-					</div>
-				</div>
-				
-				<div class="action">
-					<div class="record_form_datetime_reset hidden">
-						<div class="icon icon_record_datetime_reset use_record_form_datetime_reset">{% trans "Reset" %}</div>
-						{{ record_create_formset.datetime_set }}
 					</div>
 				</div>
 			</div>
-			
-			<div class="actions_right">
-				
-				<div class="action">
-					<div class="loading_container"><div class="loading"></div></div>
-				</div>
-				<div class="action">
-					<div class="form_menu use_form_menu">
-						<ul class="menu_headers">
-							<li class="menu_header">
-								<div class="menu_header_icon icon icon_personal"></div>
-								<span class="menu_header_text">{% trans "Personal" %}</span>
-								<div class="side"></div>
-							</li>
-						</ul>
-						<ul class="menu_items">
-							<li class="menu_item">
-								<span class="menu_item_icon icon icon_personal"></span>
-								<span class="menu_item_text">{% trans "Personal" %}</span>
-								<span class="menu_item_desc">{% trans "Keep this post restricted and only visible to yourself." %}</span>
-								<span class="menu_item_value">1</span>
-							</li>
-							<li class="menu_item">
-								<span class="menu_item_icon icon icon_shared"></span>
-								<span class="menu_item_text">{% trans "Shared" %}</span>
-								<span class="menu_item_desc">{% trans "Let anyone find and read this post. Share your life with the world." %}</span>
-								<span class="menu_item_value">0</span>
-							</li>
-						</ul>
-					</div>
-					{{ record_create_formset.personal }}
-				</div>
-				
-				<div class="action">
-					<div class="input_button_wrapper">
-						<div class="input_button_start"></div>
-						<div class="input_button_body">
-							<div class="icon icon_record_post"></div>
-							<input type="submit" name="submit" value="{% trans 'Save' %}" class="input_submit" />
-						</div>
-						<div class="input_button_end"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
+		</form>
+	</div>
 	
 	<ul id="user_record_list" class="records">
 		{% for record in records_paginator.object_list %}

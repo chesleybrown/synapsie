@@ -232,6 +232,7 @@ class RecordHandler(BaseHandler):
 			
 			# update record, set user
 			record.text = clean['text'];
+			record.personal = clean['personal'];
 			
 			# save
 			record.save()

@@ -15,6 +15,10 @@ class RecordForm(forms.ModelForm):
 	ampm = forms.CharField(widget=forms.HiddenInput, initial=datetime.today().strftime("%p"))
 	datetime_set = forms.CharField(widget=forms.HiddenInput, initial=0)
 	
+	def clean_personal(self):
+		personal = int(self.cleaned_data['personal'])
+		return personal
+	
 	def __init__(self, *args, **kwrds):
 		super(RecordForm, self).__init__(*args, **kwrds)
 		self.fields['tags'].widget.attrs['value'] = self.instance.get_tags_printable()

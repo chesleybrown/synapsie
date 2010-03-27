@@ -147,7 +147,7 @@ ul.sidebar li.sidebar_item {
 	right: -15px;
 }
 .blockMsg .popup .contents {
-	overflow: auto;
+	cursor: default;
 	padding: 1px 0;
 }
 .blockMsg .popup .contents input {
@@ -357,6 +357,7 @@ form label {
 
 /* TextboxList sample CSS */
 ul.holder {
+	cursor: text;
 	background: #fff;
 	margin: 0 13px;
 	overflow: hidden;
