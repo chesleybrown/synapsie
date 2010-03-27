@@ -119,7 +119,7 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	identity = request.user
 	record_list = False
 	records = False
-	formset = RecordSearchForm()
+	record_search_formset = RecordSearchForm()
 	selected_tags = False
 	popular_tags_printable = list()
 	used_tags_printable = ''
@@ -138,7 +138,7 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 		tags = request.GET.getlist('tags[]')
 	
 	# set query in form
-	formset = RecordSearchForm(request.GET)
+	record_search_formset = RecordSearchForm(request.GET)
 	
 	# get user records
 	record_list = Record.objects.all().filter(user=identity).order_by('-created', '-id')
@@ -172,7 +172,7 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	
 	# render
 	return render_to_response('records/record_search.html', {
-		'formset': formset,
+		'record_search_formset': record_search_formset,
 		'selected_tags': selected_tags,
 		'used_tags': used_tags,
 		'popular_tags': popular_tags,

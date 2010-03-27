@@ -131,7 +131,7 @@ class RecordHandler(BaseHandler):
 		#init
 		identity = request.user
 		messages = RecordMessages()
-		formset = RecordForm(prefix='record_create')
+		record_create_formset = RecordForm(prefix='record_create')
 		now = datetime.now()
 		str_tags = ','
 		clean = None
@@ -143,12 +143,12 @@ class RecordHandler(BaseHandler):
 		# if user has posted
 		if request.method == 'POST':
 			
-			formset = RecordForm(request.POST, prefix='record_create')
-			arr_tags = request.POST.getlist('tags[]')
+			record_create_formset = RecordForm(request.POST, prefix='record_create')
+			arr_tags = request.POST.getlist('record_create-tags[]')
 			
 			# validate form
-			if formset.is_valid():
-				clean = formset.cleaned_data
+			if record_create_formset.is_valid():
+				clean = record_create_formset.cleaned_data
 				
 				# generate datetime stamp
 				if clean['datetime_set']:

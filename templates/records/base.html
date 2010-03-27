@@ -60,8 +60,8 @@
 							{{ record_edit_formset.text }}
 						</div>
 						<div class="field tag_field">
-							<input class="tags_temp" name="tags" type="text" value="" />
-							<select id="id_record_edit-tags" name="tags[]" multiple="multiple" class="tags hidden">
+							<input class="tags_temp" name="record_edit-tags" type="text" value="" />
+							<select id="id_record_edit-tags" name="record_edit-tags[]" multiple="multiple" class="tags hidden">
 								{% for tag in used_tags %}
 									{% if tag in selected_tags %}
 										<option selected="selected" value="{{ tag.name }}">{{ tag.name }}</option>

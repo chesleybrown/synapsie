@@ -14,14 +14,14 @@
 	
 	<form id="record_search_form" class="record_form use_inline_labels" action="{% url record_search %}" method="get" autocomplete="off">
 		<fieldset>
-			<div id="id_text_field" class="field">
-				{{ formset.text.label_tag }}
-				{{ formset.text }}
+			<div class="field text_field">
+				{{ record_search_formset.text.label_tag }}
+				{{ record_search_formset.text }}
 			</div>
-			<div id="id_tags_field" class="field">
-				{{ formset.tags.label_tag }}
-				<input id="id_tags_temp" name="tags" type="text" value="" />
-				<select id="id_tags" name="tags[]" multiple="multiple" class="hidden">
+			<div class="field tag_field">
+				{{ record_search_formset.tags.label_tag }}
+				<input class="tags_temp" name="tags" type="text" value="" />
+				<select id="id_record_search-tags" name="tags[]" multiple="multiple" class="tags hidden">
 					{% for tag in used_tags %}
 						{% if tag in selected_tags %}
 							<option selected="selected" value="{{ tag.name }}">{{ tag.name }}</option>
@@ -47,7 +47,7 @@
 						<div class="input_button_start"></div>
 						<div class="input_button_body">
 							<div class="icon icon_search"></div>
-							<input type="submit" id="search_record" value="Search" class="input_submit" />
+							<input type="submit" value="Search" class="input_submit" />
 						</div>
 						<div class="input_button_end"></div>
 					</div>

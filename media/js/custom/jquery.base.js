@@ -123,12 +123,25 @@ $(document).ready(function() {
 			allow_duplicates: false,
 			onselect: function(item) {
 				setupInlineLabels(item);
+				
+				// update the edit record autocompleter list
+				var record_edit_form = $('#record_edit_form_popup form');
+				var new_edit_select_tags = $(container).find('select.tags').clone();
+				var edit_select_tags = $(record_edit_form).find('select.tags');
+				
+				// deselect anything that may already be selected
+				$(new_edit_select_tags).find('option')
+					.removeClass('selected')
+					.attr('selected', false);
+				
+				$(new_edit_select_tags).attr('id', $(edit_select_tags).attr('id'));
+				$(record_edit_form).find('select.tags').replaceWith(new_edit_select_tags);
 			},
 			onremove: function(item) {
 				setupInlineLabels(item);
 			}
 		});
-		$(container).find("input.tags_temp, input.tags_temp").remove();
+		$(container).find("input.tags_temp").remove();
 		
 		// focus effect for autocomplete input
 		$(container).find('input.maininput').live('focus', function() {
@@ -138,7 +151,7 @@ $(document).ready(function() {
 			$(this).parents('ul.holder').removeClass('focus');
 		});
 	}
-	setupAutocompleter('#record_create_form');
+	setupAutocompleter('#record_create_form, #record_search_form');
 	/*
 	 * END Tag Autocompleter
 	 */
@@ -154,7 +167,7 @@ $(document).ready(function() {
 	$('form.use_inline_labels label').inFieldLabels(in_field_labels_options);
 	
 	function setupInlineLabels(item) {
-		$('#record_create_form').each(function() {
+		$('#record_create_form, #record_search_form').each(function() {
 			
 			// init
 			var id_tags_label = $(this).find('div.tag_field label');
@@ -175,7 +188,7 @@ $(document).ready(function() {
 					
 					if ($(id_tags_selected).size() == 0) {
 						$(id_tags_maininput).attr('id', 'maininput');
-						$(id_tags_label_clone) = id_tags_label.clone(false);
+						id_tags_label_clone = $(id_tags_label).clone(false);
 						$(id_tags_label_clone).insertAfter(id_tags_label);
 						$(id_tags_label).remove();
 						
@@ -361,6 +374,8 @@ $(document).ready(function() {
 				var record_data = data.data;
 				var new_record = false;
 				var record_text = $(form).find('textarea.text');
+				var select_tags = false;
+				
 				
 				// created successfully
 				if (message['status'] == 201) {
@@ -1057,7 +1072,7 @@ $(document).ready(function() {
 	 */
 	function setupDateTimeSelection() {
 		
-		$('#record_create_form, #record_edit_form').each(function() {
+		$('#record_create_form, #record_edit_form form').each(function() {
 			
 			var selections = $(this).find('div.record_form_date, div.record_form_time_hour, div.record_form_time_minute, div.record_form_time_ampm');
 			var datetime_reset = $(this).find('div.record_form_datetime_reset');
@@ -1082,7 +1097,7 @@ $(document).ready(function() {
 	 */
 	function setupDateTimeAutoUpdate(force_update) {
 		
-		$('#record_create_form, #record_edit_form').each(function() {
+		$('#record_create_form, #record_edit_form_popup form').each(function() {
 			var now = new Date();
 			var selection_menu_items = $(this).find('div.record_form_date, div.record_form_time_hour, div.record_form_time_minute, div.record_form_time_ampm')
 				.find('.form_menu .menu_items');
