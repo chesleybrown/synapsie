@@ -119,6 +119,7 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	identity = request.user
 	record_list = False
 	records = False
+	record_edit_formset = RecordForm(prefix='record_edit')
 	record_search_formset = RecordSearchForm()
 	selected_tags = False
 	popular_tags_printable = list()
@@ -174,6 +175,7 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	
 	# render
 	return render_to_response('records/record_search.html', {
+		'record_edit_formset': record_edit_formset,
 		'record_search_formset': record_search_formset,
 		'selected_tags': selected_tags,
 		'used_tags': used_tags,

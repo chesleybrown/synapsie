@@ -43,7 +43,10 @@
 							</ul>
 						</div>
 						<div class="add_tags">
-							<a href="{% url api-record-add_tags record_id=0,emitter_format='.json' %}" class="icon icon_record_add_tags use_record_add_tags"></a>
+							<a href="{% url api-record-add_tags record_id=0,emitter_format='.json' %}" class="use_record_add_tags">
+								<span class="icon icon_record_add_tags"></span>
+								<span class="add_tags_text">Add Tags</span>
+							</a>
 						</div>
 						<div class="footer"></div>
 					</div>

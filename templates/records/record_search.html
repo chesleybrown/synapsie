@@ -88,15 +88,18 @@
 									<a href="{% url record_show record_id=record.id %}"><span class="icon icon_record_view"></span>View</a>
 								</li>
 								<li class="menu_item">
-									<a href="{% url record_edit record_id=record.id %}"><span class="icon icon_record_edit"></span>Edit</a>
+									<a class="use_record_edit" href="{% url api-record record_id=record.id,emitter_format='.json' %}"><span class="icon icon_record_edit"></span>Edit</a>
 								</li>
 								<li class="menu_item">
 									<a class="use_record_delete" href="{% url api-record record_id=record.id,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>Delete...</a>
 								</li>
 							</ul>
 						</div>
-						<div class="add_tag">
-							<div class="icon icon_tag_add use_add_tag"></div>
+						<div class="add_tags">
+							<a href="{% url api-record-add_tags record_id=record.id,emitter_format='.json' %}" class="use_record_add_tags">
+								<span class="icon icon_record_add_tags"></span>
+								<span class="add_tags_text">Add Tags</span>
+							</a>
 						</div>
 						<div class="footer">
 							{% if record.tags %}
