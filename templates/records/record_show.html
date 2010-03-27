@@ -6,6 +6,7 @@
 {% block head_title %}{% trans "Record Details" %}{% endblock %}
 
 {% block body %}
+	{{ block.super }}
 	
 	<ul id="user_record_list" class="records">
 		{% if record %}
@@ -17,6 +18,7 @@
 						<span class="year">{{ record.created|date:"Y" }}</span>
 					</div>
 					<div class="security">
+						<div class="personal">{{ record.personal }}</div>
 						{% if record.personal %}
 							<div class="icon icon_personal"></div>
 						{% else %}
@@ -36,7 +38,7 @@
 						</ul>
 						<ul class="menu_items">
 							<li class="menu_item">
-								<a class="use_record_edit" href="{% url record_edit record_id=record.id %}"><span class="icon icon_record_edit"></span>{% trans "Edit" %}</a>
+								<a class="use_record_edit" href="{% url api-record record_id=record.id,emitter_format='.json' %}"><span class="icon icon_record_edit"></span>{% trans "Edit" %}</a>
 							</li>
 							<li class="menu_item">
 								<a class="use_record_delete" href="{% url api-record record_id=record.id,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>{% trans "Delete..." %}</a>

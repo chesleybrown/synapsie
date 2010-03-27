@@ -241,6 +241,7 @@ def show_record(request, record_id):
 	identity = request.user
 	record = False
 	messages = RecordMessages()
+	record_edit_formset = RecordForm(prefix='record_edit')
 	
 	try:
 		# get record
@@ -260,6 +261,7 @@ def show_record(request, record_id):
 	
 	# render
 	return render_to_response('records/record_show.html', {
+		'record_edit_formset': record_edit_formset,
 		'used_tags': used_tags,
 		'popular_tags': popular_tags,
 		'record': record,
