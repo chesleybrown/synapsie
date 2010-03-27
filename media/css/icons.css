@@ -101,6 +101,9 @@ input.icon {
 .icon_record_datetime_reset {
 	background-image: url(/site_media/media/img/icons/fugue/calendar-previous.png);
 }
+.icon_record_add_tags {
+	background-image: url(/site_media/media/img/icons/fugue/_overlay/tag--plus.png);
+}
 
 /* Tags */
 .icon_tag {

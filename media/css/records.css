@@ -377,12 +377,24 @@ ul.records li.record .header .text {
 }
 
 ul.records li.record .add_tags {
+	cursor: pointer;
 	position: absolute;
 	right: 5px;
 	bottom: 6px;
 }
+ul.records li.record .add_tags:hover .add_tags_text {
+	display: block;
+}
 ul.records li.record .add_tags .icon {
-	cursor: pointer;
+	float: right;
+}
+ul.records li.record .add_tags .add_tags_text {
+	text-shadow: 1px 1px 0 #fff;
+	display: none;
+	font-size: 10px;
+	line-height: 16px;
+	float: right;
+	padding-right: 4px;
 }
 
 ul.records li.record .footer {
