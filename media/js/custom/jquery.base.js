@@ -20,26 +20,29 @@ $(document).ready(function() {
 	/*
 	 * Submit Buttons (Solves issue with clicking outside the input but within the visual button)
 	 */
-	$('.input_button_start, .input_button_end').bind('click', function(e) {
-		var container = $(this).parent();
-		
-		if ($(container).find('input[type=submit]').is(':enabled')) {
-			$(container).find('input[type=submit]').parents('form').trigger('submit');
-		}
-		
-		if ($(container).find('input[type=button]').is(':enabled')) {
-			$(container).find('input[type=button]').trigger('click');
-		}
-	});
-	$('.input_button_body .icon').bind('click', function(e) {
-		if ($(this).next('input[type=submit]').is(':enabled')) {
-			$(this).next('input[type=submit]').parents('form').trigger('submit');
-		}
-		
-		if ($(this).next('input[type=button]').is(':enabled')) {
-			$(this).next('input[type=button]').trigger('click');
-		}
-	});
+	function setupButtons(container) {
+		$(container).find('.input_button_start, .input_button_end').bind('click', function(e) {
+			var parent = $(this).parent();
+			
+			if ($(parent).find('input[type=submit]').is(':enabled')) {
+				$(parent).find('input[type=submit]').parents('form').trigger('submit');
+			}
+			
+			if ($(parent).find('input[type=button]').is(':enabled')) {
+				$(parent).find('input[type=button]').trigger('click');
+			}
+		});
+		$(container).find('.input_button_body .icon').bind('click', function(e) {
+			if ($(this).next('input[type=submit]').is(':enabled')) {
+				$(this).next('input[type=submit]').parents('form').trigger('submit');
+			}
+			
+			if ($(this).next('input[type=button]').is(':enabled')) {
+				$(this).next('input[type=button]').trigger('click');
+			}
+		});
+	}
+	setupButtons('body');
 	/*
 	 * END Submit Buttons
 	 */
@@ -134,7 +137,9 @@ $(document).ready(function() {
 					.removeClass('selected')
 					.attr('selected', false);
 				
-				$(new_edit_select_tags).attr('id', $(edit_select_tags).attr('id'));
+				$(new_edit_select_tags)
+					.attr('id', $(edit_select_tags).attr('id'))
+					.attr('name', $(edit_select_tags).attr('name'));
 				$(record_edit_form).find('select.tags').replaceWith(new_edit_select_tags);
 			},
 			onremove: function(item) {
@@ -282,6 +287,7 @@ $(document).ready(function() {
 		
 		// populate with new record info
 		new_record.find('div.security div.icon').addClass(security);
+		new_record.find('div.personal').text(data['personal']);
 		new_record.find('div.header div.text').html(nl2br(data['text']));
 		new_record.find('div.header div.datetime').text(data['created']);
 		new_record.find('div.header div.time').text(curr_hour + ':' + curr_min + am_pm);
@@ -310,12 +316,12 @@ $(document).ready(function() {
 			li_tag.find('a.tag_text')
 				.text(data['tags'][tag]['name'])
 				.attr('href', function(index, attr) {
-					return attr + 'tags/' + data['tags'][tag]['name']
+					return attr.replace(/(\/tags\/)/, '$1' + escape(data['tags'][tag]['name']));
 				});
 			
 			//tag delete
 			li_tag.find('a.closebutton').attr('href', function(index, attr) {
-				return attr.replace(/\/(0)\/(0)/, '/' + data['tags'][tag]['name'] + '/' + data['id']);
+				return attr.replace(/\/(0)\/(0)/, '/' + escape(data['tags'][tag]['name']) + '/' + data['id']);
 			});
 			new_record_tags.append(li_tag);
 		}
@@ -439,7 +445,20 @@ $(document).ready(function() {
 			var form = $(popup).find('form');
 			var edit_action = $(form).find('input[type=submit]');
 			
-			var text_input = $(form).find('textarea.text');
+			// displayed record
+			var record_contents = {
+				text: $(content).find('.text'),
+				tags: $(content).find('ul.tags'),
+				personal: $(content).find('.personal'),
+				security: $(content).find('.security')
+			};
+			
+			// inputs
+			var record_inputs = {
+				text: $(form).find('textarea[name$=-text]'),
+				tags: $(form).find('select.tags'),
+				personal: $(form).find('input[name$=-personal]')
+			};
 			
 			// fade out record content
 			$(content).animate({
@@ -451,18 +470,23 @@ $(document).ready(function() {
 				message: $(popup)
 			});
 			
+			// fix buttons in edit form
+			setupButtons(form);
+			
 			// populate edit form
+			$(record_inputs.text).focus();
 			$(form).attr('action', $(element).attr('href'));
-			var text_formatted = $(content).find('.text').html().replace(/(<br>|<br \/>)/g, "\n");
-			$(text_input).val(text_formatted);
-			$(text_input).focus();
+			var text_formatted = $(record_contents.text).html().replace(/(<br>|<br \/>)/g, "\n");
+			$(record_inputs.text).val(text_formatted);
+			
+			$(record_inputs.personal).val($(record_contents.personal).text());
 			
 			// set current selected tags
 			var tag_names = [];
-			$(content).find('ul.tags li.tag').each(function() {
+			$(record_contents.tags).find('li.tag').each(function() {
 				tag_names.push($(this).find('.tag_text').text());
 			});
-			$(form).find('select.tags option').each(function() {
+			$(record_inputs.tags).find('option').each(function() {
 				
 				for (tag_name in tag_names) {
 					if (tag_names[tag_name] == $(this).val()) {
@@ -477,53 +501,83 @@ $(document).ready(function() {
 			
 			// enable elastic textarea
 			$(form).find('textarea.use_elastic').elastic();
-			
-			// setup edit action
-			$(edit_action).bind('click', function(e) {
 				
-				// hide edit confirmation dialog
-				$(container).unblock();
-				$(container).block({
-					message: ''
-				});
-				
-				$(form).ajaxForm({
-					success: function(data) {
+			$(form).ajaxForm({
+				beforeSubmit: function(arr, form, options) {
 					
-						// init
-						var message = data.message;
-						var tag = data.data;
+					// hide edit confirmation dialog
+					$(container).unblock();
+					$(container).block({
+						message: ''
+					});
+					
+				},
+				success: function(data) {
+				
+					// init
+					var message = data.message;
+					var record = data.data;
+					
+					// updated successfully
+					if (message['status'] == 200) {
 						
-						// updated successfully
-						if (message['status'] == 200) {
-							
-							//update record on screen
-							
+						/******************make into plugin********************/
+						
+						//update record on screen
+						$(record_contents.text).html(nl2br(record.text));
+						$(record_contents.personal).text(record.personal);
+						
+						//determine security
+						if (record.personal == 1) {
+							var security = 'icon_personal';
 						}
-						
-						// something went wrong
 						else {
-							$.gritterExtend.add(data.message);
-							
-							$(content).animate({
-								opacity: 1
-							}, 'fast');
+							var security = 'icon_shared';
 						}
 						
-					},
-					error: function() {
-						$(content).animate({
-							opacity: 1
-						}, 'fast');
-					},
-					complete: function() {
-						$(container).unblock();
+						$(record_contents.security).find('div.icon')
+							.attr('class', 'icon')
+							.addClass(security);
+						
+						var new_record_tags = $('#tags_blank ul.tags').clone(false);
+						var new_record_tags_tag = $('#tags_blank ul.tags li.tag').clone(false);
+						
+						new_record_tags.html('');
+						for (var tag in record.tags) {
+							var li_tag = $(new_record_tags_tag).clone();
+							
+							//tag text
+							$(li_tag).find('a.tag_text')
+								.text(record.tags[tag].name)
+								.attr('href', function(index, attr) {
+									return attr.replace(/(\/tags\/)/, '$1' + escape(record.tags[tag].name));
+								});
+							
+							//tag delete
+							$(li_tag).find('a.closebutton').attr('href', function(index, attr) {
+								return attr.replace(/\/(0)\/(0)/, '/' + escape(record.tags[tag].name) + '/' + record.id);
+							});
+							$(new_record_tags).append(li_tag);
+						}
+						setupTags(new_record_tags);
+						$(record_contents.tags).replaceWith(new_record_tags);
+						
+						/****************************************************/
+						
 					}
-				});
-				//$(form).submit();
-				
-				e.preventDefault();
-				
+					
+					// something went wrong
+					else {
+						$.gritterExtend.add(data.message);
+					}
+					
+					//always unblock when done
+					$(container).unblock();
+					$(content).animate({
+						opacity: 1
+					}, 'fast');
+					
+				}
 			});
 			
 			// setup cancel action
@@ -633,6 +687,120 @@ $(document).ready(function() {
 	 * Handle Tag delete action (make into plugin!)
 	 */
 	function setupTagMenuItems(container) {
+		$(container).find('a.use_tag_edit').bind('click', function(e) {
+			var element = $(this);
+			var menu = $(this).parents('.menu');
+			var container = $(element).parents('li ');
+			var content = $(container).find('.container');
+			var popup = $('#tag_edit_form').find('.popup').clone();
+			var form = $(popup).find('form');
+			var edit_action = $(popup).find('.edit_action');
+			var cancel_action = $(popup).find('.cancel_action, .popup_close');
+			
+			//get edit info
+			var tag_name = $(container).find('.name');
+			var old_tag_name_text = $(container).find('.name').text(); //so we know what the old value is later
+			
+			//get edit form inputs
+			var tag_name_input = $(form).find('input[name="name"]');
+			
+			//fill in edit form
+			$(form).attr('action', $(element).attr('href'));
+			$(tag_name_input).val($(tag_name).text());
+			
+			//fade out record content
+			$(content).animate({
+				opacity: 0.40
+			}, 'slow');
+			
+			//show edit confirmation dialog
+			$(container).block({
+				message: $(popup)
+			});
+			
+			// fix buttons in edit form
+			setupButtons(form);
+			
+			//focus on tag name input
+			$(tag_name_input).focus();
+			
+			$(form).ajaxForm({
+				beforeSubmit: function(arr, form, options) {
+					
+					//hide edit confirmation dialog
+					$(container).unblock();
+					$(container).block({
+						message: ''
+					});
+					
+				},
+				success: function(data) {
+				
+					//init
+					var message = data.message;
+					var tag = data.data;
+					
+					//updated successfully
+					if (message['status'] == 200) {
+						
+						//update the displayed tag/href
+						tag_name.text(tag.name);
+						tag_name.attr('href', function(index, attr) {
+							return attr.replace(/(\/tags\/)(.*)$/, '$1' + escape(tag.name));
+						});
+						
+						//update edit href
+						$(element).attr('href', function(index, attr) {
+							return attr.replace(/(\/api\/tags.json\/)(.*)$/, '$1' + escape(tag.name));
+						});
+						
+						$(content).animate({
+							opacity: 1
+						}, 'fast');
+						
+						//update sidebar
+						$('#site_sidebar').sidebar('update_tag', old_tag_name_text, tag.name);
+						
+						//update delete action
+						$(container).find('a.use_tag_all_delete').attr('href', function(index, attr) {
+							return attr.replace(/(\/api\/tags.json\/)(.*)$/, '$1' + escape(tag.name));
+						});
+						
+					}
+					
+					//something went wrong
+					else {
+						$.gritterExtend.add(data.message);
+						
+						$(content).animate({
+							opacity: 1
+						}, 'fast');
+					}
+					
+				},
+				error: function() {
+					$(content).animate({
+						opacity: 1
+					}, 'fast');
+				},
+				complete: function() {
+					$(container).unblock();
+				}
+			});
+			
+			//setup cancel action
+			$(cancel_action).bind('click', function(e) {
+				$(content).animate({
+					opacity: 1
+				}, 'fast');
+				$(container).unblock();
+				
+				e.preventDefault();
+			});
+			
+			e.preventDefault();
+		});
+		
 		$(container).find('a.use_tag_all_delete').bind('click', function(e) {
 			var element = $(this);
 			var menu = $(this).parents('.menu');
@@ -712,120 +880,6 @@ $(document).ready(function() {
 					opacity: 1
 				}, 'fast');
 				container.unblock();
-				
-				e.preventDefault();
-			});
-			
-			e.preventDefault();
-		});
-		
-		$(container).find('a.use_tag_edit').bind('click', function(e) {
-			var element = $(this);
-			var menu = $(this).parents('.menu');
-			var container = $(element).parents('li ');
-			var content = $(container).find('.container');
-			var popup = $('#tag_edit_form').find('.popup').clone();
-			var form = $(popup).find('form');
-			var edit_action = $(popup).find('.edit_action');
-			var cancel_action = $(popup).find('.cancel_action, .popup_close');
-			
-			//get edit info
-			var tag_name = $(container).find('.name');
-			var old_tag_name_text = $(container).find('.name').text(); //so we know what the old value is later
-			
-			//get edit form inputs
-			var tag_name_input = $(form).find('input[name="name"]');
-			
-			//fill in edit form
-			$(form).attr('action', $(element).attr('href'));
-			$(tag_name_input).val($(tag_name).text());
-			
-			//fade out record content
-			$(content).animate({
-				opacity: 0.40
-			}, 'slow');
-			
-			//show edit confirmation dialog
-			$(container).block({
-				message: $(popup)
-			});
-			
-			//focus on tag name input
-			$(tag_name_input).focus();
-			
-			//setup edit action
-			$(edit_action).bind('click', function(e) {
-				//hide edit confirmation dialog
-				$(container).unblock();
-				$(container).block({
-					message: ''
-				});
-				
-				$(form).ajaxForm({
-					success: function(data) {
-					
-						//init
-						var message = data.message;
-						var tag = data.data;
-						
-						//updated successfully
-						if (message['status'] == 200) {
-							
-							//update the displayed tag/href
-							tag_name.text(tag.name);
-							tag_name.attr('href', function(index, attr) {
-								return attr.replace(/(\/tags\/)(.*)$/, '$1' + tag.name);
-							});
-							
-							//update edit href
-							$(element).attr('href', function(index, attr) {
-								return attr.replace(/(\/api\/tags.json\/)(.*)$/, '$1' + tag.name);
-							});
-							
-							$(content).animate({
-								opacity: 1
-							}, 'fast');
-							
-							//update sidebar
-							$('#site_sidebar').sidebar('update_tag', old_tag_name_text, tag.name);
-							
-							//update delete action
-							$(container).find('a.use_tag_all_delete').attr('href', function(index, attr) {
-								return attr.replace(/(\/api\/tags.json\/)(.*)$/, '$1' + tag.name);
-							});
-							
-						}
-						
-						//something went wrong
-						else {
-							$.gritterExtend.add(data.message);
-							
-							$(content).animate({
-								opacity: 1
-							}, 'fast');
-						}
-						
-					},
-					error: function() {
-						$(content).animate({
-							opacity: 1
-						}, 'fast');
-					},
-					complete: function() {
-						$(container).unblock();
-					}
-				});
-				$(form).submit();
-				
-				e.preventDefault();
-			});
-			
-			//setup cancel action
-			$(cancel_action).bind('click', function(e) {
-				$(content).animate({
-					opacity: 1
-				}, 'fast');
-				$(container).unblock();
 				
 				e.preventDefault();
 			});

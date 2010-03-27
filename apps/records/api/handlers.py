@@ -177,7 +177,7 @@ class RecordHandler(BaseHandler):
 					'text': record.text,
 					'personal': record.personal,
 					'created': record.created,
-					'tags': record.tags
+					'tags': record.clean_tags,
 				}
 				
 				# set message and record created
@@ -192,7 +192,74 @@ class RecordHandler(BaseHandler):
 		return response
 	
 	def update(self, request, record_id):
-		return rc.UPDATED
+		
+		#init
+		identity = request.user
+		messages = RecordMessages()
+		record_edit_formset = RecordForm(prefix='record_edit')
+		now = datetime.now()
+		str_tags = ','
+		clean = None
+		record_datetime = None
+		datetime_string = False
+		datetime_format = "%Y-%m-%d %I:%M%p"
+		response = self.empty_response
+		
+		# get record
+		try:
+			record = Record.objects.get(pk=record_id)
+			
+		except Record.DoesNotExist:
+			response['message'] = messages.get('not_found')
+			return response
+		
+		# test permission
+		if not record.can_edit(identity):
+			response['message'] = messages.get('permission_denied')
+			return response
+		
+		record_edit_formset = RecordForm(request.PUT, prefix='record_edit')
+		arr_tags = request.PUT.getlist('record_edit-tags[]')
+		
+		# validate form
+		if record_edit_formset.is_valid():
+			clean = record_edit_formset.cleaned_data
+			
+			# generate datetime stamp
+			if clean['datetime_set']:
+				datetime_string = clean['date'] + ' ' + clean['hour'] + ':' + clean['minute'] + clean['ampm']
+				record_datetime = datetime.fromtimestamp(time.mktime(time.strptime(datetime_string, datetime_format)))
+			
+			# update record, set user
+			record.text = clean['text'];
+			
+			# save
+			record.save()
+			
+			# add tags
+			str_tags += ",".join(arr_tags)
+			Tag.objects.update_tags(record, str_tags)
+			
+			# return only what we need to
+			clean_record = {
+				'id': record.id,
+				'user_id': record.user_id,
+				'text': record.text,
+				'personal': record.personal,
+				'created': record.created,
+				'tags': record.clean_tags,
+			}
+			
+			# set message and record created
+			response['message'] = messages.get('updated')
+			response['data'] = clean_record
+		
+		else:
+			
+			# set error message, missing data
+			response['message'] = messages.get('missing_data')
+		
+		return response
 	
 	def delete(self, request, record_id):
 		

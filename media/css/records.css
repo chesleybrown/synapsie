@@ -243,6 +243,10 @@ form.record_form .form_menu.active {
 	width: 600px;
 	margin: 0 auto;
 }
+.popup form.record_form .facebook-auto {
+	width: 612px;
+	margin: 0 0 0 2px;
+}
 .popup form.record_form ul.holder.focus,
 .popup form.record_form .field textarea:focus,
 .popup form.record_form .field input[type='text']:focus,
@@ -324,6 +328,10 @@ ul.records li.record .security {
 ul.records li.record .security.hover {
 	opacity: 1;
 }
+ul.records li.record .personal {
+	display: none;
+}
+
 ul.records li.record .header {
 	margin: 0 10px 0 50px;
 	padding: 5px 5px;

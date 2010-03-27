@@ -8,7 +8,7 @@ class RecordForm(forms.ModelForm):
 		attrs={'class': 'text use_elastic'}
 	))
 	tags = TagField(label='Tags for Life Record...', widget=forms.SelectMultiple, required=False)
-	personal = forms.CharField(widget=forms.HiddenInput, initial='1')
+	personal = forms.CharField(widget=forms.HiddenInput(), initial='1')
 	date = forms.CharField(widget=forms.HiddenInput, initial=date.today())
 	hour = forms.CharField(widget=forms.HiddenInput, initial=datetime.today().strftime("%I"))
 	minute = forms.CharField(widget=forms.HiddenInput, initial=datetime.today().strftime("%M"))

@@ -17,6 +17,7 @@
 							<span class="year"></span>
 						</div>
 						<div class="security">
+							<div class="personal"></div>
 							<div class="icon icon_personal"></div>
 						</div>
 						<div class="header">
@@ -34,7 +35,7 @@
 									<a href="{% url record_show record_id=0 %}"><span class="icon icon_record_view"></span>{% trans "View" %}</a>
 								</li>
 								<li class="menu_item">
-									<a class="use_record_edit" href="{% url record_edit record_id=0 %}"><span class="icon icon_record_edit"></span>{% trans "Edit" %}</a>
+									<a class="use_record_edit" href="{% url api-record record_id=0,emitter_format='.json' %}"><span class="icon icon_record_edit"></span>{% trans "Edit" %}</a>
 								</li>
 								<li class="menu_item">
 									<a class="use_record_delete" href="{% url api-record record_id=0,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>{% trans "Delete..." %}</a>
@@ -53,7 +54,7 @@
 		<div id="record_edit_form_popup">
 			<div class="popup">
 				<div class="popup_close"></div>
-				<form id="record_edit_form" class="record_form" action="{% url api-record emitter_format='.json' %}" method="update" enctype="multipart/form-data" autocomplete="off">
+				<form id="record_edit_form" class="record_form" action="{% url api-record emitter_format='.json' %}" method="put" enctype="multipart/form-data" autocomplete="off">
 					{% csrf_token %}
 					<fieldset>
 						<div class="field text_field">
@@ -256,7 +257,7 @@
 										</li>
 									</ul>
 								</div>
-								{{ record_formset.personal }}
+								{{ record_edit_formset.personal }}
 							</div>
 							
 							<div class="action">

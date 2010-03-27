@@ -11,6 +11,14 @@ class RecordMessages(GeneralMessages):
 		sticky=False,
 	)
 	
+	not_found = dict(
+		status=404,
+		kind="error",
+		title=_("Record Not Found"),
+		text=_("Honestly. We really couldn't find it."),
+		sticky=False,
+	)
+	
 	no_more = dict(
 		status=200,
 		kind="warning",
@@ -32,6 +40,14 @@ class RecordMessages(GeneralMessages):
 		kind="created",
 		title=_("Created Record"),
 		text=_("You have successfully created a new record."),
+		sticky=False,
+	)
+	
+	updated = dict(
+		status=200,
+		kind="success",
+		title=_("Updated Record"),
+		text=_("You have successfull updated a record."),
 		sticky=False,
 	)
 	

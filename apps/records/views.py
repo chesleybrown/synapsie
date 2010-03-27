@@ -153,6 +153,8 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	
 	# filter by tags if provided
 	if (tags):
+		tags = ',' + tags # makes it comma separated tags
+		
 		selected_tags = get_tag_list(tags)
 		selected_tags_printable = ",".join(map(str, selected_tags))
 		record_list = TaggedItem.objects.get_by_model(record_list, selected_tags)

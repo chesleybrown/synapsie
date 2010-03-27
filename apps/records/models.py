@@ -21,10 +21,26 @@ class Record(models.Model):
 		
 		super(Record, self).delete()
 	
+	# tags property
 	def get_tags(self):
 		return Tag.objects.get_for_object(self)
 	
 	tags = property(get_tags)
+	
+	# clean tags property
+	def get_clean_tags(self):
+		clean_tags = []
+		tags = Tag.objects.get_for_object(self)
+		
+		for tag in tags:
+			clean_tags.append({
+				'id': tag.id,
+				'name': tag.name,
+			})
+		
+		return clean_tags
+	
+	clean_tags = property(get_clean_tags)
 	
 	def get_tags_printable(self):
 		record_tags = self.get_tags()

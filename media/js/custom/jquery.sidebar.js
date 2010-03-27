@@ -1,5 +1,5 @@
 /*
- * jQuery Sidebar 0.6
+ * jQuery Sidebar 0.7
  * 
  * Makes it easy to handle adding/removing tags from the sidebar dynamically
  * 
@@ -53,7 +53,7 @@
 			$(tag).hide();
 			$(tag).find('a.tag_text').text(tag_name);
 			$(tag).find('a.tag_text').attr('href', function(index, attr) {
-				return attr + tag_name;
+				return attr + escape(tag_name);
 			});
 			$(tag).find('a.closebutton').remove();
 			
@@ -337,14 +337,14 @@
 			new_tag = $(tag).clone();
 			new_tag.find('a.tag_text').text(new_tag_name);
 			new_tag.find('a.tag_text').attr('href', function(index, attr) {
-				return attr.replace(/(\/tags\/).*/, '$1' + new_tag_name);
+				return attr.replace(/(\/tags\/).*/, '$1' + escape(new_tag_name));
 			});
 			
 			// update the popular tag
 			new_popular_tag = $(popular_tag).clone();
 			new_popular_tag.find('a.tag_text').text(new_tag_name);
 			new_popular_tag.find('a.tag_text').attr('href', function(index, attr) {
-				return attr.replace(/(\/tags\/).*/, '$1' + new_tag_name);
+				return attr.replace(/(\/tags\/).*/, '$1' + escape(new_tag_name));
 			});
 			
 			// remove old tag
