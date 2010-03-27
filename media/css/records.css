@@ -38,7 +38,7 @@ form.record_form .field input[type='password']:focus {
 form.record_form .field textarea {
 	height: 45px;
 	padding: 5px 5px;
-	max-height: 250px;
+	max-height: 200px;
 }
 form.record_form .field label {
 	font-size: 18px;

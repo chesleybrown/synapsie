@@ -66,20 +66,22 @@ body > #site_container {
 
 #site_content {
 	background: url(/site_media/media/img/backgrounds/1px/w60.png);
-	overflow: auto;
+	overflow: hidden; /* must have this or the blockUI can cause scrollbars */
 	padding-top: 10px;
-	padding-bottom: 30px; /* must be same height as the footer */
+	padding-bottom: 200px; /* must be same height as the footer */
 }
 
 #site_footer {
 	position: relative;
-	margin-top: -30px; /* negative value of footer height */
+	margin-top: -200px; /* negative value of footer height */
 	clear: both;
-	color: #fff;
+	color: #333;
 }
 #site_footer_content {
-	background: url(/site_media/media/img/backgrounds/1px/w40.png);
-	height: 30px;
+	background: url(/site_media/media/img/backgrounds/1px/w70.png);
+	border-top: 1px solid #fff;
+	margin-top: 100px;
+	height: 100px;
 }
 
 /* Highlight */
