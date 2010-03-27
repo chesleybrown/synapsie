@@ -417,7 +417,7 @@ $(document).ready(function() {
 						.removeAttr('style')
 						.blur();
 					$(form).find('select.tags').fcbkcomplete('clear');
-					$(form).find('div.use_record_form_datetime_reset').click();
+					$(form).find('div.use_record_form_datetime_reset').trigger('click');
 					
 					//done, focus
 					$(record_text).focus();
@@ -1306,7 +1306,7 @@ $(document).ready(function() {
 			$(selections)
 				.find('.menu_item, .menu_item_datepicker')
 				.bind('click', function(e) {
-					datetime_reset.fadeIn();
+					$(datetime_reset).fadeIn();
 					$(this).find('input[name=datetime_set]').val(1);
 				});
 			
