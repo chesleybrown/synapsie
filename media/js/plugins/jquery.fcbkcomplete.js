@@ -1,5 +1,5 @@
 /*
- FCBKcomplete 2.6.2.12
+ FCBKcomplete 2.6.2.13
  - Jquery version required: 1.2.x, 1.3.x
  
  Changelog:
@@ -73,6 +73,9 @@
  	
  - 2.6.2.12
  		removed use of fcbk IDs so that we can have multiple on a single page
+ 		
+ - 2.6.2.13
+ 		only prevent enter if the maininput is empty
  		
  */
 
@@ -340,8 +343,8 @@ jQuery(
 					input.keypress(
 	                    function(event)
 	                    {
-	                        if (event.keyCode == 13)
-							{
+	                    	// only prevent enter if the maininput is empty
+	                        if (event.keyCode == 13 && input.val() != ''){
 							    return false;
 							}
 							//auto expand input
