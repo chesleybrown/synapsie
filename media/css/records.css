@@ -376,12 +376,12 @@ ul.records li.record .header .text {
 	margin: 0 56px 0 60px;
 }
 
-ul.records li.record .add_tag {
+ul.records li.record .add_tags {
 	position: absolute;
 	right: 5px;
 	bottom: 6px;
 }
-ul.records li.record .add_tag .icon {
+ul.records li.record .add_tags .icon {
 	cursor: pointer;
 }
 

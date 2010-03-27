@@ -27,6 +27,17 @@ class RecordForm(forms.ModelForm):
 		model = Record
 		exclude = ('created', 'user')
 
+class RecordAddTagsForm(forms.ModelForm):
+	tags = TagField(label='Tags for Life Record...', widget=forms.SelectMultiple, required=False)
+	
+	def __init__(self, *args, **kwrds):
+		super(RecordAddTagsForm, self).__init__(*args, **kwrds)
+		self.fields['tags'].widget.attrs['value'] = self.instance.get_tags_printable()
+
+	class Meta:
+		model = Record
+		exclude = ('text', 'created', 'user')
+
 class RecordSearchForm(forms.ModelForm):
 	text = forms.CharField(label='Search Life Records...')
 	tags = TagField(label='Filter by Tags...', widget=forms.SelectMultiple, required=False)

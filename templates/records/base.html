@@ -42,8 +42,8 @@
 								</li>
 							</ul>
 						</div>
-						<div class="add_tag">
-							<div class="icon icon_tag_add use_add_tag"></div>
+						<div class="add_tags">
+							<a href="{% url api-record-add_tags record_id=0,emitter_format='.json' %}" class="icon icon_tag_add use_record_add_tags"></a>
 						</div>
 						<div class="footer"></div>
 					</div>
@@ -261,6 +261,47 @@
 									{{ record_edit_formset.personal }}
 								</div>
 								
+								<div class="action">
+									<div class="input_button_wrapper">
+										<div class="input_button_start"></div>
+										<div class="input_button_body">
+											<div class="icon icon_record_save"></div>
+											<input type="submit" name="submit" value="{% trans 'Save' %}" class="input_submit" />
+										</div>
+										<div class="input_button_end"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Record Add Tags -->
+		<div id="record_add_tags_form_popup">
+			<div class="popup">
+				<div class="popup_close"></div>
+				<div class="contents">
+					<form class="record_form" action="{% url api-record-add_tags record_id=0,emitter_format='.json' %}" method="put">
+						{% csrf_token %}
+						<fieldset>
+							<div class="field tag_field">
+								<input class="tags_temp" name="record_add_tags-tags" type="text" value="" />
+								<select id="id_record_add_tags-tags" name="record_add_tags-tags[]" multiple="multiple" class="tags hidden">
+									{% for tag in used_tags %}
+										{% if tag in selected_tags %}
+											<option selected="selected" value="{{ tag.name }}">{{ tag.name }}</option>
+										{% else %}
+											<option value="{{ tag.name }}">{{ tag.name }}</option>
+										{% endif %}
+									{% endfor %}
+								</select>
+							</div>
+						</fieldset>
+						
+						<div class="actions">
+							<div class="actions_right">
 								<div class="action">
 									<div class="input_button_wrapper">
 										<div class="input_button_start"></div>

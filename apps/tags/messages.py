@@ -23,7 +23,7 @@ class TagMessages(GeneralMessages):
 		status=200,
 		kind="success",
 		title=_("Updated Tag"),
-		text=_("You have successfull updated a tag: %(tag_name)s"),
+		text=_("You have successfull updated the tag: %(tag_name)s"),
 		sticky=False,
 	)
 	
@@ -39,6 +39,6 @@ class TagMessages(GeneralMessages):
 		status=204,
 		kind="deleted",
 		title=_("Deleted Tag"),
-		text=_("You have successfull deleted a tag: %(tag_name)s"),
+		text=_("You have successfull deleted the tag: %(tag_name)s"),
 		sticky=False,
 	)

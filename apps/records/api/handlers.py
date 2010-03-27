@@ -11,7 +11,7 @@ from piston.utils import rc, validate
 
 from apps.records.messages import RecordMessages
 from apps.records.models import Record
-from apps.records.forms import RecordForm
+from apps.records.forms import RecordForm, RecordAddTagsForm
 from tagging.models import Tag
 from tagging.utils import parse_tag_input
 
@@ -191,12 +191,13 @@ class RecordHandler(BaseHandler):
 			
 		return response
 	
-	def update(self, request, record_id):
+	def update(self, request, record_id, add_tags=False):
 		
 		#init
 		identity = request.user
 		messages = RecordMessages()
 		record_edit_formset = RecordForm(prefix='record_edit')
+		record_add_tags_formset = RecordAddTagsForm(prefix='record_add_tags')
 		now = datetime.now()
 		str_tags = ','
 		clean = None
@@ -218,47 +219,81 @@ class RecordHandler(BaseHandler):
 			response['message'] = messages.get('permission_denied')
 			return response
 		
-		record_edit_formset = RecordForm(request.PUT, prefix='record_edit')
-		arr_tags = request.PUT.getlist('record_edit-tags[]')
+		# determine if we are handling a full record edit or just adding tags
+		if (add_tags):
+			record_add_tags_formset = RecordAddTagsForm(request.PUT, prefix='record_add_tags')
+			arr_tags = request.PUT.getlist('record_add_tags-tags[]')
+			
+			# validate form
+			if record_add_tags_formset.is_valid():
+				clean = record_add_tags_formset.cleaned_data
+				
+				# add tags
+				str_tags += ",".join(arr_tags)
+				Tag.objects.update_tags(record, str_tags)
+				
+				# return only what we need to
+				clean_record = {
+					'id': record.id,
+					'user_id': record.user_id,
+					'text': record.text,
+					'personal': record.personal,
+					'created': record.created,
+					'tags': record.clean_tags,
+				}
+				
+				# set message and record created
+				response['message'] = messages.get('updated_tags')
+				response['data'] = clean_record
+			
+			else:
+				
+				# set error message, missing data
+				response['message'] = messages.get('missing_data')
 		
-		# validate form
-		if record_edit_formset.is_valid():
-			clean = record_edit_formset.cleaned_data
-			
-			# generate datetime stamp
-			if clean['datetime_set']:
-				datetime_string = clean['date'] + ' ' + clean['hour'] + ':' + clean['minute'] + clean['ampm']
-				record_datetime = datetime.fromtimestamp(time.mktime(time.strptime(datetime_string, datetime_format)))
-			
-			# update record, set user
-			record.text = clean['text'];
-			record.personal = clean['personal'];
-			
-			# save
-			record.save()
-			
-			# add tags
-			str_tags += ",".join(arr_tags)
-			Tag.objects.update_tags(record, str_tags)
-			
-			# return only what we need to
-			clean_record = {
-				'id': record.id,
-				'user_id': record.user_id,
-				'text': record.text,
-				'personal': record.personal,
-				'created': record.created,
-				'tags': record.clean_tags,
-			}
-			
-			# set message and record created
-			response['message'] = messages.get('updated')
-			response['data'] = clean_record
-		
+		# this is a full record edit
 		else:
+			record_edit_formset = RecordForm(request.PUT, prefix='record_edit')
+			arr_tags = request.PUT.getlist('record_edit-tags[]')
 			
-			# set error message, missing data
-			response['message'] = messages.get('missing_data')
+			# validate form
+			if record_edit_formset.is_valid():
+				clean = record_edit_formset.cleaned_data
+				
+				# generate datetime stamp
+				if clean['datetime_set']:
+					datetime_string = clean['date'] + ' ' + clean['hour'] + ':' + clean['minute'] + clean['ampm']
+					record_datetime = datetime.fromtimestamp(time.mktime(time.strptime(datetime_string, datetime_format)))
+				
+				# update record, set user
+				record.text = clean['text'];
+				record.personal = clean['personal'];
+				
+				# save
+				record.save()
+				
+				# add tags
+				str_tags += ",".join(arr_tags)
+				Tag.objects.update_tags(record, str_tags)
+				
+				# return only what we need to
+				clean_record = {
+					'id': record.id,
+					'user_id': record.user_id,
+					'text': record.text,
+					'personal': record.personal,
+					'created': record.created,
+					'tags': record.clean_tags,
+				}
+				
+				# set message and record created
+				response['message'] = messages.get('updated')
+				response['data'] = clean_record
+			
+			else:
+				
+				# set error message, missing data
+				response['message'] = messages.get('missing_data')
 		
 		return response
 	

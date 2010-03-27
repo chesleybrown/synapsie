@@ -300,15 +300,28 @@ $(document).ready(function() {
 		});
 		
 		// update menu items
-		new_record.find('div.menu ul.menu_items li.menu_item').each(function(e) {
+		$(new_record).find('div.menu ul.menu_items li.menu_item').each(function(e) {
 			$(this).find('a').attr('href', function(index, attr) {
 				return attr.replace(/\/0/, '/' + data['id']);
 			});
 		});
 		setupRecordMenuItems(new_record);
 		
+		// update add_tag action
+		$(new_record).find('a.use_record_add_tags').attr('href', function(index, attr) {
+			return attr.replace(/\/0/, '/' + data['id']);
+		});
+		setupRecordAddTags(new_record);
+		
+		// update add_tags action
+		$(new_record).find('div.add_tag').bind('click', function(e) {
+			$(this).find('a').attr('href', function(index, attr) {
+				return attr.replace(/\/0/, '/' + data['id']);
+			});
+		});
+		
 		// tags
-		new_record_tags.html('');
+		$(new_record_tags).html('');
 		for (var tag in data['tags']) {
 			var li_tag = new_record_tags_tag.clone();
 			
@@ -432,7 +445,7 @@ $(document).ready(function() {
 	
 	
 	/*
-	 * Handle Record delete action (make into plugin!)
+	 * Handle Record menu actions (make into plugin!)
 	 */
 	function setupRecordMenuItems(container) {
 		$(container).find('a.use_record_edit').bind('click', function(e) {
@@ -690,7 +703,149 @@ $(document).ready(function() {
 	}
 	setupRecordMenuItems('body');
 	/*
-	 * END Handle Record delete action
+	 * END Handle Record menu actions
+	 */
+	
+	
+	/*
+	 * Handle Record Add Tags actions
+	 */
+	function setupRecordAddTags(container) {
+		$(container).find('a.use_record_add_tags').bind('click', function(e) {
+			
+			var element = $(this);
+			var holder = $(element).parents('.record ');
+			var content = $(holder).find('.record_content');
+			var popup = $('#record_add_tags_form_popup').find('.popup').clone();
+			var form = $(popup).find('form');
+			
+			// displayed record
+			var record_contents = {
+				tags: $(content).find('ul.tags'),
+				footer: $(content).find('div.footer')
+			};
+			
+			// inputs
+			var record_inputs = {
+				tags: $(form).find('select.tags')
+			};
+			
+			// enable buttons
+			setupButtons(form);
+			
+			// fade out record content
+			$(content).animate({
+				opacity: 0.40
+			}, 'slow');
+			
+			// show edit record dialog
+			$(holder).block({
+				message: $(popup)
+			});
+			
+			// set current selected tags
+			var tag_names = [];
+			$(record_contents.tags).find('li.tag').each(function() {
+				tag_names.push($(this).find('.tag_text').text());
+			});
+			$(record_inputs.tags).find('option').each(function() {
+				
+				for (tag_name in tag_names) {
+					if (tag_names[tag_name] == $(this).val()) {
+						$(this).attr('selected', true);
+					}
+				}
+				
+			});
+			
+			// enable autocompleter (this will auto-populate the selected tags now)
+			setupAutocompleter(form);
+			
+			// populate edit form
+			$(record_inputs.tags).parents('.fcbk_container').find('input.maininput').focus();
+			$(form).attr('action', $(element).attr('href'));
+				
+			$(form).ajaxForm({
+				beforeSubmit: function(arr, form, options) {
+					
+					// hide edit confirmation dialog
+					$(container).unblock();
+					$(container).block({
+						message: ''
+					});
+					
+				},
+				success: function(data) {
+				
+					// init
+					var message = data.message;
+					var record = data.data;
+					
+					// updated successfully
+					if (message.status == 200) {
+						
+						/******************make into record plugin********************/
+						
+						//update record on screen
+						var new_record_tags = $('#tags_blank ul.tags').clone(false);
+						var new_record_tags_tag = $('#tags_blank ul.tags li.tag').clone(false);
+						
+						$(new_record_tags).html('');
+						for (var tag in record.tags) {
+							var li_tag = $(new_record_tags_tag).clone();
+							
+							//tag text
+							$(li_tag).find('a.tag_text')
+								.text(record.tags[tag].name)
+								.attr('href', function(index, attr) {
+									return attr.replace(/(\/tags\/)/, '$1' + escape(record.tags[tag].name));
+								});
+							
+							//tag delete
+							$(li_tag).find('a.closebutton').attr('href', function(index, attr) {
+								return attr.replace(/\/(0)\/(0)/, '/' + escape(record.tags[tag].name) + '/' + record.id);
+							});
+							$(new_record_tags).append(li_tag);
+						}
+						setupTags(new_record_tags);
+						$(record_contents.footer)
+							.html('')
+							.append(new_record_tags);
+						
+						/****************************************************/
+						
+					}
+					
+					// something went wrong
+					else {
+						$.gritterExtend.add(data.message);
+					}
+					
+					//always unblock when done
+					$(container).unblock();
+					$(content).animate({
+						opacity: 1
+					}, 'fast');
+					
+				}
+			});
+			
+			// setup cancel action
+			$(popup).find('.cancel_action, .popup_close').bind('click', function(e) {
+				content.animate({
+					opacity: 1
+				}, 'fast');
+				$(holder).unblock();
+				
+				e.preventDefault();
+			});
+			
+			e.preventDefault();
+		});
+	}
+	setupRecordAddTags('body');
+	/*
+	 * END Record Add Tags actions
 	 */
 	
 	

@@ -273,8 +273,8 @@
 							</li>
 						</ul>
 					</div>
-					<div class="add_tag">
-						<div class="icon icon_tag_add use_add_tag"></div>
+					<div class="add_tags">
+						<a href="{% url api-record-add_tags record_id=record.id,emitter_format='.json' %}" class="icon icon_tag_add use_record_add_tags"></a>
 					</div>
 					<div class="footer">
 						{% if record.tags %}

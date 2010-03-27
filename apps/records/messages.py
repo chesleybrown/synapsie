@@ -47,7 +47,15 @@ class RecordMessages(GeneralMessages):
 		status=200,
 		kind="success",
 		title=_("Updated Record"),
-		text=_("You have successfull updated a record."),
+		text=_("You have successfull updated the record."),
+		sticky=False,
+	)
+	
+	updated_tags = dict(
+		status=200,
+		kind="success",
+		title=_("Updated Record Tags"),
+		text=_("You have successfull updated the record's tags."),
 		sticky=False,
 	)
 	
@@ -55,6 +63,6 @@ class RecordMessages(GeneralMessages):
 		status=204,
 		kind="deleted",
 		title=_("Deleted Record"),
-		text=_("You have successfully deleted a record."),
+		text=_("You have successfully deleted the record."),
 		sticky=False,
 	)
