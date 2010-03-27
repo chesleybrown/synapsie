@@ -266,8 +266,9 @@ class RecordHandler(BaseHandler):
 					record_datetime = datetime.fromtimestamp(time.mktime(time.strptime(datetime_string, datetime_format)))
 				
 				# update record, set user
-				record.text = clean['text'];
-				record.personal = clean['personal'];
+				record.text = clean['text']
+				record.personal = clean['personal']
+				record.created = record_datetime
 				
 				# save
 				record.save()

@@ -1,10 +1,10 @@
 $(document).ready(function() {
 	
-	function mysqlTimeStampToDate(timestamp) {
+	function mysqlTimeStampToDate(datetimestamp) {
 		//function parses mysql datetime string and returns javascript Date object
 		//input has to be in this format: 2007-06-05 15:26:02
 		var regex=/^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9]) (?:([0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$/;
-		var parts=timestamp.replace(regex,"$1 $2 $3 $4 $5 $6").split(' ');
+		var parts=datetimestamp.replace(regex,"$1 $2 $3 $4 $5 $6").split(' ');
 		return new Date(parts[0],parts[1]-1,parts[2],parts[3],parts[4],parts[5]);
 	}
 	
@@ -295,9 +295,6 @@ $(document).ready(function() {
 		new_record.find('div.date span.month').text(short_months[created.getMonth()]);
 		new_record.find('div.date span.day').text(curr_day);
 		new_record.find('div.date span.year').text(created.getFullYear());
-		new_record.find('div.header div.menu a.use_record_delete').attr('href', function(index, value) {
-			return value + "/" + data['id'];
-		});
 		
 		// update menu items
 		$(new_record).find('div.menu ul.menu_items li.menu_item').each(function(e) {
@@ -465,7 +462,15 @@ $(document).ready(function() {
 				tags: $(content).find('ul.tags'),
 				personal: $(content).find('.personal'),
 				security: $(content).find('.security'),
-				footer: $(content).find('div.footer')
+				footer: $(content).find('div.footer'),
+				datetime: $(content).find('div.datetime'),
+				time: $(content).find('div.time'),
+				time_since: $(content).find('div.time_since'),
+				date: {
+					month: $(content).find('div.date span.month'),
+					day: $(content).find('div.date span.day'),
+					year: $(content).find('div.date span.year')
+				}
 			};
 			
 			// inputs
@@ -481,6 +486,8 @@ $(document).ready(function() {
 			setupFormDropdownMenus(form);
 			setupDatePicker(form);
 			setupDateTimeSelection(form);
+			setupDateTime(form, true, $(record_contents.datetime).text());
+			setupDateTimeReset(form, record_contents.datetime);
 			
 			// set selections for dropdowns
 			$(record_inputs.security).dropdownMenus('select', $(record_contents.personal).text());
@@ -548,6 +555,56 @@ $(document).ready(function() {
 						//update record on screen
 						$(record_contents.text).html(nl2br(record.text));
 						$(record_contents.personal).text(record.personal);
+						
+						var created = mysqlTimeStampToDate(record.created);
+						var short_months = [
+							'Jan',
+							'Feb',
+							'Mar',
+							'Apr',
+							'Jun',
+							'Jul',
+							'Aug',
+							'Sep',
+							'Oct',
+							'Nov',
+							'Dec',
+						];
+						
+						// determine time
+						var curr_hour = created.getHours();
+						var curr_min = created.getMinutes();
+						var am_pm = '';
+							
+						if (curr_hour < 12) {
+							am_pm = 'AM';
+						}
+						else {
+							am_pm = 'PM';
+						}
+						if (curr_hour == 0) {
+							curr_hour = 12;
+						}
+						if (curr_hour > 12) {
+							curr_hour = curr_hour - 12;
+						}
+						if (curr_min < 10) {
+							curr_min = '0' + curr_min;
+						}
+						
+						// add leading zero to day if needed
+						var curr_day = created.getDate();
+						
+						if (curr_day < 10) {
+							curr_day = '0' + curr_day;
+						}
+						
+						$(record_contents.datetime).text(record.created);
+						$(record_contents.time).text(curr_hour + ':' + curr_min + am_pm);
+						$(record_contents.time_since).text(jQuery.timeago(created));
+						$(record_contents.date.month).text(short_months[created.getMonth()]);
+						$(record_contents.date.day).text(curr_day);
+						$(record_contents.date.year).text(created.getFullYear());
 						
 						//determine security
 						if (record.personal == 1) {
@@ -1298,7 +1355,7 @@ $(document).ready(function() {
 	 */
 	function setupDateTimeSelection(container) {
 		
-		$(container).find('form').each(function() {
+		$(container).each(function() {
 			
 			var selections = $(this).find('div.record_form_date, div.record_form_time_hour, div.record_form_time_minute, div.record_form_time_ampm');
 			var datetime_reset = $(this).find('div.record_form_datetime_reset');
@@ -1313,18 +1370,25 @@ $(document).ready(function() {
 		});
 		
 	}
-	setupDateTimeSelection('#record_create_form_container');
+	setupDateTimeSelection('#record_create_form');
 	/*
 	 * END Record Form Date Time Selection
 	 */
 	
+	
 	/*
-	 * Setup Time Selection Auto-Updating (clock)
+	 * Setup DateTime Selection Auto-Updating (clock)
 	 */
-	function setupDateTimeAutoUpdate(force_update) {
+	function setupDateTime(container, force_update, datetimestamp) {
 		
-		$('#record_create_form').each(function() {
+		$(container).each(function() {
+			
+			// init
 			var now = new Date();
+			if (datetimestamp) {
+				var now = mysqlTimeStampToDate(datetimestamp);
+			}
+			
 			var selection_menu_items = $(this).find('div.record_form_date, div.record_form_time_hour, div.record_form_time_minute, div.record_form_time_ampm')
 				.find('.form_menu .menu_items');
 			var date = $(this).find('div.record_form_date');
@@ -1391,25 +1455,34 @@ $(document).ready(function() {
 				$(ampm).find('.menu_header_text').text(formated_ampm);
 				$(ampm).find('input').val(formated_ampm);
 				
-				$('#id_datetime_set').val(0);
+				$(datetime_reset).find('input').val(0);
 			}
 		});
 		
 	}
-	setupDateTimeAutoUpdate(false);
-	setInterval(function() { setupDateTimeAutoUpdate(false); }, 5000);
+	setupDateTime('#record_create_form', false, false);
+	setInterval(function() { setupDateTime('#record_create_form', false, false); }, 5000);
 	/*
-	 * END Setup Time Selection Auto-Updating (clock)
+	 * END Setup DateTime Selection Auto-Updating (clock)
 	 */
 	
 	
 	/*
 	 * Setup DateTime Reset
 	 */
-	$('div.use_record_form_datetime_reset').bind('click', function(e) {
-		setupDateTimeAutoUpdate(true);
-		$(this).parent().fadeOut();
-	});
+	function setupDateTimeReset(container, datetime_container) {
+		$(container).find('div.use_record_form_datetime_reset').bind('click', function(e) {
+			// init
+			var datetime = false;
+			if (datetime_container) {
+				datetime = $(datetime_container).text();
+			}
+			
+			setupDateTime(container, true, datetime);
+			$(this).parent().fadeOut();
+		});
+	}
+	setupDateTimeReset('#record_create_form');
 	/*
 	 * END Setup DateTime Reset
 	 */
