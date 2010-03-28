@@ -288,9 +288,11 @@ $(document).ready(function() {
 		//determine security
 		if (data['personal'] == 1) {
 			var security = 'icon_personal';
+			var security_text = 'Pesonal';
 		}
 		else {
 			var security = 'icon_shared';
+			var security_text = 'Shared';
 		}
 		
 		new_record.attr('id', 'record_' + data['id']);
@@ -298,6 +300,7 @@ $(document).ready(function() {
 		
 		// populate with new record info
 		new_record.find('div.security div.icon').addClass(security);
+		new_record.find('div.security span.security_text').text(security_text);
 		new_record.find('div.personal').text(data['personal']);
 		new_record.find('div.header div.text').html(nl2br(data['text']));
 		new_record.find('div.header div.datetime').text(data['created']);

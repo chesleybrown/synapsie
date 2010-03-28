@@ -338,6 +338,34 @@ ul.records li.record .security {
 ul.records li.record .security.hover {
 	opacity: 1;
 }
+ul.records li.record .security .icon {
+	float: right;
+}
+ul.records li.record .security .security_text {
+	color: #999;
+	opacity: 0;
+	display: block;
+	text-shadow: 1px 1px 0 #fff;
+	font-size: 10px;
+	line-height: 16px;
+	float: right;
+	padding-right: 4px;
+}
+ul.records li.record .security:hover .security_text {
+	opacity: 1;
+	-webkit-animation-name:add_tags-fade;
+	-webkit-animation-duration: 0.25s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-timing-function: ease-out;
+}
+@-webkit-keyframes add_tags-fade {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
 ul.records li.record .personal {
 	display: none;
 }
@@ -389,14 +417,28 @@ ul.records li.record .add_tags {
 	bottom: 6px;
 }
 ul.records li.record .add_tags:hover .add_tags_text {
-	display: block;
+	opacity: 1;
+	-webkit-animation-name:add_tags-fade;
+	-webkit-animation-duration: 0.25s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-timing-function: ease-out;
+}
+@-webkit-keyframes add_tags-fade {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 ul.records li.record .add_tags .icon {
 	float: right;
 }
 ul.records li.record .add_tags .add_tags_text {
+	color: #999;
+	opacity: 0;
+	display: block;
 	text-shadow: 1px 1px 0 #fff;
-	display: none;
 	font-size: 10px;
 	line-height: 16px;
 	float: right;
