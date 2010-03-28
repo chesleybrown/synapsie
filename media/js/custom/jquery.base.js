@@ -109,51 +109,62 @@ $(document).ready(function() {
 	function setupAutocompleter(container) {
 		
 		// setup autocomplete
-		$(container).find("select.tags").fcbkcomplete({
-			key_codes: [
-				0, //tab?
-				9, //tab
-				13, //enter
-				188 //comma
-			],
-			cache: true,
-			complete_text: false,
-			filter_case: false,
-			filter_hide: true,
-			firstselected: true,
-			filter_selected: true,
-			newel: true,
-			allow_duplicates: false,
-			onselect: function(item) {
-				setupInlineLabels(item);
-				
-				// update the edit record autocompleter list
-				var record_edit_form = $('#record_edit_form_popup form');
-				var new_edit_select_tags = $(container).find('select.tags').clone();
-				var edit_select_tags = $(record_edit_form).find('select.tags');
-				
-				// deselect anything that may already be selected
-				$(new_edit_select_tags).find('option')
-					.removeClass('selected')
-					.attr('selected', false);
-				
-				$(new_edit_select_tags)
-					.attr('id', $(edit_select_tags).attr('id'))
-					.attr('name', $(edit_select_tags).attr('name'));
-				$(record_edit_form).find('select.tags').replaceWith(new_edit_select_tags);
-			},
-			onremove: function(item) {
-				setupInlineLabels(item);
-			}
-		});
-		$(container).find("input.tags_temp").remove();
-		
-		// focus effect for autocomplete input
-		$(container).find('input.maininput').live('focus', function() {
-			$(this).parents('ul.holder').addClass('focus');
-		});
-		$(container).find('input.maininput').live('blur', function() {
-			$(this).parents('ul.holder').removeClass('focus');
+		$(container).each(function() {
+			
+			// init
+			var element = $(this);
+			
+			$(element).find("select.tags").fcbkcomplete({
+				key_codes: [
+					0, //tab?
+					9, //tab
+					13, //enter
+					188 //comma
+				],
+				cache: true,
+				complete_text: false,
+				filter_case: false,
+				filter_hide: true,
+				firstselected: true,
+				filter_selected: true,
+				newel: true,
+				allow_duplicates: false,
+				onselect: function(item) {
+					setupInlineLabels(item);
+					
+					$('#record_edit_form_popup form, #record_add_tags_form_popup form').each(function() {
+						
+						// update the edit record autocompleter list
+						var form = $(this);
+						var new_edit_select_tags = $(element).find('select.tags').clone();
+						var edit_select_tags = $(form).find('select.tags');
+						
+						// deselect anything that may already be selected
+						$(new_edit_select_tags).find('option')
+							.removeAttr('class')
+							.attr('selected', false);
+						
+						$(new_edit_select_tags)
+							.attr('id', $(edit_select_tags).attr('id'))
+							.attr('name', $(edit_select_tags).attr('name'));
+						$(form).find('select.tags').replaceWith(new_edit_select_tags);
+						
+					});
+				},
+				onremove: function(item) {
+					setupInlineLabels(item);
+				}
+			});
+			$(element).find("input.tags_temp").remove();
+			
+			// focus effect for autocomplete input
+			$(element).find('input.maininput').live('focus', function() {
+				$(this).parents('ul.holder').addClass('focus');
+			});
+			$(element).find('input.maininput').live('blur', function() {
+				$(this).parents('ul.holder').removeClass('focus');
+			});
+			
 		});
 	}
 	setupAutocompleter('#record_create_form, #record_search_form');
@@ -516,7 +527,6 @@ $(document).ready(function() {
 				tag_names.push($(this).find('.tag_text').text());
 			});
 			$(record_inputs.tags).find('option').each(function() {
-				
 				for (tag_name in tag_names) {
 					if (tag_names[tag_name] == $(this).val()) {
 						$(this).attr('selected', true);
@@ -771,14 +781,14 @@ $(document).ready(function() {
 		$(container).find('a.use_record_add_tags').bind('click', function(e) {
 			
 			var element = $(this);
-			var holder = $(element).parents('.record ');
-			var content = $(holder).find('.record_content');
+			var holder = $(element).parents('li.record ');
+			var content = $(holder).find('div.record_content');
 			var popup = $('#record_add_tags_form_popup').find('.popup').clone();
 			var form = $(popup).find('form');
 			
 			// displayed record
 			var record_contents = {
-				tags: $(content).find('ul.tags'),
+				tags: $(content).find('div.footer ul.tags'),
 				footer: $(content).find('div.footer')
 			};
 			
