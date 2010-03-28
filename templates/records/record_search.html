@@ -67,6 +67,7 @@
 							<span class="year">{{ record.created|date:"Y" }}</span>
 						</div>
 						<div class="security">
+							<div class="personal">{{ record.personal }}</div>
 							{% if record.personal %}
 								<div class="icon icon_personal"></div>
 							{% else %}

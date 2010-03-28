@@ -3,6 +3,14 @@ from django.utils.translation import ugettext as _
 
 class AccountMessages(GeneralMessages):
 	
+	invalid = dict(
+		status=400,
+		kind="error",
+		title=_("Invalid Login"),
+		text=_("You provided an invalid login. Dummy."),
+		sticky=False,
+	)
+	
 	logged_in = dict(
 		status=200,
 		kind="success",

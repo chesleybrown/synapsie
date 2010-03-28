@@ -62,7 +62,7 @@ def login(request):
 			return HttpResponseRedirect("/records/")
 		else:
 			# Show an error page
-			return HttpResponseRedirect("/account/invalid/")
+			SessionMessages.create_message(request, messages.get('invalid'))
 	
 	return render_to_response('accounts/login.html', {
 	}, context_instance=RequestContext(request))

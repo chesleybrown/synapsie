@@ -1,3 +1,4 @@
+from types import *
 import sys, pprint
 import apps.session_messages as SessionMessages
 
@@ -145,16 +146,18 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	record_list = Record.objects.all().filter(user=identity).order_by('-created', '-id')
 	
 	# user has created at least 1 record
-	if (record_list.count() > 0):
+	if record_list.count() > 0:
 		has_records = True
 	
 	# query provided
-	if (text):
+	if text:
 		record_list = record_list.filter(text__icontains=text)
 	
 	# filter by tags if provided
-	if (tags):
-		tags = ',' + tags # makes it comma separated tags
+	if tags:
+		
+		if type(tags) is StringType:
+			tags = ',' + tags # makes it comma separated tags
 		
 		selected_tags = get_tag_list(tags)
 		selected_tags_printable = ",".join(map(str, selected_tags))
