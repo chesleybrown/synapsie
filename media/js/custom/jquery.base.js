@@ -236,7 +236,7 @@ $(document).ready(function() {
 	/*
 	 * Build Record
 	 */
-	function buildRecord(data) {
+	function buildRecord(data, is_new) {
 		
 		var new_record = $('#records_blank ul.records li.record').clone(false);
 		var new_record_tags = $('#tags_blank ul.tags').clone(false);
@@ -353,10 +353,12 @@ $(document).ready(function() {
 		
 		new_record.find('div.footer').append(new_record_tags);
 		
-		// update sidebar with new tags
-		$(new_record_tags).find('li').each(function() {
-			$('#site_sidebar').sidebar('add_tag', $(this).find('a.tag_text').text());
-		});
+		if (is_new) {
+			// update sidebar with new tags
+			$(new_record_tags).find('li').each(function() {
+				$('#site_sidebar').sidebar('add_tag', $(this).find('a.tag_text').text());
+			});
+		}
 		
 		// enable menus for this new record
 		$(new_record).find('div.use_record_menu').dropdownMenus({
@@ -411,7 +413,7 @@ $(document).ready(function() {
 				if (message['status'] == 201) {
 					
 					// add new record to DOM
-					new_record = buildRecord(record_data);
+					new_record = buildRecord(record_data, true);
 					user_record_list.prepend(new_record);
 					
 					new_record.animate({
@@ -1200,7 +1202,7 @@ $(document).ready(function() {
 						next_page = page+1;
 						
 						for (key in records) {
-							new_record = buildRecord(records[key]);
+							new_record = buildRecord(records[key], false);
 							user_record_list.append(new_record);
 							
 							new_record.animate({
