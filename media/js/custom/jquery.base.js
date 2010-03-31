@@ -521,8 +521,13 @@ $(document).ready(function() {
 			// populate edit form
 			$(record_inputs.text).focus();
 			$(form).attr('action', $(element).attr('href'));
-			var text_formatted = $(record_contents.text).html().replace(/(<br>|<br \/>)/g, "\n");
-			$(record_inputs.text).val(text_formatted);
+			
+			// need to replace breaks with line breaks and then strip any remaining html
+			var record_contents_clone = $(record_contents.text).clone();
+			$(record_contents_clone).html(function(index, html) {
+				return html.replace(/(<br>|<br \/>)/g, "\n")
+			});
+			$(record_inputs.text).val($(record_contents_clone).text());
 			
 			$(record_inputs.personal).val($(record_contents.personal).text());
 			
