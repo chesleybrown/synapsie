@@ -38,7 +38,7 @@ def index_records(request, tags=False, page=1):
 	record_list = Record.objects.all().filter(user=identity).order_by('-created', '-id')
 	
 	# filter by tags if provided
-	if (tags):
+	if tags:
 		selected_tags = tags.split(",")
 		record_list = TaggedItem.objects.get_by_model(record_list, selected_tags)
 	
@@ -131,11 +131,11 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	has_records = False
 	
 	# add to filter
-	if (add_tag):
+	if add_tag:
 		tags = add_tag + ',' + tags
 	
 	# get query if one provided
-	if (request.GET):
+	if request.GET:
 		text = request.GET['text']
 		tags = request.GET.getlist('tags[]')
 	
@@ -156,7 +156,7 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	# filter by tags if provided
 	if tags:
 		
-		if type(tags) is StringType:
+		if type(tags) is UnicodeType or type(tags) is StringType:
 			tags = ',' + tags # makes it comma separated tags
 		
 		selected_tags = get_tag_list(tags)
