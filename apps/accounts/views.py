@@ -142,8 +142,9 @@ def profile(request, user_id=0, username=False):
 	for tag in unique_tags:
 		tag_stats['total'] += tag.count
 	
-	tag_stats['average_per_record'] = float(tag_stats['total']) / float(record_stats['total'])
-	tag_stats['average_per_record'] = round(tag_stats['average_per_record'], 1)
+	if tag_stats['total']:
+		tag_stats['average_per_record'] = float(tag_stats['total']) / float(record_stats['total'])
+		tag_stats['average_per_record'] = round(tag_stats['average_per_record'], 1)
 	
 	# get used/popular tags for current user
 	used_tags = get_used_tags(Record, identity)
