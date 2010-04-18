@@ -39,7 +39,7 @@ class RecordAddTagsForm(forms.ModelForm):
 		exclude = ('text', 'created', 'user')
 
 class RecordSearchForm(forms.ModelForm):
-	text = forms.CharField(label='Search Life Records...')
+	text = forms.CharField(label='Search Your Life...')
 	tags = TagField(label='Filter by Tags...', widget=forms.SelectMultiple, required=False)
 	
 	def __init__(self, *args, **kwrds):

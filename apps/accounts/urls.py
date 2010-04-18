@@ -6,6 +6,7 @@ urlpatterns = patterns('',
 	url(r'^login/$', views.login, name='accounts_login'),
 	url(r'^logout/$', views.logout, name='accounts_logout'),
 	url(r'^register/$', views.register, name='accounts_register'),
+	url(r'^created/$', views.register, name='accounts_created'),
 	#url(r'^(?P<user_id>\d+)$', views.profile, name='accounts_profile'),
 	url(r'^(?P<username>.+)$', views.profile, name='accounts_profile'),
 )

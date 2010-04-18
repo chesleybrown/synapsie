@@ -41,33 +41,6 @@ hr {
 	height: 0;
 }
 
-/* `Headings
-----------------------------------------------------------------------------------------------------*/
-
-h1 {
-	font-size: 25px;
-}
-
-h2 {
-	font-size: 23px;
-}
-
-h3 {
-	font-size: 21px;
-}
-
-h4 {
-	font-size: 19px;
-}
-
-h5 {
-	font-size: 17px;
-}
-
-h6 {
-	font-size: 15px;
-}
-
 /* `Spacing
 ----------------------------------------------------------------------------------------------------*/
 
@@ -99,6 +72,41 @@ table,
 address,
 fieldset {
 	margin-bottom: 10px;
+}
+
+/* `Headings
+----------------------------------------------------------------------------------------------------*/
+
+h1 {
+	font-size: 25px;
+	color: #333;
+	text-shadow: 1px 1px 0 #fff;
+	font-weight: normal;
+	margin-bottom: 0;
+}
+
+h2 {
+	font-size: 23px;
+}
+
+h3 {
+	font-size: 21px;
+}
+
+h4 {
+	font-size: 19px;
+	color: #666;
+	text-shadow: 1px 1px 0 #fff;
+	font-weight: normal;
+	margin-bottom: 0;
+}
+
+h5 {
+	font-size: 17px;
+}
+
+h6 {
+	font-size: 15px;
 }
 /* `Forms
 ----------------------------------------------------------------------------------------------------*/

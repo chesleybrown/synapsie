@@ -10,7 +10,7 @@ html, body, #site_container {
 	height: 100%;
 }
 body {
-	background: url(/site_media/media/img/layout/body/bg.png);
+	background: #FFFCE9;
 }
 body > #site_container {
 	height: auto;
@@ -27,28 +27,144 @@ body > #site_container {
 
 /* Site Layout */
 #site_header {
-	height: 60px;
+	height: 104px;
+	position: relative;
 }
-#site_header #login {
+#site_header #site_header_footer {
+	position: absolute;
+	bottom: 0;
+	width: 960px;
+	height: 12px;
+	background-image: url(/site_media/media/img/layout/header/bottom_bg.png);
+}
+#site_header #identity {
+	margin-top: 12px;
 	float: right;
 	height: 26px;
 }
-#site_header #login .user_username {
+#site_header #identity .user_username {
 	color: #fff;
 	text-shadow: #000 0 1px 0;
 }
+#site_header #identity ul.identity_menu {
+	background: url(/site_media/media/img/backgrounds/1px/w20.png);
+	list-style: none;
+	overflow: auto;
+	padding: 0 1px 1px 1px;
+	margin: 0;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-width: 0 1px 1px 1px;
+	border-style: solid;
+	border-color: #0071BC;
+}
+#site_header #identity ul.identity_menu li {
+	float: left;
+	padding: 0 1px 1px 1px;
+	margin: 0;
+}
+#site_header #identity a {
+	background: none;
+	padding: 0 10px;
+	display: block;
+	font-weight: bold;
+	-moz-border-radius-bottomleft: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+}
+#site_header #identity a span {
+	font-weight: normal;
+}
+#site_header #identity a:link {
+	text-shadow: 0 1px 0 #666;
+	color: #fff;
+	text-decoration: none;
+}
+#site_header #identity a:visited {
+	text-shadow: 0 1px 0 #666;
+	color: #fff;
+	text-decoration: none;
+}
+#site_header #identity a:hover {
+	background: url(/site_media/media/img/backgrounds/1px/w20.png);
+	color: #fff;
+	text-decoration: none;
+}
+#site_header #identity a:active {
+	margin-top: 1px;
+	text-decoration: none;
+}
+#site_header #identity a:focus {
+	outline: none;
+}
+
 #site_header #logo {
 	float: left;
+	margin-top: 10px;
 }
 #site_header #logo a.logo_link {
 	display: block;
-	width: 192px;
-	height: 60px;
+	width: 166px;
+	height: 94px;
 	background-image: url(/site_media/media/img/layout/header/logo.png);
+}
+#site_header #slogan {
+	float: left;
+	margin-top: 10px;
+}
+#site_header #slogan .slogan_link {
+	display: block;
+	width: 354px;
+	height: 139px;
+	background-image: url(/site_media/media/img/layout/header/slogan.png);
+}
+
+#site_header #login {
+	margin-top: 56px;
+	float: left;
+}
+#site_header #login div.field {
+	float: left;
+	margin-right: 10px;
+}
+#site_header #login div.field label,
+#site_header #login div.field a {
+	color: #fff;
+	text-shadow: 1px 1px 0 #333;
+	opacity: 0.70;
+	font-size: 11px;
+	line-height: 18px;
+	display: block;
+	margin-left: 2px;
+	cursor: pointer;
+}
+#site_header #login div.field label:hover,
+#site_header #login div.field a:hover {
+	opacity: 0.9;
+}
+#site_header #login div.field input {
+	font-size: 12px;
+	width: 130px;
+}
+#site_header #login div.actions {
+	margin-top: 34px;
+	float: right;
+}
+
+#site_header #site_search {
+	margin-top: 15px;
 }
 #site_header #site_search .field {
 	margin: 0;
 	position: relative;
+}
+#site_header #site_search div.field label {
+	font-size: 18px;
+	color: #999;
+	position: absolute;
+	top: 2px;
+	left: 7px;
 }
 #site_header #site_search input {
 	width: 210px;
@@ -65,23 +181,39 @@ body > #site_container {
 }
 
 #site_content {
-	background: url(/site_media/media/img/backgrounds/1px/w60.png);
+	background: url(/site_media/media/img/layout/body/bg.png) repeat-y;
 	overflow: hidden; /* must have this or the blockUI can cause scrollbars */
-	padding-top: 10px;
-	padding-bottom: 200px; /* must be same height as the footer */
+	padding-bottom: 203px; /* must be same height as the footer... plus offset */
+	margin-top: 10px;
 }
 
 #site_footer {
 	position: relative;
-	margin-top: -200px; /* negative value of footer height */
+	background: url(/site_media/media/img/layout/footer/bg.png) repeat-x;
+	height: 167px;
+	margin-top: -167px; /* negative value of footer height */
 	clear: both;
 	color: #333;
 }
+#site_footer .site_footer_top {
+	position: absolute;
+	top: -31px;
+	background: url(/site_media/media/img/layout/footer/top_bg.png);
+	height: 68px;
+	width: 960px;
+}
 #site_footer_content {
-	background: url(/site_media/media/img/backgrounds/1px/w70.png);
-	border-top: 1px solid #fff;
-	margin-top: 100px;
-	height: 100px;
+	margin-top: -67px;
+	height: 50px;
+}
+#site_footer_content ul.footer_items {
+	top: 8px;
+	position: absolute;
+	list-style: none;
+}
+#site_footer_content ul.footer_items li {
+	font-weight: bold;
+	float: left;
 }
 
 /* Highlight */
@@ -333,6 +465,7 @@ input[type='password'] {
 	font-size: 18px;
 	height: 20px;
 	padding: 5px 5px;
+	display: block; /* this is required for animated textarea resizing */
 }
 textarea:focus,
 input[type='text']:focus,
@@ -347,13 +480,8 @@ input[type='button']:focus,
 input[type='submit']:focus {
 	outline: none;
 }
-form label {
-	font-size: 18px;
+form input.default {
 	color: #999;
-	position: absolute;
-	top: 2px;
-	left: 7px;
-	cursor: text;
 }
 
 

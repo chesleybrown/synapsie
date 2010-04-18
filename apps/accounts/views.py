@@ -1,3 +1,4 @@
+import sys, pprint
 import apps.session_messages as SessionMessages
 
 from django.http import HttpResponseRedirect
@@ -17,14 +18,14 @@ def register(request):
 	
 	# init
 	messages = AccountMessages()
-	formset = UserCreationForm()
+	register_formset = UserCreationForm(prefix='register')
 	
 	if request.method == 'POST':
-		formset = UserCreationForm(request.POST)
+		register_formset = UserCreationForm(request.POST, prefix='register')
 		
 		# validate form
-		if formset.is_valid():
-			new_user = formset.save()
+		if register_formset.is_valid():
+			new_user = register_formset.save()
 			
 			# message
 			SessionMessages.create_message(request, messages.get('created', {
@@ -33,10 +34,15 @@ def register(request):
 			
 			return HttpResponseRedirect("/accounts/created/")
 	
-	return render_to_response("accounts/register.html", {
-		'formset': formset,
+	return render_to_response("about/home.html", {
+		'register_formset': register_formset,
 	}, context_instance=RequestContext(request))
 
+
+def created(request):
+	
+	return render_to_response("accounts/created.html", {
+	}, context_instance=RequestContext(request))
 
 def login(request):
 	
@@ -54,9 +60,11 @@ def login(request):
 			auth.login(request, user)
 			
 			# message
+			'''
 			SessionMessages.create_message(request, messages.get('logged_in', {
 				'account_username': user.username,
 			}))
+			'''
 			
 			# Redirect to a success page.
 			return HttpResponseRedirect("/records/")
@@ -78,7 +86,7 @@ def logout(request):
 	SessionMessages.create_message(request, messages.get('logged_out'))
 	
 	# Redirect to a success page.
-	return HttpResponseRedirect("/accounts/login/")
+	return HttpResponseRedirect("/")
 
 def profile(request, user_id=0, username=False):
 	

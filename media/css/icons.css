@@ -53,6 +53,9 @@ input.icon {
 }
 
 /* Profile */
+.icon_name {
+	background-image: url(/site_media/media/img/icons/fugue/card-address.png);
+}
 .icon_username {
 	background-image: url(/site_media/media/img/icons/fugue/user.png);
 }

@@ -19,6 +19,18 @@
 							<div class="container">
 								<div class="header">
 									<div class="label">
+										<label class="icon icon_name" for="id_name">{% trans "Name" %}</label>
+									</div>
+									<div id="id_name" class="content">
+										{{ viewed_user.get_full_name }}
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="container">
+								<div class="header">
+									<div class="label">
 										<label class="icon icon_username" for="id_username">{% trans "Username" %}</label>
 									</div>
 									<div id="id_username" class="content">

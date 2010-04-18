@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "marketing.html" %}
 
 {% load i18n %}
 {% load tag %}
@@ -8,6 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/960.css" />
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/text.css" />
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" />
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/marketing.css" />
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/records.css" />
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/tags.css" />
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/icons.css" />
@@ -20,26 +21,14 @@
 
 {% block identity %}
 	{% if user.is_authenticated %}
-		<ul class="identity_menu">
-			<li>
-				<a href="{% url accounts_profile %}" class="user_username"><span>{% trans "Logged in as" %}</span> {{ user.get_full_name }}</a>
-			</li>
-			{% if user.is_staff %}
-				<li>
-					<a href="/admin/">{% trans "Admin" %}</a>
-				</li>
-			{% endif %}
-			<li>
-				<a href="{% url accounts_logout %}">{% trans "Logout" %}</a>
-			</li>
-		</ul>
+		<span class="user_username">{{ user }}</span> | <a href="#">{% trans "Account" %}</a> | {% if user.is_staff %}<a href="/admin/">{% trans "Admin" %}</a> | {% endif %}<a href="{% url accounts_logout %}">{% trans "Logout" %}</a>
 	{% else %}
 		<!--login url here-->
 	{% endif %}
 {% endblock %}
 
 {% block logo_link_image %}<a class="logo_link" href="{% url home %}"></a>{% endblock %}
-{% block slogan_link_image %}{% endblock %}
+{% block slogan_link_image %}<div class="slogan_link"></div>{% endblock %}
 
 {% block right_tabs %}
 	{% if user.is_authenticated %}
@@ -177,68 +166,62 @@
 
 {% block sidebar %}
 	<div id="site_sidebar">
-		{% if user %}
-			<div class="use_tabs sidebar_tabs">
-				<ul class="tabs">
-					<li class="active"><a href="#sidebar_tab_used">{% trans "Used" %}</a></li>
-					<li><a href="#sidebar_tab_popular">{% trans "Popular" %}</a></li>
-				</ul>
-				
-				<div class="tab_container">
-					<div id="sidebar_tab_used" class="tab_content">
-						{% if used_tags %}
-							{% render_tags used_tags %}
-						{% endif %}
+		<div id="signup_container">
+			<h1>Sign up for tag<strong>life</strong></h1>
+			<h4>it's free, <strong>obviously</strong></h4>
+			
+			<form action="{% url accounts_register %}" method="post" id="signup_form" class="register_form use_inline_labels">
+				{% csrf_token %}
+				<fieldset>
+					<div class="field">
+						<div class="field_combo">
+							{{ register_formset.first_name.label_tag }}
+							{{ register_formset.first_name }}
+						</div>
+						<div class="field_combo omega">
+							{{ register_formset.last_name.label_tag }}
+							{{ register_formset.last_name }}
+						</div>
+						{{ register_formset.first_name.errors }}
+						{{ register_formset.last_name.errors }}
 					</div>
-					<div id="sidebar_tab_popular" class="tab_content hidden">
-						{% if popular_tags %}
-							<ul class="tags_chart">
-								{% for tag in popular_tags %}
-									{% if forloop.counter > 10 %}
-										<!-- These are hidden on load... -->
-										<li class="popular_tag hidden">
-											<div class="label">
-												<ul class="tags">
-													{% render_tag tag %}
-												</ul>
-											</div>
-											<div class="content">
-												<span class="value" style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
-											</div>
-										</li>
-									{% else %}
-										<li class="popular_tag">
-											<div class="label">
-												<ul class="tags">
-													{% render_tag tag %}
-												</ul>
-											</div>
-											<div class="content">
-												<span class="value" style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
-											</div>
-										</li>
-									{% endif %}
-								{% endfor %}
-							</ul>
-							
-							{% if popular_tags|length > 10 %}
-								<div class="actions">
-									<div class="action">
-										<a href="#" class="input_button_wrapper use_tag_popular_show_all">
-											<span class="input_button_start"></span>
-											<span class="input_button_body">
-												<span class="input_button_content icon icon_tags">{% trans "Show All" %}</span>
-											</span>
-											<span class="input_button_end"></span>
-										</a>
-									</div>
-								</div>
-							{% endif %}
-						{% endif %}
+					<div class="field">
+						{{ register_formset.email.label_tag }}
+						{{ register_formset.email }}
+						{{ register_formset.email.errors }}
+					</div>
+					<div class="field">
+						{{ register_formset.username.label_tag }}
+						{{ register_formset.username }}
+						{{ register_formset.username.errors }}
+					</div>
+					<div class="field">
+						<div class="field_combo">
+							{{ register_formset.password1.label_tag }}
+							{{ register_formset.password1 }}
+						</div>
+						<div class="field_combo omega">
+							{{ register_formset.password2.label_tag }}
+							{{ register_formset.password2 }}
+						</div>
+						{{ register_formset.password1.errors }}
+						{{ register_formset.password2.errors }}
+					</div>
+				</fieldset>
+				
+				<div class="actions">
+					<div class="action_right">
+						<div class="input_button_wrapper">
+							<div class="input_button_start"></div>
+							<div class="input_button_body">
+								<input type="submit" id="account_register" name="submit" value="{% trans "Register" %}" class="input_submit" />
+							</div>
+							<div class="input_button_end"></div>
+						</div>
 					</div>
 				</div>
-			</div>
-		{% endif %}
+			</form>
+		</div>
 	</div>
 {% endblock sidebar %}
 

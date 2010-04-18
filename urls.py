@@ -9,17 +9,17 @@ admin.autodiscover()
 urlpatterns = patterns('',
 	
 	# Home
-	url(r'^$', direct_to_template, {
-		"template": "homepage.html",
-	}, name="home"),
+	#url(r'^$', direct_to_template, {
+	#	"template": "homepage.html",
+	#}, name="home"),
 	
 	# API
 	(r'^api/records', include('apps.records.api.urls')),
 	(r'^api/tags', include('apps.tags.api.urls')),
 	
 	# Normal
+	(r'^', include('apps.about.urls')),
 	(r'^accounts/', include('apps.accounts.urls')),
-	(r'^about/', include('apps.about.urls')),
 	(r'^records/', include('apps.records.urls')),
 	(r'^tags/', include('apps.tags.urls')),
 	

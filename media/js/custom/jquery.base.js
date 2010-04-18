@@ -49,6 +49,23 @@ $(document).ready(function() {
 	
 	
 	/*
+	 * Login Form
+	 */
+	function setupLoginForm(container) {
+		$(container).find('#login').find('input[name=username], input[name=password]').ezpz_hint({
+			hintClass: 'default',
+			hintName: 'input_label'
+		});
+		$(container).find('#login').find('label[for=username]').click(function() {
+			$(this).next('input').focus();
+		});
+	}
+	setupLoginForm('body');
+	/*
+	 * END Login Form
+	 */
+	
+	/*
 	 * Site Gritter Site Messages
 	 */
 	function setupSiteMessages() {
@@ -525,7 +542,7 @@ $(document).ready(function() {
 			// need to replace breaks with line breaks and then strip any remaining html
 			var record_contents_clone = $(record_contents.text).clone();
 			$(record_contents_clone).html(function(index, html) {
-				return html.replace(/(<br>|<br \/>)/g, "\n")
+				return html.replace(/(\n)/g, "").replace(/(<br>|<br \/>)/g, "\n");
 			});
 			$(record_inputs.text).val($(record_contents_clone).text());
 			

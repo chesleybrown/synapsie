@@ -1,0 +1,60 @@
+{% load i18n %}
+{% load tag %}
+
+<li id="record_{{ record.id }}" class="record">
+	<div class="record_content">
+		<div class="date">
+			<span class="month">{{ record.created|date:"M" }}</span>
+			<span class="day">{{ record.created|date:"d" }}</span>
+			<span class="year">{{ record.created|date:"Y" }}</span>
+		</div>
+		<div class="security">
+			<div class="personal">{{ record.personal }}</div>
+			{% if record.personal %}
+				<div class="icon icon_personal"></div>
+				<span class="security_text">Personal</span>
+			{% else %}
+				<div class="icon icon_shared"></div>
+				<span class="security_text">Shared</span>
+			{% endif %}
+		</div>
+		<div class="header">
+			<div class="datetime">{{ record.created }}</div>
+			<div class="time">{{ record.created|date:"g:iA" }}</div>
+			<div class="time_since use_time_since">{{ record.created|timesince }} ago</div>
+			<div class="text">{{ record.text|linebreaksbr }}</div>
+		</div>
+		<div class="menu use_record_menu">
+			<ul class="menu_headers">
+				<li class="menu_header"></li>
+			</ul>
+			<ul class="menu_items">
+				<li class="menu_item">
+					<a href="{% url record_show record_id=record.id %}"><span class="icon icon_record_view"></span>{% trans "View" %}</a>
+				</li>
+				<li class="menu_item">
+					<a class="use_record_edit" href="{% url api-record record_id=record.id,emitter_format='.json' %}"><span class="icon icon_record_edit"></span>{% trans "Edit" %}</a>
+				</li>
+				<li class="menu_item">
+					<a class="use_record_delete" href="{% url api-record record_id=record.id,emitter_format='.json' %}"><span class="icon icon_record_delete"></span>{% trans "Delete..." %}</a>
+				</li>
+			</ul>
+		</div>
+		<div class="add_tags">
+			<a href="{% url api-record-add_tags record_id=record.id,emitter_format='.json' %}" class="use_record_add_tags">
+				<span class="icon icon_record_add_tags"></span>
+				<span class="add_tags_text">Add Tags</span>
+			</a>
+		</div>
+		<div class="footer">
+			{% if record.tags %}
+				<ul class="tags">
+					{% for tag in record.tags %}
+						{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' as tag_close_url %}
+						{% render_tag tag tag_close_url "use_tag_delete" %}
+					{% endfor %}
+				</ul>
+			{% endif %}
+		</div>
+	</div>
+</li>
