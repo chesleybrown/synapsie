@@ -49,22 +49,31 @@ def login(request):
 	# init
 	messages = AccountMessages()
 	user = None
+	user_by_email = None
 	
 	if request.method == 'POST':
+		email = request.POST['username']
 		username = request.POST['username']
 		password = request.POST['password']
+		
+		# try to authenticate user (assuming username provided)
 		user = auth.authenticate(username=username, password=password)
-	
-		if user is not None and user.is_active:
+		
+		# if authenticate didn't pass, can also take email and login with that
+		if user is None:
+			try:
+				user_by_email = User.objects.get(email__exact=email)
+				
+				if user_by_email:
+					user = auth.authenticate(username=user_by_email.username, password=password)
+				
+			# now user found with that email address
+			except User.DoesNotExist:
+				user_by_email = False
+		
+		if user and user.is_active:
 			# Correct password, and the user is marked "active"
 			auth.login(request, user)
-			
-			# message
-			'''
-			SessionMessages.create_message(request, messages.get('logged_in', {
-				'account_username': user.username,
-			}))
-			'''
 			
 			# Redirect to a success page.
 			return HttpResponseRedirect("/records/")
@@ -72,8 +81,7 @@ def login(request):
 			# Show an error page
 			SessionMessages.create_message(request, messages.get('invalid'))
 	
-	return render_to_response('accounts/login.html', {
-	}, context_instance=RequestContext(request))
+	return HttpResponseRedirect("/")
 
 def logout(request):
 	
