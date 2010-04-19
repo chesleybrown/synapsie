@@ -169,6 +169,9 @@ body > #site_container {
 #site_header #site_search input {
 	width: 210px;
 }
+form.record_form .field input:focus {
+	border-color: #00527F;
+}
 #site_header #site_search .icon_search {
 	position: absolute;
 	top: 9px;
