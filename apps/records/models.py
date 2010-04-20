@@ -9,7 +9,7 @@ class Record(models.Model):
 	user = models.ForeignKey(User)
 	text = models.TextField()
 	created = models.DateTimeField(default=datetime.now())
-	personal = models.BooleanField(default=True)
+	personal = models.SmallIntegerField(default=1)
 	
 	def __unicode__(self):
 		return 'Record: %s' % self.text

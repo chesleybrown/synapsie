@@ -2,12 +2,13 @@ from django import forms
 from apps.records.models import Record
 from tagging.forms import TagField
 from datetime import date, datetime
+from django.utils.translation import ugettext_lazy as _
 
 class RecordForm(forms.ModelForm):
-	text = forms.CharField(label='Life Record...', widget=forms.Textarea(
+	text = forms.CharField(label=_('Life Record...'), widget=forms.Textarea(
 		attrs={'class': 'text use_elastic'}
 	))
-	tags = TagField(label='Tags for Life Record...', widget=forms.SelectMultiple, required=False)
+	tags = TagField(label=_('Tags for Life Record...'), widget=forms.SelectMultiple, required=False)
 	personal = forms.CharField(widget=forms.HiddenInput(), initial='1')
 	date = forms.CharField(widget=forms.HiddenInput, initial=date.today())
 	hour = forms.CharField(widget=forms.HiddenInput, initial=datetime.today().strftime("%I"))
@@ -17,6 +18,7 @@ class RecordForm(forms.ModelForm):
 	
 	def clean_personal(self):
 		personal = int(self.cleaned_data['personal'])
+		
 		return personal
 	
 	def __init__(self, *args, **kwrds):
@@ -28,7 +30,7 @@ class RecordForm(forms.ModelForm):
 		exclude = ('created', 'user')
 
 class RecordAddTagsForm(forms.ModelForm):
-	tags = TagField(label='Tags for Life Record...', widget=forms.SelectMultiple, required=False)
+	tags = TagField(label=_('Tags for Life Record...'), widget=forms.SelectMultiple, required=False)
 	
 	def __init__(self, *args, **kwrds):
 		super(RecordAddTagsForm, self).__init__(*args, **kwrds)
@@ -39,7 +41,7 @@ class RecordAddTagsForm(forms.ModelForm):
 		exclude = ('text', 'created', 'user')
 
 class RecordSearchForm(forms.ModelForm):
-	text = forms.CharField(label='Search Your Life...')
+	text = forms.CharField(label=_('Search Your Life...'))
 	tags = TagField(label='Filter by Tags...', widget=forms.SelectMultiple, required=False)
 	
 	def __init__(self, *args, **kwrds):
