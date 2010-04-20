@@ -21,6 +21,8 @@ form.record_form fieldset {
 	background: url(/site_media/media/img/layout/form/bg.png);
 	border: 1px solid #00527F;
 	margin: 0;
+	-moz-box-shadow: 1px 1px 1px #fff;
+	-webkit-box-shadow: 1px 1px 1px #fff;
 }
 form .field {
 	position: relative;
@@ -64,6 +66,8 @@ form.record_form .actions {
 	-webkit-border-bottom-left-radius: 5px;
 	-moz-border-radius-bottomright: 5px;
 	-webkit-border-bottom-right-radius: 5px;
+	-moz-box-shadow: 1px 1px 1px #fff;
+	-webkit-box-shadow: 1px 1px 1px #fff;
 }
 form.record_form .actions_left {
 	float: left;
