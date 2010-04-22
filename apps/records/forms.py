@@ -38,7 +38,7 @@ class RecordAddTagsForm(forms.ModelForm):
 
 	class Meta:
 		model = Record
-		exclude = ('text', 'created', 'user')
+		exclude = ('text', 'created', 'user', 'personal')
 
 class RecordSearchForm(forms.ModelForm):
 	text = forms.CharField(label=_('Search Your Life...'))

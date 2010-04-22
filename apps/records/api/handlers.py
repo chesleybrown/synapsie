@@ -247,7 +247,7 @@ class RecordHandler(BaseHandler):
 				response['data'] = clean_record
 			
 			else:
-				
+				response['data'] = record.personal
 				# set error message, missing data
 				response['message'] = messages.get('missing_data')
 		
