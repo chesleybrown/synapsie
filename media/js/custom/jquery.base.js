@@ -265,6 +265,7 @@ $(document).ready(function() {
 			'Feb',
 			'Mar',
 			'Apr',
+			'May',
 			'Jun',
 			'Jul',
 			'Aug',
