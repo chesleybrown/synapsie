@@ -51,6 +51,8 @@ def index_records(request, tags=False, page=1):
 	except (EmptyPage, InvalidPage):
 		records_paginator = paginator.page(paginator.num_pages)
 	
+	records_paginator = False
+	
 	# get used/popular tags for current user
 	used_tags = get_used_tags(Record, identity)
 	popular_tags = get_popular_tags(used_tags)
