@@ -27,11 +27,27 @@ class AccountMessages(GeneralMessages):
 		sticky=False,
 	)
 	
+	activated = dict(
+		status=201,
+		kind="created",
+		title=_("Activated Account"),
+		text=_("Welcome to TagLife %(account_first_name)s %(account_last_name)s"),
+		sticky=False,
+	)
+	
+	invalid_activation_key = dict(
+		status=400,
+		kind="error",
+		title=_("Invalid Activation Key"),
+		text=_("You provided an invalid or expired activation key."),
+		sticky=False,
+	)
+	
 	created = dict(
 		status=201,
 		kind="created",
 		title=_("Created Account"),
-		text=_("Welcome to TagLife %(account_username)s"),
+		text=_("We have emailed you at %(account_email)s with instructions to activate your account"),
 		sticky=False,
 	)
 	

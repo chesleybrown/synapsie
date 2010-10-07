@@ -186,54 +186,50 @@
 				
 				<div class="tab_container">
 					<div id="sidebar_tab_used" class="tab_content">
-						{% if used_tags %}
-							{% render_tags used_tags %}
-						{% endif %}
+						{% render_tags used_tags %}
 					</div>
 					<div id="sidebar_tab_popular" class="tab_content hidden">
-						{% if popular_tags %}
-							<ul class="tags_chart">
-								{% for tag in popular_tags %}
-									{% if forloop.counter > 10 %}
-										<!-- These are hidden on load... -->
-										<li class="popular_tag hidden">
-											<div class="label">
-												<ul class="tags">
-													{% render_tag tag %}
-												</ul>
-											</div>
-											<div class="content">
-												<span class="value" style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
-											</div>
-										</li>
-									{% else %}
-										<li class="popular_tag">
-											<div class="label">
-												<ul class="tags">
-													{% render_tag tag %}
-												</ul>
-											</div>
-											<div class="content">
-												<span class="value" style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
-											</div>
-										</li>
-									{% endif %}
-								{% endfor %}
-							</ul>
-							
-							{% if popular_tags|length > 10 %}
-								<div class="actions">
-									<div class="action">
-										<a href="#" class="input_button_wrapper use_tag_popular_show_all">
-											<span class="input_button_start"></span>
-											<span class="input_button_body">
-												<span class="input_button_content icon icon_tags">{% trans "Show All" %}</span>
-											</span>
-											<span class="input_button_end"></span>
-										</a>
-									</div>
+						<ul class="tags_chart">
+							{% for tag in popular_tags %}
+								{% if forloop.counter > 10 %}
+									<!-- These are hidden on load... -->
+									<li class="popular_tag hidden">
+										<div class="label">
+											<ul class="tags">
+												{% render_tag tag %}
+											</ul>
+										</div>
+										<div class="content">
+											<span class="value" style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
+										</div>
+									</li>
+								{% else %}
+									<li class="popular_tag">
+										<div class="label">
+											<ul class="tags">
+												{% render_tag tag %}
+											</ul>
+										</div>
+										<div class="content">
+											<span class="value" style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
+										</div>
+									</li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+						
+						{% if popular_tags|length > 10 %}
+							<div class="actions">
+								<div class="action">
+									<a href="#" class="input_button_wrapper use_tag_popular_show_all">
+										<span class="input_button_start"></span>
+										<span class="input_button_body">
+											<span class="input_button_content icon icon_tags">{% trans "Show All" %}</span>
+										</span>
+										<span class="input_button_end"></span>
+									</a>
 								</div>
-							{% endif %}
+							</div>
 						{% endif %}
 					</div>
 				</div>

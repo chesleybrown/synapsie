@@ -1,14 +1,19 @@
 import sys, pprint
 import apps.session_messages as SessionMessages
 
+from django.db import transaction
+from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.http import Http404
+from django.core import mail
 
+from apps.accounts.models import RegistrationManager, RegistrationProfile
 from apps.accounts.messages import AccountMessages
+from apps.accounts.emails import AccountEmails
 from apps.accounts.forms import UserCreationForm
 from apps.records.models import Record
 from apps.tags.utils import get_used_tags, get_popular_tags
@@ -18,18 +23,32 @@ def register(request):
 	
 	# init
 	messages = AccountMessages()
+	emails = AccountEmails()
 	register_formset = UserCreationForm(prefix='register')
+	user_email = None
+	user_registration_profile = None
 	
 	if request.method == 'POST':
 		register_formset = UserCreationForm(request.POST, prefix='register')
 		
 		# validate form
 		if register_formset.is_valid():
+			
+			# save the new user to db
 			new_user = register_formset.save()
+			user_registration_profile = RegistrationProfile.objects.create_profile(new_user)
+			
+			# generate email and send it to user
+			user_email = emails.get('registered', {
+				'account_first_name': new_user.first_name,
+				'account_last_name': new_user.last_name,
+				'account_activation_key': user_registration_profile.activation_key,
+			})
+			mail.send_mail(user_email['subject'], user_email['body'], user_email['from_address'], [new_user.email], fail_silently=False)
 			
 			# message
 			SessionMessages.create_message(request, messages.get('created', {
-				'account_username': new_user.username,
+				'account_email': new_user.email,
 			}))
 			
 			return HttpResponseRedirect("/accounts/created/")
@@ -37,7 +56,37 @@ def register(request):
 	return render_to_response("about/home.html", {
 		'register_formset': register_formset,
 	}, context_instance=RequestContext(request))
+register = transaction.commit_on_success(register)
 
+def activate(request, activation_key=None):
+	
+	# init
+	messages = AccountMessages()
+	user= None
+	
+	# activate account if correct key provided
+	user = RegistrationProfile.objects.activate_user(activation_key)
+	
+	# successfully activated
+	if user:
+		SessionMessages.create_message(request, messages.get('activated', {
+			'account_first_name': user.first_name,
+			'account_last_name': user.last_name,
+		}))
+		
+		# Correct password, and the user is marked "active"
+		user.backend='django.contrib.auth.backends.ModelBackend' # allows me to log user in without knowing password
+		auth.login(request, user)
+		
+		# Redirect to a logged in page.
+		return HttpResponseRedirect("/records/")
+		
+	# failed activating user (incorrect key?)
+	else:
+		SessionMessages.create_message(request, messages.get('invalid_activation_key'))
+	
+	# Redirect to a homepage.
+	return HttpResponseRedirect("/")
 
 def created(request):
 	

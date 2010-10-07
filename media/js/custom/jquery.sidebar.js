@@ -215,6 +215,11 @@
 				// determine width of this popular tag
 				popular_tag_percent = Math.round((parseInt($(popular_tag_value).text()) / parseInt(highest_popular_tag_value)) * 100);
 				
+				// can never be more than 100%
+				if (popular_tag_percent > 100) {
+					popular_tag_percent = 100;
+				}
+				
 				// set popular tag info
 				$(popular_tag_value).css('width', popular_tag_percent + '%');
 				

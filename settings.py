@@ -96,6 +96,7 @@ MIDDLEWARE_CLASSES = (
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.transaction.TransactionMiddleware',
 )
 
 ROOT_URLCONF = 'taglife.urls'
@@ -125,3 +126,8 @@ INSTALLED_APPS = (
 	'taglife.apps.tags',
 	'tagging',
 )
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(PROJECT_ROOT, 'logs', 'emails')
+
+ACCOUNT_ACTIVATION_DAYS = 7
