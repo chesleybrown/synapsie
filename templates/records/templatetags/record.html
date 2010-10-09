@@ -19,7 +19,7 @@
 			{% endif %}
 		</div>
 		<div class="header">
-			<div class="datetime">{{ record.created }}</div>
+			<div class="datetime">{{ record.created|date:"Y-m-d H:i:s" }}</div>
 			<div class="time">{{ record.created|date:"g:iA" }}</div>
 			<div class="time_since use_time_since">{{ record.created|timesince }} ago</div>
 			<div class="text">{{ record.text|linebreaksbr }}</div>
