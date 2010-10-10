@@ -11,6 +11,38 @@ class AccountMessages(GeneralMessages):
 		sticky=False,
 	)
 	
+	email_not_found = dict(
+		status=400,
+		kind="error",
+		title=_("Email Not Found"),
+		text=_("The email you entered, %(account_email)s does not belong to any account."),
+		sticky=False,
+	)
+	
+	invalid_reset_key = dict(
+		status=400,
+		kind="error",
+		title=_("Invalid Password Reset Key"),
+		text=_("The password reset key you provided was invalid. You may have to generate a new one."),
+		sticky=False,
+	)
+	
+	password_reset = dict(
+		status=200,
+		kind="success",
+		title=_("Password Reset Confirmation"),
+		text=_("We have sent a password reset confirmation to %(account_email)s. Check it out."),
+		sticky=False,
+	)
+	
+	password_updated = dict(
+		status=200,
+		kind="success",
+		title=_("Password Updated"),
+		text=_("You have successfully updated your password, try logging in with it now."),
+		sticky=False,
+	)
+	
 	logged_in = dict(
 		status=200,
 		kind="success",

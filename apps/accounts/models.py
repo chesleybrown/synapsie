@@ -59,6 +59,20 @@ class RegistrationManager(models.Manager):
 				return user
 		return False
 	
+	def disable_reset_key(self, reset_key):
+		
+		try:
+			profile = self.get(reset_key=reset_key)
+		except self.model.DoesNotExist:
+			return False
+		
+		if profile:
+			profile.reset_key = self.model.DISABLED_RESET_KEY
+			profile.save()
+			return profile
+		
+		return False
+	
 	def create_inactive_user(self, username, email, password,
 							 site, send_email=True):
 		"""
@@ -95,7 +109,7 @@ class RegistrationManager(models.Manager):
 		salt = sha_constructor(str(random.random())).hexdigest()[:5]
 		activation_key = sha_constructor(salt+user.username).hexdigest()
 		return self.create(user=user, activation_key=activation_key)
-		
+	
 	def delete_expired_users(self):
 		"""
 		Remove expired instances of ``RegistrationProfile`` and their
@@ -160,9 +174,12 @@ class RegistrationProfile(models.Model):
 	
 	"""
 	ACTIVATED = u"ALREADY_ACTIVATED"
+	DISABLED_RESET_KEY = u"DISABLED"
 	
 	user = models.ForeignKey(User, unique=True, verbose_name=_('user'))
 	activation_key = models.CharField(_('activation key'), max_length=40)
+	reset_key = models.CharField(_('reset key'), max_length=40)
+	reset_key_created = models.DateTimeField(default=datetime.datetime.now())
 	
 	objects = RegistrationManager()
 	
@@ -199,7 +216,29 @@ class RegistrationProfile(models.Model):
 		return self.activation_key == self.ACTIVATED or \
 			   (self.user.date_joined + expiration_date <= datetime.datetime.now())
 	activation_key_expired.boolean = True
-
+	
+	def reset_key_expired(self):
+		
+		# key has expired
+		if self.reset_key_created+datetime.timedelta(days=settings.ACCOUNT_ACTIVATION_DAYS) < datetime.datetime.now():
+			return True
+		
+		# key has already been used
+		if self.reset_key == self.DISABLED_RESET_KEY:
+			return True
+		
+		return False
+	reset_key_expired.boolean = False
+	
+	def generate_reset_key(self, user):
+		salt = sha_constructor(str(random.random())).hexdigest()[:5]
+		self.reset_key = sha_constructor(salt+user.username).hexdigest()
+		self.reset_key_created = datetime.datetime.now()
+		
+		self.save()
+		
+		return self
+	
 	def send_activation_email(self, site):
 		"""
 		Send an activation email to the user associated with this

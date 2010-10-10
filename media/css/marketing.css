@@ -27,58 +27,51 @@
 	background-image: url(/site_media/media/img/layout/marketing/header/slogan.png);
 }
 
-#signup_container {
-	background: url(/site_media/media/img/layout/marketing/signup_bg.png) repeat-x #fff;
-	border: 1px solid #ccc;
-	padding: 0 45px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-}
-form.register_form fieldset {
+form.default_form fieldset {
 	margin-bottom: 0;
 }
-form.register_form .field label {
+form.default_form .field label {
 	font-size: 18px;
 	color: #999;
 	position: absolute;
 	top: 2px;
 	left: 7px;
 }
-form.register_form .field {
+form.default_form .field {
 	overflow: auto;
 	clear: both;
 }
-form.register_form .field input {
+form.default_form .field input {
 	width: 276px;
 }
-form.register_form .field_combo {
+form.default_form .field_combo {
 	float: left;
 	position: relative;
 	overflow: hidden;
 }
-form.register_form .field_combo input {
+form.default_form .field_combo input {
 	width: 127px;
 	margin-right: 10px;
 }
-form.register_form .field_combo.omega input {
+form.default_form .field_combo.omega input {
 	margin-right: 0;
 }
-form.register_form .actions {
+form.default_form .actions {
 	overflow: auto;
 }
-form.register_form .actions .action_right {
+form.default_form .actions .action_right {
 	padding: 0 6px 5px 0;
 	float: right;
 }
 
-form.register_form .errorlist {
+form.default_form .errorlist {
 	clear: both;
 	list-style: none;
 	margin: 0;
 	padding: 5px 0 0 0;
 	overflow: auto;
 }
-form.register_form .errorlist li {
+form.default_form .errorlist li {
 	margin: 0 0 0 0;
 	padding: 0 5px;
 	background: #FF8D8D;

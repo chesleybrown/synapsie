@@ -1,5 +1,7 @@
+import datetime
 import sys, pprint
 import apps.session_messages as SessionMessages
+import logging
 
 from django.db import transaction
 from django.conf import settings
@@ -14,10 +16,13 @@ from django.core import mail
 from apps.accounts.models import RegistrationManager, RegistrationProfile
 from apps.accounts.messages import AccountMessages
 from apps.accounts.emails import AccountEmails
-from apps.accounts.forms import UserCreationForm
+from apps.accounts.forms import UserCreationForm, UserPasswordResetForm, UserPasswordResetConfirmationForm
 from apps.records.models import Record
 from apps.tags.utils import get_used_tags, get_popular_tags
 from tagging.models import Tag, TaggedItem
+
+# Get an instance of a logger
+logger = logging.getLogger('django')
 
 def register(request):
 	
@@ -93,6 +98,113 @@ def created(request):
 	return render_to_response("accounts/created.html", {
 	}, context_instance=RequestContext(request))
 
+def reset(request):
+	
+	# init
+	emails = AccountEmails()
+	messages = AccountMessages()
+	user = None
+	user_registration_profile = None
+	account_reset_formset = UserPasswordResetForm(prefix='account_reset')
+	
+	# if form was submitted
+	if request.method == 'POST':
+		account_reset_formset = UserPasswordResetForm(request.POST, prefix='account_reset')
+		
+		# validate form
+		if account_reset_formset.is_valid():
+			clean = account_reset_formset.cleaned_data
+			
+			# test if there is a user that matches the provided email
+			try:
+				user = User.objects.get(email__exact=clean['email'])
+				
+			# no user found with that email address
+			except User.DoesNotExist:
+				user = None
+			
+			# get user registration profile
+			try:
+				user_registration_profile = RegistrationProfile.objects.get(user=user)
+				
+			# no user found with that email address
+			except RegistrationProfile.DoesNotExist:
+				user_registration_profile = None
+			
+			# user was found and is marked "active"
+			if user and user_registration_profile and user.is_active:
+				
+				# Generate reset_key
+				user_registration_profile.generate_reset_key(user)
+				
+				# generate email and send it to user
+				user_email = emails.get('reset', {
+					'account_first_name': user.first_name,
+					'account_last_name': user.last_name,
+					'account_reset_key': user_registration_profile.reset_key,
+				})
+				mail.send_mail(user_email['subject'], user_email['body'], user_email['from_address'], [user.email], fail_silently=False)
+				
+				# inform user they have been emailed
+				SessionMessages.create_message(request, messages.get('password_reset', {
+					'account_email': clean['email'],
+				}))
+				
+				# Redirect to a homepage.
+				return HttpResponseRedirect("/")
+				
+			else:
+				# Show an error page
+				SessionMessages.create_message(request, messages.get('email_not_found', {
+					'account_email': clean['email'],
+				}))
+		
+	return render_to_response("accounts/reset.html", {
+		'account_reset_formset': account_reset_formset,
+	}, context_instance=RequestContext(request))
+
+def resetconfirmation(request, reset_key):
+	
+	# init
+	emails = AccountEmails()
+	messages = AccountMessages()
+	user = None
+	user_registration_profile = None
+	accounts_resetconfirmation_formset = UserPasswordResetConfirmationForm(
+		initial={'reset_key': reset_key},
+		prefix='account_resetconfirmation'
+	)
+	
+	# if form was submitted
+	if request.method == 'POST':
+		accounts_resetconfirmation_formset = UserPasswordResetConfirmationForm(request.POST, prefix='account_resetconfirmation')
+		
+		# validate form
+		if accounts_resetconfirmation_formset.is_valid():
+			clean = accounts_resetconfirmation_formset.cleaned_data
+			
+			# update user password if correct reset_key provided (also disables the key after password is updated)
+			accounts_resetconfirmation_formset.save()
+			
+			SessionMessages.create_message(request, messages.get('password_updated'))
+			
+			# Redirect to a homepage.
+			return HttpResponseRedirect("/")
+			
+	else:
+		# test if valid reset_key provided
+		try:
+			user_registration_profile = RegistrationProfile.objects.get(reset_key=reset_key)
+			
+		except RegistrationProfile.DoesNotExist:
+			SessionMessages.create_message(request, messages.get('invalid_reset_key'))
+			return HttpResponseRedirect("/")
+	
+	return render_to_response("accounts/resetconfirmation.html", {
+		'accounts_resetconfirmation_formset': accounts_resetconfirmation_formset,
+		'reset_key': reset_key,
+	}, context_instance=RequestContext(request))
+
 def login(request):
 	
 	# init
@@ -116,9 +228,9 @@ def login(request):
 				if user_by_email:
 					user = auth.authenticate(username=user_by_email.username, password=password)
 				
-			# now user found with that email address
+			# no user found with that email address
 			except User.DoesNotExist:
-				user_by_email = False
+				user_by_email = None
 		
 		if user and user.is_active:
 			# Correct password, and the user is marked "active"
