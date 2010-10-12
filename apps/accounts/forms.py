@@ -30,12 +30,12 @@ class UserCreationForm(forms.ModelForm):
 			'required': _("You must provide a username."),
 			'invalid': _("Your username must contain only letters, numbers and underscores."),
 		})
-	first_name = forms.RegexField(label=_("First Name"), max_length=30, regex=r'^\w+$',
+	first_name = forms.RegexField(label=_("First Name"), max_length=30, regex=r'^[a-zA-Z\s\-\'\"]+$',
 		error_messages = {
 			'required': _("You must provide a first name."),
 			'invalid': _("Your first name must contain only letters and be less than 30 characters."),
 		})
-	last_name = forms.RegexField(label=_("Last Name"), max_length=30, regex=r'^\w+$',
+	last_name = forms.RegexField(label=_("Last Name"), max_length=30, regex=r'^[a-zA-Z\s\-\'\"]+$',
 		error_messages = {
 			'required': _("You must provide a last name."),
 			'invalid': _("Your last name must contain only letters and be less than 30 characters."),
