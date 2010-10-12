@@ -199,6 +199,7 @@ div.default_form_container {
 	overflow: hidden; /* must have this or the blockUI can cause scrollbars */
 	padding-bottom: 203px; /* must be same height as the footer... plus offset */
 	margin-top: 10px;
+	min-height: 375px;
 }
 
 #site_footer {
