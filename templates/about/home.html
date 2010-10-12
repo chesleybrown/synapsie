@@ -8,4 +8,70 @@
 	{{ block.super }}
 	
 	<h1>Welcome to tag<strong>life</strong></h1>
+	
+	<div class="">
+		<ul class="polaroids">
+			<li>
+				<a href="#">
+					<div class="description">
+						<h4>{% trans "Never Forget Again" %}</h4>
+						<p>{% trans "No record is ever lost. Track and remember everything that happens in your life." %}</p>
+					</div>
+					<img src="/site_media/media/img/layout/marketing/thumbs/records.png" alt="Records" />
+					<div class="title">{% trans "Your Records" %}</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<div class="description">
+						<h4>{% trans "Tag Statistics" %}</h4>
+						<p>{% trans "How is your life going? Just see which tags you've used the most." %}</p>
+					</div>
+					<img src="/site_media/media/img/layout/marketing/thumbs/popular_tags.png" alt="Popular Tags" />
+					<div class="title">{% trans "Popular Tags" %}</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<div class="description">
+						<h4>{% trans "Your Entire Life" %}</h4>
+						<p>{% trans "Record past events just as easily as current ones." %}</p>
+					</div>
+					<img src="/site_media/media/img/layout/marketing/thumbs/create_record.png" alt="Create Record" />
+					<div class="title">{% trans "Record History" %}</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<div class="description">
+						<h4>{% trans "Public or Private" %}</h4>
+						<p>{% trans "Your records will only be visible to yourself, but you also have the choice of sharing any record publicly." %}</p>
+					</div>
+					<img src="/site_media/media/img/layout/marketing/thumbs/record_security.png" alt="Record Security" />
+					<div class="title">{% trans "Record Security" %}</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<div class="description">
+						<h4>{% trans "Search Your Life" %}</h4>
+						<p>{% trans "It'll be like you indexed every event that occured in your life." %}</p>
+					</div>
+					<img src="/site_media/media/img/layout/marketing/thumbs/search_records.png" alt="Search Records" />
+					<div class="title">{% trans "Search Records" %}</div>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<div class="description">
+						<h4>{% trans "Your Used Tags" %}</h4>
+						<p>{% trans "Every tag that you attach to a record is viewable at a glance." %}</p>
+					</div>
+					<img src="/site_media/media/img/layout/marketing/thumbs/used_tags.png" alt="Used Tags" />
+					<div class="title">{% trans "Used Tags" %}</div>
+				</a>
+			</li>
+		</ul>
+	</div>
+	
 {% endblock %}
