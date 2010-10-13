@@ -648,14 +648,17 @@ $(document).ready(function() {
 						//determine security
 						if (record.personal == 1) {
 							var security = 'icon_personal';
+							var security_text = 'Pesonal';
 						}
 						else {
 							var security = 'icon_shared';
+							var security_text = 'Shared';
 						}
 						
 						$(record_contents.security).find('div.icon')
 							.attr('class', 'icon')
 							.addClass(security);
+						$(record_contents.security).find('span.security_text').text(security_text);
 						
 						var new_record_tags = $('#tags_blank ul.tags').clone(false);
 						var new_record_tags_tag = $('#tags_blank ul.tags li.tag').clone(false);
