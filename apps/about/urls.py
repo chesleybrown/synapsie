@@ -4,9 +4,7 @@ from taglife.apps.about import views
 
 urlpatterns = patterns('',
 	url(r'^$', views.home, name='home'),
-	url(r'^about/$', direct_to_template, {"template": "about/about.html"}, name="about"),
-	url(r'^terms/$', direct_to_template, {"template": "about/terms.html"}, name="terms"),
-	url(r'^privacy/$', direct_to_template, {"template": "about/privacy.html"}, name="privacy"),
-	url(r'^dmca/$', direct_to_template, {"template": "about/dmca.html"}, name="dmca"),
-	url(r'^what_next/$', direct_to_template, {"template": "about/what_next.html"}, name="what_next"),
+	url(r'^about/$', views.about, name="about"),
+	url(r'^terms/$', views.terms, name="terms"),
+	url(r'^privacy/$', views.privacy, name="privacy"),
 )
