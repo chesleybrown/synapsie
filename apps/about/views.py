@@ -27,7 +27,7 @@ def home(request):
 	return render_to_response("about/home.html", {
 		'register_formset': register_formset,
 	}, context_instance=RequestContext(request))
-
+	
 def about(request):
 	
 	# init
@@ -37,7 +37,7 @@ def about(request):
 	return render_to_response("about/about.html", {
 		'register_formset': register_formset,
 	}, context_instance=RequestContext(request))
-
+	
 def terms(request):
 	
 	# init
@@ -47,7 +47,7 @@ def terms(request):
 	return render_to_response("about/terms.html", {
 		'register_formset': register_formset,
 	}, context_instance=RequestContext(request))
-
+	
 def privacy(request):
 	
 	# init
@@ -55,5 +55,25 @@ def privacy(request):
 	register_formset = UserCreationForm(prefix='register')
 	
 	return render_to_response("about/privacy.html", {
+		'register_formset': register_formset,
+	}, context_instance=RequestContext(request))
+	
+def acceptableuse(request):
+	
+	# init
+	identity = request.user
+	register_formset = UserCreationForm(prefix='register')
+	
+	return render_to_response("about/acceptableuse.html", {
+		'register_formset': register_formset,
+	}, context_instance=RequestContext(request))
+	
+def copyright(request):
+	
+	# init
+	identity = request.user
+	register_formset = UserCreationForm(prefix='register')
+	
+	return render_to_response("about/copyright.html", {
 		'register_formset': register_formset,
 	}, context_instance=RequestContext(request))
