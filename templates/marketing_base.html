@@ -210,6 +210,14 @@
 							{{ register_formset.password1.errors }}
 							{{ register_formset.password2.errors }}
 						</div>
+						<div class="field">
+							{{ register_formset.agree.label_tag }}
+							{{ register_formset.agree }}
+							{{ register_formset.agree.errors }}
+						</div>
+						<div class="field">
+							<p>By clicking "Register", you agree to our <a href="{% url terms %}">Terms of Service</a> and <a href="{% url privacy %}">Privacy Policy</a>.</p>
+						</div>
 					</fieldset>
 					
 					<div class="actions">
