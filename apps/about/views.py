@@ -34,10 +34,6 @@ def about(request):
 	identity = request.user
 	register_formset = UserCreationForm(prefix='register')
 	
-	# if user is logged in, redirect to records
-	if not identity.is_anonymous():
-		return HttpResponseRedirect("/records/")
-	
 	return render_to_response("about/about.html", {
 		'register_formset': register_formset,
 	}, context_instance=RequestContext(request))
@@ -48,10 +44,6 @@ def terms(request):
 	identity = request.user
 	register_formset = UserCreationForm(prefix='register')
 	
-	# if user is logged in, redirect to records
-	if not identity.is_anonymous():
-		return HttpResponseRedirect("/records/")
-	
 	return render_to_response("about/terms.html", {
 		'register_formset': register_formset,
 	}, context_instance=RequestContext(request))
@@ -61,10 +53,6 @@ def privacy(request):
 	# init
 	identity = request.user
 	register_formset = UserCreationForm(prefix='register')
-	
-	# if user is logged in, redirect to records
-	if not identity.is_anonymous():
-		return HttpResponseRedirect("/records/")
 	
 	return render_to_response("about/privacy.html", {
 		'register_formset': register_formset,
