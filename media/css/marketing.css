@@ -82,3 +82,8 @@ form.default_form .errorlist li {
 	-webkit-border-radius: 3px;
 	overflow: hidden;
 }
+
+/* About Page */
+div.about {
+	margin-left: 260px;
+}
