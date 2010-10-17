@@ -63,7 +63,7 @@ class AccountMessages(GeneralMessages):
 		status=201,
 		kind="created",
 		title=_("Activated Account"),
-		text=_("Welcome to TagLife %(account_first_name)s %(account_last_name)s"),
+		text=_("Welcome to Synapsie %(account_first_name)s %(account_last_name)s"),
 		sticky=False,
 	)
 	

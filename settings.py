@@ -1,7 +1,7 @@
 import os
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
-# Django settings for taglife project.
+# Django settings for synapsie project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -18,9 +18,9 @@ MANAGERS = ADMINS
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-		'NAME': 'dj_taglife2',						# Or path to database file if using sqlite3.
-		'USER': 'dj_taglife2',						# Not used with sqlite3.
-		'PASSWORD': 'testing',					# Not used with sqlite3.
+		'NAME': 'dj_synapsie',						# Or path to database file if using sqlite3.
+		'USER': 'dj_synapsie',						# Not used with sqlite3.
+		'PASSWORD': 'syn.apsie.141',					# Not used with sqlite3.
 		'HOST': '127.0.0.1',					  # Set to empty string for localhost. Not used with sqlite3.
 		'PORT': '3308',						 # Set to empty string for default. Not used with sqlite3.
 	}
@@ -38,6 +38,7 @@ TIME_ZONE = 'America/St_Johns'
 LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
+SITE_DOMAIN = 'www.synapsie.com'
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -79,7 +80,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 	"django.core.context_processors.i18n",
 	"django.core.context_processors.media",
 	
-	# taglife
+	# synapsie
 	"apps.session_messages.context_processors.session_messages",
 )
 
@@ -116,7 +117,7 @@ INSTALLED_APPS = (
 	'django.contrib.sites',
 	'django.contrib.messages',
 	
-	# taglife
+	# synapsie
 	'taglife.apps.accounts',
 	'taglife.apps.about',
 	'taglife.apps.session_messages',
