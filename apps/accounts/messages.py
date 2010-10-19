@@ -7,7 +7,7 @@ class AccountMessages(GeneralMessages):
 		status=400,
 		kind="error",
 		title=_("Invalid Login"),
-		text=_("You provided an invalid login. Dummy."),
+		text=_("You provided an invalid login. Silly goose."),
 		sticky=False,
 	)
 	
@@ -47,7 +47,7 @@ class AccountMessages(GeneralMessages):
 		status=200,
 		kind="success",
 		title=_("Logged In"),
-		text=_("You have successfully logged in as %(account_username)s"),
+		text=_("You have successfully logged in as %(account_username)s."),
 		sticky=False,
 	)
 	
@@ -55,7 +55,7 @@ class AccountMessages(GeneralMessages):
 		status=200,
 		kind="success",
 		title=_("Logged Out"),
-		text=_("You have successfully logged out"),
+		text=_("You have successfully logged out."),
 		sticky=False,
 	)
 	
@@ -63,7 +63,7 @@ class AccountMessages(GeneralMessages):
 		status=201,
 		kind="created",
 		title=_("Activated Account"),
-		text=_("Welcome to Synapsie %(account_first_name)s %(account_last_name)s"),
+		text=_("Welcome to Synapsie, %(account_first_name)s %(account_last_name)s!"),
 		sticky=False,
 	)
 	
@@ -79,7 +79,7 @@ class AccountMessages(GeneralMessages):
 		status=201,
 		kind="created",
 		title=_("Created Account"),
-		text=_("We have emailed you at %(account_email)s with instructions to activate your account"),
+		text=_("We have emailed you at %(account_email)s with instructions to activate your account."),
 		sticky=False,
 	)
 	
@@ -87,6 +87,6 @@ class AccountMessages(GeneralMessages):
 		status=204,
 		kind="deleted",
 		title=_("Deleted Account"),
-		text=_("You have successfully deleted your account, %(account_username)s"),
+		text=_("You have successfully deleted your account, %(account_username)s."),
 		sticky=False,
 	)
