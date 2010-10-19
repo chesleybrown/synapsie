@@ -59,6 +59,11 @@ form.default_form .field_combo.omega input {
 form.default_form .actions {
 	overflow: auto;
 }
+form.default_form .actions .social_share {
+	padding: 7px 6px 5px 0;
+	float: left;
+	width: 150px;
+}
 form.default_form .actions .action_right {
 	padding: 0 6px 5px 0;
 	float: right;
