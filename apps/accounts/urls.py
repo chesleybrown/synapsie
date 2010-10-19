@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from taglife.apps.accounts import views
+from apps.accounts import views
 
 urlpatterns = patterns('',
 	url(r'^$', views.profile, name='accounts_profile'),
