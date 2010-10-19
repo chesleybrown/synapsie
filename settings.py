@@ -128,8 +128,14 @@ INSTALLED_APPS = (
 	'tagging',
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(PROJECT_ROOT, 'logs', 'emails')
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'admin@synapsie.com'
+EMAIL_HOST_PASSWORD = 'abozv8x9d8bj'
+EMAIL_USE_TLS = True
+
 
 ACCOUNT_ACTIVATION_DAYS = 7
 ACCOUNT_PASSWORD_RESET_DAYS = 7

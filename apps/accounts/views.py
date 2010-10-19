@@ -11,7 +11,7 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.http import Http404
-from django.core import mail
+from django.core.mail import EmailMultiAlternatives
 
 from apps.accounts.models import RegistrationManager, RegistrationProfile
 from apps.accounts.messages import AccountMessages
@@ -49,7 +49,9 @@ def register(request):
 				'account_last_name': new_user.last_name,
 				'account_activation_key': user_registration_profile.activation_key,
 			})
-			mail.send_mail(user_email['subject'], user_email['body'], user_email['from_address'], [new_user.email], fail_silently=False)
+			email = EmailMultiAlternatives(user_email['subject'], user_email['body'], user_email['from_address'], [new_user.email])
+			email.attach_alternative(user_email['body'], "text/html")
+			email.send()
 			
 			# message
 			SessionMessages.create_message(request, messages.get('created', {
@@ -143,7 +145,9 @@ def reset(request):
 					'account_last_name': user.last_name,
 					'account_reset_key': user_registration_profile.reset_key,
 				})
-				mail.send_mail(user_email['subject'], user_email['body'], user_email['from_address'], [user.email], fail_silently=False)
+				email = EmailMultiAlternatives(user_email['subject'], user_email['body'], user_email['from_address'], [user.email])
+				email.attach_alternative(user_email['body'], "text/html")
+				email.send()
 				
 				# inform user they have been emailed
 				SessionMessages.create_message(request, messages.get('password_reset', {
