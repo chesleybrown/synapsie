@@ -118,13 +118,13 @@ INSTALLED_APPS = (
 	'django.contrib.messages',
 	
 	# synapsie
-	'taglife.apps.accounts',
-	'taglife.apps.about',
-	'taglife.apps.session_messages',
+	'apps.accounts',
+	'apps.about',
+	'apps.session_messages',
 	'piston',
-	'taglife.apps.general',
-	'taglife.apps.records',
-	'taglife.apps.tags',
+	'apps.general',
+	'apps.records',
+	'apps.tags',
 	'tagging',
 )
 
