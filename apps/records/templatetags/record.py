@@ -1,6 +1,6 @@
 from django import template
 
-from taglife.apps.records.models import Record
+from apps.records.models import Record
 
 register = template.Library()
 
