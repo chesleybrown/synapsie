@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from taglife.apps.records import views
+from apps.records import views
 
 urlpatterns = patterns('',
 	url(r'^$', views.index_records, name='record_index'),
