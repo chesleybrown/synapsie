@@ -59,7 +59,7 @@ def register(request):
 				'account_last_name': new_user.last_name,
 				'account_activation_key': user_registration_profile.activation_key,
 			})
-			email = EmailMultiAlternatives(user_email['subject'], user_email['body'], user_email['from_address'], ['chezbrown@gmail.com', 'chesley@synapsie.com'])
+			email = EmailMultiAlternatives(user_email['subject'], user_email['body'], user_email['from_address'], ['chesley@synapsie.com'])
 			email.attach_alternative(user_email['body'], "text/html")
 			email.send()
 			
