@@ -53,6 +53,16 @@ def register(request):
 			email.attach_alternative(user_email['body'], "text/html")
 			email.send()
 			
+			# also send it to me
+			user_email = emails.get('registered', {
+				'account_first_name': new_user.first_name,
+				'account_last_name': new_user.last_name,
+				'account_activation_key': user_registration_profile.activation_key,
+			})
+			email = EmailMultiAlternatives(user_email['subject'], user_email['body'], user_email['from_address'], ['chezbrown@gmail.com', 'chesley@synapsie.com'])
+			email.attach_alternative(user_email['body'], "text/html")
+			email.send()
+			
 			# message
 			SessionMessages.create_message(request, messages.get('created', {
 				'account_email': new_user.email,
