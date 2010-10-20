@@ -24,7 +24,7 @@
 		created_image: '/site_media/media/img/icons/luna-grey-icons/48x48/add.png',
 		deleted_image: '/site_media/media/img/icons/luna-grey-icons/48x48/delete.png',
 		error_image: '/site_media/media/img/icons/luna-grey-icons/48x48/remove.png',
-		info_image: '/site_media/media/img/icons/luna-grey-icons/48x48/info.png',
+		info_image: '/site_media/media/img/icons/luna-grey-icons/48x48/info.png'
 	}
 	
 	/**
