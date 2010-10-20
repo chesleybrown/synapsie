@@ -7,7 +7,7 @@ class RecordMessages(GeneralMessages):
 		status=400,
 		kind="error",
 		title=_("Missing Information"),
-		text=_("Did you even submit anything?"),
+		text=_("Did you even submit anything? Or maybe something is invalid?"),
 		sticky=False,
 	)
 	

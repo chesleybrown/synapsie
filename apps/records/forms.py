@@ -5,7 +5,7 @@ from datetime import date, datetime
 from django.utils.translation import ugettext_lazy as _
 
 class RecordForm(forms.ModelForm):
-	text = forms.CharField(label=_('Life Record...'), widget=forms.Textarea(
+	text = forms.CharField(label=_('Life Record...'), max_length=5000, widget=forms.Textarea(
 		attrs={'class': 'text use_elastic'}
 	))
 	tags = TagField(label=_('Tags for Life Record...'), widget=forms.SelectMultiple, required=False)
