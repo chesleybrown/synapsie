@@ -42,6 +42,7 @@ class RecordHandler(BaseHandler):
 		records_paginator = False
 		results_per_page = 25
 		clean_records = list()
+		clean_tags = list()
 		response = self.empty_response
 		
 		if record_id is not None:
@@ -60,8 +61,35 @@ class RecordHandler(BaseHandler):
 			except Record.DoesNotExist:
 				return False
 			
-			return record
-		
+			
+			# clean the tags
+			clean_tags = list()
+			for tag in record.tags:
+				clean_tag = {
+					'id': tag.id,
+					'name': tag.name,
+				}
+				clean_tags.append(clean_tag)
+			
+			# clean before returning
+			clean_record = {
+				'id': record.id,
+				'user_id': record.user_id,
+				'text': record.text,
+				'personal': record.personal,
+				'created': record.created,
+				'tags': clean_tags,
+			}
+			
+			message = messages.get('found')
+			
+			# returned message with clean record
+			response['message'] = message
+			response['data'] = {
+				'record': clean_record,
+			}
+			return response
+			
 		else:
 			
 			# if a user is trying to view another user's public feed
@@ -101,14 +129,25 @@ class RecordHandler(BaseHandler):
 		
 		if records_paginator:
 			for record in records_paginator.object_list:
+				
+				# clean the tags
+				clean_tags = list()
+				for tag in record.tags:
+					clean_tag = {
+						'id': tag.id,
+						'name': tag.name,
+					}
+					clean_tags.append(clean_tag)
+				
 				clean_record = {
 					'id': record.id,
 					'user_id': record.user_id,
 					'text': record.text,
 					'personal': record.personal,
 					'created': record.created,
-					'tags': record.tags
+					'tags': clean_tags,
 				}
+				
 				clean_records.append(clean_record)
 		
 		# determine message to return based on results remaining
@@ -118,7 +157,7 @@ class RecordHandler(BaseHandler):
 		else:
 			message = messages.get('more')
 		
-		# return message and record created
+		# return message and requested records
 		response['message'] = message
 		response['data'] = {
 			'results_per_page': results_per_page,

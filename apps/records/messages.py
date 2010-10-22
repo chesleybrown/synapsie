@@ -19,6 +19,14 @@ class RecordMessages(GeneralMessages):
 		sticky=False,
 	)
 	
+	found = dict(
+		status=200,
+		kind="success",
+		title=_("Record Found"),
+		text=_("The requested record was found."),
+		sticky=False,
+	)
+	
 	no_more = dict(
 		status=200,
 		kind="warning",
