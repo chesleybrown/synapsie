@@ -95,8 +95,8 @@ div.about {
 
 /* Quote Box */
 div.quote_box {
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 	background-color: #F0F4F8;
 	border: 1px solid #D4DFEA;
 	margin: 10px 0 30px 0;
@@ -128,4 +128,65 @@ div.quote_box div.quote_bg {
 	left: 10px;
 	position: absolute;
 	width: 35px;
+}
+
+/* Twitter Box */
+.twitter_follow {
+	background: url(/site_media/media/img/layout/body/box_bg.png) repeat-x #fff;
+	border: 1px solid #ccc;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-box-shadow: 1px 2px 2px #ddd;
+	-webkit-box-shadow: 1px 2px 2px #ddd;
+	margin: 10px 15px;
+}
+.twitter_follow > .border {
+	border: 1px solid #fff;
+	padding: 5px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+.twitter_follow a {
+	background: url(/site_media/media/img/layout/marketing/social/twitter-48_48.png) no-repeat left center;
+	display: block;
+	font-size: 19px;
+	padding: 10px 0 10px 58px;
+	height: 48px;
+	text-shadow: 1px 1px 0 #fff;
+	margin-bottom: 1px;
+	opacity: 0.75;
+	-webkit-animation: 'twitter_follow_out' 0.5s; /* Animation duration in seconds */
+}
+.twitter_follow a:hover {
+	-webkit-animation: 'twitter_follow' 0.5s; /* Animation duration in seconds */
+	opacity: 1;
+}
+@-webkit-keyframes twitter_follow{
+	0% {
+		opacity: 0.75;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@-webkit-keyframes twitter_follow_out{
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0.75;
+	}
+}
+.twitter_follow a:active {
+	margin-top: 1px;
+	margin-bottom: 0;
+}
+.twitter_follow a > span.sub {
+	margin-left: 1px;
+	display: block;
+	font-size: 11px;
+	color: #999;
+}
+.twitter_follow a:hover > span.sub {
+	color: #666;
 }

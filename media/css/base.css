@@ -174,7 +174,7 @@ form.record_form .field input:focus {
 	border-color: #00527F;
 }
 div.default_form_container {
-	background: url(/site_media/media/img/layout/marketing/signup_bg.png) repeat-x #fff;
+	background: url(/site_media/media/img/layout/body/box_bg.png) repeat-x #fff;
 	border: 1px solid #ccc;
 	padding: 0 45px;
 	-moz-border-radius: 5px;
