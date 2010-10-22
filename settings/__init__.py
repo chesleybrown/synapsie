@@ -133,6 +133,7 @@ INSTALLED_APPS = (
 COMPRESS = True
 COMPRESS_AUTO = True
 COMPRESS_VERSION = True
+CSSTIDY_BINARY = '/usr/bin/csstidy'
 COMPRESS_CSS = {
 	'marketing': {
 		'source_filenames': (
