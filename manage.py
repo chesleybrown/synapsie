@@ -4,7 +4,7 @@ import socket
 
 try:
 	# if not running on production, import development settings
-	if not socket.gethostname == 'onefortyone':
+	if not socket.gethostname() == 'onefortyone':
 		import settings.development
 	else:
 		import settings # Assumed to be in the same directory.
@@ -17,7 +17,7 @@ except ImportError:
 if __name__ == "__main__":
 	
 	# if not running on production
-	if not socket.gethostname == 'onefortyone':
+	if not socket.gethostname() == 'onefortyone':
 		execute_manager(settings.development)
 	else:
 		execute_manager(settings)
