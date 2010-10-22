@@ -4,7 +4,7 @@ import socket
 
 try:
 	# if not running on production, import development settings
-	if not socket.gethostname == 'onefortyone.synapsie.com':
+	if not socket.gethostname == 'onefortyone':
 		import settings.development
 	else:
 		import settings # Assumed to be in the same directory.
