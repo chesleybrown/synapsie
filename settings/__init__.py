@@ -134,6 +134,7 @@ COMPRESS = True
 COMPRESS_AUTO = True
 COMPRESS_VERSION = True
 CSSTIDY_BINARY = '/usr/bin/csstidy'
+COMPRESS_CSS_FILTERS = None
 COMPRESS_CSS = {
 	'marketing': {
 		'source_filenames': (
