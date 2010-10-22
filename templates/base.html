@@ -4,18 +4,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title>Synapsie : {% if SITE_NAME %}{{ SITE_NAME }} : {% endif %}{% block head_title %}{% endblock %}</title>
-		<!--[if IE]><style>
-			div {
-				zoom: 1; /* trigger hasLayout */
-			}
-		</style><![endif]-->
-		{% if LANGUAGE_BIDI %}
-		<style type="text/css" media="screen">
-			div.right_panel {
-				float: left; /* hotfix for sidebar */
-			}
-		</style>
-		{% endif %}
+		
 		{% block extra_head_base %}
 			{% block extra_head %}{% endblock %}
 		{% endblock %}

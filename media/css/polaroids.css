@@ -1,6 +1,7 @@
 ul.polaroids {
 	list-style: none;
 	position: relative;
+	margin: 10px 0;
 }
 ul.polaroids li {
 	display: inline;

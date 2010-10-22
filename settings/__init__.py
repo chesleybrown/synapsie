@@ -1,9 +1,9 @@
 import os
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+PROJECT_ROOT = os.path.join(os.path.abspath(os.path.dirname(__file__)), '../')
 
 # Django settings for synapsie project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 # tells django to serve media through django.views.static.serve.

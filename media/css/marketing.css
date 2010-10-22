@@ -92,3 +92,40 @@ form.default_form .errorlist li {
 div.about {
 	margin-left: 260px;
 }
+
+/* Quote Box */
+div.quote_box {
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	background-color: #F0F4F8;
+	border: 1px solid #D4DFEA;
+	margin: 10px 0 30px 0;
+	padding: 20px 20px 10px;
+	position: relative;
+}
+h4.quote_icon {
+	background: url(/site_media/media/img/layout/quote/header_bg.png) no-repeat scroll 0 0 transparent;
+	display: block;
+	height: 28px;
+	margin-bottom: 5px;
+	padding: 0 0 2px 28px;
+}
+div.quote_box p {
+	font-size: 12px;
+	font-style: italic;
+	text-shadow: 1px 1px 0 #fff;
+}
+div.quote_box p.citation {
+	color: #A7A5A4;
+	font-size: 10px;
+	font-style: normal;
+	margin-top: -5px;
+}
+div.quote_box div.quote_bg {
+	background: url(/site_media/media/img/layout/quote/tail.gif) no-repeat scroll 0 0 transparent;
+	bottom: -25px;
+	height: 26px;
+	left: 10px;
+	position: absolute;
+	width: 35px;
+}
