@@ -10,12 +10,6 @@ TEMPLATE_DEBUG = DEBUG
 # tells django to serve media through django.views.static.serve.
 SERVE_MEDIA = DEBUG
 
-ADMINS = (
-	# ('Your Name', 'your_email@domain.com'),
-)
-
-MANAGERS = ADMINS
-
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -27,51 +21,14 @@ DATABASES = {
 	}
 }
 
-SITE_ID = 1
 SITE_DOMAIN = 'taglife.local:8000'
 
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
-USE_I18N = True
-
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = PROJECT_ROOT
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = '/site_media/media/'
-
-# Absolute path to the directory that holds static files like app media.
-# Example: "/home/media/media.lawrence.com/apps/"
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'site_media', 'static')
-
-# URL that handles the static files like app media.
-# Example: "http://media.lawrence.com"
-STATIC_URL = '/site_media/static/'
-
-# Additional directories which hold static files
-STATICFILES_DIRS = (
-	os.path.join(PROJECT_ROOT, 'media'),
-)
-
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+# compression disabled for development
+COMPRESS = False
+COMPRESS_CSS_FILTERS = None
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(PROJECT_ROOT, 'logs', 'emails')
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '587'
-EMAIL_HOST_USER = 'noreply@synapsie.com'
-EMAIL_HOST_PASSWORD = 'abozv8x9d8bj'
-EMAIL_USE_TLS = True
-
-
-ACCOUNT_ACTIVATION_DAYS = 7
-ACCOUNT_PASSWORD_RESET_DAYS = 7
 
 LOGGING = {
 	'version': 1,

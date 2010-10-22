@@ -51,7 +51,7 @@ MEDIA_ROOT = PROJECT_ROOT
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = '/site_media/media/'
+MEDIA_URL = '/site_media/'
 
 # Absolute path to the directory that holds static files like app media.
 # Example: "/home/media/media.lawrence.com/apps/"
@@ -122,11 +122,76 @@ INSTALLED_APPS = (
 	'apps.about',
 	'apps.session_messages',
 	'piston',
+	'compress',
 	'apps.general',
 	'apps.records',
 	'apps.tags',
 	'tagging',
 )
+
+# compressed CSS and JS
+COMPRESS = True
+COMPRESS_AUTO = True
+COMPRESS_VERSION = True
+COMPRESS_CSS = {
+	'marketing': {
+		'source_filenames': (
+			'media/css/reset.css',
+			'media/css/960.css',
+			'media/css/text.css',
+			'media/css/base.css',
+			'media/css/marketing.css',
+			'media/css/tabs.css',
+			'media/css/icons.css',
+			'media/css/polaroids.css',
+			'media/css/records.css',
+			'media/css/tags.css',
+			'media/css/jquery.gritter.css',
+		),
+		'output_filename': 'media/css/min/marketing.r?.css',
+	},
+	'app': {
+		'source_filenames': (
+			'media/css/reset.css',
+			'media/css/960.css',
+			'media/css/text.css',
+			'media/css/base.css',
+			'media/css/records.css',
+			'media/css/tabs.css',
+			'media/css/charts.css',
+			'media/css/icons.css',
+			'media/css/tags.css',
+			'media/css/jquery.datePicker.css',
+			'media/css/jquery.gritter.css',
+		),
+		'output_filename': 'media/css/min/app.r?.css',
+	}
+}
+COMPRESS_JS = {
+	'site': {
+		'source_filenames': (
+			'media/js/lib/min/jquery-1.4.3.min.js',
+			'media/js/lib/date.js',
+			'media/js/plugins/jquery.fcbkcomplete.js',
+			'media/js/custom/jquery.base.js',
+			'media/js/custom/jquery.dropdown_menus.js',
+			'media/js/custom/jquery.tabs.js',
+			'media/js/plugins/jquery.form-2.36.js',
+			'media/js/plugins/jquery.infieldlabel.js',
+			'media/js/plugins/jquery.elastic.js',
+			'media/js/plugins/jquery.timeago.js',
+			'media/js/plugins/jquery.blockUI.js',
+			'media/js/plugins/jquery.datePicker-2.1.2.js',
+			'media/js/plugins/jquery.highlight.js',
+			'media/js/plugins/jquery.gritter.js',
+			'media/js/plugins/jquery.ezpz_hint.js',
+			'media/js/custom/jquery.gritter_extend.js',
+			'media/js/custom/jquery.sidebar.js',
+			'media/js/custom/loader.uservoice.js',
+		),
+		'output_filename': 'media/js/min/site.r?.js',
+	}
+}
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(PROJECT_ROOT, 'logs', 'emails')
