@@ -178,11 +178,7 @@
 				
 				<div class="tab_container">
 					<div id="sidebar_tab_used" class="tab_content">
-						{% if used_tags %}
-							{% render_tags used_tags %}
-						{% else %}
-							<p>Your used tags will appear here.</p>
-						{% endif %}
+						{% render_tags used_tags %}
 					</div>
 					<div id="sidebar_tab_popular" class="tab_content hidden">
 						<ul class="tags_chart">

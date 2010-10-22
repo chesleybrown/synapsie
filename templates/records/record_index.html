@@ -236,18 +236,9 @@
 	</div>
 	
 	<ul id="user_record_list" class="records">
-		{% if records_paginator.object_list %}
-			{% for record in records_paginator.object_list %}
-				{% render_record record %}
-			{% endfor %}
-		{% else %}
-			<li>
-				<div class="default_form_container">
-					<h1>Welcome to Synapsie</h1>
-					<h4>To begin indexing your life, just start adding records above.</h4>
-				</div>
-			</li>
-		{% endif %}
+		{% for record in records_paginator.object_list %}
+			{% render_record record %}
+		{% endfor %}
 	</ul>
 	
 	{% if records_paginator.object_list|length == records_per_page %}
