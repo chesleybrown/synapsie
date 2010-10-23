@@ -190,3 +190,62 @@ div.quote_box div.quote_bg {
 .twitter_follow a:hover > span.sub {
 	color: #666;
 }
+
+/* Browser Options */
+.browser_options {
+	width: 774px;
+	margin: 10px auto 30px;
+	overflow: auto;
+}
+.browser_options .option {
+	float: left;
+	margin: 1px;
+}
+.browser_options .option .browser {
+	width: 128px;
+	height: 128px;
+	margin: 15px 64px;
+	display: block;
+}
+.browser_options .option .chrome {
+	background: url(/site_media/media/img/icons/browsers/chrome.png);
+}
+.browser_options .option .firefox {
+	background: url(/site_media/media/img/icons/browsers/firefox.png);
+}
+.browser_options .option .safari {
+	background: url(/site_media/media/img/icons/browsers/safari.png);
+}
+.browser_options .title {
+	display: block;
+	font-size: 18px;
+	font-weight: bold;
+	color: #333;
+	text-align: center;
+	clear: both;
+}
+
+.browser_not_supported {
+	margin: 25px auto;
+	width: 256px;
+}
+.browser_not_supported .ie {
+	width: 64px;
+	height: 64px;
+	background: url(/site_media/media/img/icons/browsers/ie.png);
+	margin: 0 auto;
+}
+.browser_not_supported .title {
+	font-size: 14px;
+	font-weight: bold;
+	color: #333;
+	text-align: center;
+	clear: both;
+}
+.browser_not_supported .sub {
+	font-size: 12px;
+	font-weight: bold;
+	color: #666;
+	text-align: center;
+	clear: both;
+}

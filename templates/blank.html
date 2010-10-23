@@ -1,0 +1,71 @@
+{% load i18n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}" xml:lang="{{ LANGUAGE_CODE }}" lang="{{ LANGUAGE_CODE }}">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<title>Synapsie : {% if SITE_NAME %}{{ SITE_NAME }} : {% endif %}{% block head_title %}{% endblock %}</title>
+		
+		{% block extra_head_base %}
+			{% block extra_head %}{% endblock %}
+		{% endblock %}
+	</head>
+	
+	<body class="{% block body_class %}{% endblock %}">
+		{% if site_wide_announcements %}
+			<div id="site_wide_announcements">
+				<ul>
+					{% for announcement in site_wide_announcements %}
+					<li>
+						<a href="{{ announcement.get_absolute_url }}">{{ announcement }}</a> -
+						<a href="{% url announcement_hide announcement.pk %}?next={{ request.path }}">{% trans "Hide announcement" %}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endif %}
+		
+		<div id="site_container">
+			
+			<div class="container_12">
+				
+				<div id="site_header">
+					<div id="tabhead">
+						<div class="grid_12">
+							<div id="logo">{% block logo_link_image %}{% endblock %}</div>
+							<div id="slogan">{% block slogan_link_image %}{% endblock %}</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="clear"></div>
+				
+				<div id="site_content">
+					<div class="grid_12">
+						{% block body %}{% endblock %}
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		<div id="site_footer">
+			<div class="container_12">
+				<div id="site_footer_content">
+					<div class="site_footer_top"></div>
+					<div class="grid_12">
+						{% block footer %}{% endblock %}
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="hidden">
+			{% block containers %}{% endblock %}
+		</div>
+		
+		{% block extra_body_base %}
+			{% block extra_body %}{% endblock %}
+		{% endblock %}
+	</body>
+</html>

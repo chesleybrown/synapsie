@@ -1,0 +1,36 @@
+{% extends "blank_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Home" %}{% endblock %}
+
+{% block body %}
+	{{ block.super }}
+	
+	<div class="default_form_container">
+		<h1>Seriously? You're still using Internet Explorer?</h1>
+		<h4>You should really upgrade to something better. Either one of the following is leaps and bounds better than what you're using now. And best of all, we actually support these browsers.</h4>
+		
+		<div class="browser_options">
+			<a href="http://www.google.com/chrome" class="option">
+				<span class="browser chrome"></span>
+				<span class="title">Chrome</span>
+			</a>
+			<a href="http://www.mozilla.com/en-US/" class="option">
+				<span class="browser firefox"></span>
+				<span class="title">Firefox</span>
+			</a>
+			<a href="http://www.apple.com/safari/download/" class="option">
+				<span class="browser safari"></span>
+				<span class="title">Safari</span>
+			</a>
+		</div>
+		
+		<div class="browser_not_supported">
+			<div class="ie"></div>
+			<div class="title">Internet Explorer</div>
+			<div class="sub">Not Supported</div>
+		</div>
+	</div>
+	
+{% endblock %}
