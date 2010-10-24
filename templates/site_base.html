@@ -179,8 +179,29 @@
 				<div class="tab_container">
 					<div id="sidebar_tab_used" class="tab_content">
 						{% render_tags used_tags %}
+						
+						{% if not used_tags %}
+							<div id="instruction-no_used_tags" class="message_box">
+								<div class="border">
+									<div class="content">
+										<span class="sub">All the tags you attach to your records will appear right here.</span>
+									</div>
+								</div>
+							</div>
+						{% endif %}
 					</div>
 					<div id="sidebar_tab_popular" class="tab_content hidden">
+						
+						{% if not popular_tags %}
+							<div id="instruction-no_popular_tags" class="message_box">
+								<div class="border">
+									<div class="content">
+										<span class="sub">Easily see which tags you use the most here.</span>
+									</div>
+								</div>
+							</div>
+						{% endif %}
+						
 						<ul class="tags_chart">
 							{% for tag in popular_tags %}
 								{% if forloop.counter > 10 %}

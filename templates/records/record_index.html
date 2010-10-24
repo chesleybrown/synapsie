@@ -241,6 +241,17 @@
 		{% endfor %}
 	</ul>
 	
+	{% if not records_paginator.object_list %}
+		<div id="instruction-no_records" class="message_box very_happy">
+			<div class="border">
+				<div class="content">
+					<span class="title">Awesome. Now you can start recording your life!</span>
+					<span class="sub">It's so easy too. Just type in what you want to record above and then add your tags. You can also set the date if you want to record something that happened in the past. If you want, you can make any record <strong>Shared</strong> so that your friends can see them too. If it's <strong>Personal</strong>, you're the only person that will see it. Have fun!</span>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	
 	{% if records_paginator.object_list|length == records_per_page %}
 		<div class="records_more">
 			<div class="action">

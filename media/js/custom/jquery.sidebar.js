@@ -184,6 +184,11 @@
 			// fade it all fancy
 			$(tag).fadeIn('slow');
 			
+			// always remove the instruction message if it exists
+			$('#instruction-no_used_tags').fadeOut('slow', function(e) {
+				$(this).remove();
+			});
+			
 			return true;
 			
 		}
@@ -262,6 +267,11 @@
 			
 			// fade it all fancy
 			$(popular_tag).fadeIn('slow');
+			
+			// always remove the instruction message if it exists
+			$('#instruction-no_popular_tags').fadeOut('slow', function(e) {
+				$(this).remove();
+			});
 			
 			// recalculate all widths
 			update_popular_tag_widths(sidebar);
@@ -401,6 +411,8 @@
 			return true;
 			
 		}
+		
+		return null;
 		
 	}
 	

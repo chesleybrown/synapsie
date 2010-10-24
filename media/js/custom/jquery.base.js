@@ -442,6 +442,9 @@ $(document).ready(function() {
 						}, 'slow', 'linear');
 					});
 					
+					// always remove the instruction message if it exists
+					$('#instruction-no_records').fadeOut('slow');
+					
 					// clear form
 					$(record_text)
 						.val('')
