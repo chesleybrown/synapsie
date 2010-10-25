@@ -1,6 +1,7 @@
 from types import *
 import sys, pprint
 import apps.session_messages as SessionMessages
+import settings
 
 from apps.records.messages import RecordMessages
 from apps.records.models import Record
@@ -55,6 +56,19 @@ def index_records(request, tags=False, page=1):
 	used_tags = get_used_tags(Record, identity)
 	popular_tags = get_popular_tags(used_tags)
 	
+	# this block of code will handle merging used_tags and the default_tags
+	autocomplete_tags = settings.DEFAULT_TAGS
+	for tag in used_tags:
+		is_unique_tag = True
+		
+		for autocomplete_tag in autocomplete_tags:
+			if autocomplete_tag['name'] == tag.name:
+				is_unique_tag = False
+				break
+		
+		if is_unique_tag:
+			autocomplete_tags.append({'name': tag.name})
+	
 	# render
 	return render_to_response('records/record_index.html', {
 		'record_edit_formset': record_edit_formset,
@@ -62,6 +76,7 @@ def index_records(request, tags=False, page=1):
 		'selected_tags': selected_tags,
 		'used_tags': used_tags,
 		'popular_tags': popular_tags,
+		'autocomplete_tags': autocomplete_tags,
 		'records_paginator': records_paginator,
 		'records_per_page': results_per_page,
 	}, context_instance=RequestContext(request))
@@ -176,12 +191,26 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	used_tags = get_used_tags(Record, identity)
 	popular_tags = get_popular_tags(used_tags)
 	
+	# this block of code will handle merging used_tags and the default_tags
+	autocomplete_tags = settings.DEFAULT_TAGS
+	for tag in used_tags:
+		is_unique_tag = True
+		
+		for autocomplete_tag in autocomplete_tags:
+			if autocomplete_tag['name'] == tag.name:
+				is_unique_tag = False
+				break
+		
+		if is_unique_tag:
+			autocomplete_tags.append({'name': tag.name})
+	
 	# render
 	return render_to_response('records/record_search.html', {
 		'record_edit_formset': record_edit_formset,
 		'record_search_formset': record_search_formset,
 		'selected_tags': selected_tags,
 		'used_tags': used_tags,
+		'autocomplete_tags': autocomplete_tags,
 		'popular_tags': popular_tags,
 		'records_paginator': records_paginator,
 		'selected_tags': selected_tags,
