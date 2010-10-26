@@ -61,13 +61,15 @@ def index_records(request, tags=False, page=1):
 	for tag in used_tags:
 		is_unique_tag = True
 		
-		for autocomplete_tag in autocomplete_tags:
-			if autocomplete_tag['name'] == tag.name:
+		for idx, autocomplete_tag in enumerate(autocomplete_tags):
+			if autocomplete_tag['name'].lower() == tag.name.lower():
 				is_unique_tag = False
 				break
 		
-		if is_unique_tag:
-			autocomplete_tags.append({'name': tag.name})
+		if not is_unique_tag:
+			autocomplete_tags.pop(idx)
+		
+		autocomplete_tags.append({'name': tag.name})
 	
 	# render
 	return render_to_response('records/record_index.html', {
@@ -196,13 +198,15 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	for tag in used_tags:
 		is_unique_tag = True
 		
-		for autocomplete_tag in autocomplete_tags:
-			if autocomplete_tag['name'] == tag.name:
+		for idx, autocomplete_tag in enumerate(autocomplete_tags):
+			if autocomplete_tag['name'].lower() == tag.name.lower():
 				is_unique_tag = False
 				break
 		
-		if is_unique_tag:
-			autocomplete_tags.append({'name': tag.name})
+		if not is_unique_tag:
+			autocomplete_tags.pop(idx)
+		
+		autocomplete_tags.append({'name': tag.name})
 	
 	# render
 	return render_to_response('records/record_search.html', {
