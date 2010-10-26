@@ -1,0 +1,16 @@
+/* User Voice */
+#uservoice-feedback-tab {
+	position: absolute;
+	-webkit-animation-name: uservoice-feedback;
+	-webkit-animation-duration: 1s;
+}
+@-webkit-keyframes uservoice-feedback {
+	0% {
+		opacity: 0;
+		left: -25px;
+	}
+	100% {
+		opacity: 1;
+		right: 0;
+	}
+}

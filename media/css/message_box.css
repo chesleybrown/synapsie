@@ -1,0 +1,75 @@
+/* Message Box */
+.message_box {
+	background: url(/site_media/media/img/layout/body/box_bg.png) repeat-x #fff;
+	border: 1px solid #ccc;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-box-shadow: 1px 2px 2px #ddd;
+	-webkit-box-shadow: 1px 2px 2px #ddd;
+	margin: 10px 15px;
+}
+.message_box > .border {
+	border: 1px solid #fff;
+	padding: 5px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+.message_box a,
+.message_box .content {
+	background: no-repeat left center;
+	display: block;
+	font-size: 19px;
+	padding: 10px 0 10px 0;
+	text-shadow: 1px 1px 0 #fff;
+	margin-bottom: 1px;
+	opacity: 0.6;
+	-webkit-animation: 'message_box_out' 0.5s; /* Animation duration in seconds */
+}
+.message_box a:hover,
+.message_box .content:hover {
+	-webkit-animation: 'message_box' 0.5s; /* Animation duration in seconds */
+	opacity: 1;
+}
+@-webkit-keyframes message_box {
+	0% {
+		opacity: 0.6;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@-webkit-keyframes message_box_out {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0.6;
+	}
+}
+.message_box a:active,
+.message_box .content:active {
+	margin-top: 1px;
+	margin-bottom: 0;
+}
+.message_box a > span.sub,
+.message_box .content > span.sub {
+	margin-left: 1px;
+	display: block;
+	font-size: 11px;
+	color: #999;
+}
+.message_box a:hover > span.sub,
+.message_box .content:hover > span.sub {
+	color: #666;
+}
+
+.message_box.twitter a,
+.message_box.twitter .content {
+	background-image: url(/site_media/media/img/layout/marketing/social/twitter-48_48.png);
+	padding-left: 58px;
+}
+.message_box.very_happy a,
+.message_box.very_happy .content {
+	background-image: url(/site_media/media/img/icons/emoticon/48/7.png);
+	padding-left: 58px;
+}

@@ -1,0 +1,158 @@
+/* Sexy Button */
+.input_button_wrapper,
+.input_button_large {
+	font-weight: bold;
+	display: inline-block;
+	white-space: nowrap;
+	cursor: pointer;
+	text-shadow: 1px 1px #fff;
+	text-decoration: none;
+	display: -moz-inline-box;
+	display: inline-block;
+}
+.input_button_wrapper,
+.input_button,
+.input_submit {
+	color: #000;
+	height: 30px;
+	line-height: 30px;
+	text-shadow: 1px 1px #fff;
+	border: none;
+	background: none;
+	padding: 0;
+	cursor: pointer;
+	font-weight: bold;
+}
+.input_button_large {
+	height: 50px;
+	line-height: 50px;
+}
+.input_button_large .input_button {
+	font-size: 15px;
+}
+.input_button_start,
+.input_button_body,
+.input_button_end {
+	display: inline-block;
+	float: left;
+	background-color: transparent;
+	background-position: 100% 0;
+	background-repeat: no-repeat;
+}
+.input_button_wrapper .input_button_start,
+.input_button_wrapper .input_button_body,
+.input_button_wrapper .input_button_end,
+.input_submit .input_button_start,
+.input_submit .input_button_body,
+.input_submit .input_button_end {
+	background-image: url(/site_media/media/img/layout/form/input_button.png);
+	height: 30px;
+	line-height: 30px;
+}
+.input_button_large .input_button_start,
+.input_button_large .input_button_body,
+.input_button_large .input_button_end {
+	/*background-image: url(../../images/layout/3.0/form/input_button_lg.png);*/
+	height: 50px;
+	line-height: 50px;
+}
+.input_button_wrapper .input_button_body .icon,
+.input_button_large .input_button_body .icon {
+	float: left;
+	display: inline-block;
+}
+.input_button_large .input_button_body .icon {
+	height: 50px;
+	line-height: 50px;
+}
+.input_button_wrapper .input_button_body .icon {
+	height: 30px;
+	line-height: 30px;
+}
+.input_button_start {
+	background-position: 0 0;
+	width: 14px;
+}
+.input_button_body {
+	background-position: center 0;
+}
+.input_button_end {
+	background-position: 100% 0;
+	width: 14px;
+}
+/* hover */
+.input_button_wrapper:hover .input_button_start,
+.input_button_large:hover .input_button_start {
+	background-position: 0 -81px;
+}
+.input_button_wrapper:hover .input_button_body,
+.input_button_large:hover .input_button_body {
+	background-position: center -81px;
+}
+.input_button_wrapper:hover .input_button_end,
+.input_button_large:hover .input_button_end {
+	background-position: 100% -81px;
+}
+.input_button_wrapper:active .input_button_start,
+.input_button_large:active .input_button_start {
+	background-position: 0 -162px;
+}
+.input_button_wrapper:active .input_button_body,
+.input_button_large:active .input_button_body {
+	background-position: center -162px;
+}
+.input_button_wrapper:active .input_button_end,
+.input_button_large:active .input_button_end {
+	background-position: 100% -162px;
+}
+
+/* disabled */
+.disabled .input_button_body,
+.disabled .input_button_body input {
+	color: #777;
+}
+.disabled .input_button_start,
+.disabled .input_button_start {
+	background-position: 0 -243px;
+}
+.disabled .input_button_body,
+.disabled .input_button_body {
+	background-position: center -243px;
+}
+.disabled .input_button_end,
+.disabled .input_button_end {
+	background-position: 100% -243px;
+}
+.disabled:hover .input_button_start,
+.disabled:hover .input_button_start {
+	background-position: 0 -324px;
+}
+.disabled:hover .input_button_body,
+.disabled:hover .input_button_body {
+	background-position: center -324px;
+}
+.disabled:hover .input_button_end,
+.disabled:hover .input_button_end {
+	background-position: 100% -324px;
+}
+
+a.input_button_wrapper:link,
+a.input_button_large:link {
+	color: #000;
+	text-decoration: none;
+}
+a.input_button_wrapper:visited,
+a.input_button_large:visited {
+	color: #000;
+	text-decoration: none;
+}
+a.input_button_wrapper:hover,
+a.input_button_large:hover {
+	color: #000;
+	text-decoration: none;
+}
+a.input_button_wrapper:focus,
+a.input_button_large:focus {
+	color: #000;
+	outline: none;
+}
