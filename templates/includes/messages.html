@@ -1,0 +1,22 @@
+{% load i18n %}
+
+<div id="site_messages">
+	{% if messages or session_messages  %}
+		<ul class="messages">
+			{% for message in messages %}
+				<li class="message" id="message_{{ forloop.counter }}"><a href="#" onclick="$('#message_{{ forloop.counter }}').fadeOut(); return false;"><small>{% trans "clear" %}</small></a> {{ message }}</li>
+			{% endfor %}
+			
+			{% for message in session_messages %}
+				<li class="message" id="session_message_{{ forloop.counter }}">
+					<div class="status">{{ message.status }}</div>
+					<div class="kind">{{ message.kind }}</div>
+					<div class="title">{{ message.title }}</div>
+					<div class="text">{{ message.text }}</div>
+					<div class="sticky">{{ message.sticky }}</div>
+					<a href="#" onclick="$('#session_message_{{ forloop.counter }}').fadeOut(); return false;"><small>{% trans "clear" %}</small></a> {{ message.text }}
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+</div>

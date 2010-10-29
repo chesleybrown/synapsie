@@ -1,13 +1,15 @@
 {% load i18n %}
+{% load compressed %}
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}" xml:lang="{{ LANGUAGE_CODE }}" lang="{{ LANGUAGE_CODE }}">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<title>Synapsie : {% if SITE_NAME %}{{ SITE_NAME }} : {% endif %}{% block head_title %}{% endblock %}</title>
 		
-		<!--[if lt IE 8]>
-		<script type="text/javascript" src="/site_media/media/js/custom/jquery.ie.js" charset="utf-8"></script>
-		<![endif]-->
+		{% include 'includes/ie_redirect.html' %}
+		
+		{% compressed_css 'marketing' %}
 		
 		{% block extra_head_base %}
 			{% block extra_head %}{% endblock %}
@@ -15,18 +17,8 @@
 	</head>
 	
 	<body class="{% block body_class %}{% endblock %}">
-		{% if site_wide_announcements %}
-			<div id="site_wide_announcements">
-				<ul>
-					{% for announcement in site_wide_announcements %}
-					<li>
-						<a href="{{ announcement.get_absolute_url }}">{{ announcement }}</a> -
-						<a href="{% url announcement_hide announcement.pk %}?next={{ request.path }}">{% trans "Hide announcement" %}</a>
-					</li>
-					{% endfor %}
-				</ul>
-			</div>
-		{% endif %}
+		
+		{% include 'includes/announcement.html' %}
 		
 		<div id="site_container">
 			
@@ -35,8 +27,12 @@
 				<div id="site_header">
 					<div id="tabhead">
 						<div class="grid_7">
-							<div id="logo">{% block logo_link_image %}{% endblock %}</div>
-							<div id="slogan">{% block slogan_link_image %}{% endblock %}</div>
+							<div id="logo">
+								<a class="logo_link" href="{% url home %}"></a>
+							</div>
+							<div id="slogan">
+								<div class="slogan_link"></div>
+							</div>
 						</div>
 						<div class="grid_5">
 							<div id="login">
@@ -72,31 +68,12 @@
 				{% block body_outer %}
 				<div id="site_content">
 					<div class="grid_7">
-						<div id="site_messages">
-							{% if messages or session_messages  %}
-								<ul class="messages">
-									{% for message in messages %}
-									<li class="message" id="message_{{ forloop.counter }}"><a href="#" onclick="$('#message_{{ forloop.counter }}').fadeOut(); return false;"><small>{% trans "clear" %}</small></a> {{ message }}</li>
-									{% endfor %}
-									
-									{% for message in session_messages %}
-									<li class="message" id="session_message_{{ forloop.counter }}">
-										<div class="status">{{ message.status }}</div>
-										<div class="kind">{{ message.kind }}</div>
-										<div class="title">{{ message.title }}</div>
-										<div class="text">{{ message.text }}</div>
-										<div class="sticky">{{ message.sticky }}</div>
-										<a href="#" onclick="$('#session_message_{{ forloop.counter }}').fadeOut(); return false;"><small>{% trans "clear" %}</small></a> {{ message.text }}
-									</li>
-									{% endfor %}
-								</ul>
-							{% endif %}
-						</div>
+						{% include 'includes/messages.html' %}
 						
 						{% block body %}{% endblock %}
 					</div>
 					<div class="grid_5">
-						{% block sidebar %}{% endblock %}
+						{% include 'sidebars/signup.html' %}
 					</div>
 				</div>
 				{% endblock %}
@@ -110,6 +87,7 @@
 				<div id="site_footer_content">
 					<div class="site_footer_top"></div>
 					<div class="grid_12">
+						{% include 'includes/footer.html' %}
 						{% block footer %}{% endblock %}
 					</div>
 				</div>
@@ -117,11 +95,16 @@
 		</div>
 		
 		<div class="hidden">
+			{% include 'includes/containers.html' %}
 			{% block containers %}{% endblock %}
 		</div>
+		
+		{% compressed_js 'site' %}
 		
 		{% block extra_body_base %}
 			{% block extra_body %}{% endblock %}
 		{% endblock %}
+		
+		{% include 'includes/google_analytics.html' %}
 	</body>
 </html>

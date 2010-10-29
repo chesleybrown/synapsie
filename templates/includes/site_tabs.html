@@ -1,0 +1,20 @@
+{% load i18n %}
+
+{% if user.is_authenticated %}
+	{% spaceless %}
+		<ul class="site_tabs">
+			<li id="tab_profile"><a href="{% url accounts_profile %}">{% trans "Profile" %}</a></li>
+			<li id="tab_records"><a href="{% url record_index %}">{% trans "Records" %}</a></li>
+			<li id="tab_search"><a href="{% url record_search %}">{% trans "Search" %}</a></li>
+			<li id="tab_tags"><a href="{% url tag_index %}">{% trans "Tags" %}</a></li>
+		</ul>
+	{% endspaceless %}
+{% else %}
+	{% spaceless %}
+		<ul class="site_tabs">
+			<li id="tab_home"><a href="{% url home %}">{% trans "Home" %}</a></li>
+			<li id="tab_register"><a href="{% url accounts_register %}">{% trans "Register" %}</a></li>
+			<li id="tab_login"><a href="{% url accounts_login %}">{% trans "Login" %}</a></li>
+		</ul>
+	{% endspaceless %}
+{% endif %}

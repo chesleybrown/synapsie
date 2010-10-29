@@ -1,0 +1,19 @@
+{% load i18n %}
+
+{% if user.is_authenticated %}
+	<ul class="identity_menu">
+		<li>
+			<a href="{% url accounts_profile %}" class="user_username"><span>{% trans "Logged in as" %}</span> {{ user.get_full_name }}</a>
+		</li>
+		{% if user.is_staff %}
+			<li>
+				<a href="/admin/">{% trans "Admin" %}</a>
+			</li>
+		{% endif %}
+		<li>
+			<a href="{% url accounts_logout %}">{% trans "Logout" %}</a>
+		</li>
+	</ul>
+{% else %}
+	<!--login url here-->
+{% endif %}

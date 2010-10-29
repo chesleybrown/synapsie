@@ -1,0 +1,108 @@
+{% load i18n %}
+
+<div id="site_sidebar">
+	
+	{% if register_formset %}
+		<div id="signup_container" class="default_form_container">
+			<h1>Sign up for <strong>syn</strong>apsie</h1>
+			<h4>it's free, <strong>obviously</strong></h4>
+			
+			<form action="{% url accounts_register %}" method="post" id="signup_form" class="default_form use_inline_labels">
+				{% csrf_token %}
+				<fieldset>
+					<div class="field">
+						<div class="field_combo">
+							{{ register_formset.first_name.label_tag }}
+							{{ register_formset.first_name }}
+						</div>
+						<div class="field_combo omega">
+							{{ register_formset.last_name.label_tag }}
+							{{ register_formset.last_name }}
+						</div>
+						{{ register_formset.first_name.errors }}
+						{{ register_formset.last_name.errors }}
+					</div>
+					<div class="field">
+						{{ register_formset.email.label_tag }}
+						{{ register_formset.email }}
+						{{ register_formset.email.errors }}
+					</div>
+					<div class="field">
+						{{ register_formset.username.label_tag }}
+						{{ register_formset.username }}
+						{{ register_formset.username.errors }}
+					</div>
+					<div class="field">
+						<div class="field_combo">
+							{{ register_formset.password1.label_tag }}
+							{{ register_formset.password1 }}
+						</div>
+						<div class="field_combo omega">
+							{{ register_formset.password2.label_tag }}
+							{{ register_formset.password2 }}
+						</div>
+						{{ register_formset.password1.errors }}
+						{{ register_formset.password2.errors }}
+					</div>
+					<div class="field">
+						{{ register_formset.agree.label_tag }}
+						{{ register_formset.agree }}
+						{{ register_formset.agree.errors }}
+					</div>
+					<div class="field">
+						<p>By clicking "Register", you agree to our <a href="{% url terms %}">Terms of Service</a> and <a href="{% url privacy %}">Privacy Policy</a>.</p>
+					</div>
+				</fieldset>
+				
+				<div class="actions">
+					<div class="social_share">
+						<!-- AddThis Button BEGIN -->
+						<div class="addthis_toolbox addthis_default_style">
+							<a class="addthis_button_preferred_1"></a>
+							<a class="addthis_button_preferred_2"></a>
+							<a class="addthis_button_preferred_3"></a>
+							<a class="addthis_button_preferred_4"></a>
+							<a class="addthis_button_compact"></a>
+						</div>
+						<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
+						<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=synapsie"></script>
+						<!-- AddThis Button END -->
+					</div>
+					<div class="action_right">
+						<div class="input_button_wrapper">
+							<div class="input_button_start"></div>
+							<div class="input_button_body">
+								<input type="submit" id="account_register" name="submit" value="{% trans "Register" %}" class="input_submit" />
+							</div>
+							<div class="input_button_end"></div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		
+		<div class="quote_box">
+			<h4 class="quote_icon">What are people saying?</h4>
+			<p>The next time my girlfriend asks me when our first kiss was, she'll be happy I use Synapsie.</p>
+			<p class="citation">- Chris T., St. John's, NL</p>
+			<div class="quote_bg"></div>
+		</div>
+		
+		<div class="quote_box">
+			<p>Because my brain has better things to do.</p>
+			<p class="citation">- Zach B., Trepassey, NL</p>
+			<div class="quote_bg"></div>
+		</div>
+		
+		<div class="message_box twitter">
+			<div class="border">
+				<a href="http://www.twitter.com/synapsieapp">
+					<span class="title">Follow The Progress on Twitter</span>
+					<span class="sub">And learn about the new stuff before anyone else</span>
+				</a>
+			</div>
+		</div>
+		
+	{% endif %}
+	
+</div>

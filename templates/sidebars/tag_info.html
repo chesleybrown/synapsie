@@ -1,0 +1,84 @@
+{% load i18n %}
+{% load tag %}
+
+<div id="site_sidebar">
+	{% if user %}
+		<div class="use_tabs sidebar_tabs">
+			<ul class="tabs">
+				<li class="active"><a href="#sidebar_tab_used">{% trans "Used" %}</a></li>
+				<li><a href="#sidebar_tab_popular">{% trans "Popular" %}</a></li>
+			</ul>
+			
+			<div class="tab_container">
+				<div id="sidebar_tab_used" class="tab_content">
+					{% render_tags used_tags %}
+					
+					{% if not used_tags %}
+						<div id="instruction-no_used_tags" class="message_box">
+							<div class="border">
+								<div class="content">
+									<span class="sub">All the tags you attach to your records will appear right here.</span>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+				</div>
+				<div id="sidebar_tab_popular" class="tab_content hidden">
+					
+					{% if not popular_tags %}
+						<div id="instruction-no_popular_tags" class="message_box">
+							<div class="border">
+								<div class="content">
+									<span class="sub">Easily see which tags you use the most here.</span>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+					
+					<ul class="tags_chart">
+						{% for tag in popular_tags %}
+							{% if forloop.counter > 10 %}
+								<!-- These are hidden on load... -->
+								<li class="popular_tag hidden">
+									<div class="label">
+										<ul class="tags">
+											{% render_tag tag %}
+										</ul>
+									</div>
+									<div class="content">
+										<span class="value" style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
+									</div>
+								</li>
+							{% else %}
+								<li class="popular_tag">
+									<div class="label">
+										<ul class="tags">
+											{% render_tag tag %}
+										</ul>
+									</div>
+									<div class="content">
+										<span class="value" style="width: {{ tag.percent }}%;">{{ tag.count }}</span>
+									</div>
+								</li>
+							{% endif %}
+						{% endfor %}
+					</ul>
+					
+					{% if popular_tags|length > 10 %}
+						<div class="actions">
+							<div class="action">
+								<a href="#" class="input_button_wrapper use_tag_popular_show_all">
+									<span class="input_button_start"></span>
+									<span class="input_button_body">
+										<span class="input_button_content icon icon_tags">{% trans "Show All" %}</span>
+									</span>
+									<span class="input_button_end"></span>
+								</a>
+							</div>
+						</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	{% endif %}
+</div>
