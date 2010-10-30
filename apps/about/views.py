@@ -14,15 +14,25 @@ from apps.records.models import Record
 from apps.tags.utils import get_used_tags, get_popular_tags
 from tagging.models import Tag, TaggedItem
 
+def root(request):
+	
+	# init
+	identity = request.user
+	
+	# if user is logged in, redirect to records
+	if not identity.is_anonymous():
+		return HttpResponseRedirect("/records/")
+	
+	else:
+		return HttpResponseRedirect("/home/")
+	
+	return False
+
 def home(request):
 	
 	# init
 	identity = request.user
 	register_formset = UserCreationForm(prefix='register')
-	
-	# if user is logged in, redirect to records
-	if not identity.is_anonymous():
-		return HttpResponseRedirect("/records/")
 	
 	return render_to_response("about/home.html", {
 		'register_formset': register_formset,

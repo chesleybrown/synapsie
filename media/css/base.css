@@ -125,6 +125,9 @@ body > #site_container {
 	margin-top: 56px;
 	float: left;
 }
+#site_header #logout {
+	margin-top: 56px;
+}
 #site_header #login div.field {
 	float: left;
 	margin-right: 10px;
@@ -148,7 +151,8 @@ body > #site_container {
 	font-size: 12px;
 	width: 130px;
 }
-#site_header #login div.actions {
+#site_header #login div.actions,
+#site_header #logout div.actions {
 	margin-top: 34px;
 	float: right;
 }

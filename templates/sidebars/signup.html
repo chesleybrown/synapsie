@@ -2,7 +2,7 @@
 
 <div id="site_sidebar">
 	
-	{% if register_formset %}
+	{% if register_formset and not user.is_authenticated %}
 		<div id="signup_container" class="default_form_container">
 			<h1>Sign up for <strong>syn</strong>apsie</h1>
 			<h4>it's free, <strong>obviously</strong></h4>
@@ -81,28 +81,28 @@
 			</form>
 		</div>
 		
-		<div class="quote_box">
-			<h4 class="quote_icon">What are people saying?</h4>
-			<p>The next time my girlfriend asks me when our first kiss was, she'll be happy I use Synapsie.</p>
-			<p class="citation">- Chris T., St. John's, NL</p>
-			<div class="quote_bg"></div>
-		</div>
-		
-		<div class="quote_box">
-			<p>Because my brain has better things to do.</p>
-			<p class="citation">- Zach B., Trepassey, NL</p>
-			<div class="quote_bg"></div>
-		</div>
-		
-		<div class="message_box twitter">
-			<div class="border">
-				<a href="http://www.twitter.com/synapsieapp">
-					<span class="title">Follow The Progress on Twitter</span>
-					<span class="sub">And learn about the new stuff before anyone else</span>
-				</a>
-			</div>
-		</div>
-		
 	{% endif %}
+	
+	<div class="quote_box">
+		<h4 class="quote_icon">What are people saying?</h4>
+		<p>The next time my girlfriend asks me when our first kiss was, she'll be happy I use Synapsie.</p>
+		<p class="citation">- Chris T., St. John's, NL</p>
+		<div class="quote_bg"></div>
+	</div>
+	
+	<div class="quote_box">
+		<p>Because my brain has better things to do.</p>
+		<p class="citation">- Zach B., Trepassey, NL</p>
+		<div class="quote_bg"></div>
+	</div>
+	
+	<div class="message_box twitter">
+		<div class="border">
+			<a href="http://www.twitter.com/synapsieapp">
+				<span class="title">Follow The Progress on Twitter</span>
+				<span class="sub">And learn about the new stuff before anyone else</span>
+			</a>
+		</div>
+	</div>
 	
 </div>

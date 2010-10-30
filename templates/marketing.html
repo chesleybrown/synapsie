@@ -28,36 +28,54 @@
 					<div id="tabhead">
 						<div class="grid_7">
 							<div id="logo">
-								<a class="logo_link" href="{% url home %}"></a>
+								<a class="logo_link" href="{% url root %}"></a>
 							</div>
 							<div id="slogan">
 								<div class="slogan_link"></div>
 							</div>
 						</div>
 						<div class="grid_5">
-							<div id="login">
-								<form class="" action="{% url accounts_login %}" method="post">
-									{% csrf_token %}
-									<div id="id_username_field" class="field">
-										<label for="username">Already have an account?</label>
-										<input title="{% trans "Username or Email" %}" type="text" name="username" value="" id="username" />
-									</div>
-									<div id="id_password_field" class="field">
-										<a href="{% url accounts_reset %}">Forgot your password?</a>
-										<input title="{% trans "Password" %}" type="password" name="password" value="" autocomplete="off" />
-									</div>
-									
-									<div class="actions">
-										<div class="input_button_wrapper">
-											<div class="input_button_start"></div>
-											<div class="input_button_body">
-												<input type="submit" id="account_login" name="submit" value="{% trans "Login" %}" class="input_submit" />
-											</div>
-											<div class="input_button_end"></div>
+							{% if not user.is_authenticated %}
+								<div id="login">
+									<form class="" action="{% url accounts_login %}" method="post">
+										{% csrf_token %}
+										<div id="id_username_field" class="field">
+											<label for="username">Already have an account?</label>
+											<input title="{% trans "Username or Email" %}" type="text" name="username" value="" id="username" />
 										</div>
-									</div>
-								</form>
-							</div>
+										<div id="id_password_field" class="field">
+											<a href="{% url accounts_reset %}">Forgot your password?</a>
+											<input title="{% trans "Password" %}" type="password" name="password" value="" autocomplete="off" />
+										</div>
+										
+										<div class="actions">
+											<div class="input_button_wrapper">
+												<div class="input_button_start"></div>
+												<div class="input_button_body">
+													<input type="submit" id="account_login" name="submit" value="{% trans "Login" %}" class="input_submit" />
+												</div>
+												<div class="input_button_end"></div>
+											</div>
+										</div>
+									</form>
+								</div>
+							{% else %}
+								<div id="logout">
+									<form class="" action="{% url accounts_logout %}" method="post">
+										{% csrf_token %}
+										
+										<div class="actions">
+											<div class="input_button_wrapper">
+												<div class="input_button_start"></div>
+												<div class="input_button_body">
+													<input type="submit" id="account_loout" name="submit" value="{% trans "Logout" %}" class="input_submit" />
+												</div>
+												<div class="input_button_end"></div>
+											</div>
+										</div>
+									</form>
+								</div>
+							{% endif %}
 						</div>
 					</div>
 					<div id="site_header_footer"></div>
