@@ -98,7 +98,7 @@ MIDDLEWARE_CLASSES = (
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.transaction.TransactionMiddleware',
-	'middleware.ssl.SSLRedirect',
+	'middlewares.ssl.SSLRedirect',
 )
 
 ROOT_URLCONF = 'urls'
