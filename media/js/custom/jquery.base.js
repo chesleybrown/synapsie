@@ -1357,16 +1357,19 @@ $(document).ready(function() {
 	 * Setup Record Form Date Picker
 	 */
 	function setupDatePicker(container) {
+		
+		// date picker defaults
 		Date.firstDayOfWeek = 0; //sunday
+		$.dpText.PREV_YEAR = '';
+		$.dpText.PREV_MONTH = '';
+		$.dpText.NEXT_YEAR = '';
+		$.dpText.NEXT_MONTH = '';
+		
 		$(container).find('.use_datepicker')
 			.datePicker({
 				inline: true,
 				startDate: '01/01/1970',
-				endDate: (new Date()).asString(),
-				previousYear: '',
-				previousMonth: '',
-				nextYear: '',
-				nextMonth: ''
+				endDate: (new Date()).asString()
 			})
 			.bind(
 				'dateSelected',

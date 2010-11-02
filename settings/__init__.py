@@ -191,7 +191,7 @@ COMPRESS_JS = {
 			'media/js/plugins/jquery.elastic.js',
 			'media/js/plugins/jquery.timeago.js',
 			'media/js/plugins/jquery.blockUI.js',
-			'media/js/plugins/jquery.datePicker-2.1.2.js',
+			'media/js/plugins/jquery.datePicker.js',
 			'media/js/plugins/jquery.highlight.js',
 			'media/js/plugins/jquery.gritter.js',
 			'media/js/plugins/jquery.ezpz_hint.js',
