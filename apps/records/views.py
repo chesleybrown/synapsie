@@ -140,6 +140,7 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	record_edit_formset = RecordForm(prefix='record_edit')
 	record_search_formset = RecordSearchForm()
 	selected_tags = False
+	selected_tags_raw = False
 	popular_tags_printable = list()
 	used_tags_printable = ''
 	selected_tags_printable = ''
@@ -176,9 +177,13 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 		if type(tags) is UnicodeType or type(tags) is StringType:
 			tags = ',' + tags # makes it comma separated tags
 		
-		selected_tags = get_tag_list(tags)
-		selected_tags_printable = ",".join(map(str, selected_tags))
-		record_list = TaggedItem.objects.get_by_model(record_list, selected_tags)
+		selected_tags_raw = get_tag_list(tags)
+		selected_tags_printable = ",".join(map(str, selected_tags_raw))
+		record_list = TaggedItem.objects.get_by_model(record_list, selected_tags_raw)
+		
+		selected_tags = list()
+		for selected_tag in selected_tags_raw:
+			selected_tags.append(selected_tag.name)
 	
 	# number of items per page
 	paginator = Paginator(record_list, results_per_page)
@@ -212,7 +217,6 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	return render_to_response('records/record_search.html', {
 		'record_edit_formset': record_edit_formset,
 		'record_search_formset': record_search_formset,
-		'selected_tags': selected_tags,
 		'used_tags': used_tags,
 		'autocomplete_tags': autocomplete_tags,
 		'popular_tags': popular_tags,
