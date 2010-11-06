@@ -11,7 +11,7 @@ urlpatterns = patterns('',
 	url(r'^public\/?$', views.public_records, name='record_public'),
 	
 	url(r'^search/tags/(?P<tags>[\'\w\-\!\@\#\$\%\^\&\*\(\),\s\.]*)\/?$', views.search_records, {'SSL': True}, name='record_search'),
-	url(r'^search/tags/(?P<add_tag>[\'\w\-\!\@\#\$\%\^\&\*\(\),\s\.]*),(?P<tags>[\'\w\-\!\@\#\$\%\^\&\*\(\),\s\.]*)(?P<text>.*)\/?$', views.search_records, {'SSL': True}, name='record_search'),
+	url(r'^search/tags/(?P<add_tag>[\'\w\-\!\@\#\$\%\^\&\*\(\),\s\.]*),(?P<tags>[\'\w\-\!\@\#\$\%\^\&\*\(\),\s\.]*)/(?P<text>.*)\/?$', views.search_records, {'SSL': True}, name='record_search'),
 	url(r'^search/tags/(?P<add_tag>[\'\w\-\!\@\#\$\%\^\&\*\(\),\s\.]*),(?P<tags>[\'\w\-\!\@\#\$\%\^\&\*\(\),\s\.]*)\?text=(?P<text>.+)\/?$', views.search_records, {'SSL': True}, name='record_search'),
 	url(r'^search\/?$', views.search_records, {'SSL': True}, name='record_search'),
 	

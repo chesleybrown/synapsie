@@ -144,7 +144,7 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	popular_tags_printable = list()
 	used_tags_printable = ''
 	selected_tags_printable = ''
-	results_per_page = 500
+	results_per_page = 25
 	paginator = False
 	has_records = False
 	
@@ -225,6 +225,7 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 		'selected_tags_printable': selected_tags_printable,
 		'text': text,
 		'has_records': has_records,
+		'records_per_page': results_per_page,
 	}, context_instance=RequestContext(request))
 
 @login_required

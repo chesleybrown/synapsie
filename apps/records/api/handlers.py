@@ -12,7 +12,7 @@ from piston.utils import rc, validate
 from apps.records.messages import RecordMessages
 from apps.records.models import Record
 from apps.records.forms import RecordForm, RecordAddTagsForm
-from tagging.models import Tag
+from tagging.models import Tag, TaggedItem
 from tagging.utils import parse_tag_input
 
 class AnonymousRecordHandler(AnonymousBaseHandler):
@@ -31,7 +31,7 @@ class RecordHandler(BaseHandler):
 		data = {},
 	)
 	
-	def read(self, request, record_id=None, tags=False, page=1, user_id=None, username=None, public=False):
+	def read(self, request, record_id=None, tags=False, page=1, user_id=None, username=None, public=False, text=None):
 		
 		#init
 		identity = request.user
@@ -45,6 +45,7 @@ class RecordHandler(BaseHandler):
 		clean_tags = list()
 		response = self.empty_response
 		
+		# just getting one record
 		if record_id is not None:
 			
 			try:
@@ -90,6 +91,7 @@ class RecordHandler(BaseHandler):
 			}
 			return response
 			
+		# getting more than one record
 		else:
 			
 			# if a user is trying to view another user's public feed
@@ -113,14 +115,21 @@ class RecordHandler(BaseHandler):
 			if public or user != identity:
 				record_list = record_list.filter(personal=0)
 			
+			# query provided
+			if text:
+				record_list = record_list.filter(text__icontains=text)
+			
 			# filter by tags if provided
-			if (tags):
+			if tags and len(tags) > 0:
 				selected_tags = parse_tag_input(tags)
 				record_list = TaggedItem.objects.get_by_model(record_list, selected_tags)
 			
 			# number of items per page
 			paginator = Paginator(record_list, results_per_page)
-			
+			print text
+			print tags
+			print page
+			#print selected_tags
 			# If page request is out of range, deliver last page of results.
 			try:
 				records_paginator = paginator.page(page)

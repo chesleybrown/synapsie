@@ -1207,6 +1207,7 @@ $(document).ready(function() {
 		//single tag delete
 		$(container).find('a.use_record_more').bind('click', function(e) {
 			var element = $(this);
+			var query = $('#id_text').val();
 			var holder = element.parent().parent();
 			var user_record_list = $('#user_record_list');
 			var loading = holder.find('.loading');
@@ -1235,13 +1236,16 @@ $(document).ready(function() {
 							new_record = buildRecord(records[key], false);
 							user_record_list.append(new_record);
 							
-							new_record.animate({
+							$(new_record).animate({
 								height: 'toggle'
 							}, 'slow', 'linear', function() {
 								$(this).animate({
 									opacity: 1
 								}, 'slow', 'linear');
 							});
+							
+							// if this is search, highlight any new results
+							$(new_record).find('.header .text').highlight(query);
 						}
 						
 						//determine if there are anymore results to find
@@ -1547,6 +1551,16 @@ $(document).ready(function() {
 	});
 	/*
 	 * END Setup Tag Popular Show All
+	 */
+	
+	
+	/*
+	 * Record Creation Focus
+	 * If the Record Creation input exists, focus on page load
+	 */
+	$('#id_record_create-text').focus();
+	/*
+	 * END Record Creation Focus
 	 */
 	
 	

@@ -82,6 +82,21 @@
 		</div>
 		
 	{% endif %}
+	
+	{% if records_paginator.object_list|length == records_per_page %}
+		<div class="records_more">
+			<div class="action">
+				<a href="{% url api-record page='2',emitter_format='.json',tags=selected_tags_printable,text=text %}" class="input_button_wrapper use_record_more">
+					<span class="input_button_start"></span>
+					<span class="input_button_body">
+						<span class="icon icon_record_more">{% trans "More" %}</span>
+					</span>
+					<span class="input_button_end"></span>
+				</a>
+			</div>
+			<div class="loading"></div>
+		</div>
+	{% endif %}
 {% endblock %}
 
 {% block extra_body %}
