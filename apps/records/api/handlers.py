@@ -126,9 +126,7 @@ class RecordHandler(BaseHandler):
 			
 			# number of items per page
 			paginator = Paginator(record_list, results_per_page)
-			print text
-			print tags
-			print page
+			
 			#print selected_tags
 			# If page request is out of range, deliver last page of results.
 			try:
