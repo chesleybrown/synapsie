@@ -1245,7 +1245,9 @@ $(document).ready(function() {
 							});
 							
 							// if this is search, highlight any new results
-							$(new_record).find('.header .text').highlight(query);
+							if (query) {
+								$(new_record).find('.header .text').highlight(query);
+							}
 						}
 						
 						//determine if there are anymore results to find
