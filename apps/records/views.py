@@ -7,6 +7,7 @@ from apps.records.messages import RecordMessages
 from apps.records.models import Record
 from apps.records.forms import RecordForm, RecordSearchForm
 from apps.tags.utils import get_used_tags, get_popular_tags
+from apps.records.services import RecordService
 from tagging.models import Tag, TaggedItem
 from tagging.utils import get_tag_list
 
@@ -25,32 +26,18 @@ def index_records(request, tags=False, page=1):
 	
 	# init
 	identity = request.user
-	record_list = False
-	records = False
+	record_service = RecordService()
 	records_paginator = False
 	record_edit_formset = RecordForm(prefix='record_edit')
 	record_create_formset = RecordForm(prefix='record_create')
 	selected_tags = False
 	popular_tags_printable = list()
 	results_per_page = 25
+	page = 1
 	paginator = False
 	
 	# get user records
-	record_list = Record.objects.all().filter(user=identity).order_by('-created', '-id')
-	
-	# filter by tags if provided
-	if tags:
-		selected_tags = tags.split(",")
-		record_list = TaggedItem.objects.get_by_model(record_list, selected_tags)
-	
-	# number of items per page
-	paginator = Paginator(record_list, results_per_page)
-	
-	# If page request is out of range, deliver last page of results.
-	try:
-		records_paginator = paginator.page(page)
-	except (EmptyPage, InvalidPage):
-		records_paginator = paginator.page(paginator.num_pages)
+	records_paginator = record_service.getMultiple(request, tags, page)
 	
 	# get used/popular tags for current user
 	used_tags = get_used_tags(Record, identity)
@@ -87,11 +74,13 @@ def public_records(request, user_id=0, username=None, page=1):
 	
 	# init
 	identity = request.user
-	user = identity
+	record_service = RecordService()
 	records = False
+	tags = None
 	selected_tags = False
 	popular_tags_printable = list()
 	results_per_page = 25
+	page = 1
 	
 	try:
 		# if a user is provided, get that user's public records instead
@@ -106,16 +95,7 @@ def public_records(request, user_id=0, username=None, page=1):
 		raise Http404
 	
 	# get user records
-	record_list = Record.objects.all().filter(user=user, personal=0).order_by('-created', '-id')
-	
-	# number of items per page
-	paginator = Paginator(record_list, results_per_page)
-	
-	# If page request is out of range, deliver last page of results.
-	try:
-		records_paginator = paginator.page(page)
-	except (EmptyPage, InvalidPage):
-		records_paginator = paginator.page(paginator.num_pages)
+	records_paginator = record_service.getMultiple(request, tags, page, user)
 	
 	# get used/popular tags for current user
 	used_tags = get_used_tags(Record, identity)

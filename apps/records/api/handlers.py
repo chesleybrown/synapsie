@@ -12,6 +12,7 @@ from piston.utils import rc, validate
 from apps.records.messages import RecordMessages
 from apps.records.models import Record
 from apps.records.forms import RecordForm, RecordAddTagsForm
+from apps.records.services import RecordService
 from tagging.models import Tag, TaggedItem
 from tagging.utils import parse_tag_input
 
@@ -36,6 +37,7 @@ class RecordHandler(BaseHandler):
 		#init
 		identity = request.user
 		user = identity
+		record_service = RecordService()
 		messages = RecordMessages()
 		message = False
 		records = False
@@ -45,23 +47,24 @@ class RecordHandler(BaseHandler):
 		clean_tags = list()
 		response = self.empty_response
 		
+		# if a user is trying to view another user's public feed
+		if user_id is not None:
+			try:
+				# if a user is provided, get that user's public records instead
+				if user_id:
+					user = User.objects.get(pk=user_id)
+				
+				# if a username is provided, get by that instead
+				elif username:
+					user = User.objects.get(username__iexact=username)
+				
+			except User.DoesNotExist:
+				raise Http404
+		
 		# just getting one record
 		if record_id is not None:
 			
-			try:
-				record = Record.objects.get(pk=record_id)
-				
-				# check if record was found
-				if record is None:
-					return False
-				
-				# test permission to view
-				if not record.can_view(identity):
-					return False
-				
-			except Record.DoesNotExist:
-				return False
-			
+			record = record_service.getOne(request, record_id, tags, page, user, public, text)
 			
 			# clean the tags
 			clean_tags = list()
@@ -89,87 +92,49 @@ class RecordHandler(BaseHandler):
 			response['data'] = {
 				'record': clean_record,
 			}
-			return response
 			
 		# getting more than one record
 		else:
 			
-			# if a user is trying to view another user's public feed
-			if user_id is not None:
-				try:
-					# if a user is provided, get that user's public records instead
-					if user_id:
-						user = User.objects.get(pk=user_id)
+			records_paginator = record_service.getMultiple(request, tags, page, user, public, text)
+			
+			if records_paginator:
+				for record in records_paginator.object_list:
 					
-					# if a username is provided, get by that instead
-					elif username:
-						user = User.objects.get(username__iexact=username)
+					# clean the tags
+					clean_tags = list()
+					for tag in record.tags:
+						clean_tag = {
+							'id': tag.id,
+							'name': tag.name,
+						}
+						clean_tags.append(clean_tag)
 					
-				except User.DoesNotExist:
-					raise Http404
-				
-			# get user records
-			record_list = Record.objects.all().filter(user=user).order_by('-created', '-id')
-			
-			# only show public if enabled (added user & identity check for safety)
-			if public or user != identity:
-				record_list = record_list.filter(personal=0)
-			
-			# query provided
-			if text:
-				record_list = record_list.filter(text__icontains=text)
-			
-			# filter by tags if provided
-			if tags and len(tags) > 0:
-				selected_tags = parse_tag_input(tags)
-				record_list = TaggedItem.objects.get_by_model(record_list, selected_tags)
-			
-			# number of items per page
-			paginator = Paginator(record_list, results_per_page)
-			
-			#print selected_tags
-			# If page request is out of range, deliver last page of results.
-			try:
-				records_paginator = paginator.page(page)
-			except (EmptyPage, InvalidPage):
-				records_paginator = None
-		
-		if records_paginator:
-			for record in records_paginator.object_list:
-				
-				# clean the tags
-				clean_tags = list()
-				for tag in record.tags:
-					clean_tag = {
-						'id': tag.id,
-						'name': tag.name,
+					clean_record = {
+						'id': record.id,
+						'user_id': record.user_id,
+						'text': record.text,
+						'personal': record.personal,
+						'created': record.created,
+						'tags': clean_tags,
 					}
-					clean_tags.append(clean_tag)
-				
-				clean_record = {
-					'id': record.id,
-					'user_id': record.user_id,
-					'text': record.text,
-					'personal': record.personal,
-					'created': record.created,
-					'tags': clean_tags,
-				}
-				
-				clean_records.append(clean_record)
+					
+					clean_records.append(clean_record)
+			
+			# determine message to return based on results remaining
+			if (records_paginator is None
+				or records_paginator and len(records_paginator.object_list) < results_per_page):
+				message = messages.get('no_more')
+			else:
+				message = messages.get('more')
+			
+			# return message and requested records
+			response['message'] = message
+			response['data'] = {
+				'results_per_page': results_per_page,
+				'records': clean_records,
+			}
 		
-		# determine message to return based on results remaining
-		if (records_paginator is None
-			or records_paginator and len(records_paginator.object_list) < results_per_page):
-			message = messages.get('no_more')
-		else:
-			message = messages.get('more')
-		
-		# return message and requested records
-		response['message'] = message
-		response['data'] = {
-			'results_per_page': results_per_page,
-			'records': clean_records,
-		}
 		return response
 	
 	def create(self, request):
@@ -360,12 +325,14 @@ class RecordHandler(BaseHandler):
 		
 		# test permission to delete
 		if not record.can_delete(identity):
-			SessionMessages.create_message(request, messages.get('permission_denied'))
-			return HttpResponseRedirect(reverse('record_index'))
+			response['message'] = messages.get('permission_denied')
 		
-		# delete it
-		record.delete()
+		# they have permission to delete
+		else:
+			# delete it
+			record.delete()
+			
+			# delete message
+			response['message'] = messages.get('deleted')
 		
-		# return delete message
-		response['message'] = messages.get('deleted')
 		return response
