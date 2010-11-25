@@ -39,12 +39,18 @@
 								<div id="login">
 									<form class="" action="{% url accounts_login %}" method="post">
 										{% csrf_token %}
-										<div id="id_username_field" class="field">
+										
+										<div class="field label">
 											<label for="username">Already have an account?</label>
+										</div>
+										<div class="field label">
+											<a href="{% url accounts_reset %}">Forgot your password?</a>
+										</div>
+										
+										<div id="id_username_field" class="field">
 											<input title="{% trans "Username or Email" %}" type="text" name="username" value="" id="username" />
 										</div>
 										<div id="id_password_field" class="field">
-											<a href="{% url accounts_reset %}">Forgot your password?</a>
 											<input title="{% trans "Password" %}" type="password" name="password" value="" autocomplete="off" />
 										</div>
 										

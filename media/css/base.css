@@ -126,11 +126,18 @@ body > #site_container {
 	float: left;
 }
 #site_header #logout {
-	margin-top: 56px;
+	margin-top: 89px;
 }
 #site_header #login div.field {
 	float: left;
 	margin-right: 10px;
+	margin-top: 0;
+}
+#site_header #login div.label {
+	float: left;
+	margin-top: 15px;
+	margin-bottom: 0;
+	width: 142px;
 }
 #site_header #login div.field label,
 #site_header #login div.field a {
@@ -153,7 +160,10 @@ body > #site_container {
 }
 #site_header #login div.actions,
 #site_header #logout div.actions {
-	margin-top: 34px;
+	margin-top: 1px;
+	float: left;
+}
+#site_header #logout div.actions {
 	float: right;
 }
 
