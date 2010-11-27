@@ -45,6 +45,9 @@ class Record(models.Model):
 		if num_tags_with_value > 0:
 			average = total / num_tags_with_value
 		
+		else:
+			average = None
+		
 		return average
 	
 	quality = property(get_quality)
