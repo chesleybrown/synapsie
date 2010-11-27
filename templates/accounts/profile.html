@@ -75,6 +75,22 @@
 								</div>
 							</div>
 						</li>
+						<li>
+							<div class="container">
+								<div class="header">
+									<div class="label">
+										<label class="icon icon_quality_of_life" for="id_date_joined">{% trans "Quality of Life" %}</label>
+									</div>
+									<div id="id_date_joined" class="content">
+										{% if quality_of_life %}
+											{{ quality_of_life|floatformat:1 }}
+										{% else %}
+											{% trans "N/A" %}
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -188,4 +204,38 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="clear"></div>
+	<!--
+	<div class="grid_5 alpha">
+		<div class="site_content_tabs use_tabs">
+			<ul class="tabs">
+				<li class="active"><a href="#user_stats_01">{% trans "My Stats" %}</a></li>
+			</ul>
+			
+			<div class="tab_container">
+				<div id="user_stats_01" class="tab_content">
+					<div id="chartcontainer"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="grid_4 omega">
+		<div class="site_content_tabs use_tabs">
+			<ul class="tabs">
+				<li class="active"><a href="#user_stats_02">{% trans "More Stats" %}</a></li>
+			</ul>
+			
+			<div class="tab_container">
+				<div id="user_stats_02" class="tab_content">
+					<div class="form_items_container">
+						<div id="chartcontainer2">This is just a replacement in case Javascript is not available or used for SEO purposes</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	-->
+	
 {% endblock %}

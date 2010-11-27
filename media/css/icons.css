@@ -72,6 +72,9 @@ input.icon {
 .icon_date_joined {
 	background-image: url(/site_media/media/img/icons/fugue/calendar-day.png);
 }
+.icon_quality_of_life {
+	background-image: url(/site_media/media/img/icons/fugue/trophy.png);
+}
 
 /* Security */
 .icon_personal {

@@ -19,6 +19,7 @@ from apps.accounts.emails import AccountEmails
 from apps.accounts.forms import UserCreationForm, UserPasswordResetForm, UserPasswordResetConfirmationForm
 from apps.records.models import Record
 from apps.tags.utils import get_used_tags, get_popular_tags
+from apps.records.services import RecordService
 from tagging.models import Tag, TaggedItem
 
 # Get an instance of a logger
@@ -281,7 +282,12 @@ def profile(request, user_id=0, username=False):
 		'unique': 0,
 		'average_per_record': 0,
 	}
+	quality_of_life = 0
 	popular_tags_printable = list()
+	record_service = RecordService()
+	
+	# determine quality of life for user
+	quality_of_life = record_service.getQualityOfLife(request, identity)
 	
 	''' Disabling ability to view another user's profile
 	# if they provided an id, get that user instead
@@ -335,4 +341,5 @@ def profile(request, user_id=0, username=False):
 		'tag_stats': tag_stats,
 		'used_tags': used_tags,
 		'popular_tags': popular_tags,
+		'quality_of_life': quality_of_life,
 	}, context_instance=RequestContext(request))

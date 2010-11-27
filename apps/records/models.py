@@ -27,6 +27,28 @@ class Record(models.Model):
 	
 	tags = property(get_tags)
 	
+	# record_quality property
+	def get_quality(self):
+		
+		# init
+		total = 0
+		average = 0
+		num_tags_with_value = 0
+		
+		# loop through all record tags and get the total of the tag values
+		for tag in self.tags:
+			if tag.value >= 0:
+				total = total + tag.value
+				num_tags_with_value += 1
+		
+		# get the average (aka: quality)
+		if num_tags_with_value > 0:
+			average = total / num_tags_with_value
+		
+		return average
+	
+	quality = property(get_quality)
+	
 	# clean tags property
 	def get_clean_tags(self):
 		clean_tags = []
