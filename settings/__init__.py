@@ -170,7 +170,7 @@ COMPRESS_CSS = {
 			'media/css/buttons.css',
 			'media/css/records.css',
 			'media/css/tabs.css',
-			'media/css/charts.css',
+			#'media/css/charts.css',
 			'media/css/icons.css',
 			'media/css/message_box.css',
 			'media/css/tags.css',
@@ -190,6 +190,7 @@ COMPRESS_JS = {
 			'media/js/custom/jquery.base.js',
 			'media/js/custom/jquery.dropdown_menus.js',
 			'media/js/custom/jquery.tabs.js',
+			#'media/js/custom/jquery.charts.js',
 			'media/js/plugins/jquery.form-2.36.js',
 			'media/js/plugins/jquery.infieldlabel.js',
 			'media/js/plugins/jquery.elastic.js',
@@ -207,7 +208,7 @@ COMPRESS_JS = {
 	}
 }
 
-DEFAULT_tags = [
+DEFAULT_TAGS = [
 	{'name': 'april fool\'s'},
 	{'name': 'awkward'},
 	{'name': 'bad'},
