@@ -170,7 +170,7 @@ COMPRESS_CSS = {
 			'media/css/buttons.css',
 			'media/css/records.css',
 			'media/css/tabs.css',
-			#'media/css/charts.css',
+			'media/css/charts.css',
 			'media/css/icons.css',
 			'media/css/message_box.css',
 			'media/css/tags.css',
