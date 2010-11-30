@@ -33,6 +33,31 @@ class TagHandler(BaseHandler):
 		
 		#init
 		identity = request.user
+		clean = None
+		messages = TagMessages()
+		response = self.empty_response
+		clean_tag = None
+		clean_tags = list()
+		
+		# get all user tags
+		tag_list = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)
+		
+		# clean for return
+		for tag in tag_list:
+			clean_tag = {
+				'name': tag.name,
+				'count': tag.count,
+			}
+			clean_tags.append(clean_tag)
+		
+		# order by count
+		clean_tags_sorted = sorted(clean_tags, key=lambda k: k['count'], reverse=True)
+		
+		# return message and record updated
+		response['message'] = messages.get('found')
+		response['data'] = clean_tags_sorted
+		
+		return response
 	
 	#@validate(TagForm)
 	def create(self, request):
@@ -65,7 +90,7 @@ class TagHandler(BaseHandler):
 		
 		# get updated tag (if it exists already)
 		try:
-			updated_tag = Tag.objects.get(name=request.PUT['name'])
+			updated_tag = Tag.objects.get(name=request.PUT['name'].lower())
 			
 		except Tag.DoesNotExist:
 			updated_tag = None
@@ -131,6 +156,7 @@ class TagHandler(BaseHandler):
 		else:
 			response['message'] = messages.get('invalid')
 		
+		print formset.errors
 		return response
 	
 	def delete(self, request, tag_name, record_id=None):

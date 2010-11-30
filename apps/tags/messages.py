@@ -11,6 +11,14 @@ class TagMessages(GeneralMessages):
 		sticky=False,
 	)
 	
+	found = dict(
+		status=200,
+		kind="success",
+		title=_("Tag Found"),
+		text=_("The requested tag was found."),
+		sticky=False,
+	)
+	
 	invalid = dict(
 		status=400,
 		kind="error",
