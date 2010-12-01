@@ -264,8 +264,11 @@ def logout(request):
 	# message
 	SessionMessages.create_message(request, messages.get('logged_out'))
 	
+	response = HttpResponseRedirect("/")
+	response.delete_cookie('fbs_168453549861030');
+	
 	# Redirect to a success page.
-	return HttpResponseRedirect("/")
+	return response
 
 def profile(request, user_id=0, username=False):
 	
@@ -285,9 +288,14 @@ def profile(request, user_id=0, username=False):
 	quality_of_life = 0
 	popular_tags_printable = list()
 	record_service = RecordService()
+	has_real_userame = True
 	
 	# determine quality of life for user
 	quality_of_life = record_service.getQualityOfLife(request, identity)
+	
+	# if username begins with "facebook_", not a real username
+	if identity.username.startswith('facebook_'): 
+		has_real_userame = False
 	
 	''' Disabling ability to view another user's profile
 	# if they provided an id, get that user instead
@@ -342,4 +350,5 @@ def profile(request, user_id=0, username=False):
 		'used_tags': used_tags,
 		'popular_tags': popular_tags,
 		'quality_of_life': quality_of_life,
+		'has_real_userame': has_real_userame,
 	}, context_instance=RequestContext(request))

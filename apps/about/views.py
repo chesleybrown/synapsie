@@ -14,6 +14,9 @@ from apps.records.models import Record
 from apps.tags.utils import get_used_tags, get_popular_tags
 from tagging.models import Tag, TaggedItem
 
+def xd_receiver(request):
+	return render_to_response('xd_receiver.html')
+
 def root(request):
 	
 	# init

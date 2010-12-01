@@ -458,7 +458,7 @@ class Tag(models.Model):
     A tag.
     """
     name = models.CharField(_('name'), max_length=50, unique=True, db_index=True)
-    value = models.IntegerField(_('value'), max_length=3)
+    value = models.IntegerField(_('value'), max_length=3, null=True)
 
     objects = TagManager()
 

@@ -180,6 +180,7 @@ class RegistrationProfile(models.Model):
 	activation_key = models.CharField(_('activation key'), max_length=40)
 	reset_key = models.CharField(_('reset key'), max_length=40)
 	reset_key_created = models.DateTimeField(default=datetime.datetime.now())
+	facebook_id = models.IntegerField(null=True)
 	
 	objects = RegistrationManager()
 	

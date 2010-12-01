@@ -4,6 +4,7 @@ from apps.about import views
 
 urlpatterns = patterns('django.views.generic.simple',
 	url(r'^$', views.root, name='root'),
+	url(r'^xd_receiver\.htm$', views.xd_receiver, name='xd_receiver'),
 	url(r'^home/$', views.home, name='home'),
 	url(r'^about/$', views.about, name="about"),
 	url(r'^terms/$', views.terms, name="terms"),

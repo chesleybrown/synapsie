@@ -6,41 +6,43 @@
 
 {% block body %}
 	<div class="default_form_container">
-		<h1>{% trans "Create New Password" %}</h1>
-		<h4>{% trans "Provide a new password for your account below." %}</h4>
-		
-		<form action="{% url accounts_resetconfirmation reset_key=reset_key %}" method="post" id="account_resetconfirmation_form" class="default_form use_inline_labels">
-			{% csrf_token %}
-			<fieldset>
-				<div class="field">
-					<div class="field_combo">
-						{{ accounts_resetconfirmation_formset.password1.label_tag }}
-						{{ accounts_resetconfirmation_formset.password1 }}
-					</div>
-					<div class="field_combo omega">
-						{{ accounts_resetconfirmation_formset.password2.label_tag }}
-						{{ accounts_resetconfirmation_formset.password2 }}
-					</div>
-					{{ accounts_resetconfirmation_formset.reset_key.errors }}
-					{{ accounts_resetconfirmation_formset.password1.errors }}
-					{{ accounts_resetconfirmation_formset.password2.errors }}
-					
-					{{ accounts_resetconfirmation_formset.reset_key }}
-				</div>
-			</fieldset>
+		<div class="default_form_block">
+			<h1>{% trans "Create New Password" %}</h1>
+			<h4>{% trans "Provide a new password for your account below." %}</h4>
 			
-			<div class="actions">
-				<div class="action_right">
-					<div class="input_button_wrapper">
-						<div class="input_button_start"></div>
-						<div class="input_button_body">
-							<div class="icon icon_account_reset"></div>
-							<input type="submit" id="account_resetconfirmation" name="submit" value="{% trans "Set Password" %}" class="input_submit" />
+			<form action="{% url accounts_resetconfirmation reset_key=reset_key %}" method="post" id="account_resetconfirmation_form" class="default_form use_inline_labels">
+				{% csrf_token %}
+				<fieldset>
+					<div class="field">
+						<div class="field_combo">
+							{{ accounts_resetconfirmation_formset.password1.label_tag }}
+							{{ accounts_resetconfirmation_formset.password1 }}
 						</div>
-						<div class="input_button_end"></div>
+						<div class="field_combo omega">
+							{{ accounts_resetconfirmation_formset.password2.label_tag }}
+							{{ accounts_resetconfirmation_formset.password2 }}
+						</div>
+						{{ accounts_resetconfirmation_formset.reset_key.errors }}
+						{{ accounts_resetconfirmation_formset.password1.errors }}
+						{{ accounts_resetconfirmation_formset.password2.errors }}
+						
+						{{ accounts_resetconfirmation_formset.reset_key }}
+					</div>
+				</fieldset>
+				
+				<div class="actions">
+					<div class="action_right">
+						<div class="input_button_wrapper">
+							<div class="input_button_start"></div>
+							<div class="input_button_body">
+								<div class="icon icon_account_reset"></div>
+								<input type="submit" id="account_resetconfirmation" name="submit" value="{% trans "Set Password" %}" class="input_submit" />
+							</div>
+							<div class="input_button_end"></div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 {% endblock %}

@@ -88,6 +88,14 @@ form.default_form .errorlist li {
 	overflow: hidden;
 }
 
+/* Facebook */
+.facebook_login {
+	position: relative;
+	opacity: 0;
+	margin: 20px 0 0px 31px;
+	height: 30px;
+}
+
 /* About Page */
 div.about {
 	margin-left: 260px;

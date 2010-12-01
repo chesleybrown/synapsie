@@ -6,31 +6,33 @@
 
 {% block body %}
 	<div class="default_form_container">
-		<h1>{% trans "Reset Password" %}</h1>
-		<h4>{% trans "Enter your login email below and we will send you an email with a link to reset your password." %}</h4>
-		
-		<form action="{% url accounts_reset %}" method="post" id="account_reset_form" class="default_form use_inline_labels">
-			{% csrf_token %}
-			<fieldset>
-				<div class="field">
-					{{ account_reset_formset.email.label_tag }}
-					{{ account_reset_formset.email }}
-					{{ account_reset_formset.email.errors }}
-				</div>
-			</fieldset>
+		<div class="default_form_block">
+			<h1>{% trans "Reset Password" %}</h1>
+			<h4>{% trans "Enter your login email below and we will send you an email with a link to reset your password." %}</h4>
 			
-			<div class="actions">
-				<div class="action_right">
-					<div class="input_button_wrapper">
-						<div class="input_button_start"></div>
-						<div class="input_button_body">
-							<div class="icon icon_account_reset"></div>
-							<input type="submit" id="account_reset" name="submit" value="{% trans "Reset Password" %}" class="input_submit" />
+			<form action="{% url accounts_reset %}" method="post" id="account_reset_form" class="default_form use_inline_labels">
+				{% csrf_token %}
+				<fieldset>
+					<div class="field">
+						{{ account_reset_formset.email.label_tag }}
+						{{ account_reset_formset.email }}
+						{{ account_reset_formset.email.errors }}
+					</div>
+				</fieldset>
+				
+				<div class="actions">
+					<div class="action_right">
+						<div class="input_button_wrapper">
+							<div class="input_button_start"></div>
+							<div class="input_button_body">
+								<div class="icon icon_account_reset"></div>
+								<input type="submit" id="account_reset" name="submit" value="{% trans "Reset Password" %}" class="input_submit" />
+							</div>
+							<div class="input_button_end"></div>
 						</div>
-						<div class="input_button_end"></div>
 					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 {% endblock %}

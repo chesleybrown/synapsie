@@ -27,18 +27,20 @@
 								</div>
 							</div>
 						</li>
-						<li>
-							<div class="container">
-								<div class="header">
-									<div class="label">
-										<label class="icon icon_username" for="id_username">{% trans "Username" %}</label>
-									</div>
-									<div id="id_username" class="content">
-										{{ viewed_user.username }}
+						{% if has_real_userame %}
+							<li>
+								<div class="container">
+									<div class="header">
+										<div class="label">
+											<label class="icon icon_username" for="id_username">{% trans "Username" %}</label>
+										</div>
+										<div id="id_username" class="content">
+											{{ viewed_user.username }}
+										</div>
 									</div>
 								</div>
-							</div>
-						</li>
+							</li>
+						{% endif %}
 						<li>
 							<div class="container">
 								<div class="header">

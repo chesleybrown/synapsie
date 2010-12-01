@@ -4,81 +4,91 @@
 	
 	{% if register_formset and not user.is_authenticated %}
 		<div id="signup_container" class="default_form_container">
-			<h1>Sign up for <strong>syn</strong>apsie</h1>
-			<h4>it's free, <strong>obviously</strong></h4>
 			
-			<form action="{% url accounts_register %}" method="post" id="signup_form" class="default_form use_inline_labels">
-				{% csrf_token %}
-				<fieldset>
-					<div class="field">
-						<div class="field_combo">
-							{{ register_formset.first_name.label_tag }}
-							{{ register_formset.first_name }}
-						</div>
-						<div class="field_combo omega">
-							{{ register_formset.last_name.label_tag }}
-							{{ register_formset.last_name }}
-						</div>
-						{{ register_formset.first_name.errors }}
-						{{ register_formset.last_name.errors }}
-					</div>
-					<div class="field">
-						{{ register_formset.email.label_tag }}
-						{{ register_formset.email }}
-						{{ register_formset.email.errors }}
-					</div>
-					<div class="field">
-						{{ register_formset.username.label_tag }}
-						{{ register_formset.username }}
-						{{ register_formset.username.errors }}
-					</div>
-					<div class="field">
-						<div class="field_combo">
-							{{ register_formset.password1.label_tag }}
-							{{ register_formset.password1 }}
-						</div>
-						<div class="field_combo omega">
-							{{ register_formset.password2.label_tag }}
-							{{ register_formset.password2 }}
-						</div>
-						{{ register_formset.password1.errors }}
-						{{ register_formset.password2.errors }}
-					</div>
-					<div class="field">
-						{{ register_formset.agree.label_tag }}
-						{{ register_formset.agree }}
-						{{ register_formset.agree.errors }}
-					</div>
-					<div class="field">
-						<p>By clicking "Register", you agree to our <a href="{% url terms %}">Terms of Service</a> and <a href="{% url privacy %}">Privacy Policy</a>.</p>
-					</div>
-				</fieldset>
+			<div class="default_form_block">
+				<h1>Start using <strong>syn</strong>apsie</h1>
+				<h4>it's free, <strong>obviously</strong></h4>
+			</div>
+			
+			<div class="facebook_login use_facebook_login">
+				<fb:login-button perms="email"i size="xlarge">Login with Facebook</fb:login-button>
+			</div>
+			
+			<div class="default_form_block">
+				<h4 style="text-align: center;"><strong>or</strong> create an account</h4>
 				
-				<div class="actions">
-					<div class="social_share">
-						<!-- AddThis Button BEGIN -->
-						<div class="addthis_toolbox addthis_default_style">
-							<a class="addthis_button_preferred_1"></a>
-							<a class="addthis_button_preferred_2"></a>
-							<a class="addthis_button_preferred_3"></a>
-							<a class="addthis_button_preferred_4"></a>
-							<a class="addthis_button_compact"></a>
-						</div>
-						<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
-						<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=synapsie"></script>
-						<!-- AddThis Button END -->
-					</div>
-					<div class="action_right">
-						<div class="input_button_wrapper">
-							<div class="input_button_start"></div>
-							<div class="input_button_body">
-								<input type="submit" id="account_register" name="submit" value="{% trans "Register" %}" class="input_submit" />
+				<form action="{% url accounts_register %}" method="post" id="signup_form" class="default_form use_inline_labels">
+					{% csrf_token %}
+					<fieldset>
+						<div class="field">
+							<div class="field_combo">
+								{{ register_formset.first_name.label_tag }}
+								{{ register_formset.first_name }}
 							</div>
-							<div class="input_button_end"></div>
+							<div class="field_combo omega">
+								{{ register_formset.last_name.label_tag }}
+								{{ register_formset.last_name }}
+							</div>
+							{{ register_formset.first_name.errors }}
+							{{ register_formset.last_name.errors }}
+						</div>
+						<div class="field">
+							{{ register_formset.email.label_tag }}
+							{{ register_formset.email }}
+							{{ register_formset.email.errors }}
+						</div>
+						<div class="field">
+							{{ register_formset.username.label_tag }}
+							{{ register_formset.username }}
+							{{ register_formset.username.errors }}
+						</div>
+						<div class="field">
+							<div class="field_combo">
+								{{ register_formset.password1.label_tag }}
+								{{ register_formset.password1 }}
+							</div>
+							<div class="field_combo omega">
+								{{ register_formset.password2.label_tag }}
+								{{ register_formset.password2 }}
+							</div>
+							{{ register_formset.password1.errors }}
+							{{ register_formset.password2.errors }}
+						</div>
+						<div class="field">
+							<p>By clicking "Register" or logging in with "Facebook", you agree to our <a href="{% url terms %}">Terms of Service</a> and <a href="{% url privacy %}">Privacy Policy</a>.</p>
+							
+							{{ register_formset.agree.label_tag }}
+							{{ register_formset.agree }}
+							{{ register_formset.agree.errors }}
+						</div>
+					</fieldset>
+					
+					<div class="actions">
+						<div class="social_share">
+							<!-- AddThis Button BEGIN -->
+							<div class="addthis_toolbox addthis_default_style">
+								<a class="addthis_button_preferred_1"></a>
+								<a class="addthis_button_preferred_2"></a>
+								<a class="addthis_button_preferred_3"></a>
+								<a class="addthis_button_preferred_4"></a>
+								<a class="addthis_button_compact"></a>
+							</div>
+							<script type="text/javascript">var addthis_config = {"data_track_clickback":true};</script>
+							<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#username=synapsie"></script>
+							<!-- AddThis Button END -->
+						</div>
+						<div class="action_right">
+							<div class="input_button_wrapper">
+								<div class="input_button_start"></div>
+								<div class="input_button_body">
+									<input type="submit" id="account_register" name="submit" value="{% trans "Register" %}" class="input_submit" />
+								</div>
+								<div class="input_button_end"></div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 		
 	{% endif %}

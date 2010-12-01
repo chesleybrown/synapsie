@@ -76,7 +76,7 @@ SECRET_KEY = '=h*)f311++wt=e55rm0#(*#=y!abozv8x9d8bj+v1!gnxgvv%-'
 
 # Context processors for templates
 TEMPLATE_CONTEXT_PROCESSORS = (
-	"django.core.context_processors.auth",
+	"django.contrib.auth.context_processors.auth",
 	"django.core.context_processors.i18n",
 	"django.core.context_processors.media",
 	
@@ -99,6 +99,7 @@ MIDDLEWARE_CLASSES = (
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.transaction.TransactionMiddleware',
 	'middlewares.ssl.SSLRedirect',
+	'middlewares.fbconnect.FacebookConnectMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -191,6 +192,7 @@ COMPRESS_JS = {
 			'media/js/custom/jquery.dropdown_menus.js',
 			'media/js/custom/jquery.tabs.js',
 			#'media/js/custom/jquery.charts.js',
+			'media/js/custom/jquery.facebook.js',
 			'media/js/plugins/jquery.form-2.36.js',
 			'media/js/plugins/jquery.infieldlabel.js',
 			'media/js/plugins/jquery.elastic.js',
