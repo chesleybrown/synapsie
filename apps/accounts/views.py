@@ -19,7 +19,7 @@ from apps.accounts.emails import AccountEmails
 from apps.accounts.forms import UserCreationForm, UserPasswordResetForm, UserPasswordResetConfirmationForm
 from apps.records.models import Record
 from apps.tags.utils import get_used_tags, get_popular_tags
-from apps.records.services import RecordService
+from apps.accounts import services as AccountService
 from tagging.models import Tag, TaggedItem
 
 # Get an instance of a logger
@@ -285,13 +285,9 @@ def profile(request, user_id=0, username=False):
 		'unique': 0,
 		'average_per_record': 0,
 	}
-	quality_of_life = 0
 	popular_tags_printable = list()
-	record_service = RecordService()
 	has_real_userame = True
-	
-	# determine quality of life for user
-	quality_of_life = record_service.getQualityOfLife(request, identity)
+	user_registration_profile = None
 	
 	# if username begins with "facebook_", not a real username
 	if identity.username.startswith('facebook_'): 
@@ -319,6 +315,10 @@ def profile(request, user_id=0, username=False):
 	# test permission to view
 	'''
 	
+	# registration profile
+	user_registration_profile = RegistrationProfile.objects.get(user=user)
+	user_registration_profile.save() # by calling save, we update quality_of_life
+	
 	# get all user records
 	records = Record.objects.all().filter(user=user)
 	
@@ -345,10 +345,10 @@ def profile(request, user_id=0, username=False):
 	# render
 	return render_to_response('accounts/profile.html', {
 		'viewed_user': user,
+		'viewed_user_registration_profile': user_registration_profile,
 		'record_stats': record_stats,
 		'tag_stats': tag_stats,
 		'used_tags': used_tags,
 		'popular_tags': popular_tags,
-		'quality_of_life': quality_of_life,
 		'has_real_userame': has_real_userame,
 	}, context_instance=RequestContext(request))

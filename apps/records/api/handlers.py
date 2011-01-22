@@ -64,7 +64,7 @@ class RecordHandler(BaseHandler):
 		# just getting one record
 		if record_id is not None:
 			
-			record = record_service.getOne(request, record_id, tags, page, user, public, text)
+			record = record_service.get_one(request, record_id, tags, page, user, public, text)
 			
 			# clean the tags
 			clean_tags = list()
@@ -96,7 +96,7 @@ class RecordHandler(BaseHandler):
 		# getting more than one record
 		else:
 			
-			records_paginator = record_service.getMultiple(request, tags, page, user, public, text)
+			records_paginator = record_service.get_multiple(request, tags, page, user, public, text)
 			
 			if records_paginator:
 				for record in records_paginator.object_list:
@@ -181,6 +181,9 @@ class RecordHandler(BaseHandler):
 				str_tags += ",".join(arr_tags)
 				Tag.objects.update_tags(record, str_tags)
 				
+				# update quality of record by calling save again
+				record.save()
+				
 				# return only what we need to
 				clean_record = {
 					'id': record.id,
@@ -242,6 +245,9 @@ class RecordHandler(BaseHandler):
 				# add tags
 				str_tags += ",".join(arr_tags)
 				Tag.objects.update_tags(record, str_tags)
+				
+				# save record (this will automatically update quality)
+				record.save()
 				
 				# return only what we need to
 				clean_record = {

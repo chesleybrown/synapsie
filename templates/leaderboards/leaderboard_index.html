@@ -1,0 +1,188 @@
+{% extends "leaderboards/base.html" %}
+
+{% load i18n %}
+{% load tag %}
+
+{% block head_title %}{% trans "Leaderboards" %}{% endblock %}
+
+{% block body %}
+	{{ block.super }}
+	
+	<div class="clear"></div>
+	
+	{% if no_facebook_connect %}
+		
+		{% include 'leaderboards/facebook_connect_required.html' %}
+		
+	{% else %}
+		
+		<div class="site_content_tabs use_tabs">
+			<ul class="tabs">
+				<li class="active"><a href="#tab_fresh_leaderboards">{% trans "Fresh" %}</a></li>
+				<li class=""><a href="#tab_stale_leaderboards">{% trans "Stale" %}</a></li>
+				<li class=""><a href="#tab_all_leaderboards">{% trans "All" %}</a></li>
+			</ul>
+			
+			<div class="tab_container">
+				<div id="tab_fresh_leaderboards" class="tab_content">
+					<div class="important_message">
+						<h3>{% trans "These friends have recently recorded something" %}</h3>
+						<h4>{% trans "So their Quality of Life should be accurate" %}</h4>
+					</div>
+					
+					{% if fresh_friends_paginator.object_list %}
+						<div class="form_items_container">
+							
+							<ul class="form_items">
+								{% for friend in fresh_friends_paginator.object_list %}
+									<li class="">
+										<div class="container">
+											<div class="header">
+												<div class="label">
+													<label class="icon icon_name" for="id_friend">
+														{{ friend.user.first_name }} {{ friend.user.last_name }}
+														{% if friend.user.id == identity.id %}
+															<span class="sub">{% trans "(That's You)" %}</span>
+														{% endif %}
+													</label>
+												</div>
+												<div class="content">
+													{% if friend.quality_of_life %}
+														{{ friend.quality_of_life|floatformat:1 }}%
+													{% else %}
+														{% trans "N/A" %}
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</li>
+								{% endfor %}
+							</ul>
+							
+							<div class="important_message">
+								<h5>{% trans "Showing Top" %} {{ results_per_page }}</h5>
+							</div>
+							
+						</div>
+					{% endif %}
+					
+					{% if not fresh_friends_paginator.object_list %}
+						
+						<!-- No Results -->
+						<div class="tags_no_results">
+							<p>{% trans "Sorry... maybe none of your friends are using Synapsie yet?" %}</p>
+						</div>
+						
+					{% endif %}
+				</div>
+				
+				<div id="tab_stale_leaderboards" class="tab_content hidden">
+					
+					<div class="important_message">
+						<h3>{% trans "These friends haven't recorded anything in awhile" %}</h3>
+						<h4>{% trans "So how could their Quality of Life be accurate?" %}</h4>
+					</div>
+					
+					{% if stale_friends_paginator.object_list %}
+						<div class="form_items_container">
+							
+							<ul class="form_items">
+								{% for friend in stale_friends_paginator.object_list %}
+									<li class="">
+										<div class="container">
+											<div class="header">
+												<div class="label">
+													<label class="icon icon_name" for="id_friend">
+														{{ friend.user.first_name }} {{ friend.user.last_name }}
+														{% if friend.user.id == identity.id %}
+															<span class="sub">{% trans "(That's You)" %}</span>
+														{% endif %}
+													</label>
+												</div>
+												<div class="content">
+													{% if friend.quality_of_life %}
+														{{ friend.quality_of_life|floatformat:1 }}%
+													{% else %}
+														{% trans "N/A" %}
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</li>
+								{% endfor %}
+							</ul>
+							
+							<div class="important_message">
+								<h5>{% trans "Showing Top" %} {{ results_per_page }}</h5>
+							</div>
+							
+						</div>
+					{% endif %}
+					
+					{% if not stale_friends_paginator.object_list %}
+						
+						<!-- No Results -->
+						<div class="tags_no_results">
+							<p>{% trans "Sorry... maybe none of your friends are using Synapsie yet?" %}</p>
+						</div>
+						
+					{% endif %}
+				</div>
+				
+				<div id="tab_all_leaderboards" class="tab_content hidden">
+					
+					<div class="important_message">
+						<h3>{% trans "Here are all your friends" %}</h3>
+						<h4>{% trans "Take their Quality of Life with a grain of salt" %}</h4>
+					</div>
+					
+					{% if all_friends_paginator.object_list %}
+						<div class="form_items_container">
+							
+							<ul class="form_items">
+								{% for friend in all_friends_paginator.object_list %}
+									<li class="">
+										<div class="container">
+											<div class="header">
+												<div class="label">
+													<label class="icon icon_name" for="id_friend">
+														{{ friend.user.first_name }} {{ friend.user.last_name }}
+														{% if friend.user.id == identity.id %}
+															<span class="sub">{% trans "(That's You)" %}</span>
+														{% endif %}
+													</label>
+												</div>
+												<div class="content">
+													{% if friend.quality_of_life %}
+														{{ friend.quality_of_life|floatformat:1 }}%
+													{% else %}
+														{% trans "N/A" %}
+													{% endif %}
+												</div>
+											</div>
+										</div>
+									</li>
+								{% endfor %}
+							</ul>
+							
+							<div class="important_message">
+								<h5>{% trans "Showing Top" %} {{ results_per_page }}</h5>
+							</div>
+							
+						</div>
+					{% endif %}
+					
+					{% if not all_friends_paginator.object_list %}
+						
+						<!-- No Results -->
+						<div class="tags_no_results">
+							<p>{% trans "Sorry... maybe none of your friends are using Synapsie yet?" %}</p>
+						</div>
+						
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		
+	{% endif %}
+{% endblock %}

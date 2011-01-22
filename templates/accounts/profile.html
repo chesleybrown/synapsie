@@ -84,8 +84,8 @@
 										<label class="icon icon_quality_of_life" for="id_date_joined">{% trans "Quality of Life" %}</label>
 									</div>
 									<div id="id_date_joined" class="content">
-										{% if quality_of_life %}
-											{{ quality_of_life|floatformat:1 }}%
+										{% if viewed_user_registration_profile.quality_of_life %}
+											{{ viewed_user_registration_profile.quality_of_life|floatformat:1 }}%
 										{% else %}
 											{% trans "N/A" %}
 										{% endif %}

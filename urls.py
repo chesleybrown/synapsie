@@ -22,6 +22,7 @@ urlpatterns = patterns('',
 	(r'^accounts/', include('apps.accounts.urls')),
 	(r'^records/', include('apps.records.urls')),
 	(r'^tags/', include('apps.tags.urls')),
+	(r'^leaderboards/', include('apps.leaderboards.urls')),
 	
 	# Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
 	# to INSTALLED_APPS to enable admin documentation:

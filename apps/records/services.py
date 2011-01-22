@@ -6,7 +6,6 @@ from django.http import HttpResponseNotAllowed, HttpResponseForbidden, HttpRespo
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
-from apps.records.messages import RecordMessages
 from apps.records.models import Record
 from tagging.models import Tag, TaggedItem
 from tagging.utils import parse_tag_input
@@ -15,7 +14,7 @@ from tagging.utils import parse_tag_input
 class RecordService():
 	
 	# just getting one record
-	def getOne(self, request, record_id, tags=False, page=1, user=None, public=False, text=None):
+	def get_one(self, request, record_id, tags=False, page=1, user=None, public=False, text=None):
 		
 		# init
 		identity = request.user
@@ -43,7 +42,7 @@ class RecordService():
 		return record
 	
 	# getting more than one record
-	def getMultiple(self, request, tags=False, page=1, user=None, public=False, text=None):
+	def get_multiple(self, request, tags=False, page=1, user=None, public=False, text=None):
 		
 		# init
 		identity = request.user
@@ -80,32 +79,4 @@ class RecordService():
 			records_paginator = None
 		
 		return records_paginator
-		
-	def getQualityOfLife(self, request, user=None):
-		
-		# init
-		identity = request.user
-		records = False
-		total_quality = 0
-		num_records_with_value = 0
-		average = 0
-		
-		# no user provided, just use identity
-		if not user:
-			user = identity
-		
-		# get all user records
-		records = Record.objects.all().filter(user=user)
-		
-		# go through all the records and add up the total record quality
-		for record in records:
-			if record.quality >= 0:
-				total_quality = total_quality + record.quality
-				num_records_with_value += 1
-		
-		# get the average (aka: quality)
-		if num_records_with_value > 0:
-			average = total_quality / num_records_with_value
-		
-		return average
 		

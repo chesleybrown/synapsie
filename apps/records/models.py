@@ -4,12 +4,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from tagging.fields import TagField
 from tagging.models import Tag
+from apps.accounts import services as AccountService
 
 class Record(models.Model):
 	user = models.ForeignKey(User)
 	text = models.TextField()
 	created = models.DateTimeField(default=datetime.now())
 	personal = models.SmallIntegerField(default=1)
+	quality = models.FloatField(null=True, max_length=6)
 	
 	def __unicode__(self):
 		return 'Record: %s' % self.text
@@ -27,7 +29,7 @@ class Record(models.Model):
 	
 	tags = property(get_tags)
 	
-	# record_quality property
+	# record_quality property (calculates qualty of record)
 	def get_quality(self):
 		
 		# init
@@ -50,7 +52,7 @@ class Record(models.Model):
 		
 		return average
 	
-	quality = property(get_quality)
+	#quality = property(get_quality)
 	
 	# clean tags property
 	def get_clean_tags(self):
@@ -103,3 +105,15 @@ class Record(models.Model):
 	# test to see if given user can delete this record
 	def can_delete(self, user):
 		return self.is_owner(user)
+	
+	# this hook is for setting the record quality
+	def save(self):
+		
+		# init
+		self.quality = self.get_quality()
+		
+		# Call the "real" save() method
+		super(Record, self).save()
+		
+		# also update user's quality of life
+		AccountService.update_quality_of_life(self.user)

@@ -37,7 +37,7 @@ def index_records(request, tags=False, page=1):
 	paginator = False
 	
 	# get user records
-	records_paginator = record_service.getMultiple(request, tags, page)
+	records_paginator = record_service.get_multiple(request, tags, page)
 	
 	# get used/popular tags for current user
 	used_tags = get_used_tags(Record, identity)
@@ -95,7 +95,7 @@ def public_records(request, user_id=0, username=None, page=1):
 		raise Http404
 	
 	# get user records
-	records_paginator = record_service.getMultiple(request, tags, page, user)
+	records_paginator = record_service.get_multiple(request, tags, page, user)
 	
 	# get used/popular tags for current user
 	used_tags = get_used_tags(Record, identity)

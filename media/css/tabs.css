@@ -7,6 +7,7 @@ body.profile #tab_profile a,
 body.notices #tab_notices a,
 body.records #tab_records a,
 body.search #tab_search a,
+body.leaderboards #tab_leaderboards a,
 body.tags #tab_tags a {
 	color: #000; /* selected tab text colour */
 	text-shadow: #fff 0 1px 0;
@@ -19,6 +20,7 @@ body.profile #tab_profile,
 body.notices #tab_notices,
 body.records #tab_records,
 body.search #tab_search,
+body.leaderboards #tab_leaderboards,
 body.tags #tab_tags {
 	margin: 0; /* to compensate for border */
 	padding: 5px 0 5px;

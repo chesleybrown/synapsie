@@ -2,6 +2,8 @@ import datetime
 import random
 import re
 
+from apps.records.models import Record
+
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
@@ -181,6 +183,7 @@ class RegistrationProfile(models.Model):
 	reset_key = models.CharField(_('reset key'), max_length=40)
 	reset_key_created = models.DateTimeField(default=datetime.datetime.now())
 	facebook_id = models.IntegerField(null=True)
+	quality_of_life = models.FloatField(null=True, max_length=6)
 	
 	objects = RegistrationManager()
 	
@@ -190,6 +193,29 @@ class RegistrationProfile(models.Model):
 	
 	def __unicode__(self):
 		return u"Registration information for %s" % self.user
+	
+	def get_quality_of_life(self):
+		
+		# init
+		records = False
+		total_quality = 0
+		num_records_with_value = 0
+		average = None
+		
+		# get all user records
+		records = Record.objects.all().filter(user=self.user)
+		
+		# go through all the records and add up the total record quality
+		for record in records:
+			if record.quality >= 0:
+				total_quality = total_quality + record.quality
+				num_records_with_value += 1
+		
+		# get the average (aka: quality)
+		if num_records_with_value > 0:
+			average = total_quality / num_records_with_value
+		
+		return average
 	
 	def activation_key_expired(self):
 		"""
@@ -291,3 +317,9 @@ class RegistrationProfile(models.Model):
 		
 		self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
 	
+	# this hook is for setting the record quality
+	def save(self):
+		self.quality_of_life = self.get_quality_of_life()
+		
+		# Call the "real" save() method
+		super(RegistrationProfile, self).save()

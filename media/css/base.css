@@ -1,6 +1,6 @@
 /*
 	Base CSS used in main layout
-	@version 0.2
+	@version 0.3
 	@author Chesley Brown
 	@product Synapsie
 */
@@ -371,6 +371,9 @@ ul.form_items > li .label a {
 ul.form_items > li .label a:hover {
 	color: #666;
 }
+ul.form_items > li .label span.sub {
+	color: #999;
+}
 ul.form_items > li .content {
 	margin-right: 10px;
 	padding: 10px 15px;
@@ -589,4 +592,17 @@ ul.holder li.bit-box-focus a.closebutton:hover {
 	background-color: #666 !important;
 	border-color: #333 !important;
 	color: #fff !important;
+}
+
+/* Messages */
+.important_message {
+	text-align: center;
+}
+
+/* Facebook */
+.facebook_login {
+	position: relative;
+	opacity: 0;
+	margin: 20px 0 0px 31px;
+	height: 30px;
 }

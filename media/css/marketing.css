@@ -1,6 +1,6 @@
 /*
 	Marketing CSS used in marketing layout
-	@version 0.1
+	@version 0.2
 	@author Chesley Brown
 	@product Synapsie
 */
@@ -86,14 +86,6 @@ form.default_form .errorlist li {
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	overflow: hidden;
-}
-
-/* Facebook */
-.facebook_login {
-	position: relative;
-	opacity: 0;
-	margin: 20px 0 0px 31px;
-	height: 30px;
 }
 
 /* About Page */

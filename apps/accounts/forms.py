@@ -105,7 +105,7 @@ class UserPasswordResetForm(forms.ModelForm):
 	
 	class Meta:
 		model = User
-		exclude = ('created', 'username', 'first_name', 'last_name', 'password', 'last_login', 'date_joined')
+		exclude = ('created', 'username', 'first_name', 'last_name', 'password', 'last_login', 'date_joined', 'quality_of_life')
 	
 class UserPasswordResetConfirmationForm(forms.ModelForm):
 	reset_key = forms.CharField(label=_("Password Reset Key"), widget=forms.HiddenInput(attrs={'readonly':'readonly'}),
@@ -148,7 +148,7 @@ class UserPasswordResetConfirmationForm(forms.ModelForm):
 	
 	class Meta:
 		model = User
-		exclude = ('created', 'username', 'first_name', 'last_name', 'email', 'last_login', 'date_joined', 'password')
+		exclude = ('created', 'username', 'first_name', 'last_name', 'email', 'last_login', 'date_joined', 'password', 'quality_of_life')
 	
 	def save(self):
 		

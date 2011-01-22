@@ -82,15 +82,17 @@ h1 {
 	color: #333;
 	text-shadow: 1px 1px 0 #fff;
 	font-weight: normal;
-	margin-bottom: 0;
+	margin-bottom: 5px;
 }
 
 h2 {
 	font-size: 23px;
+	margin-bottom: 5px;
 }
 
 h3 {
 	font-size: 21px;
+	margin-bottom: 5px;
 }
 
 h4 {
@@ -98,11 +100,15 @@ h4 {
 	color: #666;
 	text-shadow: 1px 1px 0 #fff;
 	font-weight: normal;
-	margin-bottom: 0;
+	margin-bottom: 5px;
 }
 
 h5 {
 	font-size: 17px;
+	color: #999;
+	text-shadow: 1px 1px 0 #fff;
+	font-weight: normal;
+	margin-bottom: 5px;
 }
 
 h6 {

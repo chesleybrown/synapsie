@@ -27,7 +27,7 @@ class RecordForm(forms.ModelForm):
 
 	class Meta:
 		model = Record
-		exclude = ('created', 'user')
+		exclude = ('created', 'user', 'quality')
 
 class RecordAddTagsForm(forms.ModelForm):
 	tags = TagField(label=_('Tags for Life Record...'), widget=forms.SelectMultiple, required=False)
@@ -38,7 +38,7 @@ class RecordAddTagsForm(forms.ModelForm):
 
 	class Meta:
 		model = Record
-		exclude = ('text', 'created', 'user', 'personal')
+		exclude = ('text', 'created', 'user', 'personal', 'quality')
 
 class RecordSearchForm(forms.ModelForm):
 	text = forms.CharField(label=_('Search Your Life...'))
@@ -50,4 +50,4 @@ class RecordSearchForm(forms.ModelForm):
 
 	class Meta:
 		model = Record
-		exclude = ('created', 'user')
+		exclude = ('created', 'user', 'quality')

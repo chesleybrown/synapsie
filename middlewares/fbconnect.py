@@ -34,151 +34,174 @@ class FacebookConnectMiddleware(object):
 	facebook_user_is_authenticated = False
 	
 	def process_request(self, request):
+		# init
+		facebook_user_cookie = False
+		facebook_valid_session = False
+		
 		try:
 			 # Set the facebook message to empty. This message can be used to dispaly info from the middleware on a Web page.
 			request.facebook_message = None
 			
-			# Don't bother trying FB Connect login if the user is already logged in
-			if not request.user.is_authenticated():
+			facebook_user_cookie = facebook.get_user_from_cookie(request.COOKIES, API_KEY, API_SECRET)
+			
+			# FB Connect will set a cookie with a key == FB App API Key if the user has been authenticated
+			#if API_KEY in request.COOKIES.keys():
+			if facebook_user_cookie:
 				
-				facebook_user_cookie = facebook.get_user_from_cookie(request.COOKIES, API_KEY, API_SECRET)
+				signature_hash = self.get_facebook_signature(facebook_user_cookie)
 				
-				# FB Connect will set a cookie with a key == FB App API Key if the user has been authenticated
-				#if API_KEY in request.COOKIES.keys():
-				if facebook_user_cookie:
+				# The hash of the values in the cookie to make sure they're not forged
+				if (signature_hash == facebook_user_cookie['sig']):
 					
-					signature_hash = self.get_facebook_signature(facebook_user_cookie)
+					# If session hasn't expired
+					if (datetime.fromtimestamp(float(facebook_user_cookie['expires'])) > datetime.now()):
+						facebook_valid_session = True
 					
-					# The hash of the values in the cookie to make sure they're not forged
-					if (signature_hash == facebook_user_cookie['sig']):
-						
-						# If session hasn't expired
-						if (datetime.fromtimestamp(float(facebook_user_cookie['expires'])) > datetime.now()):
-							
-							try:
-								# Try to get Django account corresponding to user
-								# Authenticate then login (or display disabled error message)
-								#django_user = User.objects.get(facebook_id=facebook_user_cookie['uid'])
-								user_registration_profile = RegistrationProfile.objects.get(facebook_id=facebook_user_cookie['uid'])
-								user = user_registration_profile.user
-								
-								#user = authenticate(
-								#	username='facebook_'+facebook_user_cookie['uid'], 
-								#	password=hashlib.md5('facebook_'+facebook_user_cookie['uid'] + settings.SECRET_KEY).hexdigest()
-								#)
-								
-								# allows me to log user in without knowing password
-								user.backend = 'django.contrib.auth.backends.ModelBackend'
-								
-								if user is not None:
-									if user.is_active:
-										login(request, user)
-										self.facebook_user_is_authenticated = True
-									else:
-										request.facebook_message = ACCOUNT_DISABLED_ERROR
-										self.delete_fb_cookies = True
-								else:
-									request.facebook_message = ACCOUNT_PROBLEM_ERROR
-									self.delete_fb_cookies = True
-								
-							except RegistrationProfile.DoesNotExist:
-								# There is no Django account for this Facebook user.
-								# Create one, then log the user in.
-								
-								# Make request to FB API to get user's first and last name
-								user_info_params = {
-									'method': 'Users.getInfo',
-									'api_key': API_KEY,
-									'call_id': time.time(),
-									'v': '1.0',
-									'uids': facebook_user_cookie['uid'],
-									'fields': 'first_name,last_name,email',
-									'format': 'json',
-								}
-								
-								user_info_hash = self.get_facebook_signature(user_info_params)
-								
-								user_info_params['sig'] = user_info_hash
-								
-								user_info_params = urllib.urlencode(user_info_params)
-								
-								user_info_response  = simplejson.load(urllib.urlopen(REST_SERVER, user_info_params))
-								
-								# see if this email already exists and match it up if so
-								try:
-									user = User.objects.get(email=user_info_response[0]['email'])
-									
-									user_registration_profile = RegistrationProfile.objects.get(user=user)
-									user_registration_profile.facebook_id = facebook_user_cookie['uid']
-									user_registration_profile.save()
-									
-								except User.DoesNotExist:
-									# Create user
-									user = User.objects.create_user(
-										'facebook_'+facebook_user_cookie['uid'],
-										user_info_response[0]['email'], 
-										hashlib.md5('facebook_'+facebook_user_cookie['uid'] + settings.SECRET_KEY).hexdigest()
-									)
-									user.first_name = user_info_response[0]['first_name']
-									user.last_name = user_info_response[0]['last_name']
-									
-									user_registration_profile = RegistrationProfile.objects.create_profile(user)
-									
-									# set facebook id and save user
-									user_registration_profile.facebook_id = facebook_user_cookie['uid']
-									user.save()
-									user_registration_profile.save()
-									
-									# activate
-									RegistrationProfile.objects.activate_user(user_registration_profile.activation_key)
-								
-								# allows me to log user in without knowing password
-								user.backend = 'django.contrib.auth.backends.ModelBackend'
-								login(request, user)
-								
-								# Authenticate and log in (or display disabled error message)
-								#user = authenticate(
-								#	username='facebook_'+facebook_user_cookie['uid'], 
-								#	password=hashlib.md5('facebook_'+facebook_user_cookie['uid'] + settings.SECRET_KEY).hexdigest()
-								#)
-								
-								if user is not None:
-									if user.is_active:
-										login(request, user)
-										self.facebook_user_is_authenticated = True
-									else:
-										request.facebook_message = ACCOUNT_DISABLED_ERROR
-										self.delete_fb_cookies = True
-								else:
-								   request.facebook_message = ACCOUNT_PROBLEM_ERROR
-								   self.delete_fb_cookies = True
-							
-						# Cookie session expired
-						else:
-							logout(request)
-							self.delete_fb_cookies = True
-						
-					# Cookie values don't match hash
+					# Cookie session expired
 					else:
 						logout(request)
 						self.delete_fb_cookies = True
 					
+				# Cookie values don't match hash
+				else:
+					logout(request)
+					self.delete_fb_cookies = True
+			
+			# Don't bother trying FB Connect login if the user is already logged in
+			if not request.user.is_authenticated() and facebook_valid_session:
+				
+				try:
+					# Try to get Django account corresponding to user
+					# Authenticate then login (or display disabled error message)
+					#django_user = User.objects.get(facebook_id=facebook_user_cookie['uid'])
+					user_registration_profile = RegistrationProfile.objects.get(facebook_id=facebook_user_cookie['uid'])
+					user = user_registration_profile.user
+					
+					#user = authenticate(
+					#	username='facebook_'+facebook_user_cookie['uid'], 
+					#	password=hashlib.md5('facebook_'+facebook_user_cookie['uid'] + settings.SECRET_KEY).hexdigest()
+					#)
+					
+					# allows me to log user in without knowing password
+					user.backend = 'django.contrib.auth.backends.ModelBackend'
+					
+					if user is not None:
+						if user.is_active:
+							login(request, user)
+							self.facebook_user_is_authenticated = True
+						else:
+							request.facebook_message = ACCOUNT_DISABLED_ERROR
+							self.delete_fb_cookies = True
+					else:
+						request.facebook_message = ACCOUNT_PROBLEM_ERROR
+						self.delete_fb_cookies = True
+					
+				except RegistrationProfile.DoesNotExist:
+					# There is no Django account for this Facebook user.
+					# Create one, then log the user in.
+					
+					# Make request to FB API to get user's first and last name
+					user_info_params = {
+						'method': 'Users.getInfo',
+						'api_key': API_KEY,
+						'call_id': time.time(),
+						'v': '1.0',
+						'uids': facebook_user_cookie['uid'],
+						'fields': 'first_name,last_name,email',
+						'format': 'json',
+					}
+					
+					user_info_hash = self.get_facebook_signature(user_info_params)
+					
+					user_info_params['sig'] = user_info_hash
+					
+					user_info_params = urllib.urlencode(user_info_params)
+					
+					user_info_response  = simplejson.load(urllib.urlopen(REST_SERVER, user_info_params))
+					
+					# see if this email already exists and match it up if so
+					try:
+						user = User.objects.get(email=user_info_response[0]['email'])
+						
+						user_registration_profile = RegistrationProfile.objects.get(user=user)
+						user_registration_profile.facebook_id = facebook_user_cookie['uid']
+						user_registration_profile.save()
+						
+					except User.DoesNotExist:
+						# Create user
+						user = User.objects.create_user(
+							'facebook_'+facebook_user_cookie['uid'],
+							user_info_response[0]['email'], 
+							hashlib.md5('facebook_'+facebook_user_cookie['uid'] + settings.SECRET_KEY).hexdigest()
+						)
+						user.first_name = user_info_response[0]['first_name']
+						user.last_name = user_info_response[0]['last_name']
+						
+						user_registration_profile = RegistrationProfile.objects.create_profile(user)
+						
+						# set facebook id and save user
+						user_registration_profile.facebook_id = facebook_user_cookie['uid']
+						user.save()
+						user_registration_profile.save()
+						
+						# activate
+						RegistrationProfile.objects.activate_user(user_registration_profile.activation_key)
+					
+					# allows me to log user in without knowing password
+					user.backend = 'django.contrib.auth.backends.ModelBackend'
+					login(request, user)
+					
+					# Authenticate and log in (or display disabled error message)
+					#user = authenticate(
+					#	username='facebook_'+facebook_user_cookie['uid'], 
+					#	password=hashlib.md5('facebook_'+facebook_user_cookie['uid'] + settings.SECRET_KEY).hexdigest()
+					#)
+					
+					if user is not None:
+						if user.is_active:
+							login(request, user)
+							self.facebook_user_is_authenticated = True
+						else:
+							request.facebook_message = ACCOUNT_DISABLED_ERROR
+							self.delete_fb_cookies = True
+					else:
+						request.facebook_message = ACCOUNT_PROBLEM_ERROR
+						self.delete_fb_cookies = True
+					
+					
 			# Logged in
 			else:
+				
 				# If FB Connect user
-				if API_KEY in request.COOKIES:
-					# IP hash cookie set
-					if 'fb_ip' in request.COOKIES:
+				if facebook_user_cookie:
+					
+					if facebook_valid_session:
 						
-						try:
-							real_ip = request.META['HTTP_X_FORWARDED_FOR']
-						except KeyError:
-							real_ip = request.META['REMOTE_ADDR']
+						user_registration_profile = RegistrationProfile.objects.get(user=request.user)
 						
-						# If IP hash cookie is NOT correct
-						if request.COOKIES['fb_ip'] != hashlib.md5(real_ip + API_SECRET + settings.SECRET_KEY).hexdigest():
-							 logout(request)
-							 self.delete_fb_cookies = True
+						# user is logged in with Facebook... make sure we saved their facebook_id
+						# we have to do this in case the user logged in with facebook while already
+						# logged into Synapsie
+						if not user_registration_profile.facebook_id:
+							user_registration_profile.facebook_id = facebook_user_cookie['uid']
+							user_registration_profile.save()
+						
+						'''
+						# IP hash cookie set
+						if 'fb_ip' in request.COOKIES.keys():
+							
+							try:
+								real_ip = request.META['HTTP_X_FORWARDED_FOR']
+							except KeyError:
+								real_ip = request.META['REMOTE_ADDR']
+							
+							# If IP hash cookie is NOT correct
+							if request.COOKIES['fb_ip'] != hashlib.md5(real_ip + API_SECRET + settings.SECRET_KEY).hexdigest():
+								logout(request)
+								self.delete_fb_cookies = True
+							
+						'''
+						
 					# FB Connect user without hash cookie set
 					else:
 						logout(request)

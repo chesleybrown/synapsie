@@ -1,0 +1,20 @@
+{% load i18n %}
+
+<div class="site_content_tabs use_tabs">
+	<ul class="tabs">
+		<li class="active"><a href="#tab_facebook_connect">{% trans "Facebook Connect" %}</a></li>
+	</ul>
+	
+	<div class="tab_container">
+		<div id="tab_facebook_connect" class="tab_content">
+			<div class="important_message">
+				<h3>{% trans "Leaderboards Requires Facebook Connect" %}</h3>
+				<h4>{% trans "In order for us to compare your Quality of Life to your friends, you'll need to" %}</h4>
+			</div>
+			
+			<div class="facebook_login use_facebook_login" style="width: 316px; margin: 25px auto;">
+				<fb:login-button perms="email" size="xlarge">{% trans "Login with Facebook" %}</fb:login-button>
+			</div>
+		</div>
+	</div>
+</div>
