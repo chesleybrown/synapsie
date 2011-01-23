@@ -1,6 +1,10 @@
 # Python Compiled
 *.pyc
 
+# Minified stuff
+media/css/min/*
+media/js/min/*
+
 # Logs
 logs/**/*
 
