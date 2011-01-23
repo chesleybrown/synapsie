@@ -258,7 +258,7 @@ $(document).ready(function() {
 		var new_record = $('#records_blank ul.records li.record').clone(false);
 		var new_record_tags = $('#tags_blank ul.tags').clone(false);
 		var new_record_tags_tag = $('#tags_blank ul.tags li.tag').clone(false);
-		var created = mysqlTimeStampToDate(data['created']);
+		var happened = mysqlTimeStampToDate(data['happened']);
 		var security = '';
 		var short_months = [
 			'Jan',
@@ -276,8 +276,8 @@ $(document).ready(function() {
 		];
 		
 		// determine time
-		var curr_hour = created.getHours();
-		var curr_min = created.getMinutes();
+		var curr_hour = happened.getHours();
+		var curr_min = happened.getMinutes();
 		var am_pm = '';
 			
 		if (curr_hour < 12) {
@@ -297,7 +297,7 @@ $(document).ready(function() {
 		}
 		
 		// add leading zero to day if needed
-		var curr_day = created.getDate();
+		var curr_day = happened.getDate();
 		
 		if (curr_day < 10) {
 			curr_day = '0' + curr_day;
@@ -321,12 +321,12 @@ $(document).ready(function() {
 		new_record.find('div.security span.security_text').text(security_text);
 		new_record.find('div.personal').text(data['personal']);
 		new_record.find('div.header div.text').html(nl2br(data['text']));
-		new_record.find('div.header div.datetime').text(data['created']);
+		new_record.find('div.header div.datetime').text(data['happened']);
 		new_record.find('div.header div.time').text(curr_hour + ':' + curr_min + am_pm);
-		new_record.find('div.header div.time_since').text(jQuery.timeago(created));
-		new_record.find('div.date span.month').text(short_months[created.getMonth()]);
+		new_record.find('div.header div.time_since').text(jQuery.timeago(happened));
+		new_record.find('div.date span.month').text(short_months[happened.getMonth()]);
 		new_record.find('div.date span.day').text(curr_day);
-		new_record.find('div.date span.year').text(created.getFullYear());
+		new_record.find('div.date span.year').text(happened.getFullYear());
 		
 		// update menu items
 		$(new_record).find('div.menu ul.menu_items li.menu_item').each(function(e) {
@@ -597,7 +597,7 @@ $(document).ready(function() {
 						$(record_contents.text).html(nl2br(record.text));
 						$(record_contents.personal).text(record.personal);
 						
-						var created = mysqlTimeStampToDate(record.created);
+						var happened = mysqlTimeStampToDate(record.happened);
 						var short_months = [
 							'Jan',
 							'Feb',
@@ -614,8 +614,8 @@ $(document).ready(function() {
 						];
 						
 						// determine time
-						var curr_hour = created.getHours();
-						var curr_min = created.getMinutes();
+						var curr_hour = happened.getHours();
+						var curr_min = happened.getMinutes();
 						var am_pm = '';
 							
 						if (curr_hour < 12) {
@@ -635,18 +635,18 @@ $(document).ready(function() {
 						}
 						
 						// add leading zero to day if needed
-						var curr_day = created.getDate();
+						var curr_day = happened.getDate();
 						
 						if (curr_day < 10) {
 							curr_day = '0' + curr_day;
 						}
 						
-						$(record_contents.datetime).text(record.created);
+						$(record_contents.datetime).text(record.happened);
 						$(record_contents.time).text(curr_hour + ':' + curr_min + am_pm);
-						$(record_contents.time_since).text(jQuery.timeago(created));
-						$(record_contents.date.month).text(short_months[created.getMonth()]);
+						$(record_contents.time_since).text(jQuery.timeago(happened));
+						$(record_contents.date.month).text(short_months[happened.getMonth()]);
 						$(record_contents.date.day).text(curr_day);
-						$(record_contents.date.year).text(created.getFullYear());
+						$(record_contents.date.year).text(happened.getFullYear());
 						
 						//determine security
 						if (record.personal == 1) {

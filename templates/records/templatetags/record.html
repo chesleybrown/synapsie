@@ -4,9 +4,9 @@
 <li id="record_{{ record.id }}" class="record">
 	<div class="record_content">
 		<div class="date">
-			<span class="month">{{ record.created|date:"M" }}</span>
-			<span class="day">{{ record.created|date:"d" }}</span>
-			<span class="year">{{ record.created|date:"Y" }}</span>
+			<span class="month">{{ record.happened|date:"M" }}</span>
+			<span class="day">{{ record.happened|date:"d" }}</span>
+			<span class="year">{{ record.happened|date:"Y" }}</span>
 		</div>
 		<div class="security">
 			<div class="personal">{{ record.personal }}</div>
@@ -19,9 +19,9 @@
 			{% endif %}
 		</div>
 		<div class="header">
-			<div class="datetime">{{ record.created|date:"Y-m-d H:i:s" }}</div>
-			<div class="time">{{ record.created|date:"g:iA" }}</div>
-			<div class="time_since use_time_since">{{ record.created|timesince }} ago</div>
+			<div class="datetime">{{ record.happened|date:"Y-m-d H:i:s" }}</div>
+			<div class="time">{{ record.happened|date:"g:iA" }}</div>
+			<div class="time_since use_time_since">{{ record.happened|timesince }} ago</div>
 			<div class="text">{{ record.text|linebreaksbr }}</div>
 		</div>
 		<div class="menu use_record_menu">

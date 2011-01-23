@@ -82,6 +82,7 @@ class RecordHandler(BaseHandler):
 				'text': record.text,
 				'personal': record.personal,
 				'created': record.created,
+				'happened': record.happened,
 				'tags': clean_tags,
 			}
 			
@@ -116,6 +117,7 @@ class RecordHandler(BaseHandler):
 						'text': record.text,
 						'personal': record.personal,
 						'created': record.created,
+						'happened': record.happened,
 						'tags': clean_tags,
 					}
 					
@@ -171,7 +173,7 @@ class RecordHandler(BaseHandler):
 					user_id = identity.id,
 					text = clean['text'],
 					personal = int(clean['personal']),
-					created = record_datetime
+					happened = record_datetime
 				)
 				
 				# save
@@ -191,6 +193,7 @@ class RecordHandler(BaseHandler):
 					'text': record.text,
 					'personal': record.personal,
 					'created': record.created,
+					'happened': record.happened,
 					'tags': record.clean_tags,
 				}
 				
@@ -256,6 +259,7 @@ class RecordHandler(BaseHandler):
 					'text': record.text,
 					'personal': record.personal,
 					'created': record.created,
+					'happened': record.happened,
 					'tags': record.clean_tags,
 				}
 				
@@ -285,7 +289,7 @@ class RecordHandler(BaseHandler):
 				# update record, set user
 				record.text = clean['text']
 				record.personal = clean['personal']
-				record.created = record_datetime
+				record.happened = record_datetime
 				
 				# save
 				record.save()
@@ -301,6 +305,7 @@ class RecordHandler(BaseHandler):
 					'text': record.text,
 					'personal': record.personal,
 					'created': record.created,
+					'happened': record.happened,
 					'tags': record.clean_tags,
 				}
 				

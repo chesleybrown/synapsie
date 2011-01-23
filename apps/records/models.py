@@ -9,7 +9,9 @@ from apps.accounts import services as AccountService
 class Record(models.Model):
 	user = models.ForeignKey(User)
 	text = models.TextField()
-	created = models.DateTimeField(default=datetime.now())
+	created = models.DateTimeField(auto_now_add=True)
+	updated = models.DateTimeField(auto_now=True)
+	happened = models.DateTimeField()
 	personal = models.SmallIntegerField(default=1)
 	quality = models.FloatField(null=True, max_length=6)
 	
