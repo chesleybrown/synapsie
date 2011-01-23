@@ -1,0 +1,11 @@
+# Python Compiled
+*.pyc
+
+# Logs
+logs/**/*
+
+# Komodo Project File
+*.komodoproject
+
+# Mac systemfile
+*.DS_Store
