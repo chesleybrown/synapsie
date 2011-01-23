@@ -21,6 +21,50 @@ DATABASES = {
 	}
 }
 
+MIDDLEWARE_CLASSES = (
+	'django.middleware.common.CommonMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.transaction.TransactionMiddleware',
+	'middlewares.ssl.SSLRedirect',
+	'middlewares.fbconnect.FacebookConnectMiddleware',
+	'debug_toolbar.middleware.DebugToolbarMiddleware', # need debug
+)
+
+# Debugging
+INTERNAL_IPS = (
+	'127.0.0.1',
+)
+DEBUG_TOOLBAR_CONFIG = {
+	'INTERCEPT_REDIRECTS': False,
+	'HIDE_DJANGO_SQL': False,
+}
+
+INSTALLED_APPS = (
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.sites',
+	'django.contrib.messages',
+	
+	# synapsie
+	'apps.accounts',
+	'apps.about',
+	'apps.session_messages',
+	'piston',
+	'compress',
+	'apps.general',
+	'apps.records',
+	'apps.tags',
+	'tagging',
+	
+	# debug
+	'debug_toolbar',
+)
+
 SITE_DOMAIN = 'taglife.local:8000'
 
 # compression disabled for development
