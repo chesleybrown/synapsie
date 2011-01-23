@@ -119,7 +119,14 @@
 						</div>
 					{% endif %}
 					
-					{% if not stale_friends_paginator.object_list %}
+					{% if not stale_friends_paginator.object_list and fresh_friends_paginator.object_list %}
+						
+						<!-- No Results -->
+						<div class="tags_no_results">
+							<p>{% trans "Looks like all your friends are using Synapsie. Sweet!" %}</p>
+						</div>
+						
+					{% elif not stale_friends_paginator.object_list $}
 						
 						<!-- No Results -->
 						<div class="tags_no_results">
