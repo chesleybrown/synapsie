@@ -81,9 +81,9 @@
 							<div class="container">
 								<div class="header">
 									<div class="label">
-										<label class="icon icon_quality_of_life" for="id_date_joined">{% trans "Quality of Life" %}</label>
+										<label class="icon icon_quality_of_life" for="id_quality_of_life">{% trans "Quality of Life" %}</label>
 									</div>
-									<div id="id_date_joined" class="content">
+									<div id="id_quality_of_life" class="content">
 										{% if viewed_user_registration_profile.quality_of_life %}
 											{{ viewed_user_registration_profile.quality_of_life|floatformat:1 }}%
 										{% else %}
@@ -208,7 +208,7 @@
 	</div>
 	
 	<div class="clear"></div>
-	<!--
+	
 	<div class="grid_5 alpha">
 		<div class="site_content_tabs use_tabs">
 			<ul class="tabs">
@@ -238,6 +238,6 @@
 			</div>
 		</div>
 	</div>
-	-->
+	
 	
 {% endblock %}

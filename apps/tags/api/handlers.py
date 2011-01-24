@@ -29,26 +29,36 @@ class TagHandler(BaseHandler):
 		data = {},
 	)
 	
-	def read(self, request, tag_name=None):
+	def read(self, request, tag_name=None, page=1):
 		
 		#init
 		identity = request.user
 		clean = None
 		messages = TagMessages()
 		response = self.empty_response
+		results_per_page = 10
 		clean_tag = None
 		clean_tags = list()
 		
 		# get all user tags
 		tag_list = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)
 		
+		# sort by count
+		tag_list.sort(key=lambda x: x.count, reverse=True)
+		
+		count = 0
 		# clean for return
 		for tag in tag_list:
+			
+			count = count + 1
 			clean_tag = {
 				'name': tag.name,
 				'count': tag.count,
 			}
 			clean_tags.append(clean_tag)
+			
+			if count >= results_per_page:
+				break
 		
 		# order by count
 		clean_tags_sorted = sorted(clean_tags, key=lambda k: k['count'], reverse=True)

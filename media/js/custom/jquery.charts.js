@@ -39,36 +39,48 @@
 						var chart = new google.visualization.PieChart(document.getElementById(id));
 						chart.draw(chartData, {
 							width: 370,
-							height: 240,
+							height: 280,
 							title: 'My Used Tags'
 						});
 						
-						/*
-						// create canvas
-						var r = Raphael(id, 380, 220);
+					}
+				});
+				
+				$.ajax({
+					url: '/api/tags.json',
+					success: function(data) {
 						
-						var pie = r.g.piechart(230, 110, 100, results['counts'], {
-							legend: results['names'],
-							legendpos: "west"
-						});
+						var id = $('#chartcontainer2').attr('id');
+						var tags = data.data;
 						
-						// hover effect
-						pie.hover(function () {
-							this.sector.stop();
-							this.sector.scale(1.1, 1.1, this.cx, this.cy);
-							if (this.label) {
-								this.label[0].stop();
-								this.label[0].scale(1.5);
-								this.label[1].attr({"font-weight": 800});
-							}
-						}, function () {
-							this.sector.animate({scale: [1, 1, this.cx, this.cy]}, 1000, "bounce");
-							if (this.label) {
-								this.label[0].animate({scale: 1}, 500, "bounce");
-								this.label[1].attr({"font-weight": 400});
-							}
+						// remove any current charts
+						$('#chartcontainer2').html('');
+						
+						var chartData = new google.visualization.DataTable();
+						
+						chartData.addColumn('string', 'Year');
+						chartData.addColumn('number', 'Sales');
+						chartData.addColumn('number', 'Expenses');
+						chartData.addRows(4);
+						chartData.setValue(0, 0, '2004');
+						chartData.setValue(0, 1, 1000);
+						chartData.setValue(0, 2, 400);
+						chartData.setValue(1, 0, '2005');
+						chartData.setValue(1, 1, 1170);
+						chartData.setValue(1, 2, 460);
+						chartData.setValue(2, 0, '2006');
+						chartData.setValue(2, 1, 860);
+						chartData.setValue(2, 2, 580);
+						chartData.setValue(3, 0, '2007');
+						chartData.setValue(3, 1, 1030);
+						chartData.setValue(3, 2, 540);
+						
+						var chart = new google.visualization.LineChart(document.getElementById(id));
+						chart.draw(chartData, {
+							width: 290,
+							height: 180,
+							title: 'Quality of Life'
 						});
-						*/
 						
 					}
 				});
@@ -94,4 +106,4 @@
 
 
 
-//$('#chartcontainer').chart('update');
+$('#chartcontainer').chart('update');
