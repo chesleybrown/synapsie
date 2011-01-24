@@ -317,7 +317,7 @@ class RegistrationProfile(models.Model):
 		
 		self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
 	
-	# this hook is for setting the record quality
+	# this hook is for setting the user's quality of quality
 	def save(self):
 		self.quality_of_life = self.get_quality_of_life()
 		
