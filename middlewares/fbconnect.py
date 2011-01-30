@@ -128,6 +128,7 @@ class FacebookConnectMiddleware(object):
 						user_registration_profile.save()
 						
 					except User.DoesNotExist:
+						
 						# Create user
 						user = User.objects.create_user(
 							'facebook_'+facebook_user_cookie['uid'],
@@ -136,12 +137,12 @@ class FacebookConnectMiddleware(object):
 						)
 						user.first_name = user_info_response[0]['first_name']
 						user.last_name = user_info_response[0]['last_name']
+						user.save()
 						
 						user_registration_profile = RegistrationProfile.objects.create_profile(user)
 						
 						# set facebook id and save user
 						user_registration_profile.facebook_id = facebook_user_cookie['uid']
-						user.save()
 						user_registration_profile.save()
 						
 						# activate
