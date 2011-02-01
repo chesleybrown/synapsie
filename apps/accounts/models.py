@@ -108,9 +108,14 @@ class RegistrationManager(models.Manager):
 		username and a random salt.
 		
 		"""
+		
 		salt = sha_constructor(str(random.random())).hexdigest()[:5]
 		activation_key = sha_constructor(salt+user.username).hexdigest()
-		return self.create(user=user, activation_key=activation_key)
+		
+		# I don't know why this stopped working...
+		#return self.create(user=user, activation_key=activation_key)
+		
+		return RegistrationProfile(user=user, activation_key=activation_key)
 	
 	def delete_expired_users(self):
 		"""
@@ -317,7 +322,7 @@ class RegistrationProfile(models.Model):
 		
 		self.user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
 	
-	# this hook is for setting the record quality
+	# this hook is for setting the user's quality of quality
 	def save(self):
 		self.quality_of_life = self.get_quality_of_life()
 		

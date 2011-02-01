@@ -108,8 +108,8 @@ class Record(models.Model):
 	def can_delete(self, user):
 		return self.is_owner(user)
 	
-	# this hook is for setting the record quality
-	def save(self):
+	# this hook is for setting the record quality and updating user's quality of life on save
+	def save(self, update_quality_of_life=True):
 		
 		# init
 		self.quality = self.get_quality()
@@ -118,4 +118,18 @@ class Record(models.Model):
 		super(Record, self).save()
 		
 		# also update user's quality of life
-		AccountService.update_quality_of_life(self.user)
+		if update_quality_of_life:
+			AccountService.update_quality_of_life(self.user)
+	
+	# this hook is for setting the record quality and updating user's quality of life on delete
+	def delete(self, update_quality_of_life=True):
+		
+		# init
+		self.quality = self.get_quality()
+		
+		# Call the "real" delete() method
+		super(Record, self).delete()
+		
+		# also update user's quality of life
+		if update_quality_of_life:
+			AccountService.update_quality_of_life(self.user)

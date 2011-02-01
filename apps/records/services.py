@@ -54,7 +54,7 @@ class RecordService():
 			user = identity
 		
 		# get user records
-		record_list = Record.objects.all().filter(user=user).order_by('-created', '-id')
+		record_list = Record.objects.all().filter(user=user).order_by('-happened', '-id')
 		
 		# only show public if enabled (added user & identity check for safety)
 		if public or user != identity:

@@ -141,7 +141,7 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	record_search_formset = RecordSearchForm(request.GET)
 	
 	# get user records
-	record_list = Record.objects.all().filter(user=identity).order_by('-created', '-id')
+	record_list = Record.objects.all().filter(user=identity).order_by('-happened', '-id')
 	
 	# user has created at least 1 record
 	if record_list.count() > 0:

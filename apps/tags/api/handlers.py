@@ -7,6 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from piston.handler import AnonymousBaseHandler, BaseHandler
 from piston.utils import rc, validate
 
+from apps.accounts import services as AccountService
 from apps.tags.messages import TagMessages
 from apps.records.models import Record
 from apps.tags.forms import TagForm
@@ -86,6 +87,7 @@ class TagHandler(BaseHandler):
 		str_tags = ','
 		clean = None
 		clean_records = list()
+		clean_tag = list()
 		messages = TagMessages()
 		response = self.empty_response
 		formset = None
@@ -149,6 +151,7 @@ class TagHandler(BaseHandler):
 					'text': tagged_record.text,
 					'personal': tagged_record.personal,
 					'created': tagged_record.created,
+					'happened': tagged_record.happened,
 					'tags': record_tags,
 				}
 				clean_records.append(clean_record)
@@ -157,16 +160,26 @@ class TagHandler(BaseHandler):
 				str_tags = "," + ",".join(record_tags_list)
 				Tag.objects.update_tags(tagged_record, str_tags)
 				
+				# update the quality for each record
+				tagged_record.save(update_quality_of_life=False)
+			
+			# now update user's quality of life
+			AccountService.update_quality_of_life(identity)
+			
+			# return clean updated tag
+			clean_tag = {
+				'name': updated_tag.name,
+			}
+			
 			# return message and record updated
 			response['message'] = messages.get('updated', {
 				'tag_name': tag_name,
 			})
-			response['data'] = updated_tag
+			response['data'] = clean_tag
 			
 		else:
 			response['message'] = messages.get('invalid')
 		
-		print formset.errors
 		return response
 	
 	def delete(self, request, tag_name, record_id=None):
@@ -180,6 +193,7 @@ class TagHandler(BaseHandler):
 		record_type = ContentType.objects.get_for_model(Record)
 		messages = TagMessages()
 		response = self.empty_response
+		clean_tag = list()
 		
 		# get id of tag
 		try:
@@ -198,6 +212,12 @@ class TagHandler(BaseHandler):
 			
 			tagged_items = TaggedItem.objects.all().filter(object_id=tagged_record.id, tag=tag, content_type=record_type)
 			
+			# delete it
+			tagged_items.delete()
+			
+			# update record quality of life
+			tagged_record.save()
+			
 		# doing a global tag delete for user
 		else:
 			records = Record.objects.all().filter(user=identity)
@@ -205,15 +225,26 @@ class TagHandler(BaseHandler):
 			
 			for tagged_record in tagged_records:
 				tagged_item_ids.append(tagged_record.id)
+				
+				# update the quality for each record
+				tagged_record.save(update_quality_of_life=False)
 			
 			tagged_items = TaggedItem.objects.all().filter(object_id__in=tagged_item_ids, tag=tag, content_type=record_type)
 			
-		# delete it/them
-		tagged_items.delete()
+			# delete them
+			tagged_items.delete()
+			
+			# update user's quality of life
+			AccountService.update_quality_of_life(identity)
+		
+		# return clean deleted tag
+		clean_tag = {
+			'name': tag.name,
+		}
 		
 		# return delete message
 		response['message'] = messages.get('deleted', {
 			'tag_name': tag_name,
 		})
-		response['data'] = tag
+		response['data'] = clean_tag
 		return response
