@@ -59,6 +59,7 @@ INSTALLED_APPS = (
 	'apps.general',
 	'apps.records',
 	'apps.tags',
+	'apps.stats',
 	'tagging',
 	
 	# debug

@@ -9,7 +9,8 @@ from django.contrib.auth.decorators import login_required
 from piston.handler import AnonymousBaseHandler, BaseHandler
 from piston.utils import rc, validate
 
-from apps.records.messages import RecordMessages
+from apps.stats.messages import StatMessages
+
 from apps.records.models import Record
 from apps.records.forms import RecordForm, RecordAddTagsForm
 from apps.records.services import RecordService
@@ -32,61 +33,20 @@ class StatHandler(BaseHandler):
 		data = {},
 	)
 	
-	def read(self, request, record_id=None, tags=False, page=1, user_id=None, username=None, public=False, text=None):
-		
-		#init
-		identity = request.user
-		user = identity
-		record_service = RecordService()
-		messages = RecordMessages()
-		message = False
-		records = False
-		records_paginator = False
-		results_per_page = 25
-		clean_records = list()
-		clean_tags = list()
-		response = self.empty_response
-		
-		return response
-	
-	def create(self, request):
-		
-		#init
-		identity = request.user
-		messages = RecordMessages()
-		record_create_formset = RecordForm(prefix='record_create')
-		now = datetime.now()
-		str_tags = ','
-		clean = None
-		record_datetime = None
-		datetime_string = False
-		datetime_format = "%Y-%m-%d %I:%M%p"
-		response = self.empty_response
-		
-		return response
-	
-	def update(self, request, record_id, add_tags=False):
-		
-		#init
-		identity = request.user
-		messages = RecordMessages()
-		record_edit_formset = RecordForm(prefix='record_edit')
-		record_add_tags_formset = RecordAddTagsForm(prefix='record_add_tags')
-		now = datetime.now()
-		str_tags = ','
-		clean = None
-		record_datetime = None
-		datetime_string = False
-		datetime_format = "%Y-%m-%d %I:%M%p"
-		response = self.empty_response
-		
-		return response
-	
-	def delete(self, request, record_id):
+	def read(self, request, type=None):
 		
 		# init
 		identity = request.user
-		messages = RecordMessages()
+		user = identity
+		record_service = RecordService()
+		messages = StatMessages()
+		message = False
+		records = False
+		clean_stats = list()
 		response = self.empty_response
 		
+		if type is 'weekly':
+			StatService.get_weekly(request, user=user)
+		
 		return response
+	
