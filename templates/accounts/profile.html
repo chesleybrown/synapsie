@@ -9,6 +9,8 @@
 	<div class="site_content_tabs use_tabs">
 		<ul class="tabs">
 			<li class="active"><a href="#profile">{% trans "Profile" %}</a></li>
+			<li class=""><a href="#stats">{% trans "Stats" %}</a></li>
+			<li class=""><a href="#achievements">{% trans "Achievements" %}</a></li>
 		</ul>
 		
 		<div class="tab_container">
@@ -95,6 +97,37 @@
 						</li>
 					</ul>
 				</div>
+			</div>
+			
+			<div id="stats" class="tab_content hidden">
+				<div class="menu use_record_menu">
+					<ul class="menu_headers">
+						<li class="menu_header"></li>
+					</ul>
+					<ul class="menu_items">
+						<li class="menu_item">
+							<a href="/records/show/1265"><span class="icon icon_record_view"></span>View</a>
+						</li>
+						<li class="menu_item">
+							<a href="/api/records.json/1265" class="use_record_edit"><span class="icon icon_record_edit"></span>Edit</a>
+						</li>
+						<li class="menu_item">
+							<a href="/api/records.json/1265" class="use_record_delete"><span class="icon icon_record_delete"></span>Delete...</a>
+						</li>
+					</ul>
+				</div>
+				
+				<div class="form_items_container">
+					<div id="chartcontainer2">
+						
+						<div class="loading"></div>
+						
+					</div>
+				</div>
+			</div>
+			
+			<div id="achievements" class="tab_content hidden">
+				<p>Coming soon...</p>
 			</div>
 		</div>
 	</div>
@@ -217,22 +250,10 @@
 			
 			<div class="tab_container">
 				<div id="user_stats_01" class="tab_content">
-					<div id="chartcontainer"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="grid_4 omega">
-		<div class="site_content_tabs use_tabs">
-			<ul class="tabs">
-				<li class="active"><a href="#user_stats_02">{% trans "More Stats" %}</a></li>
-			</ul>
-			
-			<div class="tab_container">
-				<div id="user_stats_02" class="tab_content">
-					<div class="form_items_container">
-						<div id="chartcontainer2">This is just a replacement in case Javascript is not available or used for SEO purposes</div>
+					<div id="chartcontainer">
+						
+						<div class="loading"></div>
+						
 					</div>
 				</div>
 			</div>

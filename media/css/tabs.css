@@ -117,6 +117,7 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
 	width: 100%;
 	background: #fff;
 	margin: 0 0 20px 0;
+	position: relative;
 }
 .tab_content {
 	padding: 10px 5px 5px 5px;
@@ -127,6 +128,13 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
 }
 .tab_content > .actions .action {
 	float: left;
+}
+.tab_content .loading {
+	background: url(/site_media/media/img/layout/body/loading.gif);
+	margin: 50px auto;
+	width: 42px;
+	height: 42px;
+	display: block;
 }
 
 /* Sidebar Tabs */

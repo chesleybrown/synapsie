@@ -5,7 +5,11 @@
 		// init
 		var element = $(this);
 		var settings = {
-			'test': true
+			type: 'weekly'
+		};
+		var weeklyData = {
+			recent: null,
+			all_time: null
 		};
 		
 		if (options) {
@@ -16,67 +20,108 @@
 		var methods = {
 			'update': function(options) {
 				
-				$.ajax({
-					url: '/api/tags.json',
-					success: function(data) {
-						
-						var id = $(element).attr('id');
-						var tags = data.data;
-						
-						// remove any current charts
-						$(element).html('');
-						
-						var chartData = new google.visualization.DataTable();
-						chartData.addColumn('string', 'Task');
-						chartData.addColumn('number', 'Hours per Day');
-						chartData.addRows(tags.length);
-						
-						for (i in tags) {
-							chartData.setValue(parseInt(i), 0, tags[i]['name']);
-							chartData.setValue(parseInt(i), 1, tags[i]['count']);
+				if (options.type == 'tags') {
+					
+					$.ajax({
+						url: '/api/tags.json',
+						success: function(data) {
+							
+							var id = $(element).attr('id');
+							var tags = data.data;
+							
+							// remove any current charts
+							$(element).html('');
+							
+							var chartData = new google.visualization.DataTable();
+							chartData.addColumn('string', 'Task');
+							chartData.addColumn('number', 'Hours per Day');
+							chartData.addRows(tags.length);
+							
+							for (i in tags) {
+								chartData.setValue(parseInt(i), 0, tags[i]['name']);
+								chartData.setValue(parseInt(i), 1, tags[i]['count']);
+							}
+							
+							var chart = new google.visualization.PieChart(document.getElementById(id));
+							chart.draw(chartData, {
+								width: 370,
+								height: 280,
+								title: 'My Used Tags'
+							});
+							
 						}
-						
-						var chart = new google.visualization.PieChart(document.getElementById(id));
-						chart.draw(chartData, {
-							width: 370,
-							height: 280,
-							title: 'My Used Tags'
-						});
-						
-					}
-				});
+					});
+					
+				}
+				else if (options.type == 'weekly') {
+					
+					$.ajax({
+						url: '/api/stats.json/weekly/recent',
+						success: function(data) {
+							
+							var id = $('#chartcontainer2').attr('id');
+							var stats = data.data.stats;
+							
+							weeklyData.recent = stats;
+							
+							element.chart('render', {
+								data: weeklyData
+							});
+						}
+					});
+					
+					$.ajax({
+						url: '/api/stats.json/weekly/all_time',
+						success: function(data) {
+							
+							var id = $('#chartcontainer2').attr('id');
+							var stats = data.data.stats;
+							
+							weeklyData.all_time = stats;
+							
+							element.chart('render', {
+								data: weeklyData
+							});
+							
+						}
+					});
+					
+				}
 				
-				$.ajax({
-					url: '/api/stats.json/weekly/recent',
-					success: function(data) {
-						
-						var id = $('#chartcontainer2').attr('id');
-						var stats = data.data.stats;
-						
-						// remove any current charts
-						$('#chartcontainer2').html('');
-						
-						var chartData = new google.visualization.DataTable();
-						
-						chartData.addColumn('string', 'Weekday');
-						chartData.addColumn('number', 'Quality');
-						chartData.addRows(stats.length);
-						
-						for (i in stats) {
-							chartData.setValue(parseInt(i), 0, stats[i]['weekday']);
-							chartData.setValue(parseInt(i), 1, stats[i]['quality']);
-						}
-						
-						var chart = new google.visualization.LineChart(document.getElementById(id));
-						chart.draw(chartData, {
-							width: 290,
-							height: 180,
-							title: 'Quality of Life',
-							legend: 'none'
-						});
-						
+			},
+			'render': function(options) {
+				
+				if (options.data.recent && options.data.all_time) {
+					
+					var id = $('#chartcontainer2').attr('id');
+					
+					// remove any current charts
+					$('#chartcontainer2').html('');
+					
+					var chartData = new google.visualization.DataTable();
+					
+					chartData.addColumn('string', 'Weekday');
+					chartData.addColumn('number', 'Recent');
+					chartData.addColumn('number', 'All Time');
+					chartData.addRows(options.data.recent.length);
+					
+					for (i in options.data.recent) {
+						chartData.setValue(parseInt(i), 0, options.data.recent[i]['weekday']);
+						chartData.setValue(parseInt(i), 1, options.data.recent[i]['quality']);
 					}
-				});
+					
+					for (i in options.data.all_time) {
+						chartData.setValue(parseInt(i), 2, options.data.all_time[i]['quality']);
+					}
+					
+					var chart = new google.visualization.LineChart(document.getElementById(id));
+					chart.draw(chartData, {
+						width: 690,
+						height: 250,
+						title: 'Quality of Life'
+					});
+					
+				}
 				
 			}
 		}
@@ -90,7 +135,7 @@
 		}
 		else {
 			$.error('Method ' +  method + ' does not exist on jQuery.chart');
-		}   
+		}
 		
 		return false;
 	};
@@ -99,4 +144,6 @@
 
 
 
-$('#chartcontainer').chart('update');
+$('#chartcontainer').chart('update', {
+	type: 'weekly'
+});

@@ -1,21 +1,21 @@
 /* Dropdown Menu */
-ul .menu {
+.menu {
 	opacity: 0.5;
 	position: absolute;
 	top: 5px;
 	right: 5px;
 	z-index: 100;
 }
-ul .menu.hover {
+.menu.hover {
 	opacity: 1;
 }
-ul .menu ul.menu_headers {
+.menu ul.menu_headers {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 	height: 16px;
 }
-ul .menu ul.menu_headers li.menu_header {
+.menu ul.menu_headers li.menu_header {
 	margin: 0;
 	padding: 0;
 	float: right;
@@ -27,10 +27,10 @@ ul .menu ul.menu_headers li.menu_header {
 	top: 1px;
 	right: 0;
 }
-ul .menu ul.menu_headers li.menu_header:hover {
+.menu ul.menu_headers li.menu_header:hover {
 	background-position: 0 -16px
 }
-ul .menu ul.menu_items {
+.menu ul.menu_items {
 	display: none;
 	list-style: none;
 	margin: 0;
@@ -45,16 +45,16 @@ ul .menu ul.menu_items {
 	-moz-box-shadow: 0 5px 5px #aaa;
 	-webkit-box-shadow: 0 5px 5px #aaa;
 }
-ul .menu ul.menu_items li.menu_item {
+.menu ul.menu_items li.menu_item {
 	font-size: 12px;
 	margin: 0;
 	padding: 0;
 }
-ul .menu ul.menu_items li.menu_item .icon {
+.menu ul.menu_items li.menu_item .icon {
 	float: left;
 	margin: 3px 10px 0 0;
 }
-ul .menu ul.menu_items li.menu_item a {
+.menu ul.menu_items li.menu_item a {
 	color: #666;
 	text-decoration: none;
 	font-weight: bold;
@@ -65,21 +65,21 @@ ul .menu ul.menu_items li.menu_item a {
 	border-style: solid;
 	border-color: transparent;
 }
-ul .menu ul.menu_items li.menu_item a:hover {
+.menu ul.menu_items li.menu_item a:hover {
 	color: #fff;
 	text-shadow: 1px 1px #000;
 	text-decoration: none;
 	background-color: #333;
 	border-color: #000;
 }
-ul .menu ul.menu_headers li.menu_header.active,
-ul .menu ul.menu_headers li.menu_header.active:hover { /*--Makes sure that the active tab does not listen to the hover properties--*/
+.menu ul.menu_headers li.menu_header.active,
+.menu ul.menu_headers li.menu_header.active:hover { /*--Makes sure that the active tab does not listen to the hover properties--*/
 	background-position: 0 -32px !important;
 }
-ul .menu.active ul.menu_headers {
+.menu.active ul.menu_headers {
 	border-bottom: 1px solid #999;
 }
 
-ul .menu.active {
+.menu.active {
 	z-index: 2000;
 }
