@@ -87,16 +87,9 @@
 
 
 /* Dropdown Menu with Descriptions */
-.menu_large {
-	opacity: 1;
-}
 .menu_large ul.menu_headers .icon {
 	float: left;
 	padding: 4px 4px 4px 0;
-}
-.menu_large.hover,
-.menu_large:hover {
-	opacity: 1;
 }
 .menu_large ul.menu_headers {
 	list-style: none;
@@ -167,17 +160,11 @@
 	border-color: transparent;
 	cursor: pointer;
 }
-.menu_large ul.menu_items li.menu_item_datepicker {
-	margin: 0;
-	padding: 0;
-	cursor: default;
-}
 .menu_large ul.menu_items li.menu_item .icon {
 	float: left;
 	margin: 3px 10px 0 0;
 }
-.menu_large ul.menu_items li.menu_item .menu_item_value,
-.menu_large ul.menu_items li.menu_item_datepicker .menu_item_value {
+.menu_large ul.menu_items li.menu_item .menu_item_value {
 	display: none;
 }
 .menu_large ul.menu_items li.menu_item .menu_item_text {
@@ -188,10 +175,6 @@
 	display: block;
 	color: #999;
 }
-.menu_large ul.menu_items li.menu_item_datepicker .menu_item_desc {
-	margin: 0;
-	padding: 0;
-}
 .menu_large ul.menu_items li.menu_item:hover .menu_item_desc {
 	color: #ddd;
 }
@@ -201,9 +184,6 @@
 	text-decoration: none;
 	background-color: #333;
 	border-color: #000;
-}
-.menu_large ul.menu_items li.menu_item_datepicker:hover {
-	background-color: #fff;
 }
 .menu_large.active ul.menu_headers li.menu_header .side,
 .menu_large.active ul.menu_headers li.menu_header .side:hover,

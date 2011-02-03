@@ -120,9 +120,6 @@ form.record_form .record_security {
 }
 
 /* Dropdown Menu Override */
-form.record_form .menu_large {
-	opacity: 1;
-}
 form.record_form .menu_large ul.menu_headers {
 	float: none;
 }
@@ -132,6 +129,9 @@ form.record_form .menu_large ul.menu_items {
 }
 
 /* Dropdown Menu for datepicker */
+form.record_form .menu_large ul.menu_items li.menu_item_datepicker .menu_item_value {
+	display: none;
+}
 form.record_form .menu_large ul.menu_items li.menu_item_datepicker {
 	margin: 0;
 	padding: 0;

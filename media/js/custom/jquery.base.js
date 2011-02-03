@@ -1575,4 +1575,31 @@ $(document).ready(function() {
 	 */
 	
 	
+	/*
+	* Stats Menu
+	*/
+	function setupStatsMenu(container) {
+		$(container).find('div.use_stats_menu').find('ul.menu_items li.menu_item').bind('click', function(e) {
+			
+			// init
+			var menu_item_value = $(this).find('.menu_item_value').text();
+			
+			// update selected chart
+			$('#stats_container').stats('update', {
+				type: menu_item_value
+			});
+			
+		});
+	}
+	setupStatsMenu('body');
+	/*
+	* END Stats Menu
+	*/
+	
+	$('#stats_container').each(function() {
+		$(this).stats('update', {
+			type: 'weekly'
+		});
+	});
+	
 });
