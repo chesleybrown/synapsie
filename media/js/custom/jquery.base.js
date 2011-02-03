@@ -488,7 +488,7 @@ $(document).ready(function() {
 			var menu = $(this).parents('.menu');
 			var holder = $(element).parents('.record ');
 			var content = $(holder).find('.record_content');
-			var popup = $('#record_edit_form_popup').find('.popup').clone();
+			var popup = $('#record_edit_form_popup').find('.popup').clone(false);
 			var form = $(popup).find('form');
 			var edit_action = $(form).find('input[type=submit]');
 			
