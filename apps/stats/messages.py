@@ -27,4 +27,3 @@ class StatMessages(GeneralMessages):
 		sticky=False,
 	)
 	
-	)

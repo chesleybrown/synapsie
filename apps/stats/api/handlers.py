@@ -10,10 +10,10 @@ from piston.handler import AnonymousBaseHandler, BaseHandler
 from piston.utils import rc, validate
 
 from apps.stats.messages import StatMessages
+from apps.stats import services as StatService
 
 from apps.records.models import Record
 from apps.records.forms import RecordForm, RecordAddTagsForm
-from apps.records.services import RecordService
 from tagging.models import Tag, TaggedItem
 from tagging.utils import parse_tag_input
 
@@ -38,15 +38,14 @@ class StatHandler(BaseHandler):
 		# init
 		identity = request.user
 		user = identity
-		record_service = RecordService()
 		messages = StatMessages()
 		message = False
 		records = False
 		clean_stats = list()
 		response = self.empty_response
 		
-		if type is 'weekly':
-			StatService.get_weekly(request, user=user)
+		if type == 'weekly':
+			response = StatService.get_weekly(request, user=user, week='latest')
 		
 		return response
 	

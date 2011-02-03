@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from piston.resource import Resource
 from piston.emitters import Emitter, JSONEmitter, XMLEmitter
-from apps.records.api.handlers import RecordHandler
+from apps.stats.api.handlers import StatHandler
 
 stat_handler = Resource(StatHandler)
 Emitter.register('.json', JSONEmitter, 'application/json; charset=utf-8')
