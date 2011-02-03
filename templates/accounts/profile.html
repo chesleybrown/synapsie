@@ -130,16 +130,18 @@
 								<span class="menu_item_icon icon icon_records"></span>
 								<span class="menu_item_text">{% trans "Records" %}</span>
 								<span class="menu_item_desc">{% trans "General stats about your records." %}</span>
+								<span class="menu_item_value">record_counts</span>
 							</li>
 							<li class="menu_item">
 								<span class="menu_item_icon icon icon_tags"></span>
 								<span class="menu_item_text">{% trans "Tags" %}</span>
 								<span class="menu_item_desc">{% trans "General stats about your tags." %}</span>
+								<span class="menu_item_value">tag_counts</span>
 							</li>
 							<li class="menu_item">
 								<span class="menu_item_icon icon"></span>
 								<span class="menu_item_desc">{% trans "Top Used" %}</span>
-								<span class="menu_item_value">tags</span>
+								<span class="menu_item_value">top_tags</span>
 							</li>
 						</ul>
 					</div>
@@ -158,114 +160,6 @@
 				<div class="important_message">
 					<h3>Achievements are Coming Soon</h3>
 					<h4>We're currently developing this truely awesome feature, so stay tuned!</h4>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="clear"></div>
-	
-	<div class="grid_4 suffix_1 alpha">
-		<div class="site_content_tabs use_tabs">
-			<ul class="tabs">
-				<li class="active"><a href="#record_stats">{% trans "Record Stats" %}</a></li>
-			</ul>
-			
-			<div class="tab_container">
-				<div id="record_stats" class="tab_content">
-					<div class="form_items_container">
-						<ul class="form_items">
-							<li>
-								<div class="container">
-									<div class="header">
-										<div class="label">
-											<label for="id_record_total">{% trans "Total" %}</label>
-										</div>
-										<div id="id_record_total" class="content">
-											{{ record_stats.total }}
-										</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="container">
-									<div class="header">
-										<div class="label">
-											<label for="id_record_personal">{% trans "Personal" %}</label>
-										</div>
-										<div id="id_record_personal" class="content">
-											{{ record_stats.personal }}
-										</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="container">
-									<div class="header">
-										<div class="label">
-											<label for="id_record_shared">{% trans "Shared" %}</label>
-										</div>
-										<div id="id_record_shared" class="content">
-											{{ record_stats.shared }}
-										</div>
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="grid_4 omega">
-		<div class="site_content_tabs use_tabs">
-			<ul class="tabs">
-				<li class="active"><a href="#tag_stats">{% trans "Tag Stats" %}</a></li>
-			</ul>
-			
-			<div class="tab_container">
-				<div id="tag_stats" class="tab_content">
-					<div class="form_items_container">
-						<ul class="form_items">
-							<li>
-								<div class="container">
-									<div class="header">
-										<div class="label">
-											<label for="id_tag_total">{% trans "Total" %}</label>
-										</div>
-										<div id="id_tag_total" class="content">
-											{{ tag_stats.total }}
-										</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="container">
-									<div class="header">
-										<div class="label">
-											<label for="id_tag_unique">{% trans "Unique" %}</label>
-										</div>
-										<div id="id_tag_unique" class="content">
-											{{ tag_stats.unique }}
-										</div>
-									</div>
-								</div>
-							</li>
-							<li>
-								<div class="container">
-									<div class="header">
-										<div class="label">
-											<label for="id_tag_average_per_record">{% trans "Average Per Record" %}</label>
-										</div>
-										<div id="id_tag_average_per_record" class="content">
-											{{ tag_stats.average_per_record }}
-										</div>
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
 				</div>
 			</div>
 		</div>

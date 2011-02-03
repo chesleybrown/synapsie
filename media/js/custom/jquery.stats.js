@@ -23,24 +23,7 @@
 				// show loading
 				$(element).html('<div class="loading"></div>');
 				
-				if (options.type == 'tags') {
-					
-					$.ajax({
-						url: '/api/tags.json',
-						success: function(data) {
-							
-							var tags = data.data;
-							
-							element.stats('render', {
-								type: 'tags',
-								data: tags
-							});
-							
-						}
-					});
-					
-				}
-				else if (options.type == 'weekly') {
+				if (options.type == 'weekly') {
 					
 					$.ajax({
 						url: '/api/stats.json/weekly/recent',
@@ -51,7 +34,7 @@
 							weeklyData.recent = stats;
 							
 							element.stats('render', {
-								type: 'weekly',
+								type: options.type,
 								data: weeklyData
 							});
 						}
@@ -66,7 +49,7 @@
 							weeklyData.all_time = stats;
 							
 							element.stats('render', {
-								type: 'weekly',
+								type: options.type,
 								data: weeklyData
 							});
 							
@@ -83,7 +66,7 @@
 							var stats = data.data.stats;
 							
 							element.stats('render', {
-								type: 'monthly',
+								type: options.type,
 								data: stats
 							});
 						}
@@ -99,9 +82,58 @@
 							var stats = data.data.stats;
 							
 							element.stats('render', {
-								type: 'yearly',
+								type: options.type,
 								data: stats
 							});
+						}
+					});
+					
+				}
+				else if (options.type == 'record_counts') {
+					
+					$.ajax({
+						url: '/api/stats.json/record_counts',
+						success: function(data) {
+							
+							var stats = data.data.stats;
+							
+							element.stats('render', {
+								type: options.type,
+								data: stats
+							});
+						}
+					});
+					
+				}
+				else if (options.type == 'tag_counts') {
+					
+					$.ajax({
+						url: '/api/stats.json/tag_counts',
+						success: function(data) {
+							
+							var stats = data.data.stats;
+							
+							element.stats('render', {
+								type: options.type,
+								data: stats
+							});
+						}
+					});
+					
+				}
+				else if (options.type == 'top_tags') {
+					
+					$.ajax({
+						url: '/api/tags.json',
+						success: function(data) {
+							
+							var tags = data.data;
+							
+							element.stats('render', {
+								type: options.type,
+								data: tags
+							});
+							
 						}
 					});
 					
@@ -190,7 +222,71 @@
 					}
 					
 				}
-				else if (options.type == 'tags') {
+				else if (options.type == 'record_counts') {
+					
+					var chartData = new google.visualization.DataTable();
+					
+					chartData.addColumn('string', 'Counts');
+					
+					var count = 0;
+					for (i in options.data) {
+						chartData.addColumn('number', i);
+						count++;
+					}
+					
+					chartData.addRows(count);
+					
+					var count = 0;
+					for (i in options.data) {
+						chartData.setValue(count, 0, i);
+						chartData.setValue(count, count+1, options.data[i]);
+						count++;
+					}
+					
+					if (id) {
+						var chart = new google.visualization.BarChart(document.getElementById(id));
+						chart.draw(chartData, {
+							width: 690,
+							height: 250,
+							title: 'Record Counts',
+							legend: 'none'
+						});
+					}
+					
+				}
+				else if (options.type == 'tag_counts') {
+					
+					var chartData = new google.visualization.DataTable();
+					
+					chartData.addColumn('string', 'Counts');
+					
+					var count = 0;
+					for (i in options.data) {
+						chartData.addColumn('number', i);
+						count++;
+					}
+					
+					chartData.addRows(count);
+					
+					var count = 0;
+					for (i in options.data) {
+						chartData.setValue(count, 0, i);
+						chartData.setValue(count, count+1, options.data[i]);
+						count++;
+					}
+					
+					if (id) {
+						var chart = new google.visualization.BarChart(document.getElementById(id));
+						chart.draw(chartData, {
+							width: 690,
+							height: 250,
+							title: 'Tag Counts',
+							legend: 'none'
+						});
+					}
+					
+				}
+				else if (options.type == 'top_tags') {
 					
 					var chartData = new google.visualization.DataTable();
 					chartData.addColumn('string', 'Tag');

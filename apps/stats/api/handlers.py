@@ -88,7 +88,7 @@ class StatHandler(BaseHandler):
 				'stats': clean_yearly,
 			}
 		
-		elif type == 'records':
+		elif type == 'record_counts':
 			
 			record_counts = StatService.get_record_counts(request, user=user)
 			
@@ -101,7 +101,7 @@ class StatHandler(BaseHandler):
 				'stats': clean_record_counts,
 			}
 		
-		elif type == 'tags':
+		elif type == 'tag_counts':
 			
 			tag_counts = StatService.get_tag_counts(request, user=user)
 			

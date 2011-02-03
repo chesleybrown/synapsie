@@ -275,16 +275,6 @@ def profile(request, user_id=0, username=False):
 	# init
 	identity = request.user
 	user = identity
-	record_stats = {
-		'total': 0,
-		'personal': 0,
-		'shared': 0,
-	}
-	tag_stats = {
-		'total': 0,
-		'unique': 0,
-		'average_per_record': 0,
-	}
 	popular_tags_printable = list()
 	has_real_userame = True
 	user_registration_profile = None
@@ -322,22 +312,6 @@ def profile(request, user_id=0, username=False):
 	# get all user records
 	records = Record.objects.all().filter(user=user)
 	
-	# get record stats
-	record_stats['total'] = Record.objects.all().filter(user=user).count()
-	record_stats['personal'] = records.filter(personal=True).count()
-	record_stats['shared'] = records.filter(personal=False).count()
-	
-	# get tag stats
-	unique_tags = Tag.objects.usage_for_model(Record, filters=dict(user=identity), counts=True)
-	tag_stats['unique'] = len(unique_tags)
-	
-	for tag in unique_tags:
-		tag_stats['total'] += tag.count
-	
-	if tag_stats['total']:
-		tag_stats['average_per_record'] = float(tag_stats['total']) / float(record_stats['total'])
-		tag_stats['average_per_record'] = round(tag_stats['average_per_record'], 1)
-	
 	# get used/popular tags for current user
 	used_tags = get_used_tags(Record, identity)
 	popular_tags = get_popular_tags(used_tags)
@@ -346,8 +320,6 @@ def profile(request, user_id=0, username=False):
 	return render_to_response('accounts/profile.html', {
 		'viewed_user': user,
 		'viewed_user_registration_profile': user_registration_profile,
-		'record_stats': record_stats,
-		'tag_stats': tag_stats,
 		'used_tags': used_tags,
 		'popular_tags': popular_tags,
 		'has_real_userame': has_real_userame,

@@ -234,11 +234,11 @@ def get_yearly(request, user=None):
 def get_record_counts(request, user=None):
 	
 	# init
-	record_stats = {
-		'total': 0,
-		'personal': 0,
-		'shared': 0,
-	}
+	record_stats = odict.OrderedDict([
+		('Total', 0),
+		('Personal', 0),
+		('Shared', 0),
+	])
 	
 	# no user provided, just use identity
 	if not user:
@@ -248,41 +248,43 @@ def get_record_counts(request, user=None):
 	records = apps.records.models.Record.objects.all().filter(user=user)
 	
 	# get record stats
-	record_stats['total'] = records.count()
-	record_stats['personal'] = records.filter(personal=True).count()
-	record_stats['shared'] = records.filter(personal=False).count()
+	record_stats['Total'] = records.count()
+	record_stats['Personal'] = records.filter(personal=True).count()
+	record_stats['Shared'] = records.filter(personal=False).count()
 	
 	return record_stats
 	
 def get_tag_counts(request, user=None):
 	
 	# init
-	tag_stats = {
-		'total': 0,
-		'unique': 0,
-		'average_per_record': 0,
-	}
-	record_stats = {
-		'total': 0,
-	}
+	tag_stats = odict.OrderedDict([
+		('Total', 0),
+		('Unique', 0),
+		#('Average per Record', 0),
+	])
+	record_stats = odict.OrderedDict([
+		('Total', 0),
+	])
 	
 	# no user provided, just use identity
 	if not user:
 		user = identity
 	
 	# get all user records
+	'''
 	records = apps.records.models.Record.objects.all().filter(user=user)
-	record_stats['total'] = records.count()
+	record_stats['Total'] = records.count()
+	'''
 	
 	# get tag stats
 	unique_tags = Tag.objects.usage_for_model(apps.records.models.Record, filters=dict(user=user), counts=True)
-	tag_stats['unique'] = len(unique_tags)
+	tag_stats['Unique'] = len(unique_tags)
 	
 	for tag in unique_tags:
-		tag_stats['total'] += tag.count
-	
-	if tag_stats['total']:
-		tag_stats['average_per_record'] = float(tag_stats['total']) / float(record_stats['total'])
-		tag_stats['average_per_record'] = round(tag_stats['average_per_record'], 1)
-	
+		tag_stats['Total'] += tag.count
+	'''
+	if tag_stats['Total']:
+		tag_stats['Average per Record'] = float(tag_stats['Total']) / float(record_stats['Total'])
+		tag_stats['Average per Record'] = round(tag_stats['Average per Record'], 1)
+	'''
 	return tag_stats
