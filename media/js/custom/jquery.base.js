@@ -1292,7 +1292,7 @@ $(document).ready(function() {
 	
 	
 	/*
-	 * Setup Record/Tag Menus (dropdowns)
+	 * Setup Record/Tag/Tab Menus (dropdowns)
 	 */
 	$('div.use_record_menu').dropdownMenus({
 		parent_block_selector: 'li.record',
@@ -1314,8 +1314,17 @@ $(document).ready(function() {
 			e.removeClass('hover');
 		}
 	});
+	$('div.use_tab_menu').dropdownMenus({
+		parent_block_selector: 'div.tab_content',
+		show_effect: function(e) {
+			e.addClass('hover');
+		},
+		hide_effect: function(e) {
+			e.removeClass('hover');
+		}
+	});
 	/*
-	 * END Setup Record/Tag Menus (dropdowns)
+	 * END Setup Record/Tag/Tab Menus (dropdowns)
 	 */
 	
 	
@@ -1336,13 +1345,13 @@ $(document).ready(function() {
 		$(container).find('div.use_form_menu ul.menu_items li.menu_item').bind('click', function(e) {
 			
 			//init
-			var menu_header = $(this).parents('.form_menu').find('li.menu_header');
+			var menu_header = $(this).parents('.menu_large').find('li.menu_header');
 			var menu_header_text = menu_header.find('.menu_header_text');
 			var menu_header_icon = menu_header.find('.menu_header_icon');
 			var menu_item_text = $(this).find('.menu_item_text').text();
 			var menu_item_icon = $(this).find('.menu_item_icon');
 			var menu_item_value = $(this).find('.menu_item_value').text();
-			var input = $(this).parents('.form_menu').next('input');
+			var input = $(this).parents('.menu_large').next('input');
 			
 			//change header
 			menu_header_text.text(menu_item_text);
@@ -1380,7 +1389,7 @@ $(document).ready(function() {
 			.bind(
 				'dateSelected',
 				function(e, selectedDate, $td) {
-					var input = $(this).parents('.form_menu').next('input');
+					var input = $(this).parents('.menu_large').next('input');
 					var formated_day = selectedDate.getDate();
 					if (formated_day < 10) {
 						formated_day = '0' + formated_day;
@@ -1393,7 +1402,7 @@ $(document).ready(function() {
 					var formated_date = selectedDate.getMonthName(true) + ' ' + formated_day + ', ' + selectedDate.getFullYear();
 					var date = selectedDate.getFullYear() + '-' + formated_month + '-' + formated_day
 					
-					$(this).parents('.form_menu').find('.menu_header_text').text(formated_date);
+					$(this).parents('.menu_large').find('.menu_header_text').text(formated_date);
 					input.val(date);
 				}
 			);
@@ -1444,7 +1453,7 @@ $(document).ready(function() {
 			}
 			
 			var selection_menu_items = $(this).find('div.record_form_date, div.record_form_time_hour, div.record_form_time_minute, div.record_form_time_ampm')
-				.find('.form_menu .menu_items');
+				.find('.menu_large .menu_items');
 			var date = $(this).find('div.record_form_date');
 			var hour = $(this).find('div.record_form_time_hour');
 			var minute = $(this).find('div.record_form_time_minute');

@@ -100,21 +100,45 @@
 			</div>
 			
 			<div id="stats" class="tab_content hidden">
-				<div class="menu use_record_menu">
-					<ul class="menu_headers">
-						<li class="menu_header"></li>
-					</ul>
-					<ul class="menu_items">
-						<li class="menu_item">
-							<a href="/records/show/1265"><span class="icon icon_record_view"></span>View</a>
-						</li>
-						<li class="menu_item">
-							<a href="/api/records.json/1265" class="use_record_edit"><span class="icon icon_record_edit"></span>Edit</a>
-						</li>
-						<li class="menu_item">
-							<a href="/api/records.json/1265" class="use_record_delete"><span class="icon icon_record_delete"></span>Delete...</a>
-						</li>
-					</ul>
+				<div class="tab_menu">
+					<div class="menu_large use_tab_menu">
+						<ul class="menu_headers">
+							<li class="menu_header">
+								<div class="menu_header_icon icon icon_stats"></div>
+								<div class="menu_header_text">{% trans "Other Stats" %}</div>
+								<div class="side"></div>
+							</li>
+						</ul>
+						<ul class="menu_items">
+							<li class="menu_item">
+								<span class="menu_item_icon icon icon_quality_of_life"></span>
+								<span class="menu_item_text">{% trans "Quality of Life" %}</span>
+								<span class="menu_item_desc">{% trans "by Weekday" %}</span>
+							</li>
+							<li class="menu_item">
+								<span class="menu_item_icon icon"></span>
+								<span class="menu_item_desc">{% trans "by Month" %}</span>
+							</li>
+							<li class="menu_item">
+								<span class="menu_item_icon icon"></span>
+								<span class="menu_item_desc">{% trans "by Year" %}</span>
+							</li>
+							<li class="menu_item">
+								<span class="menu_item_icon icon icon_records"></span>
+								<span class="menu_item_text">{% trans "Records" %}</span>
+								<span class="menu_item_desc">{% trans "General stats about your records." %}</span>
+							</li>
+							<li class="menu_item">
+								<span class="menu_item_icon icon icon_tags"></span>
+								<span class="menu_item_text">{% trans "Tags" %}</span>
+								<span class="menu_item_desc">{% trans "General stats about your tags." %}</span>
+							</li>
+							<li class="menu_item">
+								<span class="menu_item_icon icon"></span>
+								<span class="menu_item_desc">{% trans "Top Used" %}</span>
+							</li>
+						</ul>
+					</div>
 				</div>
 				
 				<div class="form_items_container">
@@ -127,7 +151,10 @@
 			</div>
 			
 			<div id="achievements" class="tab_content hidden">
-				<p>Coming soon...</p>
+				<div class="important_message">
+					<h3>Achievements are Coming Soon</h3>
+					<h4>We're currently developing this truely awesome feature, so stay tuned!</h4>
+				</div>
 			</div>
 		</div>
 	</div>

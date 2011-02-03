@@ -121,7 +121,6 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
 }
 .tab_content {
 	padding: 10px 5px 5px 5px;
-	font-size: 1.2em;
 }
 .tab_content > .actions {
 	float: right;
@@ -135,6 +134,12 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
 	width: 42px;
 	height: 42px;
 	display: block;
+}
+
+.tab_content .tab_menu {
+	float: right;
+	position: absolute;
+	right: 10px;
 }
 
 /* Sidebar Tabs */

@@ -75,6 +75,12 @@ input.icon {
 .icon_quality_of_life {
 	background-image: url(/site_media/media/img/icons/fugue/trophy.png);
 }
+.icon_records {
+	background-image: url(/site_media/media/img/icons/fugue/quill.png);
+}
+.icon_stats {
+	background-image: url(/site_media/media/img/icons/fugue/chart-up.png);
+}
 
 /* Security */
 .icon_personal {

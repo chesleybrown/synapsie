@@ -114,12 +114,14 @@
 						chartData.setValue(parseInt(i), 2, options.data.all_time[i]['quality']);
 					}
 					
-					var chart = new google.visualization.LineChart(document.getElementById(id));
-					chart.draw(chartData, {
-						width: 690,
-						height: 250,
-						title: 'Quality of Life'
-					});
+					if (id) {
+						var chart = new google.visualization.LineChart(document.getElementById(id));
+						chart.draw(chartData, {
+							width: 690,
+							height: 250,
+							title: 'Quality of Life by Weekday'
+						});
+					}
 					
 				}
 				
