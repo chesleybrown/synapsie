@@ -40,12 +40,21 @@ class StatHandler(BaseHandler):
 		user = identity
 		messages = StatMessages()
 		message = False
-		records = False
-		clean_stats = list()
 		response = self.empty_response
 		
 		if type == 'weekly':
-			response = StatService.get_weekly(request, user=user, week='latest')
+			
+			weekly = StatService.get_weekly(request, user=user)
+			
+			# I trust that this service layer returns clean data
+			clean_weekly = weekly
+			
+			message = messages.get('found')
+			
+			response['message'] = message
+			response['data'] = {
+				'stats': clean_weekly,
+			}
 		
 		return response
 	
