@@ -10,10 +10,10 @@ Emitter.register('.xml', XMLEmitter, 'text/xml; charset=utf-8')
 Emitter.register('.xml/', XMLEmitter, 'text/xml; charset=utf-8')
 
 urlpatterns = patterns('',
-	url(r'^(?P<emitter_format>[\.a-z]+)/(?P<type>[\'\w\-\!\@\#\$\%\^\&\*\(\),\s\.]+)/(?P<time>all_time|recent)$', stat_handler, {
+	url(r'^(?P<emitter_format>[\.a-z]+)/(?P<type>[\w]+)/(?P<time>all_time|recent)$', stat_handler, {
 		'SSL': True,
 	}, name='api-stat'),
-	url(r'^(?P<emitter_format>[\.a-z]+)/(?P<type>[\'\w\-\!\@\#\$\%\^\&\*\(\),\s\.]+)$', stat_handler, {
+	url(r'^(?P<emitter_format>[\.a-z]+)/(?P<type>[\w]+)$', stat_handler, {
 		'SSL': True,
 	}, name='api-stat'),
 	url(r'^(?P<emitter_format>[\.a-z]+)$', stat_handler, {'SSL': True}, name='api-stat'),

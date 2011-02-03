@@ -27,22 +27,22 @@ class StatHandler(BaseHandler):
 	allowed_methods = ('GET')
 	model = Record
 	
-	# init our empty response
-	empty_response = dict(
-		message = {},
-		data = {},
-	)
-	
 	def read(self, request, type=None, time=None):
 		
 		# init
 		identity = request.user
 		user = identity
 		messages = StatMessages()
-		message = False
-		response = self.empty_response
-		weekly = False
-		monthly = False
+		message = None
+		response = dict(
+			message = {},
+			data = {},
+		)
+		weekly = None
+		monthly = None
+		yearly = None
+		record_counts = None
+		tag_counts = None
 		
 		if type == 'weekly':
 			
@@ -57,7 +57,6 @@ class StatHandler(BaseHandler):
 			
 			message = messages.get('found')
 			
-			response['message'] = message
 			response['data'] = {
 				'stats': clean_weekly,
 			}
@@ -72,7 +71,6 @@ class StatHandler(BaseHandler):
 			
 			message = messages.get('found')
 			
-			response['message'] = message
 			response['data'] = {
 				'stats': clean_monthly,
 			}
@@ -86,10 +84,41 @@ class StatHandler(BaseHandler):
 			
 			message = messages.get('found')
 			
-			response['message'] = message
 			response['data'] = {
 				'stats': clean_yearly,
 			}
+		
+		elif type == 'records':
+			
+			record_counts = StatService.get_record_counts(request, user=user)
+			
+			# I trust that this service layer returns clean data
+			clean_record_counts = record_counts
+			
+			message = messages.get('found')
+			
+			response['data'] = {
+				'stats': clean_record_counts,
+			}
+		
+		elif type == 'tags':
+			
+			tag_counts = StatService.get_tag_counts(request, user=user)
+			
+			# I trust that this service layer returns clean data
+			clean_tag_counts = tag_counts
+			
+			message = messages.get('found')
+			
+			response['data'] = {
+				'stats': clean_tag_counts,
+			}
+		
+		# not a valid type
+		else:
+			message = messages.get('not_found')
+		
+		response['message'] = message
 		
 		return response
 	

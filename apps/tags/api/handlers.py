@@ -24,19 +24,16 @@ class TagHandler(BaseHandler):
 	allowed_methods = ('GET', 'PUT', 'POST', 'DELETE')
 	model = Tag
 	
-	# init our empty response
-	empty_response = dict(
-		message = {},
-		data = {},
-	)
-	
 	def read(self, request, tag_name=None, page=1):
 		
 		#init
 		identity = request.user
 		clean = None
 		messages = TagMessages()
-		response = self.empty_response
+		response = dict(
+			message = {},
+			data = {},
+		)
 		results_per_page = 10
 		clean_tag = None
 		clean_tags = list()
@@ -89,7 +86,10 @@ class TagHandler(BaseHandler):
 		clean_records = list()
 		clean_tag = list()
 		messages = TagMessages()
-		response = self.empty_response
+		response = dict(
+			message = {},
+			data = {},
+		)
 		formset = None
 		
 		# get original tag
@@ -192,7 +192,10 @@ class TagHandler(BaseHandler):
 		tagged_item_ids = []
 		record_type = ContentType.objects.get_for_model(Record)
 		messages = TagMessages()
-		response = self.empty_response
+		response = dict(
+			message = {},
+			data = {},
+		)
 		clean_tag = list()
 		
 		# get id of tag

@@ -26,12 +26,6 @@ class RecordHandler(BaseHandler):
 	allowed_methods = ('GET', 'PUT', 'POST', 'DELETE')
 	model = Record
 	
-	# init our empty response
-	empty_response = dict(
-		message = {},
-		data = {},
-	)
-	
 	def read(self, request, record_id=None, tags=False, page=1, user_id=None, username=None, public=False, text=None):
 		
 		#init
@@ -45,7 +39,10 @@ class RecordHandler(BaseHandler):
 		results_per_page = 25
 		clean_records = list()
 		clean_tags = list()
-		response = self.empty_response
+		response = dict(
+			message = {},
+			data = {},
+		)
 		
 		# if a user is trying to view another user's public feed
 		if user_id is not None:
@@ -151,7 +148,10 @@ class RecordHandler(BaseHandler):
 		record_datetime = None
 		datetime_string = False
 		datetime_format = "%Y-%m-%d %I:%M%p"
-		response = self.empty_response
+		response = dict(
+			message = {},
+			data = {},
+		)
 		
 		# if user has posted
 		if request.method == 'POST':
@@ -221,7 +221,10 @@ class RecordHandler(BaseHandler):
 		record_datetime = None
 		datetime_string = False
 		datetime_format = "%Y-%m-%d %I:%M%p"
-		response = self.empty_response
+		response = dict(
+			message = {},
+			data = {},
+		)
 		
 		# get record
 		try:
@@ -325,7 +328,10 @@ class RecordHandler(BaseHandler):
 		# init
 		identity = request.user
 		messages = RecordMessages()
-		response = self.empty_response
+		response = dict(
+			message = {},
+			data = {},
+		)
 		
 		# get record
 		record = Record.objects.get(pk=record_id)
