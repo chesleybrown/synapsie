@@ -19,13 +19,13 @@ def get_weekly(request, user=None, weeks=4, all_time=False):
 	today = datetime.date.today()
 	weeks_ago = today - datetime.timedelta(weeks=weeks)
 	weekly_results = odict.OrderedDict([
+		('sunday', list()),
 		('monday', list()),
 		('tuesday', list()),
 		('wednesday', list()),
 		('thursday', list()),
 		('friday', list()),
 		('saturday', list()),
-		('sunday', list()),
 	])
 	final_weekly_results = list()
 	

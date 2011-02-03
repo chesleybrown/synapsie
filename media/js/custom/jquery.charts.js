@@ -47,7 +47,7 @@
 				});
 				
 				$.ajax({
-					url: '/api/stats.json/weekly/all_time',
+					url: '/api/stats.json/weekly/recent',
 					success: function(data) {
 						
 						var id = $('#chartcontainer2').attr('id');

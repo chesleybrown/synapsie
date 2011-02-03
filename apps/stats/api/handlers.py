@@ -46,8 +46,9 @@ class StatHandler(BaseHandler):
 			
 			if time == 'all_time':
 				weekly = StatService.get_weekly(request, user=user, all_time=True)
-			else:
-				weekly = StatService.get_weekly(request, user=user)
+			
+			elif time == 'recent':
+				weekly = StatService.get_weekly(request, user=user, all_time=False)
 			
 			# I trust that this service layer returns clean data
 			clean_weekly = weekly
