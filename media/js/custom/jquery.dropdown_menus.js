@@ -1,7 +1,7 @@
 /*
- * jQuery RecordMenus 0.8
+ * jQuery RecordMenus 0.9
  * 
- * Add a "Dropdown" menu when you hover over a record
+ * Dynamic dropdown menu that can be used for a variety of tasks
  * 
  * @author Chesley Brown
  * 
@@ -221,6 +221,8 @@
 				
 			});
 		}
+		
+		return true;
 		
 	}
 })(jQuery); 
