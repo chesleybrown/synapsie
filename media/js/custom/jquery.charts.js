@@ -47,39 +47,33 @@
 				});
 				
 				$.ajax({
-					url: '/api/tags.json',
+					url: '/api/stats.json/weekly/all_time',
 					success: function(data) {
 						
 						var id = $('#chartcontainer2').attr('id');
-						var tags = data.data;
+						var stats = data.data.stats;
 						
 						// remove any current charts
 						$('#chartcontainer2').html('');
 						
 						var chartData = new google.visualization.DataTable();
 						
-						chartData.addColumn('string', 'Year');
-						chartData.addColumn('number', 'Sales');
-						chartData.addColumn('number', 'Expenses');
-						chartData.addRows(4);
-						chartData.setValue(0, 0, '2004');
-						chartData.setValue(0, 1, 1000);
-						chartData.setValue(0, 2, 400);
-						chartData.setValue(1, 0, '2005');
-						chartData.setValue(1, 1, 1170);
-						chartData.setValue(1, 2, 460);
-						chartData.setValue(2, 0, '2006');
-						chartData.setValue(2, 1, 860);
-						chartData.setValue(2, 2, 580);
-						chartData.setValue(3, 0, '2007');
-						chartData.setValue(3, 1, 1030);
-						chartData.setValue(3, 2, 540);
+						chartData.addColumn('string', 'Weekday');
+						chartData.addColumn('number', 'Quality');
+						chartData.addRows(stats.length);
+						
+						for (i in stats) {
+							chartData.setValue(parseInt(i), 0, stats[i]['weekday']);
+							chartData.setValue(parseInt(i), 1, stats[i]['quality']);
+						}
+
 						
 						var chart = new google.visualization.LineChart(document.getElementById(id));
 						chart.draw(chartData, {
 							width: 290,
 							height: 180,
-							title: 'Quality of Life'
+							title: 'Quality of Life',
+							legend: 'none'
 						});
 						
 					}

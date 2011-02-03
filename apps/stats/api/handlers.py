@@ -33,7 +33,7 @@ class StatHandler(BaseHandler):
 		data = {},
 	)
 	
-	def read(self, request, type=None):
+	def read(self, request, type=None, time=None):
 		
 		# init
 		identity = request.user
@@ -44,7 +44,10 @@ class StatHandler(BaseHandler):
 		
 		if type == 'weekly':
 			
-			weekly = StatService.get_weekly(request, user=user)
+			if time == 'all_time':
+				weekly = StatService.get_weekly(request, user=user, all_time=True)
+			else:
+				weekly = StatService.get_weekly(request, user=user)
 			
 			# I trust that this service layer returns clean data
 			clean_weekly = weekly

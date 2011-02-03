@@ -11,12 +11,12 @@ from tagging.utils import parse_tag_input
 
 
 # weekly stats
-def get_weekly(request, user=None, weeks=4):
+def get_weekly(request, user=None, weeks=4, all_time=False):
 	
 	# init
 	identity = request.user
 	today = datetime.date.today()
-	one_week_ago = today - datetime.timedelta(weeks=weeks)
+	weeks_ago = today - datetime.timedelta(weeks=weeks)
 	weekly_results = dict({
 		'monday': list(),
 		'tuesday': list(),
@@ -26,32 +26,33 @@ def get_weekly(request, user=None, weeks=4):
 		'saturday': list(),
 		'sunday': list(),
 	})
-	final_weekly_results = dict({
-		'monday': 0,
-		'tuesday': 0,
-		'wednesday': 0,
-		'thursday': 0,
-		'friday': 0,
-		'saturday': 0,
-		'sunday': 0,
-	})
+	final_weekly_results = list()
 	
 	# no user provided, just use identity
 	if not user:
 		user = identity
 	
-	# retrieve all the user's records from the past week
 	records = (
 		apps.records.models.Record.objects
 		.only('id', 'quality', 'happened')
-		.filter(user=user, happened__gte=one_week_ago)
-		.order_by('-happened', '-id')
+		.exclude(quality__isnull=True)
 	)
+	
+	# retrieve all the user's records
+	if all_time:
+		records.filter(user=user)
+	
+	# retrieve all the user's records from the past weeks
+	else:
+		records.filter(user=user, happened__gte=weeks_ago)
 	
 	# split results into each day of the week
 	for record in records:
 		
-		if record.happened.weekday() == 0:
+		if record.happened.weekday() == 6:
+			weekly_results['sunday'].append(record)
+		
+		elif record.happened.weekday() == 0:
 			weekly_results['monday'].append(record)
 		
 		elif record.happened.weekday() == 1:
@@ -69,8 +70,6 @@ def get_weekly(request, user=None, weeks=4):
 		elif record.happened.weekday() == 5:
 			weekly_results['saturday'].append(record)
 		
-		elif record.happened.weekday() == 6:
-			weekly_results['sunday'].append(record)
 	
 	# average out the quality of each weekday
 	for weekday, records in weekly_results.items():
@@ -81,9 +80,12 @@ def get_weekly(request, user=None, weeks=4):
 		for record in records:
 			quality = quality + record.quality
 		
-		if len(records) > 0:
+		if len(records) > 0 and quality > 0:
 			average_quality = quality / len(records)
 		
-		final_weekly_results[weekday] = average_quality
+		final_weekly_results.append({
+			'weekday': weekday,
+			'quality': round(average_quality, 1),
+		})
 	
 	return final_weekly_results
