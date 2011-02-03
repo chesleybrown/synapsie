@@ -77,5 +77,19 @@ class StatHandler(BaseHandler):
 				'stats': clean_monthly,
 			}
 		
+		elif type == 'yearly':
+			
+			yearly = StatService.get_yearly(request, user=user)
+			
+			# I trust that this service layer returns clean data
+			clean_yearly = yearly
+			
+			message = messages.get('found')
+			
+			response['message'] = message
+			response['data'] = {
+				'stats': clean_yearly,
+			}
+		
 		return response
 	

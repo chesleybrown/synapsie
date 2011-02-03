@@ -182,3 +182,51 @@ def get_monthly(request, user=None, all_time=False):
 		})
 	
 	return final_monthly_results
+	
+# yearly stats
+def get_yearly(request, user=None):
+	
+	# init
+	identity = request.user
+	yearly_results = odict.OrderedDict()
+	final_yearly_results = list()
+	
+	# no user provided, just use identity
+	if not user:
+		user = identity
+	
+	# retrieve all the user's records
+	records = (
+		apps.records.models.Record.objects
+		.only('id', 'quality', 'happened')
+		.exclude(quality__isnull=True)
+		.filter(user=user)
+		.order_by('happened')
+	)
+	
+	# split results into each year
+	for record in records:
+		yearly_results[record.happened.year] = list()
+		
+	
+	for record in records:
+		yearly_results[record.happened.year].append(record)
+	
+	# average out the quality of each year
+	for year, records in yearly_results.items():
+		
+		quality = 0
+		average_quality = None
+		
+		for record in records:
+			quality = quality + record.quality
+		
+		if len(records) > 0 and quality > 0:
+			average_quality = round(quality / len(records), 1)
+		
+		final_yearly_results.append({
+			'year': year,
+			'quality': average_quality,
+		})
+	
+	return final_yearly_results

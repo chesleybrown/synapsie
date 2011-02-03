@@ -82,11 +82,25 @@
 							
 							var stats = data.data.stats;
 							
-							weeklyData.recent = stats;
-							
 							element.stats('render', {
 								type: 'monthly',
-								data: weeklyData
+								data: stats
+							});
+						}
+					});
+					
+				}
+				else if (options.type == 'yearly') {
+					
+					$.ajax({
+						url: '/api/stats.json/yearly',
+						success: function(data) {
+							
+							var stats = data.data.stats;
+							
+							element.stats('render', {
+								type: 'yearly',
+								data: stats
 							});
 						}
 					});
@@ -136,11 +150,11 @@
 					
 					chartData.addColumn('string', 'Month');
 					chartData.addColumn('number', 'All Time');
-					chartData.addRows(options.data.recent.length);
+					chartData.addRows(options.data.length);
 					
-					for (i in options.data.recent) {
-						chartData.setValue(parseInt(i), 0, options.data.recent[i]['month']);
-						chartData.setValue(parseInt(i), 1, options.data.recent[i]['quality']);
+					for (i in options.data) {
+						chartData.setValue(parseInt(i), 0, options.data[i]['month']);
+						chartData.setValue(parseInt(i), 1, options.data[i]['quality']);
 					}
 					
 					if (id) {
@@ -149,6 +163,29 @@
 							width: 690,
 							height: 250,
 							title: 'Quality of Life by Month'
+						});
+					}
+					
+				}
+				else if (options.type == 'yearly') {
+					
+					var chartData = new google.visualization.DataTable();
+					
+					chartData.addColumn('string', 'Year');
+					chartData.addColumn('number', 'All Time');
+					chartData.addRows(options.data.length);
+					
+					for (i in options.data) {
+						chartData.setValue(parseInt(i), 0, options.data[i]['year'].toString());
+						chartData.setValue(parseInt(i), 1, options.data[i]['quality']);
+					}
+					
+					if (id) {
+						var chart = new google.visualization.LineChart(document.getElementById(id));
+						chart.draw(chartData, {
+							width: 690,
+							height: 250,
+							title: 'Quality of Life by Year'
 						});
 					}
 					
