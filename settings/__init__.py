@@ -192,7 +192,7 @@ COMPRESS_JS = {
 			'media/js/custom/jquery.base.js',
 			'media/js/custom/jquery.dropdown_menus.js',
 			'media/js/custom/jquery.tabs.js',
-			'media/js/custom/jquery.charts.js',
+			'media/js/custom/jquery.stats.js',
 			'media/js/custom/jquery.facebook.js',
 			'media/js/plugins/jquery.form-2.36.js',
 			'media/js/plugins/jquery.infieldlabel.js',

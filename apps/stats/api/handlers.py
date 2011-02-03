@@ -41,6 +41,8 @@ class StatHandler(BaseHandler):
 		messages = StatMessages()
 		message = False
 		response = self.empty_response
+		weekly = False
+		monthly = False
 		
 		if type == 'weekly':
 			
@@ -58,6 +60,21 @@ class StatHandler(BaseHandler):
 			response['message'] = message
 			response['data'] = {
 				'stats': clean_weekly,
+			}
+		
+		elif type == 'monthly':
+			
+			if time == 'all_time':
+				monthly = StatService.get_monthly(request, user=user, all_time=True)
+			
+			# I trust that this service layer returns clean data
+			clean_monthly = monthly
+			
+			message = messages.get('found')
+			
+			response['message'] = message
+			response['data'] = {
+				'stats': clean_monthly,
 			}
 		
 		return response

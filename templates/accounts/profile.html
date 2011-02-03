@@ -101,7 +101,7 @@
 			
 			<div id="stats" class="tab_content hidden">
 				<div class="tab_menu">
-					<div class="menu_large use_tab_menu">
+					<div class="menu_large use_tab_menu use_stats_menu">
 						<ul class="menu_headers">
 							<li class="menu_header">
 								<div class="menu_header_icon icon icon_stats"></div>
@@ -114,10 +114,12 @@
 								<span class="menu_item_icon icon icon_quality_of_life"></span>
 								<span class="menu_item_text">{% trans "Quality of Life" %}</span>
 								<span class="menu_item_desc">{% trans "by Weekday" %}</span>
+								<span class="menu_item_value">weekly</span>
 							</li>
 							<li class="menu_item">
 								<span class="menu_item_icon icon"></span>
 								<span class="menu_item_desc">{% trans "by Month" %}</span>
+								<span class="menu_item_value">monthly</span>
 							</li>
 							<li class="menu_item">
 								<span class="menu_item_icon icon"></span>
@@ -136,13 +138,14 @@
 							<li class="menu_item">
 								<span class="menu_item_icon icon"></span>
 								<span class="menu_item_desc">{% trans "Top Used" %}</span>
+								<span class="menu_item_value">tags</span>
 							</li>
 						</ul>
 					</div>
 				</div>
 				
 				<div class="form_items_container">
-					<div id="chartcontainer2">
+					<div id="stats_container">
 						
 						<div class="loading"></div>
 						
@@ -268,24 +271,6 @@
 	</div>
 	
 	<div class="clear"></div>
-	
-	<div class="grid_5 alpha">
-		<div class="site_content_tabs use_tabs">
-			<ul class="tabs">
-				<li class="active"><a href="#user_stats_01">{% trans "My Stats" %}</a></li>
-			</ul>
-			
-			<div class="tab_container">
-				<div id="user_stats_01" class="tab_content">
-					<div id="chartcontainer">
-						
-						<div class="loading"></div>
-						
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 	
 	
 {% endblock %}
