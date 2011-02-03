@@ -66,7 +66,6 @@
 							chartData.setValue(parseInt(i), 0, stats[i]['weekday']);
 							chartData.setValue(parseInt(i), 1, stats[i]['quality']);
 						}
-
 						
 						var chart = new google.visualization.LineChart(document.getElementById(id));
 						chart.draw(chartData, {

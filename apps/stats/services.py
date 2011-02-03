@@ -1,4 +1,5 @@
 from __future__ import division
+from utils import odict
 import datetime
 import time
 
@@ -17,15 +18,15 @@ def get_weekly(request, user=None, weeks=4, all_time=False):
 	identity = request.user
 	today = datetime.date.today()
 	weeks_ago = today - datetime.timedelta(weeks=weeks)
-	weekly_results = dict({
-		'monday': list(),
-		'tuesday': list(),
-		'wednesday': list(),
-		'thursday': list(),
-		'friday': list(),
-		'saturday': list(),
-		'sunday': list(),
-	})
+	weekly_results = odict.OrderedDict([
+		('monday', list()),
+		('tuesday', list()),
+		('wednesday', list()),
+		('thursday', list()),
+		('friday', list()),
+		('saturday', list()),
+		('sunday', list()),
+	])
 	final_weekly_results = list()
 	
 	# no user provided, just use identity
