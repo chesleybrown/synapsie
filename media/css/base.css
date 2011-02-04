@@ -195,6 +195,8 @@ div.default_form_container {
 	-moz-box-shadow: 1px 2px 2px #ddd;
 	-webkit-box-shadow: 1px 2px 2px #ddd;
 	clear: both;
+	overflow: auto;
+	padding: 10px 0;
 }
 div.default_form_block {
 	padding: 0 45px;

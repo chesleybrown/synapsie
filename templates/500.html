@@ -1,0 +1,28 @@
+{% extends "blank.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "500" %}{% endblock %}
+
+{% block body %}
+	{{ block.super }}
+	
+	<div class="default_form_container">
+		<div class="default_form_block">
+			<h1>{% trans "My God! What have you done?!?" %}</h1>
+			<h4>{% trans "You definitely broke something... In all honestly, it was probably our fault." %}</h4>
+			
+			<div style="float: right;">
+				<a href="{% url record_index %}" class="input_button_wrapper">
+					<div class="input_button_start"></div>
+					<div class="input_button_body">
+						<span>{% trans "Back to Safety" %}</span>
+					</div>
+					<div class="input_button_end"></div>
+				</a>
+			</div>
+			
+		</div>
+	</div>
+	
+{% endblock %}

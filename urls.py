@@ -13,6 +13,14 @@ urlpatterns = patterns('',
 	#	"template": "homepage.html",
 	#}, name="home"),
 	
+	# Errors
+	url(r'^error/404$', direct_to_template, {
+		"template": "404.html",
+	}, name="404"),
+	url(r'^error/500$', direct_to_template, {
+		"template": "500.html",
+	}, name="500"),
+	
 	# API
 	(r'^api/records', include('apps.records.api.urls')),
 	(r'^api/tags', include('apps.tags.api.urls')),

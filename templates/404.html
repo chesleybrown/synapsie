@@ -1,0 +1,28 @@
+{% extends "blank.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "404" %}{% endblock %}
+
+{% block body %}
+	{{ block.super }}
+	
+	<div class="default_form_container">
+		<div class="default_form_block">
+			<h1>{% trans "Uh oh! Page not found!" %}</h1>
+			<h4>{% trans "Sorry the page you requested may have been moved or deleted." %}</h4>
+			
+			<div style="float: right;">
+				<a href="{% url record_index %}" class="input_button_wrapper">
+					<div class="input_button_start"></div>
+					<div class="input_button_body">
+						<span>{% trans "Back to Safety" %}</span>
+					</div>
+					<div class="input_button_end"></div>
+				</a>
+			</div>
+			
+		</div>
+	</div>
+	
+{% endblock %}
