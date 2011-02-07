@@ -213,8 +213,10 @@ COMPRESS_JS = {
 
 DEFAULT_TAGS = [
 	{'name': 'april fool\'s'},
+	{'name': 'awesome'},
 	{'name': 'awkward'},
 	{'name': 'bad'},
+	{'name': 'badass'},
 	{'name': 'birthday'},
 	{'name': 'broken'},
 	{'name': 'busniness'},
@@ -222,6 +224,7 @@ DEFAULT_TAGS = [
 	{'name': 'cars'},
 	{'name': 'christmas'},
 	{'name': 'concert'},
+	{'name': 'cool'},
 	{'name': 'crazy'},
 	{'name': 'cute'},
 	{'name': 'dating'},
@@ -245,6 +248,7 @@ DEFAULT_TAGS = [
 	{'name': 'girls'},
 	{'name': 'goals'},
 	{'name': 'good'},
+	{'name': 'great'},
 	{'name': 'gym'},
 	{'name': 'halloween'},
 	{'name': 'happy'},
