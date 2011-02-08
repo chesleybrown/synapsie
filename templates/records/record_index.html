@@ -11,6 +11,10 @@
 	
 	<div class="clear"></div>
 	
+	{% if next_suggestion %}
+		<p>{{ next_suggestion.text }}</p>
+	{% endif %}
+	
 	<div id="record_create_form_container">
 		<form id="record_create_form" class="record_form use_inline_labels" action="{% url api-record emitter_format='.json' %}" method="post" enctype="multipart/form-data" autocomplete="off">
 			{% csrf_token %}

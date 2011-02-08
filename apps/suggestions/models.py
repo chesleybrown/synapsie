@@ -9,7 +9,6 @@ class Suggestion(models.Model):
 	text = models.TextField()
 	created = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
-	priority = models.IntegerField(max_length=3, null=True)
 	
 	def __unicode__(self):
 		return 'Suggestion: %s' % self.text

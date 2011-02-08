@@ -22,8 +22,8 @@ def get_next_suggestion(request, user=None):
 	
 	# get current user_suggestions that are marked completed or ignored
 	user_suggestions = (
-		apps.records.models.UserSuggestions.objects.all()
-		.filter(Q(user_suggestion__ignored=True) | Q(user_suggestion__completed=True), user=user)
+		apps.suggestions.models.UserSuggestions.objects.all()
+		.filter(Q(ignored=True) | Q(completed=True), user=user)
 	)
 	
 	for user_suggestion in user_suggestions:
@@ -31,9 +31,9 @@ def get_next_suggestion(request, user=None):
 	
 	# get a random suggestion that the user hasn't already completed or ignored
 	suggestions = (
-		apps.records.models.Suggestion.objects.all()
-		.exclude(id__in=user_suggestion_ids)
-		.order_by('priority', '?')[:1]
+		apps.suggestions.models.Suggestion.objects
+		.exclude(pk__in=user_suggestion_ids)
+		.order_by('?')[:1]
 	)
 	
 	# get the first suggestion
