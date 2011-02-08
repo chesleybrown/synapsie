@@ -381,7 +381,7 @@ ul.records li.record .footer {
 .records_more .action {
 	float: right;
 }
-.records_more .loading {
+.records_more .loading_more {
 	display: none;
 	width: 32px;
 	height: 32px;

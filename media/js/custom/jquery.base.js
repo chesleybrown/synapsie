@@ -1210,7 +1210,7 @@ $(document).ready(function() {
 			var query = $('#id_text').val();
 			var holder = element.parent().parent();
 			var user_record_list = $('#user_record_list');
-			var loading = holder.find('.loading');
+			var loading = holder.find('.loading_more');
 			
 			//show loading animation
 			element.hide();
