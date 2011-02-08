@@ -121,6 +121,11 @@ input.icon {
 	background-image: url(/site_media/media/img/icons/fugue/_overlay/tag--plus.png);
 }
 
+/* Suggestions */
+.icon_suggestion_completed {
+	background-image: url(/site_media/media/img/icons/fugue/tick.png);
+}
+
 /* Tags */
 .icon_tag {
 	background-image: url(/site_media/media/img/icons/fugue/tag.png);

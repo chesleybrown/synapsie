@@ -12,7 +12,20 @@
 	<div class="clear"></div>
 	
 	{% if next_suggestion %}
-		<p>{{ next_suggestion.text }}</p>
+		<div class="suggestion_container">
+			<p class="text">{{ next_suggestion.text }}</p>
+			<div class="actions">
+				
+				<a href="" class="input_button_wrapper">
+					<span class="input_button_start"></span>
+					<span class="input_button_body">
+						<span class="icon icon_suggestion_completed">{% trans "Completed" %}</span>
+					</span>
+					<span class="input_button_end"></span>
+				</a>
+				
+			</div>
+		</div>
 	{% endif %}
 	
 	<div id="record_create_form_container">

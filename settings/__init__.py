@@ -172,6 +172,7 @@ COMPRESS_CSS = {
 			'media/css/dropdown_menu.css',
 			'media/css/buttons.css',
 			'media/css/records.css',
+			'media/css/suggestions.css',
 			'media/css/tabs.css',
 			'media/css/charts.css',
 			'media/css/icons.css',
