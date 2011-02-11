@@ -13,17 +13,19 @@
 	
 	{% if next_suggestion %}
 		<div class="suggestion_container">
-			<p class="text">{{ next_suggestion.text }}</p>
-			<div class="actions">
-				
-				<a href="" class="input_button_wrapper">
-					<span class="input_button_start"></span>
-					<span class="input_button_body">
-						<span class="icon icon_suggestion_completed">{% trans "Completed" %}</span>
-					</span>
-					<span class="input_button_end"></span>
-				</a>
-				
+			<div class="suggestion_content">
+				<p class="text icon icon_suggestion">{{ next_suggestion.text }}</p>
+				<div class="actions">
+					<ul class="grouped_actions">
+						<li>
+							<div class="icon icon_suggestion_add_suggested_tags"></div>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<div class="icon icon_suggestion_completed"></div>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	{% endif %}

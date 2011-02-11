@@ -122,8 +122,14 @@ input.icon {
 }
 
 /* Suggestions */
+.icon_suggestion {
+	background-image: url(/site_media/media/img/icons/fugue/question-balloon.png);
+}
+.icon_suggestion_add_suggested_tags {
+	background-image: url(/site_media/media/img/icons/fugue/tag-small.png);
+}
 .icon_suggestion_completed {
-	background-image: url(/site_media/media/img/icons/fugue/tick.png);
+	background-image: url(/site_media/media/img/icons/fugue/tick-small.png);
 }
 
 /* Tags */
