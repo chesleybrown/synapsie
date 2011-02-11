@@ -160,6 +160,7 @@ COMPRESS_CSS = {
 			'media/css/tags.css',
 			'media/css/user_voice.css',
 			'media/css/jquery.gritter.css',
+			'media/css/jquery.tipsy.css',
 		),
 		'output_filename': 'media/css/min/marketing.r?.css',
 	},
@@ -181,6 +182,7 @@ COMPRESS_CSS = {
 			'media/css/user_voice.css',
 			'media/css/jquery.datePicker.css',
 			'media/css/jquery.gritter.css',
+			'media/css/jquery.tipsy.css',
 		),
 		'output_filename': 'media/css/min/app.r?.css',
 	}
@@ -204,6 +206,7 @@ COMPRESS_JS = {
 			'media/js/plugins/jquery.datePicker.js',
 			'media/js/plugins/jquery.highlight.js',
 			'media/js/plugins/jquery.gritter.js',
+			'media/js/plugins/jquery.tipsy.js',
 			'media/js/plugins/jquery.ezpz_hint.js',
 			'media/js/custom/jquery.gritter_extend.js',
 			'media/js/custom/jquery.sidebar.js',

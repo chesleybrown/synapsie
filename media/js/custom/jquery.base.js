@@ -1576,8 +1576,8 @@ $(document).ready(function() {
 	
 	
 	/*
-	* Stats Menu
-	*/
+	 * Stats Menu
+	 */
 	function setupStatsMenu(container) {
 		$(container).find('div.use_stats_menu').find('ul.menu_items li.menu_item').bind('click', function(e) {
 			
@@ -1601,5 +1601,15 @@ $(document).ready(function() {
 			type: 'weekly'
 		});
 	});
+	
+	/*
+	 * Tipsy
+	 */
+	$('body a.use_tipsy').tipsy({
+		gravity: 's'
+	});
+	/*
+	 * END Tipsy
+	 */
 	
 });
