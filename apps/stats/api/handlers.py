@@ -17,13 +17,11 @@ from apps.records.forms import RecordForm, RecordAddTagsForm
 from tagging.models import Tag, TaggedItem
 from tagging.utils import parse_tag_input
 
-class AnonymousRecordHandler(AnonymousBaseHandler):
-	model = Record
+class AnonymousStatHandler(AnonymousBaseHandler):
 	allowed_methods = ('GET')
-	fields = ('id', 'text')
 
 class StatHandler(BaseHandler):
-	anonymous = AnonymousRecordHandler
+	anonymous = AnonymousStatHandler
 	allowed_methods = ('GET')
 	model = Record
 	

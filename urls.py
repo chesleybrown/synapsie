@@ -25,6 +25,7 @@ urlpatterns = patterns('',
 	(r'^api/records', include('apps.records.api.urls')),
 	(r'^api/tags', include('apps.tags.api.urls')),
 	(r'^api/stats', include('apps.stats.api.urls')),
+	(r'^api/suggestions', include('apps.suggestions.api.urls')),
 	
 	# Normal
 	(r'^', include('apps.about.urls')),
