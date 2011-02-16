@@ -8,6 +8,7 @@
 /* Tags */
 ul.tags {
 	list-style: none;
+	overflow: auto;
 	margin: 0;
 }
 ul.tags li.tag {
