@@ -9,7 +9,7 @@ from tagging.utils import parse_tag_input
 
 
 # get the next suggestion for given user
-def get_next_suggestion(request, user=None):
+def get_next_suggestion(request, user=None, skipped_suggestion_id=None):
 	
 	# init
 	identity = request.user
@@ -34,17 +34,37 @@ def get_next_suggestion(request, user=None):
 	# we have to determine a random suggestion to select like this because MySQL random order sucks
 	num_suggestions = apps.suggestions.models.Suggestion.objects.count()
 	random_id_range = random.randint(1, num_suggestions)
-	if random.random() > 0.5:
-		random_sort = 'id'
-	else:
-		random_sort = '-id'
 	
 	suggestions = (
 		apps.suggestions.models.Suggestion.objects
 		.exclude(pk__in=user_suggestion_ids)
-		.filter(pk__gte=random_id_range)
-		.order_by(random_sort)[:1]
+		.filter(pk__gte=random_id_range) # trying gte
 	)
+	
+	# if skipped_suggestion_id provided, make sure we don't return that suggestion
+	if skipped_suggestion_id is not None:
+		suggestions = suggestions.exclude(id=skipped_suggestion_id)
+	
+	# get one
+	suggestions = suggestions.order_by('id')[:1]
+	
+	# get the first suggestion
+	for suggestion in suggestions:
+		next_suggestion = suggestion
+	
+	
+	
+	
+	# if we still don't have a suggestion, try lte... if no match after that, then nothing to suggest
+	suggestions = (
+		apps.suggestions.models.Suggestion.objects
+		.exclude(pk__in=user_suggestion_ids)
+		.filter(pk__lte=random_id_range) # trying lte
+	)
+	
+	# if skipped_suggestion_id provided, make sure we don't return that suggestion
+	if skipped_suggestion_id is not None:
+		suggestions = suggestions.exclude(id=skipped_suggestion_id)
 	
 	# get the first suggestion
 	for suggestion in suggestions:
