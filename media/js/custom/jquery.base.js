@@ -754,7 +754,7 @@ $(document).ready(function() {
 						//init
 						var message = data.message;
 						
-						//created successfully
+						//deleted successfully
 						if (message['status'] == 204) {
 							
 							$(holder).animate({
@@ -1610,6 +1610,79 @@ $(document).ready(function() {
 	});
 	/*
 	 * END Tipsy
+	 */
+	
+	
+	/*
+	 * Suggestion Skip
+	 */
+	function setupSuggestionSkip(container) {
+		$(container).find('a.use_suggestion_skip').bind('click', function(e) {
+			
+			// init
+			var element = $(this);
+			var suggestion_container = $(this).parents('div.suggestion_container');
+			var suggestion_text = $(suggestion_container).find('div.suggestion_content .text');
+			var suggestion_complete = $(suggestion_container).find('a.use_suggestion_complete');
+			
+			$.ajax({
+				type: 'get',
+				url: $(this).attr('href'),
+				success: function(data) {
+					
+					//init
+					var message = data.message;
+					var result = data.data;
+					
+					//get successfully
+					if (message.status == 200) {
+						
+						//display new suggestion
+						$(suggestion_text).text(result.suggestion.text);
+						
+						//update suggestion action urls
+						$(element).attr('href', function(index, attr) {
+							return attr.replace(/(skip\/)\d+/, '$1' + result.suggestion.id);
+						});
+						$(suggestion_complete).attr('href', function(index, attr) {
+							return attr.replace(/(complete\/)\d+/, '$1' + result.suggestion.id);
+						});
+						
+					}
+					
+					//no more suggestions to display, hide the container
+					else if (message.status == 404) {
+						
+						$(suggestion_container).animate({
+							opacity: 0
+						}, 'slow', 'linear', function() {
+							$(this).slideUp('slow', function() {
+								$(this).remove();
+							});
+						});
+						
+					}
+					
+					//something went wrong
+					else {
+						$.gritterExtend.add(data.message);
+					}
+					
+				},
+				error: function() {
+				},
+				complete: function() {
+				}
+			});
+			
+			// prevent default
+			return false;
+			
+		});
+	}
+	setupSuggestionSkip('body');
+	/*
+	 * END Suggestion Skip
 	 */
 	
 });

@@ -97,6 +97,10 @@ ul.grouped_actions li:hover {
 ul.grouped_actions li.selected {
 	background: url(/site_media/media/img/backgrounds/1px/w80.png);
 }
+ul.grouped_actions li a {
+	outline: none;
+	overflow: hidden;
+}
 ul.grouped_actions li a:hover {
 	color: #000;
 }

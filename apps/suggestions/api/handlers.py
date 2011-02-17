@@ -63,7 +63,7 @@ class SuggestionHandler(BaseHandler):
 					'tags': clean_tags,
 				}
 				
-				message = messages.get('found')
+				message = messages.get('not_found')
 				
 			else:
 				message = messages.get('not_found')
