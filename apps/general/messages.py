@@ -17,6 +17,14 @@ class GeneralMessages():
 		
 		return custom_message
 	
+	unknown_error = dict(
+		status=500,
+		kind="error",
+		title=_("Unknown Error"),
+		text=_("Something seriously broke... Rare, I know. Sorry."),
+		sticky=False,
+	)
+	
 	permission_denied = dict(
 		status=401,
 		kind="error",
