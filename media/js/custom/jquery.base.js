@@ -1686,6 +1686,56 @@ $(document).ready(function() {
 			return false;
 			
 		});
+		
+		
+		// setup user suggestion update
+		$(container).find('a.use_suggestion_add_tags').bind('click', function(e) {
+			
+			// init
+			var element = $(this);
+			var form_auto_completer = $('#record_create_form #id_record_create-tags');
+			var suggestion_container = $(this).parents('div.suggestion_container');
+			var suggestion_tags_select = $(suggestion_container).find('select[name=suggestions-tags]');
+			
+			$.ajax({
+				type: 'get',
+				url: $(this).attr('href'),
+				success: function(data) {
+					
+					//init
+					var message = data.message;
+					var result = data.data;
+					
+					//get successfully
+					if (message.status == 200) {
+						
+						// add suggested tags for suggestion
+						for (i in result.suggestion.tags) {
+							$(form_auto_completer).trigger("addItem", [{
+								"title": result.suggestion.tags[i].name,
+								"value": result.suggestion.tags[i].name
+							}]);
+						}
+						
+					}
+					
+					//something went wrong
+					else {
+						$.gritterExtend.add(data.message);
+					}
+					
+				},
+				error: function() {
+				},
+				complete: function() {
+				}
+			});
+			
+			// prevent default
+			return false;
+			
+		});
+		
 	}
 	setupSuggestionActions('body');
 	/*

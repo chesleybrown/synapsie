@@ -19,15 +19,15 @@ from tagging.utils import parse_tag_input
 
 class AnonymousSuggestionHandler(AnonymousBaseHandler):
 	model = Suggestion
-	allowed_methods = ('GET', 'PUT', 'POST', 'DELETE')
+	allowed_methods = ('GET', 'PUT')
 	fields = ('id', 'text')
 
 class SuggestionHandler(BaseHandler):
 	anonymous = AnonymousSuggestionHandler
-	allowed_methods = ('GET', 'PUT', 'POST', 'DELETE')
+	allowed_methods = ('GET', 'PUT')
 	model = Suggestion
 	
-	def read(self, request, suggestion_id=None, skipped_suggestion_id=None, action=None):
+	def read(self, request, suggestion_id=None):
 		
 		#init
 		identity = request.user
@@ -40,6 +40,39 @@ class SuggestionHandler(BaseHandler):
 			message = messages.get('unknown_error'),
 			data = {},
 		)
+		
+		# update given suggestion for user
+		if suggestion_id is not None:
+			
+			suggestion = SuggestionService.get_one(request, suggestion_id=suggestion_id)
+			
+			if suggestion:
+				
+				# clean the tags
+				clean_tags = list()
+				for tag in suggestion.tags:
+					clean_tag = {
+						'id': tag.id,
+						'name': tag.name,
+					}
+					clean_tags.append(clean_tag)
+				
+				# clean before returning
+				clean_suggestion = {
+					'id': suggestion.id,
+					'text': suggestion.text,
+					'tags': clean_tags,
+				}
+				
+				response['message'] = messages.get('found')
+				
+			else:
+				response['message'] = messages.get('not_found')
+			
+			# returned message with clean suggestion
+			response['data'] = {
+				'suggestion': clean_suggestion,
+			}
 		
 		return response
 	
@@ -55,7 +88,7 @@ class SuggestionHandler(BaseHandler):
 		
 		return response
 	
-	def update(self, request, suggestion_id, get_next_suggestion=None):
+	def update(self, request, suggestion_id, get_next=False):
 		
 		# init
 		identity = request.user
@@ -72,7 +105,7 @@ class SuggestionHandler(BaseHandler):
 			message = messages.get('unknown_error'),
 			data = {},
 		)
-		
+		print get_next
 		# update given suggestion for user
 		if suggestion_id is not None:
 			
@@ -105,7 +138,7 @@ class SuggestionHandler(BaseHandler):
 					response['message'] = messages.get('user_suggestion_updated')
 					
 					# get the next suggestion for the user if requested
-					if get_next_suggestion:
+					if get_next:
 						next_suggestion = SuggestionService.get_next_suggestion(request, user=user, skipped_suggestion_id=suggestion_id)
 						
 						if next_suggestion:

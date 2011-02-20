@@ -7,6 +7,20 @@ import apps.suggestions.models
 from tagging.models import Tag, TaggedItem
 from tagging.utils import parse_tag_input
 
+# just getting one suggestion
+def get_one(request, suggestion_id):
+	
+	# init
+	suggestion = None
+	
+	# get the suggestion
+	try:
+		suggestion = apps.suggestions.models.Suggestion.objects.get(pk=suggestion_id)
+	except apps.suggestions.models.Suggestion.DoesNotExist:
+		suggestion = None
+		pass
+	
+	return suggestion
 
 # get the next suggestion for given user
 def get_next_suggestion(request, user=None, skipped_suggestion_id=None):

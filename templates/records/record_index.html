@@ -18,16 +18,16 @@
 				<div class="actions">
 					<ul class="grouped_actions">
 						<li>
-							<a title="Skip Suggestion" data-completed='0' data-viewed='1' href="{% url api-suggestion emitter_format='.json' suggestion_id=next_suggestion.id get_next_suggestion=1 %}" class="icon icon_suggestion_skip use_tipsy use_suggestion_update"></a>
+							<a title="Skip Suggestion" data-completed='0' data-viewed='1' href="{% url api-suggestion-get_next emitter_format='.json' suggestion_id=next_suggestion.id %}" class="icon icon_suggestion_skip use_tipsy use_suggestion_update"></a>
 						</li>
 					</ul>
 					<ul class="grouped_actions">
 						<li>
-							<a title="Add Suggested Tags" href="#" class="icon icon_suggestion_add_suggested_tags use_tipsy"></a>
+							<a title="Add Suggested Tags" href="{% url api-suggestion emitter_format='.json' suggestion_id=next_suggestion.id %}" class="icon icon_suggestion_add_suggested_tags use_tipsy use_suggestion_add_tags"></a>
 						</li>
 						<li class="divider"></li>
 						<li>
-							<a title="Mark as Completed" data-completed='1' data-viewed='1' href="{% url api-suggestion emitter_format='.json' suggestion_id=next_suggestion.id get_next_suggestion=1 %}" class="icon icon_suggestion_completed use_tipsy use_suggestion_update"></a>
+							<a title="Mark as Completed" data-completed='1' data-viewed='1' href="{% url api-suggestion-get_next emitter_format='.json' suggestion_id=next_suggestion.id %}" class="icon icon_suggestion_completed use_tipsy use_suggestion_update"></a>
 						</li>
 					</ul>
 				</div>
