@@ -1614,10 +1614,12 @@ $(document).ready(function() {
 	
 	
 	/*
-	 * Suggestion Skip
+	 * Suggestion Actions
 	 */
-	function setupSuggestionSkip(container) {
-		$(container).find('a.use_suggestion_skip').bind('click', function(e) {
+	function setupSuggestionActions(container) {
+		
+		// setup user suggestion update
+		$(container).find('a.use_suggestion_update').bind('click', function(e) {
 			
 			// init
 			var element = $(this);
@@ -1626,7 +1628,11 @@ $(document).ready(function() {
 			var suggestion_complete = $(suggestion_container).find('a.use_suggestion_complete');
 			
 			$.ajax({
-				type: 'get',
+				type: 'put',
+				data: {
+					'user_suggestion_edit-completed': $(element).data('completed'),
+					'user_suggestion_edit-viewed': $(element).data('viewed')
+				},
 				url: $(this).attr('href'),
 				success: function(data) {
 					
@@ -1637,29 +1643,30 @@ $(document).ready(function() {
 					//get successfully
 					if (message.status == 200) {
 						
-						//display new suggestion
-						$(suggestion_text).text(result.suggestion.text);
-						
-						//update suggestion action urls
-						$(element).attr('href', function(index, attr) {
-							return attr.replace(/(skip\/)\d+/, '$1' + result.suggestion.id);
-						});
-						$(suggestion_complete).attr('href', function(index, attr) {
-							return attr.replace(/(complete\/)\d+/, '$1' + result.suggestion.id);
-						});
-						
-					}
-					
-					//no more suggestions to display, hide the container
-					else if (message.status == 404) {
-						
-						$(suggestion_container).animate({
-							opacity: 0
-						}, 'slow', 'linear', function() {
-							$(this).slideUp('slow', function() {
-								$(this).remove();
+						if (result.next_suggestion) {
+							//display new suggestion
+							$(suggestion_text).text(result.next_suggestion.text);
+							
+							//update suggestion action urls
+							$(element).attr('href', function(index, attr) {
+								return attr.replace(/(id\/)\d+/, '$1' + result.next_suggestion.id);
 							});
-						});
+							$(suggestion_complete).attr('href', function(index, attr) {
+								return attr.replace(/(id\/)\d+/, '$1' + result.next_suggestion.id);
+							});
+							
+						}
+						else {
+							
+							$(suggestion_container).animate({
+								opacity: 0
+							}, 'slow', 'linear', function() {
+								$(this).slideUp('slow', function() {
+									$(this).remove();
+								});
+							});
+							
+						}
 						
 					}
 					
@@ -1680,9 +1687,9 @@ $(document).ready(function() {
 			
 		});
 	}
-	setupSuggestionSkip('body');
+	setupSuggestionActions('body');
 	/*
-	 * END Suggestion Skip
+	 * END Suggestion Actions
 	 */
 	
 });

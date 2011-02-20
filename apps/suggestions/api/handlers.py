@@ -11,6 +11,7 @@ from piston.utils import rc, validate
 
 from apps.suggestions.messages import SuggestionMessages
 from apps.suggestions.models import Suggestion
+from apps.suggestions.forms import UserSuggestionForm
 from apps.suggestions import services as SuggestionService
 
 from tagging.models import Tag, TaggedItem
@@ -18,12 +19,12 @@ from tagging.utils import parse_tag_input
 
 class AnonymousSuggestionHandler(AnonymousBaseHandler):
 	model = Suggestion
-	allowed_methods = ('GET')
+	allowed_methods = ('GET', 'PUT', 'POST', 'DELETE')
 	fields = ('id', 'text')
 
 class SuggestionHandler(BaseHandler):
 	anonymous = AnonymousSuggestionHandler
-	allowed_methods = ('GET', 'POST')
+	allowed_methods = ('GET', 'PUT', 'POST', 'DELETE')
 	model = Suggestion
 	
 	def read(self, request, suggestion_id=None, skipped_suggestion_id=None, action=None):
@@ -36,177 +37,108 @@ class SuggestionHandler(BaseHandler):
 		suggestion = None
 		clean_suggestion = list()
 		response = dict(
-			message = {},
+			message = messages.get('unknown_error'),
 			data = {},
 		)
-		
-		# just getting one suggestion randomly, but skipping one suggestion
-		if skipped_suggestion_id is not None and action == 'skip':
-			
-			suggestion = SuggestionService.get_next_suggestion(request, user=user, skipped_suggestion_id=skipped_suggestion_id)
-			
-			if suggestion:
-				
-				# clean the tags
-				clean_tags = list()
-				for tag in suggestion.tags:
-					clean_tag = {
-						'id': tag.id,
-						'name': tag.name,
-					}
-					clean_tags.append(clean_tag)
-				
-				# clean before returning
-				clean_suggestion = {
-					'id': suggestion.id,
-					'text': suggestion.text,
-					'tags': clean_tags,
-				}
-				
-				message = messages.get('not_found')
-				
-			else:
-				message = messages.get('not_found')
-			
-			# returned message with clean suggestion
-			response['message'] = message
-			response['data'] = {
-				'suggestion': clean_suggestion,
-			}
 		
 		return response
 	
 	def create(self, request):
 		
-		#init
+		# init
 		identity = request.user
-		messages = RecordMessages()
-		record_create_formset = RecordForm(prefix='record_create')
-		now = datetime.now()
-		str_tags = ','
-		clean = None
-		record_datetime = None
-		datetime_string = False
-		datetime_format = "%Y-%m-%d %I:%M%p"
+		messages = SuggestionMessages()
 		response = dict(
-			message = {},
+			message = messages.get('unknown_error'),
 			data = {},
 		)
-			
+		
 		return response
 	
-	def update(self, request, record_id, add_tags=False):
+	def update(self, request, suggestion_id, get_next_suggestion=None):
 		
-		#init
+		# init
 		identity = request.user
-		messages = RecordMessages()
-		record_edit_formset = RecordForm(prefix='record_edit')
-		record_add_tags_formset = RecordAddTagsForm(prefix='record_add_tags')
-		now = datetime.now()
-		str_tags = ','
+		user = identity
+		messages = SuggestionMessages()
+		message = False
+		user_suggestion_edit_formset = UserSuggestionForm(prefix='user_suggestion_edit')
+		suggestion = None
+		next_suggestion = None
 		clean = None
-		record_datetime = None
-		datetime_string = False
-		datetime_format = "%Y-%m-%d %I:%M%p"
+		clean_suggestion = list()
+		clean_next_suggestion = None
 		response = dict(
-			message = {},
+			message = messages.get('unknown_error'),
 			data = {},
 		)
 		
-		# get record
-		try:
-			record = Record.objects.get(pk=record_id)
+		# update given suggestion for user
+		if suggestion_id is not None:
 			
-		except Record.DoesNotExist:
-			response['message'] = messages.get('not_found')
-			return response
-		
-		# test permission
-		if not record.can_edit(identity):
-			response['message'] = messages.get('permission_denied')
-			return response
-		
-		# determine if we are handling a full record edit or just adding tags
-		if (add_tags):
-			record_add_tags_formset = RecordAddTagsForm(request.PUT, prefix='record_add_tags')
-			arr_tags = request.PUT.getlist('record_add_tags-tags[]')
+			user_suggestion_edit_formset = UserSuggestionForm(request.PUT, prefix='user_suggestion_edit')
 			
 			# validate form
-			if record_add_tags_formset.is_valid():
-				clean = record_add_tags_formset.cleaned_data
+			if user_suggestion_edit_formset.is_valid():
+				clean = user_suggestion_edit_formset.cleaned_data
 				
-				# add tags
-				str_tags += ",".join(arr_tags)
-				Tag.objects.update_tags(record, str_tags)
+				suggestion = SuggestionService.update_user_suggestion(request, user=user, suggestion_id=suggestion_id, data=clean)
 				
-				# save record (this will automatically update quality)
-				record.save()
+				if suggestion:
+					
+					# clean the tags
+					clean_tags = list()
+					for tag in suggestion.tags:
+						clean_tag = {
+							'id': tag.id,
+							'name': tag.name,
+						}
+						clean_tags.append(clean_tag)
+					
+					# clean before returning
+					clean_suggestion = {
+						'id': suggestion.id,
+						'text': suggestion.text,
+						'tags': clean_tags,
+					}
+					
+					response['message'] = messages.get('user_suggestion_updated')
+					
+					# get the next suggestion for the user if requested
+					if get_next_suggestion:
+						next_suggestion = SuggestionService.get_next_suggestion(request, user=user, skipped_suggestion_id=suggestion_id)
+						
+						if next_suggestion:
+							
+							# clean the tags
+							clean_tags = list()
+							for tag in next_suggestion.tags:
+								clean_tag = {
+									'id': tag.id,
+									'name': tag.name,
+								}
+								clean_tags.append(clean_tag)
+							
+							# clean before returning
+							clean_next_suggestion = {
+								'id': next_suggestion.id,
+								'text': next_suggestion.text,
+								'tags': clean_tags,
+							}
+					
+				else:
+					response['message'] = messages.get('not_found')
 				
-				# return only what we need to
-				clean_record = {
-					'id': record.id,
-					'user_id': record.user_id,
-					'text': record.text,
-					'personal': record.personal,
-					'created': record.created,
-					'happened': record.happened,
-					'tags': record.clean_tags,
-				}
-				
-				# set message and record created
-				response['message'] = messages.get('updated_tags')
-				response['data'] = clean_record
-			
-			else:
-				response['data'] = record.personal
-				# set error message, missing data
-				response['message'] = messages.get('missing_data')
-		
-		# this is a full record edit
-		else:
-			record_edit_formset = RecordForm(request.PUT, prefix='record_edit')
-			arr_tags = request.PUT.getlist('record_edit-tags[]')
-			
-			# validate form
-			if record_edit_formset.is_valid():
-				clean = record_edit_formset.cleaned_data
-				
-				# generate datetime stamp
-				if clean['datetime_set']:
-					datetime_string = clean['date'] + ' ' + clean['hour'] + ':' + clean['minute'] + clean['ampm']
-					record_datetime = datetime.fromtimestamp(time.mktime(time.strptime(datetime_string, datetime_format)))
-				
-				# update record, set user
-				record.text = clean['text']
-				record.personal = clean['personal']
-				record.happened = record_datetime
-				
-				# save
-				record.save()
-				
-				# add tags
-				str_tags += ",".join(arr_tags)
-				Tag.objects.update_tags(record, str_tags)
-				
-				# return only what we need to
-				clean_record = {
-					'id': record.id,
-					'user_id': record.user_id,
-					'text': record.text,
-					'personal': record.personal,
-					'created': record.created,
-					'happened': record.happened,
-					'tags': record.clean_tags,
-				}
-				
-				# set message and record created
-				response['message'] = messages.get('updated')
-				response['data'] = clean_record
-			
 			else:
 				
 				# set error message, missing data
 				response['message'] = messages.get('missing_data')
+			
+			# returned message with clean suggestion
+			response['data'] = {
+				'suggestion': clean_suggestion,
+				'next_suggestion': clean_next_suggestion,
+			}
 		
 		return response
 	
@@ -214,9 +146,9 @@ class SuggestionHandler(BaseHandler):
 		
 		# init
 		identity = request.user
-		messages = RecordMessages()
+		messages = SuggestionMessages()
 		response = dict(
-			message = {},
+			message = messages.get('unknown_error'),
 			data = {},
 		)
 		

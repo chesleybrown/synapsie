@@ -51,9 +51,9 @@ class UserSuggestions(models.Model):
 	suggestion = models.ForeignKey(Suggestion)
 	created = models.DateTimeField(auto_now_add=True)
 	updated = models.DateTimeField(auto_now=True)
-	ignored = models.BooleanField(default=False)
-	completed = models.BooleanField(default=False)
-	viewed = models.BooleanField(default=False)
+	ignored = models.NullBooleanField(default=False, null=True)
+	completed = models.NullBooleanField(default=False, null=True)
+	viewed = models.NullBooleanField(default=False, null=True)
 	
 	def __unicode__(self):
 		return 'User Suggestion: %s' % self.id

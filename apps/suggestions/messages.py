@@ -27,3 +27,11 @@ class SuggestionMessages(GeneralMessages):
 		sticky=False,
 	)
 	
+	user_suggestion_updated = dict(
+		status=200,
+		kind="success",
+		title=_("User Suggestion Updated"),
+		text=_("The user suggestion was updated."),
+		sticky=False,
+	)
+	

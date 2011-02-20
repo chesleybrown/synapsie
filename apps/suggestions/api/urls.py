@@ -10,10 +10,7 @@ Emitter.register('.xml', XMLEmitter, 'text/xml; charset=utf-8')
 Emitter.register('.xml/', XMLEmitter, 'text/xml; charset=utf-8')
 
 urlpatterns = patterns('',
-	url(r'^(?P<emitter_format>[\.a-z]+)/(?P<action>skip)/(?P<skipped_suggestion_id>\d+)$', suggestion_handler, {
-		'SSL': True,
-	}, name='api-suggestion'),
-	url(r'^(?P<emitter_format>[\.a-z]+)/(?P<action>complete)/(?P<suggestion_id>\d+)$', suggestion_handler, {
+	url(r'^(?P<emitter_format>[\.a-z]+)/id/(?P<suggestion_id>\d+)/get_next/(?P<get_next_suggestion>\d+)$', suggestion_handler, {
 		'SSL': True,
 	}, name='api-suggestion'),
 	url(r'^(?P<emitter_format>[\.a-z]+)$', suggestion_handler, {
