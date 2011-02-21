@@ -105,7 +105,7 @@ class SuggestionHandler(BaseHandler):
 			message = messages.get('unknown_error'),
 			data = {},
 		)
-		print get_next
+		
 		# update given suggestion for user
 		if suggestion_id is not None:
 			
