@@ -35,3 +35,11 @@ class SuggestionMessages(GeneralMessages):
 		sticky=False,
 	)
 	
+	setup_completed = dict(
+		status=200,
+		kind="success",
+		title=_("Suggestions Updated"),
+		text=_("All suggestions were updated."),
+		sticky=False,
+	)
+	

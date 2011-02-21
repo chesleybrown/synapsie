@@ -29,7 +29,7 @@ class SuggestionHandler(BaseHandler):
 	
 	def read(self, request, suggestion_id=None):
 		
-		#init
+		# init
 		identity = request.user
 		user = identity
 		messages = SuggestionMessages()

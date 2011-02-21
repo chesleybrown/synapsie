@@ -1625,7 +1625,8 @@ $(document).ready(function() {
 			var element = $(this);
 			var suggestion_container = $(this).parents('div.suggestion_container');
 			var suggestion_text = $(suggestion_container).find('div.suggestion_content .text');
-			var suggestion_complete = $(suggestion_container).find('a.use_suggestion_complete');
+			var suggestion_update = $(suggestion_container).find('a.use_suggestion_update');
+			var suggestion_add_tags = $(suggestion_container).find('a.use_suggestion_add_tags');
 			var loading = $(suggestion_container).find('div.loading_container div.loading');
 			
 			$.ajax({
@@ -1655,10 +1656,10 @@ $(document).ready(function() {
 							$(suggestion_text).fadeIn();
 							
 							//update suggestion action urls
-							$(element).attr('href', function(index, attr) {
+							$(suggestion_update).attr('href', function(index, attr) {
 								return attr.replace(/(id\/)\d+/, '$1' + result.next_suggestion.id);
 							});
-							$(suggestion_complete).attr('href', function(index, attr) {
+							$(suggestion_add_tags).attr('href', function(index, attr) {
 								return attr.replace(/(id\/)\d+/, '$1' + result.next_suggestion.id);
 							});
 							
