@@ -754,7 +754,7 @@ $(document).ready(function() {
 						//init
 						var message = data.message;
 						
-						//created successfully
+						//deleted successfully
 						if (message['status'] == 204) {
 							
 							$(holder).animate({
@@ -1210,7 +1210,7 @@ $(document).ready(function() {
 			var query = $('#id_text').val();
 			var holder = element.parent().parent();
 			var user_record_list = $('#user_record_list');
-			var loading = holder.find('.loading');
+			var loading = holder.find('.loading_more');
 			
 			//show loading animation
 			element.hide();
@@ -1576,8 +1576,8 @@ $(document).ready(function() {
 	
 	
 	/*
-	* Stats Menu
-	*/
+	 * Stats Menu
+	 */
 	function setupStatsMenu(container) {
 		$(container).find('div.use_stats_menu').find('ul.menu_items li.menu_item').bind('click', function(e) {
 			
@@ -1601,5 +1601,159 @@ $(document).ready(function() {
 			type: 'weekly'
 		});
 	});
+	
+	/*
+	 * Tipsy
+	 */
+	$('body a.use_tipsy').tipsy({
+		gravity: 's'
+	});
+	/*
+	 * END Tipsy
+	 */
+	
+	
+	/*
+	 * Suggestion Actions
+	 */
+	function setupSuggestionActions(container) {
+		
+		// setup user suggestion update
+		$(container).find('a.use_suggestion_update').bind('click', function(e) {
+			
+			// init
+			var element = $(this);
+			var suggestion_container = $(this).parents('div.suggestion_container');
+			var suggestion_text = $(suggestion_container).find('div.suggestion_content .text');
+			var suggestion_update = $(suggestion_container).find('a.use_suggestion_update');
+			var suggestion_add_tags = $(suggestion_container).find('a.use_suggestion_add_tags');
+			var loading = $(suggestion_container).find('div.loading_container div.loading');
+			
+			$.ajax({
+				type: 'put',
+				data: {
+					'user_suggestion_edit-completed': $(element).data('completed'),
+					'user_suggestion_edit-viewed': $(element).data('viewed')
+				},
+				url: $(this).attr('href'),
+				beforeSend: function() {
+					$(loading).fadeIn(50);
+					$(suggestion_text).fadeOut(100);
+				},
+				success: function(data) {
+					
+					//init
+					var message = data.message;
+					var result = data.data;
+					
+					//get successfully
+					if (message.status == 200) {
+						
+						if (result.next_suggestion) {
+							
+							//display new suggestion
+							$(suggestion_text).text(result.next_suggestion.text);
+							$(suggestion_text).fadeIn();
+							
+							//update suggestion action urls
+							$(suggestion_update).attr('href', function(index, attr) {
+								return attr.replace(/(id\/)\d+/, '$1' + result.next_suggestion.id);
+							});
+							$(suggestion_add_tags).attr('href', function(index, attr) {
+								return attr.replace(/(id\/)\d+/, '$1' + result.next_suggestion.id);
+							});
+							
+						}
+						else {
+							
+							$(suggestion_container).animate({
+								opacity: 0
+							}, 'slow', 'linear', function() {
+								$(this).slideUp('slow', function() {
+									$(this).remove();
+								});
+							});
+							
+						}
+						
+					}
+					
+					//something went wrong
+					else {
+						$.gritterExtend.add(data.message);
+					}
+					
+				},
+				error: function() {
+				},
+				complete: function() {
+					$(loading).fadeOut();
+				}
+			});
+			
+			// prevent default
+			return false;
+			
+		});
+		
+		
+		// setup user suggestion update
+		$(container).find('a.use_suggestion_add_tags').bind('click', function(e) {
+			
+			// init
+			var element = $(this);
+			var form_auto_completer = $('#record_create_form #id_record_create-tags');
+			var suggestion_container = $(this).parents('div.suggestion_container');
+			var suggestion_tags_select = $(suggestion_container).find('select[name=suggestions-tags]');
+			var loading = $(suggestion_container).find('div.loading_container div.loading');
+			
+			$.ajax({
+				type: 'get',
+				url: $(this).attr('href'),
+				beforeSend: function() {
+					$(loading).fadeIn(50);
+				},
+				success: function(data) {
+					
+					//init
+					var message = data.message;
+					var result = data.data;
+					
+					//get successfully
+					if (message.status == 200) {
+						
+						// add suggested tags for suggestion
+						for (i in result.suggestion.tags) {
+							$(form_auto_completer).trigger("addItem", [{
+								"title": result.suggestion.tags[i].name,
+								"value": result.suggestion.tags[i].name
+							}]);
+						}
+						
+					}
+					
+					//something went wrong
+					else {
+						$.gritterExtend.add(data.message);
+					}
+					
+				},
+				error: function() {
+				},
+				complete: function() {
+					$(loading).fadeOut();
+				}
+			});
+			
+			// prevent default
+			return false;
+			
+		});
+		
+	}
+	setupSuggestionActions('body');
+	/*
+	 * END Suggestion Actions
+	 */
 	
 });

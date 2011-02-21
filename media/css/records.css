@@ -362,6 +362,9 @@ ul.records li.record .footer {
 	margin-left: 50px;
 	overflow: auto;
 }
+ul.records li.record .footer ul.tags {
+	margin-right: 75px;
+}
 
 
 /* Records More */
@@ -381,7 +384,7 @@ ul.records li.record .footer {
 .records_more .action {
 	float: right;
 }
-.records_more .loading {
+.records_more .loading_more {
 	display: none;
 	width: 32px;
 	height: 32px;

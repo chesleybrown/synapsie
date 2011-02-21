@@ -1,0 +1,121 @@
+/* Suggestion Container */
+.suggestion_container {
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.31, rgba(0,0,0,0.70)),
+		color-stop(0.66, rgba(31,31,31,0.70)),
+		color-stop(0.83, rgba(43,43,43,0.70))
+	);
+	background-image: -moz-linear-gradient(
+		center bottom,
+		rgba(0,0,0,0.70) 31%,
+		rgba(31,31,31,0.70) 66%,
+		rgba(43,43,43,0.70) 83%
+	);
+	margin: 0 10px 10px 10px;
+	border: 1px solid #000;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+.suggestion_container > .suggestion_content {
+	border: 1px solid #999;
+	margin: 0;
+	padding: 5px;
+}
+.suggestion_container,
+.suggestion_container > .suggestion_content {
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	overflow: auto;
+}
+.suggestion_container p {
+	float: left;
+	font-size: 12px;
+	color: #fff;
+	text-shadow: 1px 1px 0 #000;
+	margin: 0;
+}
+.suggestion_container .actions {
+	float: right;
+}
+.suggestion_container .actions .action {
+	float: left;
+}
+
+.suggestion_container .loading_container {
+	margin-top: 4px;
+	width: 16px;
+	height: 11px;
+}
+.suggestion_container .loading {
+	background: url(/site_media/media/img/layout/suggestions/loading.gif) no-repeat;
+	width: 16px;
+	height: 11px;
+	display: none;
+}
+
+/* Grouped Actions */
+ul.grouped_actions {
+	float: left;
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0.43, rgb(212,212,212)),
+		color-stop(0.72, rgb(245,245,245)),
+		color-stop(0.86, rgb(255,255,255))
+	);
+	background-image: -moz-linear-gradient(
+		center bottom,
+		rgb(212,212,212) 43%,
+		rgb(245,245,245) 72%,
+		rgb(255,255,255) 86%
+	);
+	list-style: none;
+	border: 1px solid #333;
+	list-style: none;
+	padding: 0;
+	margin: 0 0 0 5px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px 3px;
+	overflow: auto;
+}
+ul.grouped_actions li {
+	margin: 0;
+	padding: 0 1px 0 2px;
+	float: left;
+	height: 16px;
+	line-height: 16px;
+	cursor: pointer;
+	border-width: 0 1px 0 0;
+	border-style: solid;
+	border-color: #fff;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px 3px;
+}
+ul.grouped_actions li.divider {
+	border-width: 0 1px 0 0;
+	border-style: solid;
+	border-color: #333;
+	padding: 0;
+	margin: 0;
+}
+ul.grouped_actions li:hover {
+	background: url(/site_media/media/img/backgrounds/1px/w60.png);
+}
+ul.grouped_actions li.selected {
+	background: url(/site_media/media/img/backgrounds/1px/w80.png);
+}
+ul.grouped_actions li a {
+	outline: none;
+	overflow: hidden;
+}
+ul.grouped_actions li a:hover {
+	color: #000;
+}

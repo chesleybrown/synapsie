@@ -8,6 +8,7 @@ from apps.records.models import Record
 from apps.records.forms import RecordForm, RecordSearchForm
 from apps.tags.utils import get_used_tags, get_popular_tags
 from apps.records.services import RecordService
+from apps.suggestions import services as SuggestionService
 from tagging.models import Tag, TaggedItem
 from tagging.utils import get_tag_list
 
@@ -35,6 +36,10 @@ def index_records(request, tags=False, page=1):
 	results_per_page = 25
 	page = 1
 	paginator = False
+	next_suggestion = None
+	
+	# get user's next suggestion (if there is one)
+	next_suggestion = SuggestionService.get_next_suggestion(request, identity)
 	
 	# get user records
 	records_paginator = record_service.get_multiple(request, tags, page)
@@ -60,6 +65,7 @@ def index_records(request, tags=False, page=1):
 	
 	# render
 	return render_to_response('records/record_index.html', {
+		'next_suggestion': next_suggestion,
 		'record_edit_formset': record_edit_formset,
 		'record_create_formset': record_create_formset,
 		'selected_tags': selected_tags,

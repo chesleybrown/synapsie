@@ -19,6 +19,7 @@ body > #site_container {
 #site_container {
 	background: url(/site_media/media/img/layout/header/bg.png) repeat-x;
 }
+.data,
 .hidden {
 	display: none;
 	zoom: 1;

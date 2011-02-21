@@ -121,6 +121,20 @@ input.icon {
 	background-image: url(/site_media/media/img/icons/fugue/_overlay/tag--plus.png);
 }
 
+/* Suggestions */
+.icon_suggestion {
+	background-image: url(/site_media/media/img/icons/fugue/question-balloon.png);
+}
+.icon_suggestion_add_suggested_tags {
+	background-image: url(/site_media/media/img/icons/fugue/tag-small.png);
+}
+.icon_suggestion_skip {
+	background-image: url(/site_media/media/img/icons/fugue/arrow-000-small.png);
+}
+.icon_suggestion_completed {
+	background-image: url(/site_media/media/img/icons/fugue/tick-small.png);
+}
+
 /* Tags */
 .icon_tag {
 	background-image: url(/site_media/media/img/icons/fugue/tag.png);

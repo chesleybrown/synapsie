@@ -25,6 +25,7 @@ urlpatterns = patterns('',
 	(r'^api/records', include('apps.records.api.urls')),
 	(r'^api/tags', include('apps.tags.api.urls')),
 	(r'^api/stats', include('apps.stats.api.urls')),
+	(r'^api/suggestions', include('apps.suggestions.api.urls')),
 	
 	# Normal
 	(r'^', include('apps.about.urls')),
@@ -33,6 +34,7 @@ urlpatterns = patterns('',
 	(r'^tags/', include('apps.tags.urls')),
 	(r'^leaderboards/', include('apps.leaderboards.urls')),
 	#(r'^stats/', include('apps.stats.urls')),
+	(r'^suggestions/', include('apps.suggestions.urls')),
 	
 	# Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
 	# to INSTALLED_APPS to enable admin documentation:
