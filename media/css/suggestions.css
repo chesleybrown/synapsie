@@ -42,6 +42,21 @@
 .suggestion_container .actions {
 	float: right;
 }
+.suggestion_container .actions .action {
+	float: left;
+}
+
+.suggestion_container .loading_container {
+	margin-top: 4px;
+	width: 16px;
+	height: 11px;
+}
+.suggestion_container .loading {
+	background: url(/site_media/media/img/layout/suggestions/loading.gif) no-repeat;
+	width: 16px;
+	height: 11px;
+	display: none;
+}
 
 /* Grouped Actions */
 ul.grouped_actions {

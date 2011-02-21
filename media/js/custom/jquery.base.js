@@ -1626,6 +1626,7 @@ $(document).ready(function() {
 			var suggestion_container = $(this).parents('div.suggestion_container');
 			var suggestion_text = $(suggestion_container).find('div.suggestion_content .text');
 			var suggestion_complete = $(suggestion_container).find('a.use_suggestion_complete');
+			var loading = $(suggestion_container).find('div.loading_container div.loading');
 			
 			$.ajax({
 				type: 'put',
@@ -1634,6 +1635,10 @@ $(document).ready(function() {
 					'user_suggestion_edit-viewed': $(element).data('viewed')
 				},
 				url: $(this).attr('href'),
+				beforeSend: function() {
+					$(loading).fadeIn(50);
+					$(suggestion_text).fadeOut(100);
+				},
 				success: function(data) {
 					
 					//init
@@ -1644,8 +1649,10 @@ $(document).ready(function() {
 					if (message.status == 200) {
 						
 						if (result.next_suggestion) {
+							
 							//display new suggestion
 							$(suggestion_text).text(result.next_suggestion.text);
+							$(suggestion_text).fadeIn();
 							
 							//update suggestion action urls
 							$(element).attr('href', function(index, attr) {
@@ -1679,6 +1686,7 @@ $(document).ready(function() {
 				error: function() {
 				},
 				complete: function() {
+					$(loading).fadeOut();
 				}
 			});
 			
@@ -1696,10 +1704,14 @@ $(document).ready(function() {
 			var form_auto_completer = $('#record_create_form #id_record_create-tags');
 			var suggestion_container = $(this).parents('div.suggestion_container');
 			var suggestion_tags_select = $(suggestion_container).find('select[name=suggestions-tags]');
+			var loading = $(suggestion_container).find('div.loading_container div.loading');
 			
 			$.ajax({
 				type: 'get',
 				url: $(this).attr('href'),
+				beforeSend: function() {
+					$(loading).fadeIn(50);
+				},
 				success: function(data) {
 					
 					//init
@@ -1728,6 +1740,7 @@ $(document).ready(function() {
 				error: function() {
 				},
 				complete: function() {
+					$(loading).fadeOut();
 				}
 			});
 			
