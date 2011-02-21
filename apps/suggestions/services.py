@@ -48,37 +48,38 @@ def get_next_suggestion(request, user=None, skipped_suggestion_id=None):
 	# get a random suggestion that the user hasn't already completed or ignored
 	# we have to determine a random suggestion to select like this because MySQL random order sucks
 	num_suggestions = apps.suggestions.models.Suggestion.objects.count()
-	random_id_range = random.randint(1, num_suggestions)
-	
-	# only ever try twice
-	while attempt <= 2 and next_suggestion is None:
+	if num_suggestions > 0:
+		random_id_range = random.randint(1, num_suggestions)
 		
-		suggestions = (
-			apps.suggestions.models.Suggestion.objects
-			.exclude(pk__in=user_suggestion_ids)
-		)
-		
-		# trying greater than or equal to
-		if attempt == 1:
-			suggestions = suggestions.filter(pk__gte=random_id_range)
+		# only ever try twice
+		while attempt <= 2 and next_suggestion is None:
 			
-		# trying less than
-		else:
-			suggestions = suggestions.filter(pk__lt=random_id_range)
-		
-		# if skipped_suggestion_id provided, make sure we don't return that suggestion
-		if skipped_suggestion_id is not None:
-			suggestions = suggestions.exclude(id=skipped_suggestion_id)
-		
-		# get one
-		suggestions = suggestions.order_by('id')[:1]
-		
-		# get the first suggestion
-		for suggestion in suggestions:
-			next_suggestion = suggestion
-		
-		# increment attempt num
-		attempt += 1
+			suggestions = (
+				apps.suggestions.models.Suggestion.objects
+				.exclude(pk__in=user_suggestion_ids)
+			)
+			
+			# trying greater than or equal to
+			if attempt == 1:
+				suggestions = suggestions.filter(pk__gte=random_id_range)
+				
+			# trying less than
+			else:
+				suggestions = suggestions.filter(pk__lt=random_id_range)
+			
+			# if skipped_suggestion_id provided, make sure we don't return that suggestion
+			if skipped_suggestion_id is not None:
+				suggestions = suggestions.exclude(id=skipped_suggestion_id)
+			
+			# get one
+			suggestions = suggestions.order_by('id')[:1]
+			
+			# get the first suggestion
+			for suggestion in suggestions:
+				next_suggestion = suggestion
+			
+			# increment attempt num
+			attempt += 1
 	
 	return next_suggestion
 	
