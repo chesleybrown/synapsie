@@ -253,11 +253,18 @@ $(document).ready(function() {
 	/*
 	 * Build Record
 	 */
-	function buildRecord(data, is_new) {
+	function buildRecord(data, is_new, is_public) {
 		
-		var new_record = $('#records_blank ul.records li.record').clone(false);
-		var new_record_tags = $('#tags_blank ul.tags').clone(false);
-		var new_record_tags_tag = $('#tags_blank ul.tags li.tag').clone(false);
+		if (is_public) {
+			var new_record = $('#records_public_blank ul.records li.record').clone(false);
+			var new_record_tags = $('#tags_no_delete_blank ul.tags').clone(false);
+			var new_record_tags_tag = $('#tags_no_delete_blank ul.tags li.tag').clone(false);
+		}
+		else {
+			var new_record = $('#records_blank ul.records li.record').clone(false);
+			var new_record_tags = $('#tags_blank ul.tags').clone(false);
+			var new_record_tags_tag = $('#tags_blank ul.tags li.tag').clone(false);
+		}
 		var happened = mysqlTimeStampToDate(data['happened']);
 		var security = '';
 		var short_months = [
@@ -327,6 +334,11 @@ $(document).ready(function() {
 		new_record.find('div.date span.month').text(short_months[happened.getMonth()]);
 		new_record.find('div.date span.day').text(curr_day);
 		new_record.find('div.date span.year').text(happened.getFullYear());
+		
+		// if it's public, need to add created_by
+		if (is_public) {
+			new_record.find('div.header div.created_by span.value').text(data['user']['first_name'] + data['user']['last_name']);
+		}
 		
 		// update menu items
 		$(new_record).find('div.menu ul.menu_items li.menu_item').each(function(e) {
@@ -1204,15 +1216,17 @@ $(document).ready(function() {
 	 * Handle Record More
 	 */
 	function setupRecordMore(container) {
-		//single tag delete
+		
 		$(container).find('a.use_record_more').bind('click', function(e) {
+			
 			var element = $(this);
 			var query = $('#id_text').val();
 			var holder = element.parent().parent();
-			var user_record_list = $('#user_record_list');
+			var user_record_list = $(element).parents('div.records_container').find('ul.records');
 			var loading = holder.find('.loading_more');
+			var is_public = $(element).data('public');
 			
-			//show loading animation
+			// show loading animation
 			element.hide();
 			loading.show();
 			
@@ -1225,7 +1239,7 @@ $(document).ready(function() {
 					var new_record = false;
 					var page = 2;
 					
-					//success
+					// success
 					if (message.status == 200) {
 						
 						var matches = element.attr('href').match(/page\/(\d+)/);
@@ -1233,7 +1247,7 @@ $(document).ready(function() {
 						next_page = page+1;
 						
 						for (key in records) {
-							new_record = buildRecord(records[key], false);
+							new_record = buildRecord(records[key], false, is_public);
 							user_record_list.append(new_record);
 							
 							$(new_record).animate({

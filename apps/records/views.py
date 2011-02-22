@@ -45,7 +45,7 @@ def index_records(request, tags=False, page=1):
 	next_suggestion = SuggestionService.get_next_suggestion(request, identity)
 	
 	# get user records
-	records_paginator = record_service.get_multiple(request, tags, page)
+	records_paginator = record_service.get_multiple(request, tags, page, results_per_page=results_per_page)
 	
 	# get used/popular tags for current user
 	used_tags = get_used_tags(Record, identity)
@@ -68,7 +68,7 @@ def index_records(request, tags=False, page=1):
 	
 	
 	# get friends records
-	friends_records_paginator = record_service.get_friends_records(request, page)
+	friends_records_paginator = record_service.get_friends_records(request, page=page, results_per_page=results_per_page)
 	
 	if friends_records_paginator:
 		no_facebook_connect = False

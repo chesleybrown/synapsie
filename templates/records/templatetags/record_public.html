@@ -20,7 +20,7 @@
 			<div class="datetime">{{ record.happened|date:"Y-m-d H:i:s" }}</div>
 			<div class="time">{{ record.happened|date:"g:iA" }}</div>
 			<div class="time_since use_time_since">{{ record.happened|timesince }} ago</div>
-			<div class="created_by"><span class="label">{% trans "Shared by" %} </span><span class="value">{{ record.user.first_name }} {{ record.user.last_name }}</div></span>
+			<div class="created_by"><span class="label">{% trans "Shared by" %} </span><span class="value">{{ record.user.first_name }} {{ record.user.last_name }}</span></div>
 			<div class="text">{{ record.text|linebreaksbr }}</div>
 		</div>
 		<div class="menu use_record_menu">

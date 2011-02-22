@@ -21,6 +21,11 @@ urlpatterns = patterns('',
 		'public': True,
 	}, name='api-record_public'),
 	
+	url(r'^(?P<emitter_format>[\.a-z]+)/friends/page/(?P<page>\d+)$', record_handler, {
+		'SSL': True,
+		'friends': True,
+	}, name='api-record-friends'),
+	
 	url(r'^(?P<emitter_format>[\.a-z]+)/page/(?P<page>\d+)/tags/(?P<tags>[\'\w\-\!\@\#\$\%\^\&\*\(\),\s\.]+)/(?P<text>.*)$', record_handler, {'SSL': True}, name='api-record'),
 	url(r'^(?P<emitter_format>[\.a-z]+)/page/(?P<page>\d+)/(?P<tags>.{0})/(?P<text>.*)$', record_handler, {'SSL': True}, name='api-record'),
 	

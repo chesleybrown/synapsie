@@ -44,12 +44,11 @@ class RecordService():
 		return record
 	
 	# getting more than one record
-	def get_multiple(self, request, tags=False, page=1, user=None, public=False, text=None):
+	def get_multiple(self, request, tags=False, page=1, user=None, public=False, text=None, results_per_page=25):
 		
 		# init
 		identity = request.user
 		records_paginator = None
-		results_per_page = 25
 		
 		# no user provided, just use identity
 		if not user:
@@ -83,12 +82,11 @@ class RecordService():
 		return records_paginator
 		
 	# get friend's shared records
-	def get_friends_records(self, request, user=None, page=1):
+	def get_friends_records(self, request, user=None, page=1, results_per_page=25):
 		
 		# init
 		identity = request.user
 		records_paginator = None
-		results_per_page = 25
 		friends = None
 		friend_user_ids = list()
 		

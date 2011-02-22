@@ -57,46 +57,51 @@
 		</div>
 	</form>
 	
-	{% if records_paginator.object_list %}
-		<ul id="user_record_list" class="records">
-			{% for record in records_paginator.object_list %}
-				{% render_record record %}
-			{% endfor %}
-		</ul>
-	{% endif %}
-	
-	{% if not has_records %}
+	<div class="records_container">
 		
-		<!-- No Enteries at all yet -->
-		<div class="records_no_results">
-			<p>{% trans "Sorry, but you haven't even created a single life record yet..." %}</p>
-		</div>
+		{% if records_paginator.object_list %}
+			<ul id="user_record_list" class="records">
+				{% for record in records_paginator.object_list %}
+					{% render_record record %}
+				{% endfor %}
+			</ul>
+		{% endif %}
 		
-	{% endif %}
-	
-	{% if has_records and not records_paginator.object_list %}
-		
-		<!-- No Results -->
-		<div class="records_no_results">
-			<p>{% trans "Sorry, but nothing like that has ever happened in your life yet." %}</p>
-		</div>
-		
-	{% endif %}
-	
-	{% if records_paginator.object_list|length == records_per_page %}
-		<div class="records_more">
-			<div class="action">
-				<a href="{% url api-record page='2',emitter_format='.json',tags=selected_tags_printable,text=text %}" class="input_button_wrapper use_record_more">
-					<span class="input_button_start"></span>
-					<span class="input_button_body">
-						<span class="icon icon_record_more">{% trans "More" %}</span>
-					</span>
-					<span class="input_button_end"></span>
-				</a>
+		{% if not has_records %}
+			
+			<!-- No Enteries at all yet -->
+			<div class="records_no_results">
+				<p>{% trans "Sorry, but you haven't even created a single life record yet..." %}</p>
 			</div>
-			<div class="loading_more"></div>
-		</div>
-	{% endif %}
+			
+		{% endif %}
+		
+		{% if has_records and not records_paginator.object_list %}
+			
+			<!-- No Results -->
+			<div class="records_no_results">
+				<p>{% trans "Sorry, but nothing like that has ever happened in your life yet." %}</p>
+			</div>
+			
+		{% endif %}
+		
+		{% if records_paginator.object_list|length == records_per_page %}
+			<div class="records_more">
+				<div class="action">
+					<a href="{% url api-record page='2',emitter_format='.json',tags=selected_tags_printable,text=text %}" class="input_button_wrapper use_record_more">
+						<span class="input_button_start"></span>
+						<span class="input_button_body">
+							<span class="icon icon_record_more">{% trans "More" %}</span>
+						</span>
+						<span class="input_button_end"></span>
+					</a>
+				</div>
+				<div class="loading_more"></div>
+			</div>
+		{% endif %}
+		
+	</div>
+	
 {% endblock %}
 
 {% block extra_body %}

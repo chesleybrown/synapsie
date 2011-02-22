@@ -26,7 +26,7 @@ class RecordHandler(BaseHandler):
 	allowed_methods = ('GET', 'PUT', 'POST', 'DELETE')
 	model = Record
 	
-	def read(self, request, record_id=None, tags=False, page=1, user_id=None, username=None, public=False, text=None):
+	def read(self, request, record_id=None, tags=False, page=1, user_id=None, username=None, public=False, text=None, friends=False):
 		
 		#init
 		identity = request.user
@@ -94,31 +94,69 @@ class RecordHandler(BaseHandler):
 		# getting more than one record
 		else:
 			
-			records_paginator = record_service.get_multiple(request, tags, page, user, public, text)
-			
-			if records_paginator:
-				for record in records_paginator.object_list:
-					
-					# clean the tags
-					clean_tags = list()
-					for tag in record.tags:
-						clean_tag = {
-							'id': tag.id,
-							'name': tag.name,
+			# if requesting friend's public record feed
+			if friends:
+				records_paginator = record_service.get_friends_records(request, page=page, results_per_page=results_per_page)
+				
+				if records_paginator:
+					for record in records_paginator.object_list:
+						
+						# clean the user
+						clean_user = {
+							'id': record.user.id,
+							'username': record.user.username,
+							'first_name': record.user.first_name,
+							'last_name': record.user.last_name,
 						}
-						clean_tags.append(clean_tag)
-					
-					clean_record = {
-						'id': record.id,
-						'user_id': record.user_id,
-						'text': record.text,
-						'personal': record.personal,
-						'created': record.created,
-						'happened': record.happened,
-						'tags': clean_tags,
-					}
-					
-					clean_records.append(clean_record)
+						
+						# clean the tags
+						clean_tags = list()
+						for tag in record.tags:
+							clean_tag = {
+								'id': tag.id,
+								'name': tag.name,
+							}
+							clean_tags.append(clean_tag)
+						
+						clean_record = {
+							'id': record.id,
+							'user_id': record.user_id,
+							'text': record.text,
+							'personal': record.personal,
+							'created': record.created,
+							'happened': record.happened,
+							'tags': clean_tags,
+							'user': clean_user,
+						}
+						
+						clean_records.append(clean_record)
+				
+			else:
+				records_paginator = record_service.get_multiple(request, tags=tags, page=page, user=user, public=public, text=text, results_per_page=results_per_page)
+				
+				if records_paginator:
+					for record in records_paginator.object_list:
+						
+						# clean the tags
+						clean_tags = list()
+						for tag in record.tags:
+							clean_tag = {
+								'id': tag.id,
+								'name': tag.name,
+							}
+							clean_tags.append(clean_tag)
+						
+						clean_record = {
+							'id': record.id,
+							'user_id': record.user_id,
+							'text': record.text,
+							'personal': record.personal,
+							'created': record.created,
+							'happened': record.happened,
+							'tags': clean_tags,
+						}
+						
+						clean_records.append(clean_record)
 			
 			# determine message to return based on results remaining
 			if (records_paginator is None

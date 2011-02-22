@@ -22,7 +22,7 @@ def get_friends(request, user=None, include_self=False):
 	friends = False
 	friend_facebook_ids = list()
 	facebook_friends = False
-	debug = True
+	debug = False
 	debug_ids = (
 		597160467, # tiffany
 		589794771, # tim
