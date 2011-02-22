@@ -22,6 +22,12 @@ def get_friends(request, user=None, include_self=False):
 	friends = False
 	friend_facebook_ids = list()
 	facebook_friends = False
+	debug = True
+	debug_ids = (
+		597160467, # tiffany
+		589794771, # tim
+		604615254, # trudel
+	)
 	
 	# no user provided, just use identity
 	if not user:
@@ -43,6 +49,9 @@ def get_friends(request, user=None, include_self=False):
 		
 		# get user's friends
 		friends = apps.accounts.models.RegistrationProfile.objects.select_related('user').filter(facebook_id__in=friend_facebook_ids)
+	
+	if debug:
+		friends = apps.accounts.models.RegistrationProfile.objects.select_related('user').filter(facebook_id__in=debug_ids)
 	
 	return friends
 	

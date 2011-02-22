@@ -22,7 +22,7 @@
 	padding: 10px 0 10px 0;
 	text-shadow: 1px 1px 0 #fff;
 	margin-bottom: 1px;
-	opacity: 0.6;
+	opacity: 0.8;
 	-webkit-animation: 'message_box_out' 0.5s; /* Animation duration in seconds */
 }
 .message_box a:hover,
@@ -32,7 +32,7 @@
 }
 @-webkit-keyframes message_box {
 	0% {
-		opacity: 0.6;
+		opacity: 0.8;
 	}
 	100% {
 		opacity: 1;
@@ -43,7 +43,7 @@
 		opacity: 1;
 	}
 	100% {
-		opacity: 0.6;
+		opacity: 0.8;
 	}
 }
 .message_box a:active,
@@ -70,6 +70,11 @@
 }
 .message_box.very_happy a,
 .message_box.very_happy .content {
-	background-image: url(/site_media/media/img/icons/emoticon/48/7.png);
+	background-image: url(/site_media/media/img/icons/emoticon/48/9.png);
+	padding-left: 58px;
+}
+.message_box.disappointed a,
+.message_box.disappointed .content {
+	background-image: url(/site_media/media/img/icons/emoticon/48/9.png);
 	padding-left: 58px;
 }

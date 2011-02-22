@@ -1,0 +1,10 @@
+{% load i18n %}
+
+<div class="important_message">
+	<h3>{% trans "Requires Facebook Connect" %}</h3>
+	<h4>{% trans "In order to see your friend's shared records, you'll need to" %}</h4>
+</div>
+
+<div class="facebook_login use_facebook_login" style="width: 316px; margin: 25px auto;">
+	<fb:login-button perms="email" size="xlarge">{% trans "Login with Facebook" %}</fb:login-button>
+</div>

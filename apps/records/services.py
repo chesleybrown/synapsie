@@ -6,6 +6,8 @@ from django.http import HttpResponseNotAllowed, HttpResponseForbidden, HttpRespo
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
+from apps.accounts import services as AccountService
+
 from apps.records.models import Record
 from tagging.models import Tag, TaggedItem
 from tagging.utils import parse_tag_input
@@ -46,7 +48,7 @@ class RecordService():
 		
 		# init
 		identity = request.user
-		records_paginator = False
+		records_paginator = None
 		results_per_page = 25
 		
 		# no user provided, just use identity
@@ -80,3 +82,46 @@ class RecordService():
 		
 		return records_paginator
 		
+	# get friend's shared records
+	def get_friends_records(self, request, user=None, page=1):
+		
+		# init
+		identity = request.user
+		records_paginator = None
+		results_per_page = 25
+		friends = None
+		friend_user_ids = list()
+		
+		# no user provided, just use identity
+		if not user:
+			user = identity
+		
+		# get any friends the user has
+		friends = AccountService.get_friends(request, user=user, include_self=False)
+		
+		# if user has friends
+		if friends:
+			
+			# generate list of user_ids
+			for friend in friends:
+				friend_user_ids.append(friend.user.id)
+			
+			# get friend PUBLIC records
+			record_list = (
+				Record.objects.all()
+				.select_related('user')
+				.filter(user__in=friend_user_ids)
+				.filter(personal=0) # only get public
+				.order_by('-happened', '-id')
+			)
+			
+			# number of items per page
+			paginator = Paginator(record_list, results_per_page)
+			
+			# If page request is out of range, deliver last page of results.
+			try:
+				records_paginator = paginator.page(page)
+			except (EmptyPage, InvalidPage):
+				records_paginator = None
+		
+		return records_paginator

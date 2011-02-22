@@ -1,0 +1,47 @@
+{% load i18n %}
+{% load tag %}
+
+<li id="public_record_{{ record.id }}" class="record">
+	<div class="record_content">
+		<div class="date">
+			<span class="month">{{ record.happened|date:"M" }}</span>
+			<span class="day">{{ record.happened|date:"d" }}</span>
+			<span class="year">{{ record.happened|date:"Y" }}</span>
+		</div>
+		<div class="security">
+			<div class="personal">{{ record.personal }}</div>
+			{% if record.personal %}
+				<div class="icon icon_personal"></div>
+			{% else %}
+				<div class="icon icon_shared"></div>
+			{% endif %}
+		</div>
+		<div class="header">
+			<div class="datetime">{{ record.happened|date:"Y-m-d H:i:s" }}</div>
+			<div class="time">{{ record.happened|date:"g:iA" }}</div>
+			<div class="time_since use_time_since">{{ record.happened|timesince }} ago</div>
+			<div class="created_by"><span class="label">{% trans "Shared by" %} </span><span class="value">{{ record.user.first_name }} {{ record.user.last_name }}</div></span>
+			<div class="text">{{ record.text|linebreaksbr }}</div>
+		</div>
+		<div class="menu use_record_menu">
+			<ul class="menu_headers">
+				<li class="menu_header"></li>
+			</ul>
+			<ul class="menu_items">
+				<li class="menu_item">
+					<a href="{% url record_show record_id=record.id %}"><span class="icon icon_record_view"></span>{% trans "View" %}</a>
+				</li>
+			</ul>
+		</div>
+		<div class="footer">
+			{% if record.tags %}
+				<ul class="tags">
+					{% for tag in record.tags %}
+						{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' as tag_close_url %}
+						{% render_tag tag %}
+					{% endfor %}
+				</ul>
+			{% endif %}
+		</div>
+	</div>
+</li>

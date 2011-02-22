@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load tag %}
 {% load record %}
+{% load record_public %}
 
 {% block head_title %}{% trans "Records" %}{% endblock %}
 
@@ -262,35 +263,93 @@
 		</form>
 	</div>
 	
-	<ul id="user_record_list" class="records">
-		{% for record in records_paginator.object_list %}
-			{% render_record record %}
-		{% endfor %}
-	</ul>
-	
-	{% if not records_paginator.object_list %}
-		<div id="instruction-no_records" class="message_box very_happy">
-			<div class="border">
-				<div class="content">
-					<span class="title">Awesome. Now you can start recording your life!</span>
-					<span class="sub">It's so easy too. Just type in what you want to record above and then add your tags. You can also set the date if you want to record something that happened in the past. If you want, you can make any record <strong>Shared</strong> so that your friends can see them too. If it's <strong>Personal</strong>, you're the only person that will see it. Have fun!</span>
-				</div>
+	<div class="site_content_tabs use_tabs">
+		<ul class="tabs">
+			<li class="active"><a href="#mine">{% trans "Mine" %}</a></li>
+			<li class=""><a href="#friends">{% trans "Friends" %}</a></li>
+		</ul>
+		
+		<div class="tab_container">
+			<div id="mine" class="tab_content">
+				
+				<ul id="user_record_list" class="records">
+					{% for record in records_paginator.object_list %}
+						{% render_record record %}
+					{% endfor %}
+				</ul>
+				
+				{% if not records_paginator.object_list %}
+					<div id="instruction-no_records" class="message_box very_happy">
+						<div class="border">
+							<div class="content">
+								<span class="title">{% trans "Awesome. Now you can start recording your life!" %}</span>
+								<span class="sub">{% trans "It's so easy too. Just type in what you want to record above and then add your tags. You can also set the date if you want to record something that happened in the past. If you want, you can make any record <strong>Shared</strong> so that your friends can see them too. If it's <strong>Personal</strong>, you're the only person that will see it. Have fun!" %}</span>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+				
+				{% if records_paginator.object_list|length == records_per_page %}
+					<div class="records_more">
+						<div class="action">
+							<a href="{% url api-record page='2',emitter_format='.json' %}" class="input_button_wrapper use_record_more">
+								<span class="input_button_start"></span>
+								<span class="input_button_body">
+									<span class="icon icon_record_more">{% trans "More" %}</span>
+								</span>
+								<span class="input_button_end"></span>
+							</a>
+						</div>
+						<div class="loading_more"></div>
+					</div>
+				{% endif %}
+				
+			</div>
+			
+			<div id="friends" class="tab_content hidden">
+				
+				{% if no_facebook_connect %}
+					
+					{% include 'records/facebook_connect_required.html' %}
+					
+				{% else %}
+					
+					<ul id="user_record_list" class="records">
+						{% for record in friends_records_paginator.object_list %}
+							{% render_record_public record %}
+						{% endfor %}
+					</ul>
+					
+					{% if not friends_records_paginator.object_list %}
+						<div id="instruction-no_records" class="message_box disappointed">
+							<div class="border">
+								<div class="content">
+									<span class="title">{% trans "Nothing to see yet" %}</span>
+									<span class="sub">{% trans "Either you don't have any friends on Synapsie or they simply aren't sharing anything." %}</span>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+					
+					{% if friends_records_paginator.object_list|length == friends_records_per_page %}
+						<div class="records_more">
+							<div class="action">
+								<a href="{% url api-record page='2',emitter_format='.json' %}" class="input_button_wrapper use_record_more">
+									<span class="input_button_start"></span>
+									<span class="input_button_body">
+										<span class="icon icon_record_more">{% trans "More" %}</span>
+									</span>
+									<span class="input_button_end"></span>
+								</a>
+							</div>
+							<div class="loading_more"></div>
+						</div>
+					{% endif %}
+					
+				{% endif %}
+				
 			</div>
 		</div>
-	{% endif %}
-	
-	{% if records_paginator.object_list|length == records_per_page %}
-		<div class="records_more">
-			<div class="action">
-				<a href="{% url api-record page='2',emitter_format='.json' %}" class="input_button_wrapper use_record_more">
-					<span class="input_button_start"></span>
-					<span class="input_button_body">
-						<span class="icon icon_record_more">{% trans "More" %}</span>
-					</span>
-					<span class="input_button_end"></span>
-				</a>
-			</div>
-			<div class="loading_more"></div>
-		</div>
-	{% endif %}
+		
+	</div>
 {% endblock %}

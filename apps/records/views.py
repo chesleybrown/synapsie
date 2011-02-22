@@ -7,6 +7,7 @@ from apps.records.messages import RecordMessages
 from apps.records.models import Record
 from apps.records.forms import RecordForm, RecordSearchForm
 from apps.tags.utils import get_used_tags, get_popular_tags
+from apps.accounts import services as AccountService
 from apps.records.services import RecordService
 from apps.suggestions import services as SuggestionService
 from tagging.models import Tag, TaggedItem
@@ -28,7 +29,8 @@ def index_records(request, tags=False, page=1):
 	# init
 	identity = request.user
 	record_service = RecordService()
-	records_paginator = False
+	records_paginator = None
+	friends_records_paginator = None
 	record_edit_formset = RecordForm(prefix='record_edit')
 	record_create_formset = RecordForm(prefix='record_create')
 	selected_tags = False
@@ -37,6 +39,7 @@ def index_records(request, tags=False, page=1):
 	page = 1
 	paginator = False
 	next_suggestion = None
+	no_facebook_connect = True
 	
 	# get user's next suggestion (if there is one)
 	next_suggestion = SuggestionService.get_next_suggestion(request, identity)
@@ -63,6 +66,13 @@ def index_records(request, tags=False, page=1):
 		
 		autocomplete_tags.append({'name': tag.name})
 	
+	
+	# get friends records
+	friends_records_paginator = record_service.get_friends_records(request, page)
+	
+	if friends_records_paginator:
+		no_facebook_connect = False
+	
 	# render
 	return render_to_response('records/record_index.html', {
 		'next_suggestion': next_suggestion,
@@ -74,6 +84,9 @@ def index_records(request, tags=False, page=1):
 		'autocomplete_tags': autocomplete_tags,
 		'records_paginator': records_paginator,
 		'records_per_page': results_per_page,
+		'friends_records_per_page': results_per_page,
+		'no_facebook_connect': no_facebook_connect,
+		'friends_records_paginator': friends_records_paginator,
 	}, context_instance=RequestContext(request))
 
 def public_records(request, user_id=0, username=None, page=1):
