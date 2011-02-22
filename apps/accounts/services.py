@@ -49,6 +49,9 @@ def get_friends(request, user=None, include_self=False):
 		
 		# get user's friends
 		friends = apps.accounts.models.RegistrationProfile.objects.select_related('user').filter(facebook_id__in=friend_facebook_ids)
+		
+		if not include_self:
+			friends = friends.exclude(user=user)
 	
 	if debug:
 		friends = apps.accounts.models.RegistrationProfile.objects.select_related('user').filter(facebook_id__in=debug_ids)
