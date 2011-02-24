@@ -43,6 +43,7 @@ def register(request):
 			# save the new user to db
 			new_user = register_formset.save()
 			user_registration_profile = RegistrationProfile.objects.create_profile(new_user)
+			user_registration_profile.save()
 			
 			# generate email and send it to user
 			user_email = emails.get('registered', {
