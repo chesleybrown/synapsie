@@ -9,12 +9,7 @@
 		});
 		
 		FB.Event.subscribe('auth.login', function(response) {
-			
-			// only attempt to redirect user if they aren't already logged in
-			{% if not user.is_authenticated %}
-				window.location = "{% url record_index %}";
-			{% endif %}
-			
+			window.location = "{% url record_index %}";
 		});
 	};
 	(function() {
