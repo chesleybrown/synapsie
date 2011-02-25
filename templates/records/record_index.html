@@ -267,7 +267,13 @@
 		<ul class="tabs">
 			<li class="active"><a href="#mine">{% trans "Mine" %}</a></li>
 			<li class="">
-				<a href="#friends"><span>{% trans "Friends" %}</span><span class="notifications">3</span></a>
+				<a href="#friends" class="{% if not no_facebook_connect %}use_update_last_viewed_friends_shared{% endif %}">
+					<div class="hidden href">{% url api-account emitter_format='.json' %}</div>
+					<span class="text">{% trans "Friends" %}</span>
+					{% if friends_unviewed_count > 0 %}
+						<span class="notifications">{{ friends_unviewed_count }}</span>
+					{% endif %}
+				</a>
 			</li>
 		</ul>
 		
@@ -362,4 +368,5 @@
 		</div>
 		
 	</div>
+	
 {% endblock %}

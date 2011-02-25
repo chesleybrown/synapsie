@@ -40,6 +40,7 @@ def index_records(request, tags=False, page=1):
 	paginator = False
 	next_suggestion = None
 	no_facebook_connect = True
+	friends_unviewed_count = 0
 	
 	# get user's next suggestion (if there is one)
 	next_suggestion = SuggestionService.get_next_suggestion(request, identity)
@@ -70,6 +71,9 @@ def index_records(request, tags=False, page=1):
 	# get friends records
 	friends_records_paginator = record_service.get_friends_records(request, page=page, results_per_page=results_per_page)
 	
+	# get unviewed count
+	friends_unviewed_count = record_service.get_unviewed_friend_count(request)
+	
 	if friends_records_paginator:
 		no_facebook_connect = False
 	
@@ -87,6 +91,7 @@ def index_records(request, tags=False, page=1):
 		'friends_records_per_page': results_per_page,
 		'no_facebook_connect': no_facebook_connect,
 		'friends_records_paginator': friends_records_paginator,
+		'friends_unviewed_count': friends_unviewed_count,
 	}, context_instance=RequestContext(request))
 
 def public_records(request, user_id=0, username=None, page=1):

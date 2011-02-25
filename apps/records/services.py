@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 from apps.accounts import services as AccountService
+from apps.accounts.models import RegistrationProfile
 
 from apps.records.models import Record
 from tagging.models import Tag, TaggedItem
@@ -123,3 +124,51 @@ class RecordService():
 				records_paginator = None
 		
 		return records_paginator
+		
+	# get count of unviewed friend shared records
+	def get_unviewed_friend_count(self, request, user=None):
+		
+		# init
+		identity = request.user
+		user_registration_profile = None
+		friends = None
+		friend_user_ids = list()
+		count = 0
+		
+		# no user provided, just use identity
+		if not user:
+			user = identity
+		
+		# get user registration profile
+		try:
+			user_registration_profile = RegistrationProfile.objects.get(user=user)
+			
+		# weird...
+		except RegistrationProfile.DoesNotExist:
+			user_registration_profile = None
+		
+		# get any friends the user has
+		friends = AccountService.get_friends(request, user=user, include_self=False)
+		
+		# if user has friends
+		if friends:
+			
+			# generate list of user_ids
+			for friend in friends:
+				friend_user_ids.append(friend.user.id)
+			
+			# get friend PUBLIC records
+			record_list = (
+				Record.objects.all()
+				.select_related('user')
+				.filter(user__in=friend_user_ids)
+				.filter(personal=0) # only get public
+			)
+			
+			if user_registration_profile.last_viewed_friends_shared:
+				record_list = record_list.filter(created__gt=user_registration_profile.last_viewed_friends_shared)
+			
+			count = record_list.count()
+			
+		
+		return count

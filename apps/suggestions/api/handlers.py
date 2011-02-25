@@ -95,7 +95,7 @@ class SuggestionHandler(BaseHandler):
 		user = identity
 		messages = SuggestionMessages()
 		message = False
-		user_suggestion_edit_formset = UserSuggestionForm(prefix='user_suggestion_edit')
+		user_suggestion_edit_formset = UserSuggestionForm()
 		suggestion = None
 		next_suggestion = None
 		clean = None
@@ -109,7 +109,7 @@ class SuggestionHandler(BaseHandler):
 		# update given suggestion for user
 		if suggestion_id is not None:
 			
-			user_suggestion_edit_formset = UserSuggestionForm(request.PUT, prefix='user_suggestion_edit')
+			user_suggestion_edit_formset = UserSuggestionForm(request.PUT)
 			
 			# validate form
 			if user_suggestion_edit_formset.is_valid():

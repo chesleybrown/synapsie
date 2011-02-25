@@ -22,6 +22,7 @@ urlpatterns = patterns('',
 	}, name="500"),
 	
 	# API
+	(r'^api/accounts', include('apps.accounts.api.urls')),
 	(r'^api/records', include('apps.records.api.urls')),
 	(r'^api/tags', include('apps.tags.api.urls')),
 	(r'^api/stats', include('apps.stats.api.urls')),

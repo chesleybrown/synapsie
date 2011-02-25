@@ -90,3 +90,11 @@ class AccountMessages(GeneralMessages):
 		text=_("You have successfully deleted your account, %(account_username)s."),
 		sticky=False,
 	)
+	
+	updated_last_viewed = dict(
+		status=200,
+		kind="success",
+		title=_("Updated Last Viewed"),
+		text=_("You have successfully updated the last viewed friends shared."),
+		sticky=False,
+	)

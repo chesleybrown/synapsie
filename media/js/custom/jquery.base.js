@@ -1646,8 +1646,8 @@ $(document).ready(function() {
 			$.ajax({
 				type: 'put',
 				data: {
-					'user_suggestion_edit-completed': $(element).data('completed'),
-					'user_suggestion_edit-viewed': $(element).data('viewed')
+					'completed': $(element).data('completed'),
+					'viewed': $(element).data('viewed')
 				},
 				url: $(this).attr('href'),
 				beforeSend: function() {
@@ -1769,5 +1769,65 @@ $(document).ready(function() {
 	/*
 	 * END Suggestion Actions
 	 */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// hate doing stuff like this... this file is gross
+	// update last viewed when user clicks "Friends"
+	$('a.use_update_last_viewed_friends_shared').bind('click', function() {
+		
+		// init
+		var element = $(this);
+		var href = $(element).find('.href').text();
+		
+		$.ajax({
+			type: 'put',
+			data: {
+				'viewed_friends_shared': 1
+			},
+			url: href,
+			success: function(data) {
+				
+				//init
+				var message = data.message;
+				var result = data.data;
+				
+				//get successfully
+				if (message.status == 200) {
+					
+					// hide notifications count
+					$(element).find('span.notifications')
+						.delay(2000)
+						.animate({
+							opacity: 0
+						}, 3000, 'linear', function() {
+							$(this).animate({
+								width: 'toggle'
+							}, 'fast', 'linear');
+						});
+					
+				}
+				
+				//something went wrong
+				else {
+					$.gritterExtend.add(data.message);
+				}
+				
+			},
+			error: function() {
+			},
+			complete: function() {
+			}
+		});
+		
+	});
+	
 	
 });

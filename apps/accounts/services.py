@@ -22,7 +22,7 @@ def get_friends(request, user=None, include_self=False):
 	friends = False
 	friend_facebook_ids = list()
 	facebook_friends = False
-	debug = False
+	debug = True
 	debug_ids = (
 		597160467, # tiffany
 		589794771, # tim
@@ -94,3 +94,12 @@ def update_quality_of_life(user=None):
 	
 	return user_registration_profile.quality_of_life
 	
+def update_last_viewed_friends_shared(user=None):
+	
+	# init
+	user_registration_profile = apps.accounts.models.RegistrationProfile.objects.get(user=user)
+	
+	user_registration_profile.last_viewed_friends_shared = datetime.now()
+	user_registration_profile.save()
+	
+	return user_registration_profile
