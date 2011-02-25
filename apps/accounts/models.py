@@ -189,6 +189,7 @@ class RegistrationProfile(models.Model):
 	reset_key_created = models.DateTimeField(default=datetime.datetime.now())
 	facebook_id = models.IntegerField(null=True)
 	quality_of_life = models.FloatField(null=True, max_length=6)
+	last_viewed_friends_shared = models.DateTimeField(default=datetime.datetime.now())
 	
 	objects = RegistrationManager()
 	

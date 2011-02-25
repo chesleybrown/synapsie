@@ -109,6 +109,24 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that th
 	border-bottom: 1px solid #fff; /*--Makes the active tab look like it's connected with its content--*/
 }
 
+
+/* Tab Notifications */
+ul.tabs li .notifications {
+	display: block;
+	float: right;
+	border: 1px solid rgba(0, 0, 0, 0.9);
+	background: rgba(0, 0, 0, 0.6);
+	font-size: 12px;
+	line-height: 13px;
+	padding: 2px 6px 3px 6px;
+	margin: 6px -15px 0 5px;
+	color: #fff;
+	text-shadow: 1px 1px 0 #000;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
 .tab_container {
 	border: 1px solid #ccc;
 	border-top: none;
