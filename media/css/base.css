@@ -109,7 +109,6 @@ body > #site_container {
 	display: block;
 	width: 166px;
 	height: 94px;
-	background-image: url(/site_media/media/img/layout/header/logo.png);
 }
 #site_header #slogan {
 	float: left;
