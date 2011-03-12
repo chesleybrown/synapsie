@@ -337,7 +337,7 @@ $(document).ready(function() {
 		
 		// if it's public, need to add created_by
 		if (is_public) {
-			new_record.find('div.header div.created_by span.value').text(data['user']['first_name'] + data['user']['last_name']);
+			new_record.find('div.header div.created_by span.value').text(data['user']['first_name'] + ' ' + data['user']['last_name']);
 		}
 		
 		// update menu items
