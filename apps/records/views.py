@@ -6,8 +6,9 @@ import settings
 from apps.records.messages import RecordMessages
 from apps.records.models import Record
 from apps.records.forms import RecordForm, RecordSearchForm
-from apps.tags.utils import get_used_tags, get_popular_tags
+from apps.tags.utils import get_used_tags, get_popular_tags # needed?
 from apps.accounts import services as AccountService
+from apps.tags import services as TagService
 from apps.records.services import RecordService
 from apps.suggestions import services as SuggestionService
 from tagging.models import Tag, TaggedItem
@@ -53,19 +54,7 @@ def index_records(request, tags=False, page=1):
 	popular_tags = get_popular_tags(used_tags)
 	
 	# this block of code will handle merging used_tags and the default_tags
-	autocomplete_tags = settings.DEFAULT_TAGS
-	for tag in used_tags:
-		is_unique_tag = True
-		
-		for idx, autocomplete_tag in enumerate(autocomplete_tags):
-			if autocomplete_tag['name'].lower() == tag.name.lower():
-				is_unique_tag = False
-				break
-		
-		if not is_unique_tag:
-			autocomplete_tags.pop(idx)
-		
-		autocomplete_tags.append({'name': tag.name})
+	autocomplete_tags = TagService.get_autocomplete(request, identity)
 	
 	
 	# get friends records
