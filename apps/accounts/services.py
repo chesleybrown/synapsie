@@ -1,6 +1,7 @@
 from __future__ import division
 from datetime import datetime
 import time
+import settings
 
 from django.http import HttpResponseNotAllowed, HttpResponseForbidden, HttpResponse, HttpResponseBadRequest
 from django.contrib.auth.models import User
@@ -19,7 +20,7 @@ def get_friends(request, user=None, include_self=False):
 	
 	# init
 	identity = request.user
-	friends = False
+	friends = None
 	friend_facebook_ids = list()
 	facebook_friends = False
 	debug = False
@@ -55,6 +56,51 @@ def get_friends(request, user=None, include_self=False):
 	
 	if debug:
 		friends = apps.accounts.models.RegistrationProfile.objects.select_related('user').filter(facebook_id__in=debug_ids)
+	
+	return friends
+	
+def get_facebook_friends(request, user=None):
+	
+	# init
+	identity = request.user
+	friends = None
+	friend_facebook_ids = list()
+	facebook_friends = False
+	debug = True
+	debug_facebook_friends_data = (
+		{
+			'name': 'Tiffany White',
+			'id': '597160467',
+		},
+		{
+			'name': 'Tim Oram',
+			'id': '589794771',
+		},
+		{
+			'name': 'Christopher Trudel',
+			'id': '604615254',
+		},
+		{
+			'name': 'Someone Else',
+			'id': '10002',
+		},
+	)
+	
+	# no user provided, just use identity
+	if not user:
+		user = identity
+	
+	facebook_user = Facebook.get_user_from_cookie(request.COOKIES, '168453549861030', '25dd90990d7444d4c8b7a5467ac6bc43')
+	
+	if facebook_user:
+		facebook_graph = Facebook.GraphAPI(facebook_user['access_token'])
+		facebook_profile = facebook_graph.get_object('me')
+		facebook_friends = facebook_graph.get_connections('me', 'friends')
+		
+		friends = facebook_friends['data']
+		
+	elif debug:
+		friends = debug_facebook_friends_data
 	
 	return friends
 	

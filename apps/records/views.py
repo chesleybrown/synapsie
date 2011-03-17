@@ -53,8 +53,8 @@ def index_records(request, tags=False, page=1):
 	used_tags = get_used_tags(Record, identity)
 	popular_tags = get_popular_tags(used_tags)
 	
-	# this block of code will handle merging used_tags and the default_tags
-	autocomplete_tags = TagService.get_autocomplete(request, identity)
+	# get the autocomplete for tags
+	autocomplete_tags = TagService.get_autocomplete(request, user=identity)
 	
 	
 	# get friends records
@@ -191,20 +191,8 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	used_tags = get_used_tags(Record, identity)
 	popular_tags = get_popular_tags(used_tags)
 	
-	# this block of code will handle merging used_tags and the default_tags
-	autocomplete_tags = settings.DEFAULT_TAGS
-	for tag in used_tags:
-		is_unique_tag = True
-		
-		for idx, autocomplete_tag in enumerate(autocomplete_tags):
-			if autocomplete_tag['name'].lower() == tag.name.lower():
-				is_unique_tag = False
-				break
-		
-		if not is_unique_tag:
-			autocomplete_tags.pop(idx)
-		
-		autocomplete_tags.append({'name': tag.name})
+	# get the autocomplete for tags
+	autocomplete_tags = TagService.get_autocomplete(request, user=identity)
 	
 	# render
 	return render_to_response('records/record_search.html', {
