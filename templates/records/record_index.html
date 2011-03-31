@@ -53,9 +53,9 @@
 					<select id="id_record_create-tags" name="record_create-tags[]" multiple="multiple" class="tags hidden">
 						{% for tag in autocomplete_tags %}
 							{% if tag in selected_tags %}
-								<option selected="selected" value="{{ tag.name }}">{{ tag.name }}</option>
+								<option selected="selected" value="{{ tag.name }}" {% if tag.facebook_id %}data-facebook_id="{{ tag.facebook_id }}"{% endif %}>{{ tag.name }}</option>
 							{% else %}
-								<option value="{{ tag.name }}">{{ tag.name }}</option>
+								<option value="{{ tag.name }}" {% if tag.facebook_id %}data-facebook_id="{{ tag.facebook_id }}"{% endif %}>{{ tag.name }}</option>
 							{% endif %}
 						{% endfor %}
 					</select>
