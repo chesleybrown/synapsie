@@ -64,9 +64,46 @@ def get_autocomplete(request, user=None):
 				autocomplete_tags.pop(idx)
 			
 			autocomplete_tags.append({
-				'name': friend_lowered,
+				'name': 'facebook_id-' + friend['id'],
+				'facebook_name': friend_lowered,
 				'facebook_id': friend['id'],
 			})
 	
 	return autocomplete_tags
 	
+def set_facebook_names(request, tags, user=None):
+	
+	# init
+	identity = request.user
+	facebook_tags = list()
+	facebook_friends = list()
+	facebook_id_regex = re.compile(r'(?P<facebook_id>facebook_id-\d+)')
+	
+	# no user provided, just use identity
+	if not user:
+		user = identity
+	
+	# get the user's facebook friends
+	facebook_friends = AccountService.get_facebook_friends(request, user=user)
+	
+	for tag in tags:
+		
+		# check if provided tag is a facebook_id
+		match = facebook_id_regex.search(tag)
+		if match:
+			try:
+				facebook_tag = Tag.objects.get(name=tag)
+			except Tag.DoesNotExist:
+				
+				facebook_id = match.group('facebook_id')
+				facebook_name = ''
+				
+				for facebook_friend in facebook_friends:
+					if facebook_friend.id == facebook_id:
+						facebook_name = facebook_friend.name
+				
+				facebook_tag = Tag(name=tag, facebook_name=facebook_name, facebook_id=facebook_id)
+			
+			facebook_tags.append(facebook_tag)
+		
+	return facebook_tags

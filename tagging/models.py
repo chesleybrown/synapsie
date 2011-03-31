@@ -459,7 +459,8 @@ class Tag(models.Model):
     """
     name = models.CharField(_('name'), max_length=50, unique=True, db_index=True)
     value = models.IntegerField(_('value'), max_length=3, null=True)
-    facebook_id = models.IntegerField(null=True)
+    facebook_name = models.CharField(_('facebook_name'), max_length=255, db_index=True)
+    facebook_id = models.IntegerField(_('facebook_id'))
 
     objects = TagManager()
 
