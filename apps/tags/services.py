@@ -21,9 +21,12 @@ def get_autocomplete(request, user=None):
 	
 	# init
 	identity = request.user
-	autocomplete_tags = settings.DEFAULT_TAGS
+	autocomplete_tags = None
 	used_tags = get_used_tags(apps.records.models.Record, identity)
 	friends = None
+	
+	# set default tags that everyone gets
+	autocomplete_tags = settings.DEFAULT_TAGS
 	
 	# no user provided, just use identity
 	if not user:
@@ -34,23 +37,36 @@ def get_autocomplete(request, user=None):
 	# this block of code will handle merging used_tags and the default_tags
 	for tag in used_tags:
 		is_unique_tag = True
+		tag_lowered = tag.name.lower()
 		
 		for idx, autocomplete_tag in enumerate(autocomplete_tags):
-			if autocomplete_tag['name'].lower() == tag.name.lower():
+			if autocomplete_tag['name'].lower() == tag_lowered:
 				is_unique_tag = False
 				break
 		
 		if not is_unique_tag:
 			autocomplete_tags.pop(idx)
 		
-		autocomplete_tags.append({'name': tag.name})
+		autocomplete_tags.append({'name': tag_lowered})
 	
 	# handles adding facebook friends to autocomplete
-	for friend in friends:
-		autocomplete_tags.append({
-			'name': friend['name'],
-			'facebook_id': friend['id'],
-		})
+	if friends:
+		for friend in friends:
+			is_unique_tag = True
+			friend_lowered = friend['name'].lower()
+			
+			for idx, autocomplete_tag in enumerate(autocomplete_tags):
+				if autocomplete_tag['name'].lower() == friend_lowered:
+					is_unique_tag = False
+					break
+			
+			if not is_unique_tag:
+				autocomplete_tags.pop(idx)
+			
+			autocomplete_tags.append({
+				'name': friend_lowered,
+				'facebook_id': friend['id'],
+			})
 	
 	return autocomplete_tags
 	
