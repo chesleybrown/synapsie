@@ -98,6 +98,7 @@ def set_facebook_names(request, tags, user=None):
 				facebook_id = match.group('facebook_id')
 				facebook_name = ''
 				
+				# check if the provided facebook_id is one of their facebook friends
 				for facebook_friend in facebook_friends:
 					if facebook_friend.id == facebook_id:
 						facebook_name = facebook_friend.name
