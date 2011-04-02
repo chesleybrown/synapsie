@@ -85,7 +85,7 @@ class TagManager(models.Manager):
         model_table = qn(model._meta.db_table)
         model_pk = '%s.%s' % (model_table, qn(model._meta.pk.column))
         query = """
-        SELECT DISTINCT %(tag)s.id, %(tag)s.name%(count_sql)s
+        SELECT DISTINCT %(tag)s.id, %(tag)s.value, %(tag)s.facebook_name, %(tag)s.facebook_id, %(tag)s.name%(count_sql)s
         FROM
             %(tag)s
             INNER JOIN %(tagged_item)s
@@ -115,9 +115,9 @@ class TagManager(models.Manager):
         cursor.execute(query % (extra_joins, extra_criteria, min_count_sql), params)
         tags = []
         for row in cursor.fetchall():
-            t = self.model(*row[:2])
+            t = self.model(id=row[0], name=row[4], value=row[1], facebook_name=row[2], facebook_id=row[3])
             if counts:
-                t.count = row[2]
+                t.count = row[5]
             tags.append(t)
         return tags
 

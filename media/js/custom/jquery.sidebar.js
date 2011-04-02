@@ -1,5 +1,5 @@
 /*
- * jQuery Sidebar 0.7
+ * jQuery Sidebar 0.8
  * 
  * Makes it easy to handle adding/removing tags from the sidebar dynamically
  * 
@@ -13,7 +13,7 @@
 		// call functions if provided
 		switch (options) {
 			case 'add_tag':
-				return add_tag($(this), optionName);
+				return add_tag($(this), optionName, value);
 				break;
 			
 			case 'update_tag':
@@ -43,7 +43,7 @@
 		$(sidebar).data('sidebar_settings', settings);
 		
 		// build tag
-		function build_tag(sidebar, tag_name) {
+		function build_tag(sidebar, tag_name, key) {
 			
 			//init
 			var settings = sidebar.data('sidebar_settings');
@@ -53,7 +53,12 @@
 			$(tag).hide();
 			$(tag).find('a.tag_text').text(tag_name);
 			$(tag).find('a.tag_text').attr('href', function(index, attr) {
-				return attr + escape(tag_name);
+				if (key) {
+					return attr + escape(key);
+				}
+				else {
+					return attr + escape(tag_name);
+				}
 			});
 			$(tag).find('a.closebutton').remove();
 			
@@ -63,7 +68,7 @@
 		}
 		
 		// build popular tag
-		function build_popular_tag(sidebar, tag_name) {
+		function build_popular_tag(sidebar, tag_name, key) {
 			
 			//init
 			var settings = sidebar.data('sidebar_settings');
@@ -75,7 +80,7 @@
 			var tag_highest = 0;
 			
 			// build tag
-			tag = build_tag(sidebar, tag_name);
+			tag = build_tag(sidebar, tag_name, key);
 			$(tag).show();
 			
 			// determine width of this tag
@@ -315,7 +320,7 @@
 		}
 		
 		// add new tag (will not add it if it already exists)
-		function add_tag(sidebar, tag_name) {
+		function add_tag(sidebar, tag_name, key) {
 			
 			//init
 			var settings = sidebar.data('sidebar_settings');
@@ -325,10 +330,10 @@
 			var popular_tag = false;
 			
 			// build the tag
-			tag = build_tag(sidebar, tag_name);
+			tag = build_tag(sidebar, tag_name, key);
 			
 			// build the popular tag container
-			popular_tag = build_popular_tag(sidebar, tag_name);
+			popular_tag = build_popular_tag(sidebar, tag_name, key);
 			
 			// add tag
 			insert_tag(sidebar, tag);

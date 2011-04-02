@@ -367,7 +367,7 @@ $(document).ready(function() {
 			var li_tag = new_record_tags_tag.clone();
 			
 			//tag text
-			var tag_value = data['tags'][tag]['name'];
+			var tag_key = data['tags'][tag]['name'];
 			var tag_name = data['tags'][tag]['name'];
 			
 			if (data['tags'][tag]['facebook_id']) {
@@ -375,7 +375,7 @@ $(document).ready(function() {
 			}
 			
 			li_tag.find('a.tag_text')
-				.data('value', tag_value)
+				.data('key', tag_key)
 				.text(tag_name)
 				.attr('href', function(index, attr) {
 					return attr.replace(/(\/tags\/)/, '$1' + escape(data['tags'][tag]['name']));
@@ -394,7 +394,7 @@ $(document).ready(function() {
 		if (is_new) {
 			// update sidebar with new tags
 			$(new_record_tags).find('li').each(function() {
-				$('#site_sidebar').sidebar('add_tag', $(this).find('a.tag_text').text());
+				$('#site_sidebar').sidebar('add_tag', $(this).find('a.tag_text').text(), $(this).find('a.tag_text').data('key'));
 			});
 		}
 		
@@ -573,13 +573,13 @@ $(document).ready(function() {
 			$(record_inputs.personal).val($(record_contents.personal).text());
 			
 			// set current selected tags
-			var tag_values = [];
+			var tag_names = [];
 			$(record_contents.tags).find('li.tag').each(function() {
-				tag_values.push($(this).find('.tag_text').data('value'));
+				tag_names.push($(this).find('.tag_text').data('key'));
 			});
 			$(record_inputs.tags).find('option').each(function() {
-				for (tag_value in tag_values) {
-					if (tag_values[tag_value] == $(this).val()) {
+				for (tag_name in tag_names) {
+					if (tag_names[tag_name] == $(this).val()) {
 						$(this).attr('selected', true);
 					}
 				}
@@ -865,13 +865,13 @@ $(document).ready(function() {
 			});
 			
 			// set current selected tags
-			var tag_values = [];
+			var tag_names = [];
 			$(record_contents.tags).find('li.tag').each(function() {
-				tag_values.push($(this).find('.tag_text').data('value'));
+				tag_names.push($(this).find('.tag_text').data('key'));
 			});
 			$(record_inputs.tags).find('option').each(function() {
-				for (tag_value in tag_values) {
-					if (tag_values[tag_value] == $(this).val()) {
+				for (tag_name in tag_names) {
+					if (tag_names[tag_name] == $(this).val()) {
 						$(this).attr('selected', true);
 					}
 				}
