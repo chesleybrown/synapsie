@@ -690,8 +690,13 @@ $(document).ready(function() {
 							var li_tag = $(new_record_tags_tag).clone();
 							
 							//tag text
+							tag_name = record.tags[tag].name
+							if (record.tags[tag].facebook_id){
+								tag_name = record.tags[tag].facebook_name;
+							}
 							$(li_tag).find('a.tag_text')
-								.text(record.tags[tag].name)
+								.data('key', record.tags[tag].name)
+								.text(tag_name)
 								.attr('href', function(index, attr) {
 									return attr.replace(/(\/tags\/)/, '$1' + escape(record.tags[tag].name));
 								});
@@ -914,8 +919,13 @@ $(document).ready(function() {
 							var li_tag = $(new_record_tags_tag).clone();
 							
 							//tag text
+							tag_name = record.tags[tag].name
+							if (record.tags[tag].facebook_id){
+								tag_name = record.tags[tag].facebook_name;
+							}
 							$(li_tag).find('a.tag_text')
-								.text(record.tags[tag].name)
+								.data('key', record.tags[tag].name)
+								.text(tag_name)
 								.attr('href', function(index, attr) {
 									return attr.replace(/(\/tags\/)/, '$1' + escape(record.tags[tag].name));
 								});
