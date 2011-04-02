@@ -367,13 +367,15 @@ $(document).ready(function() {
 			var li_tag = new_record_tags_tag.clone();
 			
 			//tag text
-			var tag_name = data['tags'][tag]['name']
+			var tag_value = data['tags'][tag]['name'];
+			var tag_name = data['tags'][tag]['name'];
 			
 			if (data['tags'][tag]['facebook_id']) {
 				tag_name = data['tags'][tag]['facebook_name']
 			}
 			
 			li_tag.find('a.tag_text')
+				.data('value', tag_value)
 				.text(tag_name)
 				.attr('href', function(index, attr) {
 					return attr.replace(/(\/tags\/)/, '$1' + escape(data['tags'][tag]['name']));
@@ -571,17 +573,16 @@ $(document).ready(function() {
 			$(record_inputs.personal).val($(record_contents.personal).text());
 			
 			// set current selected tags
-			var tag_names = [];
+			var tag_values = [];
 			$(record_contents.tags).find('li.tag').each(function() {
-				tag_names.push($(this).find('.tag_text').text());
+				tag_values.push($(this).find('.tag_text').data('value'));
 			});
 			$(record_inputs.tags).find('option').each(function() {
-				for (tag_name in tag_names) {
-					if (tag_names[tag_name] == $(this).val()) {
+				for (tag_value in tag_values) {
+					if (tag_values[tag_value] == $(this).val()) {
 						$(this).attr('selected', true);
 					}
 				}
-				
 			});
 			
 			// enable autocompleter (this will auto-populate the selected tags now)
@@ -864,18 +865,16 @@ $(document).ready(function() {
 			});
 			
 			// set current selected tags
-			var tag_names = [];
+			var tag_values = [];
 			$(record_contents.tags).find('li.tag').each(function() {
-				tag_names.push($(this).find('.tag_text').text());
+				tag_values.push($(this).find('.tag_text').data('value'));
 			});
 			$(record_inputs.tags).find('option').each(function() {
-				
-				for (tag_name in tag_names) {
-					if (tag_names[tag_name] == $(this).val()) {
+				for (tag_value in tag_values) {
+					if (tag_values[tag_value] == $(this).val()) {
 						$(this).attr('selected', true);
 					}
 				}
-				
 			});
 			
 			// enable autocompleter (this will auto-populate the selected tags now)
