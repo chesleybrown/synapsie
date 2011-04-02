@@ -47,16 +47,20 @@ def get_autocomplete(request, user=None):
 		if not is_unique_tag:
 			autocomplete_tags.pop(idx)
 		
-		autocomplete_tags.append({'name': tag_lowered})
+		autocomplete_tags.append({
+			'name': tag_lowered,
+			'facebook_name': None,
+			'facebook_id': None,
+		})
 	
 	# handles adding facebook friends to autocomplete
 	if friends:
 		for friend in friends:
 			is_unique_tag = True
-			friend_lowered = friend['name'].lower()
+			friend_tag_name = 'facebook_id-' + friend['id']
 			
 			for idx, autocomplete_tag in enumerate(autocomplete_tags):
-				if autocomplete_tag['name'].lower() == friend_lowered:
+				if autocomplete_tag['name'].lower() == friend_tag_name:
 					is_unique_tag = False
 					break
 			
@@ -65,7 +69,7 @@ def get_autocomplete(request, user=None):
 			
 			autocomplete_tags.append({
 				'name': 'facebook_id-' + friend['id'],
-				'facebook_name': friend_lowered,
+				'facebook_name': friend['name'].lower(),
 				'facebook_id': friend['id'],
 			})
 	
