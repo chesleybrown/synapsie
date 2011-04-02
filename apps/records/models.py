@@ -65,6 +65,8 @@ class Record(models.Model):
 			clean_tags.append({
 				'id': tag.id,
 				'name': tag.name,
+				'facebook_name': tag.facebook_name,
+				'facebook_id': tag.facebook_id,
 			})
 		
 		return clean_tags

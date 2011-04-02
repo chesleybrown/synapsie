@@ -367,8 +367,14 @@ $(document).ready(function() {
 			var li_tag = new_record_tags_tag.clone();
 			
 			//tag text
+			var tag_name = data['tags'][tag]['name']
+			
+			if (data['tags'][tag]['facebook_id']) {
+				tag_name = data['tags'][tag]['facebook_name']
+			}
+			
 			li_tag.find('a.tag_text')
-				.text(data['tags'][tag]['name'])
+				.text(tag_name)
 				.attr('href', function(index, attr) {
 					return attr.replace(/(\/tags\/)/, '$1' + escape(data['tags'][tag]['name']));
 				});

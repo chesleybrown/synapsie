@@ -1,6 +1,6 @@
 from __future__ import division
 from datetime import datetime
-import time
+import time, re
 import settings
 
 from django.http import HttpResponseNotAllowed, HttpResponseForbidden, HttpResponse, HttpResponseBadRequest
@@ -77,7 +77,7 @@ def set_facebook_names(request, tags, user=None):
 	identity = request.user
 	facebook_tags = list()
 	facebook_friends = list()
-	facebook_id_regex = re.compile(r'(?P<facebook_id>facebook_id-\d+)')
+	facebook_id_regex = re.compile(r'(?P<facebook_group>(facebook_id-)(?P<facebook_id>\d+))')
 	
 	# no user provided, just use identity
 	if not user:
@@ -91,19 +91,26 @@ def set_facebook_names(request, tags, user=None):
 		# check if provided tag is a facebook_id
 		match = facebook_id_regex.search(tag)
 		if match:
+			
+			facebook_id = match.group('facebook_id')
+			facebook_name = ''
+			
+			# check if the provided facebook_id is one of their facebook friends
+			for facebook_friend in facebook_friends:
+				if facebook_friend['id'] == facebook_id:
+					facebook_name = facebook_friend['name'].lower()
+			
+			# update or create
 			try:
 				facebook_tag = Tag.objects.get(name=tag)
+				facebook_tag.facebook_id = facebook_id
+				facebook_tag.facebook_name = facebook_name
+				
 			except Tag.DoesNotExist:
-				
-				facebook_id = match.group('facebook_id')
-				facebook_name = ''
-				
-				# check if the provided facebook_id is one of their facebook friends
-				for facebook_friend in facebook_friends:
-					if facebook_friend.id == facebook_id:
-						facebook_name = facebook_friend.name
-				
 				facebook_tag = Tag(name=tag, facebook_name=facebook_name, facebook_id=facebook_id)
+			
+			# save
+			facebook_tag.save()
 			
 			facebook_tags.append(facebook_tag)
 		

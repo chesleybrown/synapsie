@@ -1,5 +1,11 @@
 <li class="tag">
-	<a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,text=text %}">{{ tag.name }}</a>
+	<a class="tag_text" href="{% url record_search tags=selected_tags_printable,add_tag=tag.name,text=text %}">
+		{% if tag.facebook_id %}
+			{{ tag.facebook_name }}
+		{% else %}
+			{{ tag.name }}
+		{% endif %}
+	</a>
 	{% if close_url %}
 		<a class="closebutton {{ closebutton_class }}" href="{{ close_url }}"></a>
 	{% endif %}

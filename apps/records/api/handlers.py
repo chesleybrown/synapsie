@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from piston.handler import AnonymousBaseHandler, BaseHandler
 from piston.utils import rc, validate
 
+from apps.tags import services as TagService
 from apps.records.messages import RecordMessages
 from apps.records.models import Record
 from apps.records.forms import RecordForm, RecordAddTagsForm
@@ -221,6 +222,9 @@ class RecordHandler(BaseHandler):
 				str_tags += ",".join(arr_tags)
 				Tag.objects.update_tags(record, str_tags)
 				
+				# flag facebook_ids as facebook tags
+				TagService.set_facebook_names(request, arr_tags)
+				
 				# update quality of record by calling save again
 				record.save()
 				
@@ -290,6 +294,9 @@ class RecordHandler(BaseHandler):
 				str_tags += ",".join(arr_tags)
 				Tag.objects.update_tags(record, str_tags)
 				
+				# flag facebook_ids as facebook tags
+				TagService.set_facebook_names(request, arr_tags)
+				
 				# save record (this will automatically update quality)
 				record.save()
 				
@@ -338,6 +345,9 @@ class RecordHandler(BaseHandler):
 				# add tags
 				str_tags += ",".join(arr_tags)
 				Tag.objects.update_tags(record, str_tags)
+				
+				# flag facebook_ids as facebook tags
+				TagService.set_facebook_names(request, arr_tags)
 				
 				# return only what we need to
 				clean_record = {
