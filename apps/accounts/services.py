@@ -66,7 +66,7 @@ def get_facebook_friends(request, user=None):
 	friends = None
 	friend_facebook_ids = list()
 	facebook_friends = False
-	debug = True
+	debug = False
 	debug_facebook_friends_data = (
 		{
 			'name': 'Tiffany White',
