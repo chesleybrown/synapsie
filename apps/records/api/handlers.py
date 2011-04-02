@@ -70,6 +70,8 @@ class RecordHandler(BaseHandler):
 				clean_tag = {
 					'id': tag.id,
 					'name': tag.name,
+					'facebook_id': tag.facebook_id,
+					'facebook_name': tag.facebook_name,
 				}
 				clean_tags.append(clean_tag)
 			
@@ -116,6 +118,8 @@ class RecordHandler(BaseHandler):
 							clean_tag = {
 								'id': tag.id,
 								'name': tag.name,
+								'facebook_id': tag.facebook_id,
+								'facebook_name': tag.facebook_name,
 							}
 							clean_tags.append(clean_tag)
 						
@@ -144,6 +148,8 @@ class RecordHandler(BaseHandler):
 							clean_tag = {
 								'id': tag.id,
 								'name': tag.name,
+								'facebook_id': tag.facebook_id,
+								'facebook_name': tag.facebook_name,
 							}
 							clean_tags.append(clean_tag)
 						
