@@ -104,11 +104,11 @@
 							<div class="field tag_field">
 								<input class="tags_temp" name="record_edit-tags" type="text" value="" />
 								<select id="id_record_edit-tags" name="record_edit-tags[]" multiple="multiple" class="tags hidden">
-									{% for tag in used_tags %}
-										{% if tag in selected_tags %}
-											<option selected="selected" value="{{ tag.name }}">{{ tag.name }}</option>
+									{% for tag in autocomplete_tags %}
+										{% if tag.facebook_id %}
+											<option {% if tag in selected_tags %}selected="selected"{% endif %} value="{{ tag.name }}">{{ tag.facebook_name }}</option>
 										{% else %}
-											<option value="{{ tag.name }}">{{ tag.name }}</option>
+											<option {% if tag in selected_tags %}selected="selected"{% endif %} value="{{ tag.name }}">{{ tag.name }}</option>
 										{% endif %}
 									{% endfor %}
 								</select>
@@ -326,11 +326,11 @@
 							<div class="field tag_field">
 								<input class="tags_temp" name="record_add_tags-tags" type="text" value="" />
 								<select id="id_record_add_tags-tags" name="record_add_tags-tags[]" multiple="multiple" class="tags hidden">
-									{% for tag in used_tags %}
-										{% if tag in selected_tags %}
-											<option selected="selected" value="{{ tag.name }}">{{ tag.name }}</option>
+									{% for tag in autocomplete_tags %}
+										{% if tag.facebook_id %}
+											<option {% if tag in selected_tags %}selected="selected"{% endif %} value="{{ tag.name }}">{{ tag.facebook_name }}</option>
 										{% else %}
-											<option value="{{ tag.name }}">{{ tag.name }}</option>
+											<option {% if tag in selected_tags %}selected="selected"{% endif %} value="{{ tag.name }}">{{ tag.name }}</option>
 										{% endif %}
 									{% endfor %}
 								</select>

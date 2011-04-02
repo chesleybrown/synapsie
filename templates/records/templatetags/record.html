@@ -12,10 +12,10 @@
 			<div class="personal">{{ record.personal }}</div>
 			{% if record.personal %}
 				<div class="icon icon_personal"></div>
-				<span class="security_text">Personal</span>
+				<span class="security_text">{% trans "Personal" %}</span>
 			{% else %}
 				<div class="icon icon_shared"></div>
-				<span class="security_text">Shared</span>
+				<span class="security_text">{% trans "Shared" %}</span>
 			{% endif %}
 		</div>
 		<div class="header">
@@ -43,7 +43,7 @@
 		<div class="add_tags">
 			<a href="{% url api-record-add_tags record_id=record.id,emitter_format='.json' %}" class="use_record_add_tags">
 				<span class="icon icon_record_add_tags"></span>
-				<span class="add_tags_text">Add Tags</span>
+				<span class="add_tags_text">{% trans "Add Tags" %}</span>
 			</a>
 		</div>
 		<div class="footer">
