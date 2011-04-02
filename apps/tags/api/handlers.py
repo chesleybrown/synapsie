@@ -100,6 +100,11 @@ class TagHandler(BaseHandler):
 			response['message'] = messages.get('not_found')
 			return response
 		
+		# not allowed to update a facebook_id's name
+		if tag.facebook_id:
+			response['message'] = messages.get('permission_denied')
+			return response
+		
 		# get updated tag (if it exists already)
 		try:
 			updated_tag = Tag.objects.get(name=request.PUT['name'].lower())

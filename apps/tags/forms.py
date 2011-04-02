@@ -20,4 +20,4 @@ class TagForm(forms.ModelForm):
 	
 	class Meta:
 		model = Tag
-		exclude = ('value')
+		exclude = ('value', 'facebook_name', 'facebook_id')
