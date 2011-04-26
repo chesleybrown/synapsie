@@ -3,9 +3,11 @@ import sys, pprint
 import apps.session_messages as SessionMessages
 import logging
 
+from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.conf import settings
 from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.contrib import auth
 from django.contrib.auth.models import User
@@ -325,3 +327,30 @@ def profile(request, user_id=0, username=False):
 		'popular_tags': popular_tags,
 		'has_real_userame': has_real_userame,
 	}, context_instance=RequestContext(request))
+
+@login_required
+def refresh_quality_of_life(request):
+	
+	# init
+	messages = AccountMessages()
+	identity = request.user
+	
+	# not allowed
+	if not identity.is_superuser:
+		
+		# message
+		SessionMessages.create_message(request, messages.get('permission_denied'))
+		
+	# allowed
+	else:
+		
+		# all user records
+		records = Record.objects.all()
+		
+		for record in records:
+			record.save()
+		
+		# message
+		SessionMessages.create_message(request, messages.get('quality_of_life_refreshed'))
+	
+	return HttpResponseRedirect(reverse('accounts_profile'))

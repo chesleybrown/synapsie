@@ -98,3 +98,11 @@ class AccountMessages(GeneralMessages):
 		text=_("You have successfully updated the last viewed friends shared."),
 		sticky=False,
 	)
+	
+	quality_of_life_refreshed = dict(
+		status=200,
+		kind="success",
+		title=_("Quality of Life Refreshed"),
+		text=_("Everyone's quality of life has been successfully refreshed."),
+		sticky=False,
+	)
