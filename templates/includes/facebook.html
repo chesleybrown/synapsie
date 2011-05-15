@@ -8,11 +8,9 @@
 			xfbml: true
 		});
 		
-		{% if not user.is_authenticated %}
-			FB.Event.subscribe('auth.login', function(response) {
-				window.location = "{% url record_index %}";
-			});
-		{% endif %}
+		FB.Event.subscribe('auth.login', function(response) {
+			window.location = "{% url record_index %}";
+		});
 	};
 	(function() {
 		var e = document.createElement('script');
