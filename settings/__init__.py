@@ -190,7 +190,7 @@ COMPRESS_CSS = {
 COMPRESS_JS = {
 	'site': {
 		'source_filenames': (
-			'media/js/lib/min/jquery-1.5.1.min.js',
+			'media/js/lib/min/jquery-1.6.1.min.js',
 			'media/js/lib/date.js',
 			'media/js/plugins/jquery.fcbkcomplete.js',
 			'media/js/custom/jquery.base.js',
