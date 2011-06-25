@@ -56,7 +56,31 @@ class RecordService():
 			user = identity
 		
 		# get user records
-		record_list = Record.objects.all().filter(user=user).order_by('-happened', '-id')
+		record_list = Record.objects.select_related('taggeditem, taggeditem__tag').filter(user=user).order_by('-happened', '-id')
+		
+		# see these
+		# http://blog.roseman.org.uk/2010/02/15/django-patterns-part-3-efficient-generic-relations/
+		# http://blog.roseman.org.uk/2010/02/22/django-patterns-part-4-forwards-generic-relations/
+		
+		queryset = record_list
+		
+		generics = {}
+		for item in queryset:
+			generics.setdefault(item.content_type_id, set()).add(item.object_id)
+		
+		content_types = ContentType.objects.in_bulk(generics.keys())
+		
+		relations = {}
+		for ct, fk_list in generics.items():
+			ct_model = content_types[ct].model_class()
+			relations[ct] = ct_model.objects.in_bulk(list(fk_list))
+		
+		for item in queryset:
+			setattr(item, '_content_object_cache', relations[content_type_id][object_id])
+		
+		record_list = queryset
+		
+		
 		
 		# only show public if enabled (added user & identity check for safety)
 		if public or user != identity:

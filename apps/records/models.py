@@ -2,8 +2,9 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.contenttypes import generic
 from tagging.fields import TagField
-from tagging.models import Tag
+from tagging.models import Tag, TaggedItem
 from apps.accounts import services as AccountService
 
 class Record(models.Model):
@@ -14,6 +15,7 @@ class Record(models.Model):
 	happened = models.DateTimeField()
 	personal = models.SmallIntegerField(default=1)
 	quality = models.FloatField(null=True, max_length=6)
+	tags = generic.GenericRelation(TaggedItem, content_type_field='content_type', object_id_field='object_id')
 	
 	def __unicode__(self):
 		return 'Record: %s' % self.text
@@ -28,8 +30,16 @@ class Record(models.Model):
 	# tags property
 	def get_tags(self):
 		return Tag.objects.get_for_object(self)
+		
+	def get_tags_iterable(self):
+		tags = self.tags.all()
+		tag_list = list()
+		for tag in tags:
+			tag_list.append(tag.tag)
+		
+		return self.tags.all()
 	
-	tags = property(get_tags)
+	tags_iterable = property(get_tags_iterable)
 	
 	# record_quality property (calculates qualty of record)
 	def get_quality(self):
@@ -74,7 +84,7 @@ class Record(models.Model):
 	clean_tags = property(get_clean_tags)
 	
 	def get_tags_printable(self):
-		record_tags = self.get_tags()
+		record_tags = self.tags.all()
 		tags_printable = ", ".join(map(str, record_tags))
 		return tags_printable
 	

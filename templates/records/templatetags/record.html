@@ -49,7 +49,7 @@
 		<div class="footer">
 			{% if record.tags %}
 				<ul class="tags">
-					{% for tag in record.tags %}
+					{% for tag in record.tags_iterable %}
 						{% url api-tag tag_name=tag.name,record_id=record.id,emitter_format='.json' as tag_close_url %}
 						{% render_tag tag tag_close_url "use_tag_delete" %}
 					{% endfor %}
