@@ -62,26 +62,6 @@ class RecordService():
 		# http://blog.roseman.org.uk/2010/02/15/django-patterns-part-3-efficient-generic-relations/
 		# http://blog.roseman.org.uk/2010/02/22/django-patterns-part-4-forwards-generic-relations/
 		
-		queryset = record_list
-		
-		generics = {}
-		for item in queryset:
-			generics.setdefault(item.content_type_id, set()).add(item.object_id)
-		
-		content_types = ContentType.objects.in_bulk(generics.keys())
-		
-		relations = {}
-		for ct, fk_list in generics.items():
-			ct_model = content_types[ct].model_class()
-			relations[ct] = ct_model.objects.in_bulk(list(fk_list))
-		
-		for item in queryset:
-			setattr(item, '_content_object_cache', relations[content_type_id][object_id])
-		
-		record_list = queryset
-		
-		
-		
 		# only show public if enabled (added user & identity check for safety)
 		if public or user != identity:
 			record_list = record_list.filter(personal=0)
@@ -101,6 +81,38 @@ class RecordService():
 		# If page request is out of range, deliver last page of results.
 		try:
 			records_paginator = paginator.page(page)
+			
+			
+			
+			
+			
+			
+			record_ids = list()
+			for record in records_paginator.object_list:
+				record_ids.append(record.id)
+			
+			# get all the current record tags in one query
+			tagged_items = TaggedItem.objects.filter(object_id__in=record_ids)
+			
+			record_map = {}
+			for tagged_item in tagged_items:
+				record_map[tagged_item.object_id] = list()
+			
+			for tagged_item in tagged_items:
+				record_map[tagged_item.object_id].append(tagged_item.tag)
+			
+			for record_map_item in record_map:
+				#records_paginator.object_list[record_map_item] = record_map[record_map_item]
+				for record in records_paginator.object_list:
+					if record.id == record_map_item:
+						record.tags = record_map[record_map_item]
+			
+			for record in records_paginator.object_list:
+				print record.tags
+			
+			
+			
+			
 		except (EmptyPage, InvalidPage):
 			records_paginator = None
 		
