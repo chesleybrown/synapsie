@@ -58,9 +58,6 @@ class RecordService():
 		# get user records
 		record_list = Record.objects.select_related('taggeditem, taggeditem__tag').filter(user=user).order_by('-happened', '-id')
 		
-		# see these
-		# http://blog.roseman.org.uk/2010/02/15/django-patterns-part-3-efficient-generic-relations/
-		# http://blog.roseman.org.uk/2010/02/22/django-patterns-part-4-forwards-generic-relations/
 		
 		# only show public if enabled (added user & identity check for safety)
 		if public or user != identity:
@@ -83,16 +80,14 @@ class RecordService():
 			records_paginator = paginator.page(page)
 			
 			
-			
-			
-			
-			
+			# all this will populate each record's tags for rendering in a
+			# single query
 			record_ids = list()
 			for record in records_paginator.object_list:
 				record_ids.append(record.id)
 			
 			# get all the current record tags in one query
-			tagged_items = TaggedItem.objects.filter(object_id__in=record_ids)
+			tagged_items = TaggedItem.objects.select_related('tag').filter(object_id__in=record_ids)
 			
 			record_map = {}
 			for tagged_item in tagged_items:
@@ -106,11 +101,6 @@ class RecordService():
 				for record in records_paginator.object_list:
 					if record.id == record_map_item:
 						record.tags = record_map[record_map_item]
-			
-			for record in records_paginator.object_list:
-				print record.tags
-			
-			
 			
 			
 		except (EmptyPage, InvalidPage):

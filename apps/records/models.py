@@ -15,7 +15,8 @@ class Record(models.Model):
 	happened = models.DateTimeField()
 	personal = models.SmallIntegerField(default=1)
 	quality = models.FloatField(null=True, max_length=6)
-	tags = generic.GenericRelation(TaggedItem, content_type_field='content_type', object_id_field='object_id')
+	#tags = generic.GenericRelation(TaggedItem, content_type_field='content_type', object_id_field='object_id')
+	tags = list()
 	
 	def __unicode__(self):
 		return 'Record: %s' % self.text
@@ -26,20 +27,6 @@ class Record(models.Model):
 		tagged_items = Tag.objects.update_tags(self, None)
 		
 		super(Record, self).delete()
-	
-	# tags property
-	def get_tags(self):
-		return Tag.objects.get_for_object(self)
-		
-	def get_tags_iterable(self):
-		tags = self.tags.all()
-		tag_list = list()
-		for tag in tags:
-			tag_list.append(tag.tag)
-		
-		return self.tags.all()
-	
-	tags_iterable = property(get_tags_iterable)
 	
 	# record_quality property (calculates qualty of record)
 	def get_quality(self):
@@ -84,8 +71,7 @@ class Record(models.Model):
 	clean_tags = property(get_clean_tags)
 	
 	def get_tags_printable(self):
-		record_tags = self.tags.all()
-		tags_printable = ", ".join(map(str, record_tags))
+		tags_printable = ", ".join(map(str, self.tags))
 		return tags_printable
 	
 	# test to see if given user owns this record
