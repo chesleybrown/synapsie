@@ -128,6 +128,7 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	
 	# init
 	identity = request.user
+	record_service = RecordService()
 	record_list = False
 	records = False
 	record_edit_formset = RecordForm(prefix='record_edit')
@@ -154,38 +155,15 @@ def search_records(request, tags=False, text='', add_tag=False, page=1):
 	record_search_formset = RecordSearchForm(request.GET)
 	
 	# get user records
-	record_list = Record.objects.all().filter(user=identity).order_by('-happened', '-id')
+	record_list = Record.objects.all().filter(user=identity).order_by('-happened', '-id')[:1]
 	
 	# user has created at least 1 record
 	if record_list.count() > 0:
 		has_records = True
 	
-	# query provided
-	if text:
-		record_list = record_list.filter(text__icontains=text)
+	# get user records
+	records_paginator = record_service.get_multiple(request, tags=tags, page=page, user=identity, text=text)
 	
-	# filter by tags if provided
-	if tags:
-		
-		if type(tags) is UnicodeType or type(tags) is StringType:
-			tags = ',' + tags # makes it comma separated tags
-		
-		selected_tags_raw = get_tag_list(tags)
-		selected_tags_printable = ",".join(map(str, selected_tags_raw))
-		record_list = TaggedItem.objects.get_by_model(record_list, selected_tags_raw)
-		
-		selected_tags = list()
-		for selected_tag in selected_tags_raw:
-			selected_tags.append(selected_tag.name)
-	
-	# number of items per page
-	paginator = Paginator(record_list, results_per_page)
-	
-	# If page request is out of range, deliver last page of results.
-	try:
-		records_paginator = paginator.page(page)
-	except (EmptyPage, InvalidPage):
-		records_paginator = paginator.page(paginator.num_pages)
 	
 	# get used/popular tags for current user
 	used_tags = get_used_tags(Record, identity)

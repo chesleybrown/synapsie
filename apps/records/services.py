@@ -5,6 +5,7 @@ import time
 from django.http import HttpResponseNotAllowed, HttpResponseForbidden, HttpResponse, HttpResponseBadRequest
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.contrib.contenttypes.models import ContentType
 
 from apps.accounts import services as AccountService
 from apps.accounts.models import RegistrationProfile
@@ -56,7 +57,7 @@ class RecordService():
 			user = identity
 		
 		# get user records
-		record_list = Record.objects.select_related('taggeditem, taggeditem__tag').filter(user=user).order_by('-happened', '-id')
+		record_list = Record.objects.filter(user=user).order_by('-happened', '-id')
 		
 		
 		# only show public if enabled (added user & identity check for safety)
@@ -75,33 +76,10 @@ class RecordService():
 		# number of items per page
 		paginator = Paginator(record_list, results_per_page)
 		
-		# If page request is out of range, deliver last page of results.
+		# If page request is in range
 		try:
 			records_paginator = paginator.page(page)
-			
-			
-			# all this will populate each record's tags for rendering in a
-			# single query
-			record_ids = list()
-			for record in records_paginator.object_list:
-				record_ids.append(record.id)
-			
-			# get all the current record tags in one query
-			tagged_items = TaggedItem.objects.select_related('tag').filter(object_id__in=record_ids)
-			
-			record_map = {}
-			for tagged_item in tagged_items:
-				record_map[tagged_item.object_id] = list()
-			
-			for tagged_item in tagged_items:
-				record_map[tagged_item.object_id].append(tagged_item.tag)
-			
-			for record_map_item in record_map:
-				#records_paginator.object_list[record_map_item] = record_map[record_map_item]
-				for record in records_paginator.object_list:
-					if record.id == record_map_item:
-						record.tags = record_map[record_map_item]
-			
+			records_paginator = self.populate_record_tags(request, records_paginator)
 			
 		except (EmptyPage, InvalidPage):
 			records_paginator = None
@@ -146,11 +124,42 @@ class RecordService():
 			# If page request is out of range, deliver last page of results.
 			try:
 				records_paginator = paginator.page(page)
+				records_paginator = self.populate_record_tags(request, records_paginator)
+				
 			except (EmptyPage, InvalidPage):
 				records_paginator = None
 		
 		return records_paginator
 		
+	def populate_record_tags(self, request, records_paginator):
+		
+		# all this will populate each record's tags for rendering in a
+		# single query
+		record_ids = list()
+		for record in records_paginator.object_list:
+			record_ids.append(record.id)
+		
+		# get all the current record tags in one query
+		record_content_type = ContentType.objects.get_for_model(Record)
+		tagged_items = TaggedItem.objects.select_related('tag').filter(object_id__in=record_ids, content_type=record_content_type)
+		
+		record_map = {}
+		for tagged_item in tagged_items:
+			record_map[tagged_item.object_id] = list()
+		
+		for tagged_item in tagged_items:
+			record_map[tagged_item.object_id].append(tagged_item.tag)
+		
+		for record_map_item in record_map:
+			#records_paginator.object_list[record_map_item] = record_map[record_map_item]
+			for record in records_paginator.object_list:
+				if record.id == record_map_item:
+					record.tags = record_map[record_map_item]
+		# end
+		
+		return records_paginator
+	
+	
 	# get count of unviewed friend shared records
 	def get_unviewed_friend_count(self, request, user=None):
 		

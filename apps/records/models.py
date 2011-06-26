@@ -2,7 +2,7 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.contenttypes import generic
+#from django.contrib.contenttypes import generic
 from tagging.fields import TagField
 from tagging.models import Tag, TaggedItem
 from apps.accounts import services as AccountService
@@ -16,7 +16,7 @@ class Record(models.Model):
 	personal = models.SmallIntegerField(default=1)
 	quality = models.FloatField(null=True, max_length=6)
 	#tags = generic.GenericRelation(TaggedItem, content_type_field='content_type', object_id_field='object_id')
-	tags = list()
+	_tags = None
 	
 	def __unicode__(self):
 		return 'Record: %s' % self.text
@@ -27,6 +27,18 @@ class Record(models.Model):
 		tagged_items = Tag.objects.update_tags(self, None)
 		
 		super(Record, self).delete()
+	
+	# tags property
+	def get_tags(self):
+		if self._tags is None:
+			return Tag.objects.get_for_object(self)
+		else:
+			return self._tags
+	
+	def set_tags(self, tags):
+		self._tags = tags
+	
+	tags = property(get_tags, set_tags)
 	
 	# record_quality property (calculates qualty of record)
 	def get_quality(self):
@@ -56,7 +68,7 @@ class Record(models.Model):
 	# clean tags property
 	def get_clean_tags(self):
 		clean_tags = []
-		tags = Tag.objects.get_for_object(self)
+		tags = self.tags
 		
 		for tag in tags:
 			clean_tags.append({
