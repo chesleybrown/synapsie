@@ -8,8 +8,10 @@ media/js/min/*
 # Logs
 logs/**/*
 
-# Komodo Project File
+# Editor Project File
 *.komodoproject
+*.sublime-project
+*.sublime-workspace
 
 # Mac systemfile
 *.DS_Store
