@@ -1,7 +1,7 @@
 import os
 import sys
 
-path = '/srv/synapsie'
+path = '/vagrant'
 if path not in sys.path:
 	sys.path.append(path)
 
