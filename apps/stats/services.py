@@ -1,5 +1,5 @@
 from __future__ import division
-from odict import odict
+from django.utils.datastructures import SortedDict
 import datetime
 import time
 
@@ -18,7 +18,7 @@ def get_weekly(request, user=None, weeks=4, all_time=False):
 	identity = request.user
 	today = datetime.date.today()
 	weeks_ago = today - datetime.timedelta(weeks=weeks)
-	weekly_results = odict([
+	weekly_results = SortedDict([
 		('Sun', list()),
 		('Mon', list()),
 		('Tue', list()),
@@ -96,7 +96,7 @@ def get_monthly(request, user=None, all_time=False):
 	
 	# init
 	identity = request.user
-	monthly_results = odict([
+	monthly_results = SortedDict([
 		('Jan', list()),
 		('Feb', list()),
 		('Mar', list()),
@@ -188,7 +188,7 @@ def get_yearly(request, user=None):
 	
 	# init
 	identity = request.user
-	yearly_results = odict()
+	yearly_results = SortedDict()
 	final_yearly_results = list()
 	
 	# no user provided, just use identity
@@ -234,7 +234,7 @@ def get_yearly(request, user=None):
 def get_record_counts(request, user=None):
 	
 	# init
-	record_stats = odict([
+	record_stats = SortedDict([
 		('Total', 0),
 		('Personal', 0),
 		('Shared', 0),
@@ -257,12 +257,12 @@ def get_record_counts(request, user=None):
 def get_tag_counts(request, user=None):
 	
 	# init
-	tag_stats = odict([
+	tag_stats = SortedDict([
 		('Total', 0),
 		('Unique', 0),
 		#('Average per Record', 0),
 	])
-	record_stats = odict([
+	record_stats = SortedDict([
 		('Total', 0),
 	])
 	
