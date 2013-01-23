@@ -90,3 +90,10 @@ mysql::db { 'database':
 	grant    => ['all'],
 	ensure   => present,
 }
+
+exec { "django_database_setup":
+	cwd     => "/vagrant",
+	command => "python manage.py syncdb",
+	path    => "/usr/bin",
+	require => [Package["python"], Package["python-mysqldb"], Package["mysql-server"]],
+}
