@@ -7,6 +7,7 @@ media/js/min/*
 
 # Logs
 logs/**/*
+logs/error.log
 
 # Editor Project File
 *.komodoproject
@@ -15,3 +16,6 @@ logs/**/*
 
 # Mac systemfile
 *.DS_Store
+
+# VM files
+.vagrant

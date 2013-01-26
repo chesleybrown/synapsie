@@ -24,8 +24,10 @@ package {
 		ensure => "1.3.1-4ubuntu1.4",
 		require => [Exec["apt-update"], Package["python-mysqldb"]];
 	"libmysqlclient-dev":
+	notify => Service["mysqld"],
 		ensure => "latest";
 	"python-mysqldb":
+		notify => Service["mysqld"],
 		ensure => "latest",
 		require => [Package["mysql-server"], Package["libmysqlclient-dev"], Exec["apt-update"]];
 	"python-django-debug-toolbar":
@@ -43,22 +45,66 @@ package {
 	"vim":
 		ensure => "latest";
 }
+
+file { "/etc/apache2/ssl":
+	ensure => "directory",
+	require => Package["apache2-mpm-worker"],
+}
+file { "/etc/apache2/ssl/synapsie":
+	ensure => "directory",
+	require => File["/etc/apache2/ssl"],
+}
  
 file {
 	"/etc/apache2/sites-available/synapsie.com":
+		notify => Service["apache2"],
 		content => template("/vagrant/puppet/manifests/vhost.erb"),
 		ensure => file,
 		require => Package["apache2-mpm-worker"];
 	"/etc/apache2/sites-enabled/001-synapsie.com":
+		notify => Service["apache2"],
 		ensure => "/etc/apache2/sites-available/synapsie.com",
 		require => Package["apache2-mpm-worker"];
 	"/etc/apache2/sites-enabled/000-default":
+		notify => Service["apache2"],
 		ensure => absent,
 		require => Package["apache2-mpm-worker"];
 	"/etc/apache2/mods-enabled/expires.load":
+		notify => Service["apache2"],
 		ensure => link,
 		require => Package["apache2-mpm-worker"],
 		target => '/etc/apache2/mods-available/expires.load';
+	"/etc/apache2/mods-enabled/ssl.load":
+		notify => Service["apache2"],
+		ensure => link,
+		require => Package["apache2-mpm-worker"],
+		target => '/etc/apache2/mods-available/ssl.load';
+	"/etc/apache2/ssl/synapsie/synapsie.com.crt":
+		notify => Service["apache2"],
+		content => template("/vagrant/puppet/manifests/synapsie.com.crt"),
+		ensure => file,
+		require => File["/etc/apache2/ssl/synapsie"],
+		owner => "vagrant",
+		group => "vagrant",
+		mode => 644;
+	"/etc/apache2/ssl/synapsie/synapsie.com.key":
+		notify => Service["apache2"],
+		content => template("/vagrant/puppet/manifests/synapsie.com.key"),
+		ensure => file,
+		require => File["/etc/apache2/ssl/synapsie"],
+		owner => "root",
+		group => "root",
+		mode => 600;
+	"/etc/apache2/ssl/synapsie/gd_bundle.crt":
+		notify => Service["apache2"],
+		content => template("/vagrant/puppet/manifests/gd_bundle.crt"),
+		ensure => file,
+		require => File["/etc/apache2/ssl/synapsie"],
+		owner => "vagrant",
+		group => "vagrant",
+		mode => 644;
+	"/vagrant/logs/error.log":
+		ensure => file;
 }
 
 service { "apache2":
@@ -93,7 +139,7 @@ mysql::db { 'database':
 
 exec { "django_database_setup":
 	cwd     => "/vagrant",
-	command => "python manage.py syncdb",
+	command => "python manage.py syncdb --noinput",
 	path    => "/usr/bin",
-	require => [Package["python"], Package["python-mysqldb"], Package["mysql-server"]],
+	require => [Database["dj_synapsie"], Database_user["dj_synapsie@localhost"], Service["mysqld"], Package["python"], Package["python-mysqldb"], Package["mysql-server"]],
 }
