@@ -1,3 +1,5 @@
+SSLPassPhraseDialog exec:/vagrant/puppet/manifests/apache/ssl/ppdialog.sh
+
 <VirtualHost *:80>
 	ServerAdmin root@synapsie.com
 	ServerName synapsie.com
@@ -8,7 +10,7 @@
 	
 	WSGIDaemonProcess synapsie.com user=vagrant group=vagrant processes=1 threads=15 maximum-requests=10000 python-path=/usr/lib/python2.7/dist-packages/django
 	WSGIProcessGroup synapsie.com
-	WSGIScriptAlias / /vagrant/apache/django.wsgi
+	WSGIScriptAlias / /vagrant/apache/site.wsgi
 	
 	Alias /site_media/media /vagrant/media/
 	Alias /media /usr/lib/python2.7/dist-packages/django/contrib/admin/media/
@@ -55,7 +57,7 @@
 	
 	WSGIDaemonProcess secure.synapsie.com user=vagrant group=vagrant processes=1 threads=15 maximum-requests=10000 python-path=/usr/lib/python2.7/dist-packages/django
 	WSGIProcessGroup secure.synapsie.com
-	WSGIScriptAlias / /vagrant/apache/django.wsgi
+	WSGIScriptAlias / /vagrant/apache/site.wsgi
 	
 	Alias /site_media/media /vagrant/media/
 	Alias /media /usr/lib/python2.7/dist-packages/django/contrib/admin/media/

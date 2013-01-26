@@ -58,7 +58,7 @@ file { "/etc/apache2/ssl/synapsie":
 file {
 	"/etc/apache2/sites-available/synapsie.com":
 		notify => Service["apache2"],
-		content => template("/vagrant/puppet/manifests/vhost.erb"),
+		content => template("/vagrant/puppet/manifests/apache/vhost.erb"),
 		ensure => file,
 		require => Package["apache2-mpm-worker"];
 	"/etc/apache2/sites-enabled/001-synapsie.com":
@@ -81,7 +81,7 @@ file {
 		target => '/etc/apache2/mods-available/ssl.load';
 	"/etc/apache2/ssl/synapsie/synapsie.com.crt":
 		notify => Service["apache2"],
-		content => template("/vagrant/puppet/manifests/synapsie.com.crt"),
+		content => template("/vagrant/puppet/manifests/apache/ssl/synapsie.com.crt"),
 		ensure => file,
 		require => File["/etc/apache2/ssl/synapsie"],
 		owner => "vagrant",
@@ -89,7 +89,7 @@ file {
 		mode => 644;
 	"/etc/apache2/ssl/synapsie/synapsie.com.key":
 		notify => Service["apache2"],
-		content => template("/vagrant/puppet/manifests/synapsie.com.key"),
+		content => template("/vagrant/puppet/manifests/apache/ssl/synapsie.com.key"),
 		ensure => file,
 		require => File["/etc/apache2/ssl/synapsie"],
 		owner => "root",
@@ -97,9 +97,17 @@ file {
 		mode => 600;
 	"/etc/apache2/ssl/synapsie/gd_bundle.crt":
 		notify => Service["apache2"],
-		content => template("/vagrant/puppet/manifests/gd_bundle.crt"),
+		content => template("/vagrant/puppet/manifests/apache/ssl/gd_bundle.crt"),
 		ensure => file,
 		require => File["/etc/apache2/ssl/synapsie"],
+		owner => "vagrant",
+		group => "vagrant",
+		mode => 644;
+	"/vagrant/apache/site.wsgi":
+		notify => Service["apache2"],
+		content => template("/vagrant/puppet/manifests/apache/wsgi/${settings::env}.wsgi"),
+		ensure => file,
+		require => Package["apache2-mpm-worker"],
 		owner => "vagrant",
 		group => "vagrant",
 		mode => 644;
