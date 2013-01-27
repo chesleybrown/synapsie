@@ -14,7 +14,7 @@ class python {
 		path => "/usr/local/bin:/usr/bin:/bin",
 		refreshonly => true,
 		require => Package["python-setuptools"],
-		subscribe => Package["python-setuptools"];
+		subscribe => Package["python-setuptools"],
 	}
 }
 class { "python": stage => "pre" }
