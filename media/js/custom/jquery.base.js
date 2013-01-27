@@ -104,7 +104,7 @@ $(document).ready(function() {
 	function setupTimeSince() {
 		$('ul.records li.record .use_time_since').each(function(index, element) {
 			var date = $(this).prevAll('.datetime').text();
-			$(this).text(jQuery.timeago(date));
+			$(this).text($.timeago(date));
 			
 			if ($(this).css('opacity') == 0) {
 				$(this).animate({
@@ -330,7 +330,7 @@ $(document).ready(function() {
 		new_record.find('div.header div.text').html(nl2br(data['text']));
 		new_record.find('div.header div.datetime').text(data['happened']);
 		new_record.find('div.header div.time').text(curr_hour + ':' + curr_min + am_pm);
-		new_record.find('div.header div.time_since').text(jQuery.timeago(happened));
+		new_record.find('div.header div.time_since').text($.timeago(happened));
 		new_record.find('div.date span.month').text(short_months[happened.getMonth()]);
 		new_record.find('div.date span.day').text(curr_day);
 		new_record.find('div.date span.year').text(happened.getFullYear());
@@ -662,7 +662,7 @@ $(document).ready(function() {
 						
 						$(record_contents.datetime).text(record.happened);
 						$(record_contents.time).text(curr_hour + ':' + curr_min + am_pm);
-						$(record_contents.time_since).text(jQuery.timeago(happened));
+						$(record_contents.time_since).text($.timeago(happened));
 						$(record_contents.date.month).text(short_months[happened.getMonth()]);
 						$(record_contents.date.day).text(curr_day);
 						$(record_contents.date.year).text(happened.getFullYear());
