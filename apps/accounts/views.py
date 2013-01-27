@@ -268,7 +268,8 @@ def logout(request):
 	SessionMessages.create_message(request, messages.get('logged_out'))
 	
 	response = HttpResponseRedirect("/")
-	response.delete_cookie('fbs_168453549861030');
+	response.delete_cookie('fbm_168453549861030');
+	response.delete_cookie('fbsr_168453549861030');
 	
 	# Redirect to a success page.
 	return response

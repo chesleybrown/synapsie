@@ -46,8 +46,7 @@ class FacebookConnectMiddleware(object):
 			 # Set the facebook message to empty. This message can be used to dispaly info from the middleware on a Web page.
 			request.facebook_message = None
 			
-			fb_connect = facebook.FBConnect()
-			facebook_user_cookie = fb_connect.get_user_from_cookie(request.COOKIES, API_KEY, API_SECRET)
+			facebook_user_cookie = facebook.get_user_from_cookie(request.session, request.COOKIES, API_KEY, API_SECRET)
 			
 			# FB Connect will set a cookie with a key == FB App API Key if the user has been authenticated
 			#if API_KEY in request.COOKIES.keys():

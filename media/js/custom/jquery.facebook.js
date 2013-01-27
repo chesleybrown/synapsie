@@ -25,7 +25,7 @@ $(document).ready(function() {
 			FB.getLoginStatus(function(response) {
 				
 				// if user is logged in via facebook
-				if (response.session) {
+				if (response.status === 'connected') {
 					FB.logout(function(response) {
 						window.location = logout_url;
 					});
