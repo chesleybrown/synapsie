@@ -10,6 +10,10 @@ import time
 import json as simplejson
 from datetime import datetime
 
+# import the logging library
+import logging
+logger = logging.getLogger('django')
+
 from apps.accounts.models import RegistrationManager, RegistrationProfile
 from lib import facebook as facebook
 
@@ -42,30 +46,31 @@ class FacebookConnectMiddleware(object):
 			 # Set the facebook message to empty. This message can be used to dispaly info from the middleware on a Web page.
 			request.facebook_message = None
 			
-			facebook_user_cookie = facebook.get_user_from_cookie(request.COOKIES, API_KEY, API_SECRET)
+			fb_connect = facebook.FBConnect()
+			facebook_user_cookie = fb_connect.get_user_from_cookie(request.COOKIES, API_KEY, API_SECRET)
 			
 			# FB Connect will set a cookie with a key == FB App API Key if the user has been authenticated
 			#if API_KEY in request.COOKIES.keys():
 			if facebook_user_cookie:
 				
-				signature_hash = self.get_facebook_signature(facebook_user_cookie)
+				#signature_hash = self.get_facebook_signature(facebook_user_cookie)
 				
 				# The hash of the values in the cookie to make sure they're not forged
-				if (signature_hash == facebook_user_cookie['sig']):
-					
-					# If session hasn't expired
-					if (datetime.fromtimestamp(float(facebook_user_cookie['expires'])) > datetime.now()):
-						facebook_valid_session = True
-					
-					# Cookie session expired
-					else:
-						logout(request)
-						self.delete_fb_cookies = True
-					
-				# Cookie values don't match hash
+				#if (signature_hash == facebook_user_cookie['sig']):
+				
+				# If session hasn't expired
+				if (float(facebook_user_cookie['expires']) > 0):
+					facebook_valid_session = True
+				
+				# Cookie session expired
 				else:
 					logout(request)
 					self.delete_fb_cookies = True
+				
+				# Cookie values don't match hash
+				#else:
+				#	logout(request)
+				#	self.delete_fb_cookies = True
 			
 			# Don't bother trying FB Connect login if the user is already logged in
 			if not request.user.is_authenticated() and facebook_valid_session:

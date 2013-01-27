@@ -14,6 +14,10 @@ import apps.accounts.models
 from tagging.models import Tag, TaggedItem
 from tagging.utils import parse_tag_input
 
+# import the logging library
+import logging
+logger = logging.getLogger('django')
+
 
 # given a user, get their friends
 def get_friends(request, user=None, include_self=False):
@@ -34,7 +38,8 @@ def get_friends(request, user=None, include_self=False):
 	if not user:
 		user = identity
 	
-	facebook_user = Facebook.get_user_from_cookie(request.COOKIES, '168453549861030', '25dd90990d7444d4c8b7a5467ac6bc43')
+	fb_connect = Facebook.FBConnect()
+	facebook_user = fb_connect.get_user_from_cookie(request.COOKIES, '168453549861030', '25dd90990d7444d4c8b7a5467ac6bc43')
 	
 	if facebook_user:
 		facebook_graph = Facebook.GraphAPI(facebook_user['access_token'])
@@ -90,7 +95,8 @@ def get_facebook_friends(request, user=None):
 	if not user:
 		user = identity
 	
-	facebook_user = Facebook.get_user_from_cookie(request.COOKIES, '168453549861030', '25dd90990d7444d4c8b7a5467ac6bc43')
+	fb_connect = Facebook.FBConnect()
+	facebook_user = fb_connect.get_user_from_cookie(request.COOKIES, '168453549861030', '25dd90990d7444d4c8b7a5467ac6bc43')
 	
 	if facebook_user:
 		facebook_graph = Facebook.GraphAPI(facebook_user['access_token'])
