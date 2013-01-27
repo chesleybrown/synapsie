@@ -10,10 +10,6 @@ import time
 import json as simplejson
 from datetime import datetime
 
-# import the logging library
-import logging
-logger = logging.getLogger('django')
-
 from apps.accounts.models import RegistrationManager, RegistrationProfile
 from lib import facebook as facebook
 

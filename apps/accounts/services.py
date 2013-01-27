@@ -14,10 +14,6 @@ import apps.accounts.models
 from tagging.models import Tag, TaggedItem
 from tagging.utils import parse_tag_input
 
-# import the logging library
-import logging
-logger = logging.getLogger('django')
-
 
 # given a user, get their friends
 def get_friends(request, user=None, include_self=False):

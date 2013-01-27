@@ -331,7 +331,7 @@ LOGGING = {
 			'level':'DEBUG',
 			'class':'logging.FileHandler',
 			'formatter': 'simple',
-			'filename': '/vagrant/logs/error.log'
+			'filename': '../logs/error.log'
 		},
 		'mail_admins': {
 			'level': 'ERROR',

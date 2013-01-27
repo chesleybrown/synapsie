@@ -44,10 +44,6 @@ import base64
 import logging
 import socket
 
-# import the logging library
-import logging
-logger = logging.getLogger('django')
-
 # Find a JSON parser
 try:
     import simplejson as json
