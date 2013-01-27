@@ -9,12 +9,12 @@ class python {
 		"python": ensure => "2.7.3-0ubuntu2";
 		"python-dev": ensure => "purged";
 		"python-setuptools": ensure => "purged";
-	}   
+	}
 	exec { "easy_install pip":
 		path => "/usr/local/bin:/usr/bin:/bin",
 		refreshonly => true,
 		require => Package["python-setuptools"],
-		subscribe => Package["python-setuptools"],
+		subscribe => Package["python-setuptools"];
 	}
 }
 class { "python": stage => "pre" }
