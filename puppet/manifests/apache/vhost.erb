@@ -8,7 +8,7 @@ SSLPassPhraseDialog exec:/vagrant/puppet/manifests/apache/ssl/ppdialog.sh
 	SSLCertificateKeyFile /etc/apache2/ssl/synapsie/synapsie.com.key
 	SSLCertificateChainFile /etc/apache2/ssl/synapsie/gd_bundle.crt
 	
-	WSGIDaemonProcess synapsie.com processes=1 threads=15 maximum-requests=10000 python-path=/usr/lib/python2.7/dist-packages/django
+	WSGIDaemonProcess synapsie.com user=vagrant group=vagrant processes=1 threads=15 maximum-requests=10000 python-path=/usr/lib/python2.7/dist-packages/django
 	WSGIProcessGroup synapsie.com
 	WSGIScriptAlias / /vagrant/apache/site.wsgi
 	
@@ -55,7 +55,7 @@ SSLPassPhraseDialog exec:/vagrant/puppet/manifests/apache/ssl/ppdialog.sh
 	SSLCertificateKeyFile /etc/apache2/ssl/synapsie/synapsie.com.key
 	SSLCertificateChainFile /etc/apache2/ssl/synapsie/gd_bundle.crt
 	
-	WSGIDaemonProcess secure.synapsie.com processes=1 threads=15 maximum-requests=10000 python-path=/usr/lib/python2.7/dist-packages/django
+	WSGIDaemonProcess secure.synapsie.com user=vagrant group=vagrant processes=1 threads=15 maximum-requests=10000 python-path=/usr/lib/python2.7/dist-packages/django
 	WSGIProcessGroup secure.synapsie.com
 	WSGIScriptAlias / /vagrant/apache/site.wsgi
 	

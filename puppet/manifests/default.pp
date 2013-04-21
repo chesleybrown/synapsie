@@ -2,6 +2,14 @@ exec { "apt-update":
 	command => "/usr/bin/apt-get update"
 }
 
+user { 'vagrant':
+	password_min_age => '0',
+	ensure => 'present',
+	password_max_age => '99999',
+	password => 'vagrant',
+	groups => ['www-data','vagrant'],
+}
+
 stage { "pre": before => Stage["main"] }
 class python {
 	package {
