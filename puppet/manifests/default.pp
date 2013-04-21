@@ -2,6 +2,10 @@ exec { "apt-update":
 	command => "/usr/bin/apt-get update"
 }
 
+group { 'vagrant':
+	
+}
+
 user { 'vagrant':
 	password_min_age => '0',
 	ensure => 'present',
