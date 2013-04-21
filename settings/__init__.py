@@ -329,9 +329,8 @@ LOGGING = {
 		},
 		'console':{
 			'level':'DEBUG',
-			'class':'logging.FileHandler',
-			'formatter': 'simple',
-			'filename': '../logs/error.log'
+			'class':'logging.StreamHandler',
+			'formatter': 'simple'
 		},
 		'mail_admins': {
 			'level': 'ERROR',
