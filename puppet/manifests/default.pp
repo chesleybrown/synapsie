@@ -16,6 +16,13 @@ user { 'vagrant':
 	require => Group['vagrant'],
 }
 
+# make sure vagrant can access all site code
+exec { "vagrant_access":
+	command => "sudo chgrp -R vagrant /vagrant",
+	path => "/usr/bin",
+	require => Group["vagrant"],
+}
+
 stage { "pre": before => Stage["main"] }
 class python {
 	package {
@@ -164,4 +171,18 @@ exec { "django_database_setup":
 	command => "python manage.py syncdb --noinput",
 	path    => "/usr/bin",
 	require => [Database["dj_synapsie"], Database_user["dj_synapsie@localhost"], Service["mysqld"], Package["python"], Package["python-mysqldb"], Package["mysql-server"]],
+}
+
+# do a final build
+exec { "build_synapsie_database":
+	cwd     => "/vagrant",
+	command => "python manage.py syncdb --noinput",
+	path    => "/usr/bin",
+	require => [Database["dj_synapsie"], Database_user["dj_synapsie@localhost"], Service["mysqld"], Package["python"], Package["python-mysqldb"], Package["mysql-server"]],
+}
+exec { "build_synapsie_code":
+	cwd     => "/vagrant",
+	command => "touch apache/site.wsgi",
+	path    => "/usr/bin",
+	require => [Group['vagrant'], Database["dj_synapsie"], Database_user["dj_synapsie@localhost"], Service["mysqld"], Package["python"], Package["python-mysqldb"], Package["mysql-server"]],
 }
