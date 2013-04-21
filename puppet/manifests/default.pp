@@ -11,6 +11,7 @@ user { 'vagrant':
 	ensure => 'present',
 	password_max_age => '99999',
 	password => 'vagrant',
+	gid => 'vagrant',
 	groups => ['www-data','vagrant'],
 	require => Group['vagrant'],
 }
