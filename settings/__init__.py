@@ -38,7 +38,9 @@ TIME_ZONE = 'America/St_Johns'
 LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
-SITE_DOMAIN = 'www.synapsie.com'
+SITE_DOMAIN = 'synapsie.com'
+SITE_URL = 'http://synapsie.com'
+SITE_URL_SSL = 'https://synapsie.com'
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -82,6 +84,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 	
 	# synapsie
 	"apps.session_messages.context_processors.session_messages",
+	"apps.context_processors.site",
 )
 
 # List of callables that know how to import templates from various sources.

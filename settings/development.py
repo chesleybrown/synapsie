@@ -21,6 +21,10 @@ DATABASES = {
 	}
 }
 
+SITE_DOMAIN = 'synapsie.local'
+SITE_URL = 'http://synapsie.local'
+SITE_URL_SSL = 'https://synapsie.local'
+
 MIDDLEWARE_CLASSES = (
 	'django.middleware.common.CommonMiddleware',
 	'django.contrib.sessions.middleware.SessionMiddleware',
