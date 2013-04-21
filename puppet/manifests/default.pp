@@ -2,16 +2,17 @@ exec { "apt-update":
 	command => "/usr/bin/apt-get update"
 }
 
+# create vagrant user and group
 group { 'vagrant':
-	
+	ensure => 'present',
 }
-
 user { 'vagrant':
 	password_min_age => '0',
 	ensure => 'present',
 	password_max_age => '99999',
 	password => 'vagrant',
 	groups => ['www-data','vagrant'],
+	require => Group['vagrant'],
 }
 
 stage { "pre": before => Stage["main"] }
