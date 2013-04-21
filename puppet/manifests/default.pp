@@ -6,7 +6,7 @@ stage { "pre": before => Stage["main"] }
 class python {
 	package {
 		"build-essential": ensure => "purged";
-		"python": ensure => "2.7.3-0ubuntu2";
+		"python": ensure => "latest";
 		"python-dev": ensure => "purged";
 		"python-setuptools": ensure => "purged";
 	}
@@ -21,7 +21,7 @@ class { "python": stage => "pre" }
  
 package {
 	"python-django":
-		ensure => "1.3.1-4ubuntu1.4",
+		ensure => "latest",
 		require => [Exec["apt-update"], Package["python-mysqldb"]];
 	"libmysqlclient-dev":
 	notify => Service["mysqld"],
