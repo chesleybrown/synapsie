@@ -102,7 +102,7 @@ file {
 		target => '/etc/apache2/mods-available/ssl.load';
 	"/etc/apache2/ssl/synapsie/synapsie.com.crt":
 		notify => Service["apache2"],
-		content => template("/vagrant/puppet/manifests/apache/ssl/synapsie.com.crt"),
+		content => template("/vagrant/puppet/manifests/apache/ssl/${settings::env}/synapsie.com.crt"),
 		ensure => file,
 		require => File["/etc/apache2/ssl/synapsie"],
 		owner => "vagrant",
@@ -110,7 +110,7 @@ file {
 		mode => 644;
 	"/etc/apache2/ssl/synapsie/synapsie.com.key":
 		notify => Service["apache2"],
-		content => template("/vagrant/puppet/manifests/apache/ssl/synapsie.com.key"),
+		content => template("/vagrant/puppet/manifests/apache/ssl/${settings::env}/synapsie.com.key"),
 		ensure => file,
 		require => File["/etc/apache2/ssl/synapsie"],
 		owner => "root",
