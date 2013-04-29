@@ -3,6 +3,7 @@ SSLPassPhraseDialog exec:/vagrant/puppet/manifests/apache/ssl/ppdialog.sh
 <VirtualHost *:80>
 	ServerAdmin root@synapsie.com
 	ServerName synapsie.com
+	ServerAlias www.synapsie.com
 	
 	SSLCertificateFile /etc/apache2/ssl/synapsie/synapsie.com.crt
 	SSLCertificateKeyFile /etc/apache2/ssl/synapsie/synapsie.com.key
@@ -50,6 +51,7 @@ SSLPassPhraseDialog exec:/vagrant/puppet/manifests/apache/ssl/ppdialog.sh
 	
 	ServerAdmin root@synapsie.com
 	ServerName synapsie.com
+	ServerAlias www.synapsie.com
 	
 	SSLCertificateFile /etc/apache2/ssl/synapsie/synapsie.com.crt
 	SSLCertificateKeyFile /etc/apache2/ssl/synapsie/synapsie.com.key
