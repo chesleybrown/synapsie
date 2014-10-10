@@ -19,10 +19,10 @@ SSLPassPhraseDialog exec:/vagrant/puppet/manifests/apache/ssl/ppdialog.sh
 	Alias /favicon.ico /vagrant/media/favicon.ico
 	
 	<Directory /vagrant/media>
-			Order Deny,Allow
-			Allow from all
-			Options -Indexes -FollowSymLinks -Includes -ExecCGI
-			AllowOverride None
+		Order Deny,Allow
+		Allow from all
+		Options -Indexes -FollowSymLinks -Includes -ExecCGI
+		AllowOverride None
 	</Directory>
 	<Directory /usr/lib/python2.7/dist-packages/django/contrib/admin/media>
 		Order Deny,Allow
@@ -32,19 +32,22 @@ SSLPassPhraseDialog exec:/vagrant/puppet/manifests/apache/ssl/ppdialog.sh
 	</Directory>
 	
 	<Directory /vagrant/media/css/min>
-			ExpiresActive On
-			ExpiresDefault "access plus 10 years"
+		ExpiresActive On
+		ExpiresDefault "access plus 10 years"
 	</Directory>
 	<Directory /vagrant/media/js/min>
-			ExpiresActive On
-			ExpiresDefault "access plus 10 years"
+		ExpiresActive On
+		ExpiresDefault "access plus 10 years"
 	</Directory>
 	
 	<Directory /vagrant/apache>
-			Order Allow,Deny
-			Allow from all
+		<Files site.wsgi>
+			Require all granted
+		</Files>
+		Order Allow,Deny
+		Allow from all
 	</Directory>
-
+	
 </VirtualHost>
 
 <VirtualHost *:443>
@@ -82,35 +85,38 @@ SSLPassPhraseDialog exec:/vagrant/puppet/manifests/apache/ssl/ppdialog.sh
 	SSLProxyEngine off
 	
 	<IfModule mime.c>
-			AddType application/x-x509-ca-cert      .crt
-			AddType application/x-pkcs7-crl         .crl
+		AddType application/x-x509-ca-cert      .crt
+		AddType application/x-pkcs7-crl         .crl
 	</IfModule>
 	
 	<Directory /vagrant/media>
-			Order Deny,Allow
-			Allow from all
-			Options -Indexes -FollowSymLinks -Includes -ExecCGI
-			AllowOverride None
+		Order Deny,Allow
+		Allow from all
+		Options -Indexes -FollowSymLinks -Includes -ExecCGI
+		AllowOverride None
 	</Directory>
 	<Directory /usr/lib/python2.7/dist-packages/django/contrib/admin/media>
-			Order Deny,Allow
-			Allow from all
-			Options -Indexes -FollowSymLinks -Includes -ExecCGI
-			AllowOverride None
+		Order Deny,Allow
+		Allow from all
+		Options -Indexes -FollowSymLinks -Includes -ExecCGI
+		AllowOverride None
 	</Directory>
 	
 	<Directory /vagrant/media/css/min>
-			ExpiresActive On
-			ExpiresDefault "access plus 10 years"
+		ExpiresActive On
+		ExpiresDefault "access plus 10 years"
 	</Directory>
 	<Directory /vagrant/media/js/min>
-			ExpiresActive On
-			ExpiresDefault "access plus 10 years"
+		ExpiresActive On
+		ExpiresDefault "access plus 10 years"
 	</Directory>
-
+	
 	<Directory /vagrant/apache>
-			Order Allow,Deny
-			Allow from all
+		<Files site.wsgi>
+			Require all granted
+		</Files>
+		Order Allow,Deny
+		Allow from all
 	</Directory>
 	
 </VirtualHost>
