@@ -19,12 +19,18 @@ SSLPassPhraseDialog exec:/vagrant/puppet/manifests/apache/ssl/ppdialog.sh
 	Alias /favicon.ico /vagrant/media/favicon.ico
 	
 	<Directory /vagrant/media>
+		<Files *>
+			Require all granted
+		</Files>
 		Order Deny,Allow
 		Allow from all
 		Options -Indexes -FollowSymLinks -Includes -ExecCGI
 		AllowOverride None
 	</Directory>
 	<Directory /usr/lib/python2.7/dist-packages/django/contrib/admin/media>
+		<Files *>
+			Require all granted
+		</Files>
 		Order Deny,Allow
 		Allow from all
 		Options -Indexes -FollowSymLinks -Includes -ExecCGI
@@ -32,10 +38,16 @@ SSLPassPhraseDialog exec:/vagrant/puppet/manifests/apache/ssl/ppdialog.sh
 	</Directory>
 	
 	<Directory /vagrant/media/css/min>
+		<Files *>
+			Require all granted
+		</Files>
 		ExpiresActive On
 		ExpiresDefault "access plus 10 years"
 	</Directory>
 	<Directory /vagrant/media/js/min>
+		<Files *>
+			Require all granted
+		</Files>
 		ExpiresActive On
 		ExpiresDefault "access plus 10 years"
 	</Directory>
@@ -90,12 +102,18 @@ SSLPassPhraseDialog exec:/vagrant/puppet/manifests/apache/ssl/ppdialog.sh
 	</IfModule>
 	
 	<Directory /vagrant/media>
+		<Files *>
+			Require all granted
+		</Files>
 		Order Deny,Allow
 		Allow from all
 		Options -Indexes -FollowSymLinks -Includes -ExecCGI
 		AllowOverride None
 	</Directory>
 	<Directory /usr/lib/python2.7/dist-packages/django/contrib/admin/media>
+		<Files *>
+			Require all granted
+		</Files>
 		Order Deny,Allow
 		Allow from all
 		Options -Indexes -FollowSymLinks -Includes -ExecCGI
@@ -103,10 +121,16 @@ SSLPassPhraseDialog exec:/vagrant/puppet/manifests/apache/ssl/ppdialog.sh
 	</Directory>
 	
 	<Directory /vagrant/media/css/min>
+		<Files *>
+			Require all granted
+		</Files>
 		ExpiresActive On
 		ExpiresDefault "access plus 10 years"
 	</Directory>
 	<Directory /vagrant/media/js/min>
+		<Files *>
+			Require all granted
+		</Files>
 		ExpiresActive On
 		ExpiresDefault "access plus 10 years"
 	</Directory>
